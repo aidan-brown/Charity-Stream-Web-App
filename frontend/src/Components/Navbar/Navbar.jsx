@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import App from '../App/App';
 import { Route, Link, BrowserRouter as Router } from 'react-router-dom';
+import StoreContent from '../Content/StoreContent';
 
 class Navbar extends Component{
     render(){
@@ -23,8 +24,8 @@ class Navbar extends Component{
                     <img src="Logo.png" alt="CSH logo" />
                 </div>
                 <Route exact path="/Home" component={App} />
-                <Route exact path="/Store" component={App} />
-                <Route exact path="/JustGiving" component={App} />
+                <Route exact path="/Store" component={StoreContent} />
+                <Route exact path="/JustGiving" component={StoreContent} />
                 </Router>
             </div>
         )
