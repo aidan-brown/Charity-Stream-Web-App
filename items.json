@@ -128,6 +128,66 @@
                 "hungerFill": 8,
                 "effects": "No special effects."
             }
+        },
+        {
+            "id": 15,
+            "name": "Golden Apple",
+            "description": "Filled with magic, this powerful apple grants you extra health!",
+            "type": {
+                "name": "food",
+                "hungerFill": 4,
+                "effects": "Absorption for 2 minutes and regeneration for 5 seconds!"
+            }
+        },
+        {
+            "id": 16,
+            "name": "Golden 'God' Apple",
+            "description": "The ultimate food, this apple makes the player tough and filled with vitality!",
+            "type": {
+                "name": "food",
+                "hungerFill": 4,
+                "effects": "Absorption 4 for 2 minutes, Regeneration 2 for 20 seconds, and Fire Resistance and Damage Resistance for 5 minutes!"
+            }
+        },
+        {
+            "id": 17,
+            "name": "Stone Sword",
+            "description": "The basic weapon for combat. Help your favorite player triump in battle!",
+            "type": {
+                "name": "weapon",
+                "damage": 5,
+                "durability": 131
+            }
+        },
+        {
+            "id": 18,
+            "name": "Iron Sword",
+            "description": "An upgraded sword for combat. Help your favorite player triump in battle!",
+            "type": {
+                "name": "weapon",
+                "damage": 6,
+                "durability": 250
+            }
+        },
+        {
+            "id": 19,
+            "name": "Diamond Sword",
+            "description": "The ultimate sword for combat. Help your favorite player triump in battle with style!",
+            "type": {
+                "name": "weapon",
+                "damage": 7,
+                "durability": 1561
+            }
+        },
+        {
+            "id": 20,
+            "name": "Bow",
+            "description": "Minecraft's signature ranged weapon. Can take out foes at a distance!",
+            "type": {
+                "name": "weapon",
+                "damage": 6,
+                "durability": 384
+            }
         }
     ]
 }
