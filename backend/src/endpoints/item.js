@@ -1,7 +1,11 @@
 import { SqlConnect } from "../sqlConnection";
 
-export function GetItemByWhere(where){
-    const connection = SqlConnect();
+export function GetItemsWhere(where){
+    const connection = SqlConnect(
+        process.env.MCHOST,
+        process.env.MCDB,
+        process.env.MCPWD,
+    );
 
     if (where){
         connection.query( `SELECT * 
@@ -10,7 +14,6 @@ export function GetItemByWhere(where){
                        (error, result) => {
             if (error){
                 connection.end();
-                
                 return "Could not find the given item!";
             }
             else {
@@ -32,7 +35,9 @@ export function GetItemByWhere(where){
 }
 
 export function CreateItem(item){
-    const connection = SqlConnect();
+    const connection = SqlConnect(
+        process.env.
+    );
 
     if (item){
         connection.query(`
