@@ -1,0 +1,133 @@
+{
+    "items": [
+        {
+            "id": 1,
+            "name": "Iron Ingot",
+            "description": "An ingot full of potential. Can be used to craft iron armor, weapons, and tools.",
+            "type": "material"
+        },
+        {
+            "id": 2,
+            "name": "Gold Ingot",
+            "description": "An ingot full of potential. Can be used to craft gold armor, weapons, and tools.",
+            "type": "material"
+        },
+        {
+            "id": 3,
+            "name": "Diamond",
+            "description": "A shiny gem. Can be used to craft powerful diamond armor, weapons, and tools.",
+            "type": "material"
+        },
+        {
+            "id": 4,
+            "name": "Iron Pickaxe",
+            "description": "A basic but durable pickaxe. Breaks rocks!",
+            "type": {
+                "name" : "tool",
+                "speed": 1,
+                "durability": 250
+            }
+        },
+        {
+            "id": 5,
+            "name": "Gold Pickaxe",
+            "description": "A fast but flimsy pickaxe. Breaks rocks!",
+            "type": {
+                "name" : "tool",
+                "speed": 1.5,
+                "durability": 32
+            }
+            
+        },
+        {
+            "id": 6,
+            "name": "Diamond Pickaxe",
+            "description": "A very fast and durable pickaxe. Breaks rocks!",
+            "type": {
+                "name" : "tool",
+                "speed": 4,
+                "durability": 1561
+            }
+        },
+        {
+            "id": 7,
+            "name": "Iron Shovel",
+            "description": "A basic but durable shovel. Breaks dirt/gravel/sand!",
+            "type": {
+                "name" : "tool",
+                "speed": 1,
+                "durability": 250
+            }
+        },
+        {
+            "id": 8,
+            "name": "Gold Shovel",
+            "description": "A fast but flimsy shovel. Breaks dirt/gravel/sand!",
+            "type": {
+                "name" : "tool",
+                "speed": 1.5,
+                "durability": 32
+            }
+        },
+        {
+            "id": 9,
+            "name": "Diamond Shovel",
+            "description": "A very fast and durable shovel. Breaks dirt/gravel/sand!",
+            "type": {
+                "name" : "tool",
+                "speed": 4,
+                "durability": 1561
+            }
+        },
+        {
+            "id": 10,
+            "name": "Iron Axe",
+            "description": "A basic but durable axe. Chops wood!",
+            "type": {
+                "name" : "tool",
+                "speed": 1,
+                "durability": 250
+            }
+        },
+        {
+            "id": 11,
+            "name": "Gold Axe",
+            "description": "A fast but flimsy axe. Chops wood!",
+            "type": {
+                "name" : "tool",
+                "speed": 1.5,
+                "durability": 32
+            }
+        },
+        {
+            "id": 12,
+            "name": "Diamond Axe",
+            "description": "A very fast and durable axe. Chops wood!",
+            "type": {
+                "name" : "tool",
+                "speed": 4,
+                "durability": 1561
+            }
+        },
+        {
+            "id": 13,
+            "name": "Bread",
+            "description": "A good basic food.",
+            "type": {
+                "name": "food",
+                "hungerFill": 5,
+                "effects": "No special effects."
+            }
+        },
+        {
+            "id": 14,
+            "name": "Steak",
+            "description": "A very filling food.",
+            "type": {
+                "name": "food",
+                "hungerFill": 8,
+                "effects": "No special effects."
+            }
+        }
+    ]
+}

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import All from './StoreTabs/All';
 
 class Store extends Component{
     render(){
