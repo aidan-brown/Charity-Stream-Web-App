@@ -208,6 +208,68 @@
                 "damage": 6,
                 "durability": 384
             }
+        },
+        {
+            "id": 21,
+            "name": "10x Arrows",
+            "description": "The basic ammo for the bow. Comes with 10 arrows!",
+            "price": 0.60,
+            "type": "misc"
+        },
+        {
+            "id": 22,
+            "name": "Leather Helmet",
+            "description": "The helm of the most basic armor set. Keep your favorite player alive!",
+            "price": 0.50,
+            "type": {
+                "name": "armor",
+                "protection": 1,
+                "durability": 56
+            }
+        },
+        {
+            "id": 23,
+            "name": "Leather Chestplate",
+            "description": "The chestplate of the most basic armor set. Keep your favorite player alive!",
+            "price": 0.80,
+            "type": {
+                "name": "armor",
+                "protection": 3,
+                "durability": 81
+            }
+        },
+        {
+            "id": 24,
+            "name": "Leather Leggings",
+            "description": "The leggings of the most basic armor set. Keep your favorite player alive!",
+            "price": 0.70,
+            "type": {
+                "name": "armor",
+                "protection": 2,
+                "durability": 76
+            }
+        },
+        {
+            "id": 25,
+            "name": "Leather Boots",
+            "description": "The boots of the most basic armor set. Keep your favorite player alive!",
+            "price": 0.40,
+            "type": {
+                "name": "armor",
+                "protection": 1,
+                "durability": 66
+            }
+        },
+        {
+            "id": 26,
+            "name": "Gold Helmet",
+            "description": "The helm of a protective but breakable armor set. Keep your favorite player alive!",
+            "price": 1.00,
+            "type": {
+                "name": "armor",
+                "protection": 2,
+                "durability": 78
+            }
         }
     ]
 }
