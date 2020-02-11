@@ -4,24 +4,28 @@
             "id": 1,
             "name": "Iron Ingot",
             "description": "An ingot full of potential. Can be used to craft iron armor, weapons, and tools.",
+            "price": 0.25,
             "type": "material"
         },
         {
             "id": 2,
             "name": "Gold Ingot",
             "description": "An ingot full of potential. Can be used to craft gold armor, weapons, and tools.",
+            "price": 0.20,
             "type": "material"
         },
         {
             "id": 3,
             "name": "Diamond",
             "description": "A shiny gem. Can be used to craft powerful diamond armor, weapons, and tools.",
+            "price": 1.00,
             "type": "material"
         },
         {
             "id": 4,
             "name": "Iron Pickaxe",
             "description": "A basic but durable pickaxe. Breaks rocks!",
+            "price": 0.65,
             "type": {
                 "name" : "tool",
                 "speed": 1,
@@ -32,6 +36,7 @@
             "id": 5,
             "name": "Gold Pickaxe",
             "description": "A fast but flimsy pickaxe. Breaks rocks!",
+            "price": 0.50,
             "type": {
                 "name" : "tool",
                 "speed": 1.5,
@@ -43,6 +48,7 @@
             "id": 6,
             "name": "Diamond Pickaxe",
             "description": "A very fast and durable pickaxe. Breaks rocks!",
+            "price": 3.00,
             "type": {
                 "name" : "tool",
                 "speed": 4,
@@ -53,6 +59,7 @@
             "id": 7,
             "name": "Iron Shovel",
             "description": "A basic but durable shovel. Breaks dirt/gravel/sand!",
+            "price": 0.30,
             "type": {
                 "name" : "tool",
                 "speed": 1,
@@ -63,6 +70,7 @@
             "id": 8,
             "name": "Gold Shovel",
             "description": "A fast but flimsy shovel. Breaks dirt/gravel/sand!",
+            "price": 0.25,
             "type": {
                 "name" : "tool",
                 "speed": 1.5,
@@ -73,6 +81,7 @@
             "id": 9,
             "name": "Diamond Shovel",
             "description": "A very fast and durable shovel. Breaks dirt/gravel/sand!",
+            "price": 1.00,
             "type": {
                 "name" : "tool",
                 "speed": 4,
@@ -83,6 +92,7 @@
             "id": 10,
             "name": "Iron Axe",
             "description": "A basic but durable axe. Chops wood!",
+            "price": 0.65,
             "type": {
                 "name" : "tool",
                 "speed": 1,
@@ -93,6 +103,7 @@
             "id": 11,
             "name": "Gold Axe",
             "description": "A fast but flimsy axe. Chops wood!",
+            "price": 0.50,
             "type": {
                 "name" : "tool",
                 "speed": 1.5,
@@ -103,6 +114,7 @@
             "id": 12,
             "name": "Diamond Axe",
             "description": "A very fast and durable axe. Chops wood!",
+            "price": 3.00,
             "type": {
                 "name" : "tool",
                 "speed": 4,
@@ -113,6 +125,7 @@
             "id": 13,
             "name": "Bread",
             "description": "A good basic food.",
+            "price": 0.25,
             "type": {
                 "name": "food",
                 "hungerFill": 5,
@@ -123,6 +136,7 @@
             "id": 14,
             "name": "Steak",
             "description": "A very filling food.",
+            "price": 0.50,
             "type": {
                 "name": "food",
                 "hungerFill": 8,
@@ -133,6 +147,7 @@
             "id": 15,
             "name": "Golden Apple",
             "description": "Filled with magic, this powerful apple grants you extra health!",
+            "price": 1.00,
             "type": {
                 "name": "food",
                 "hungerFill": 4,
@@ -143,6 +158,7 @@
             "id": 16,
             "name": "Golden 'God' Apple",
             "description": "The ultimate food, this apple makes the player tough and filled with vitality!",
+            "price": 10.00,
             "type": {
                 "name": "food",
                 "hungerFill": 4,
@@ -153,6 +169,7 @@
             "id": 17,
             "name": "Stone Sword",
             "description": "The basic weapon for combat. Help your favorite player triump in battle!",
+            "price": 0.30,
             "type": {
                 "name": "weapon",
                 "damage": 5,
@@ -163,6 +180,7 @@
             "id": 18,
             "name": "Iron Sword",
             "description": "An upgraded sword for combat. Help your favorite player triump in battle!",
+            "price": 0.50,
             "type": {
                 "name": "weapon",
                 "damage": 6,
@@ -173,6 +191,7 @@
             "id": 19,
             "name": "Diamond Sword",
             "description": "The ultimate sword for combat. Help your favorite player triump in battle with style!",
+            "price": 2.00,
             "type": {
                 "name": "weapon",
                 "damage": 7,
@@ -183,6 +202,7 @@
             "id": 20,
             "name": "Bow",
             "description": "Minecraft's signature ranged weapon. Can take out foes at a distance!",
+            "price": 1.50,
             "type": {
                 "name": "weapon",
                 "damage": 6,
