@@ -4,129 +4,129 @@ import './PlayerList.css';
 class PlayerList extends Component{
     render(){
         return(
-            <div className="PlayerList">
-                <div className="row list-head">
-                    <div class="col">
+            <div className='PlayerList'>
+                <div className='row list-head'>
+                    <div className='col'>
                         <p>Player Name</p>
                     </div>
-                    <div class="col">
+                    <div className='col'>
                         <p>Username</p>
                     </div>
-                    <div class="col">
+                    <div className='col'>
                         <p>Team</p>
                     </div>
                 </div>
 
-                <div class="container">
-                    <div className="row list-element">
-                        <div class="col">
+                <div className='container'>
+                    <div className='row list-element'>
+                        <div className='col'>
                             <p>Aidan Brown</p>
                         </div>
-                        <div class="col">
+                        <div className='col'>
                             <p>fastturtle123</p>
                         </div>
-                        <div class="col">
+                        <div className='col'>
                             <p>CSH</p>
                         </div>
                     </div>
 
-                    <div className="row list-element">
-                        <div class="col">
+                    <div className='row list-element'>
+                        <div className='col'>
                             <p>Rhys Stever</p>
                         </div>
-                        <div class="col">
+                        <div className='col'>
                             <p>The3Watermelon</p>
                         </div>
-                        <div class="col">
+                        <div className='col'>
                             <p>CSH</p>
                         </div>
                     </div>
-                    <div className="row list-element">
-                        <div class="col">
+                    <div className='row list-element'>
+                        <div className='col'>
                             <p>Rhys Stever</p>
                         </div>
-                        <div class="col">
+                        <div className='col'>
                             <p>The3Watermelon</p>
                         </div>
-                        <div class="col">
+                        <div className='col'>
                             <p>CSH</p>
                         </div>
                     </div>
-                    <div className="row list-element">
-                        <div class="col">
+                    <div className='row list-element'>
+                        <div className='col'>
                             <p>Rhys Stever</p>
                         </div>
-                        <div class="col">
+                        <div className='col'>
                             <p>The3Watermelon</p>
                         </div>
-                        <div class="col">
+                        <div className='col'>
                             <p>CSH</p>
                         </div>
                     </div>
-                    <div className="row list-element">
-                        <div class="col">
+                    <div className='row list-element'>
+                        <div className='col'>
                             <p>Rhys Stever</p>
                         </div>
-                        <div class="col">
+                        <div className='col'>
                             <p>The3Watermelon</p>
                         </div>
-                        <div class="col">
+                        <div className='col'>
                             <p>CSH</p>
                         </div>
                     </div>
-                    <div className="row list-element">
-                        <div class="col">
+                    <div className='row list-element'>
+                        <div className='col'>
                             <p>Rhys Stever</p>
                         </div>
-                        <div class="col">
+                        <div className='col'>
                             <p>The3Watermelon</p>
                         </div>
-                        <div class="col">
+                        <div className='col'>
                             <p>CSH</p>
                         </div>
                     </div>
-                    <div className="row list-element">
-                        <div class="col">
+                    <div className='row list-element'>
+                        <div className='col'>
                             <p>Rhys Stever</p>
                         </div>
-                        <div class="col">
+                        <div className='col'>
                             <p>The3Watermelon</p>
                         </div>
-                        <div class="col">
+                        <div className='col'>
                             <p>CSH</p>
                         </div>
                     </div>
-                    <div className="row list-element">
-                        <div class="col">
+                    <div className='row list-element'>
+                        <div className='col'>
                             <p>Rhys Stever</p>
                         </div>
-                        <div class="col">
+                        <div className='col'>
                             <p>The3Watermelon</p>
                         </div>
-                        <div class="col">
+                        <div className='col'>
                             <p>CSH</p>
                         </div>
                     </div>
-                    <div className="row list-element">
-                        <div class="col">
+                    <div className='row list-element'>
+                        <div className='col'>
                             <p>Rhys Stever</p>
                         </div>
-                        <div class="col">
+                        <div className='col'>
                             <p>The3Watermelon</p>
                         </div>
-                        <div class="col">
+                        <div className='col'>
                             <p>CSH</p>
                         </div>
                     </div>
 
-                    <div className="row list-element">
-                        <div class="col">
+                    <div className='row list-element'>
+                        <div className='col'>
                             <p></p>
                         </div>
-                        <div class="col">
+                        <div className='col'>
                             <p></p>
                         </div>
-                        <div class="col">
+                        <div className='col'>
                             <p></p>
                         </div>
                     </div>

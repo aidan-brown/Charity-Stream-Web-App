@@ -1,6 +1,10 @@
+.PlayerList{
+    width: 20rem;
+    font-size: .75rem;
+}
+
 .container{
     height: 100%;
-
     overflow-y: scroll;
 }
 

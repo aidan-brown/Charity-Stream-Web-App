@@ -13,7 +13,7 @@ class Landing extends Component{
         return(
             <div className='Landing'>
                 <div className="jumbotron stream-player">
-                    <StreamWindow title="Charity Stream" width="100%" height="100%" url="https://player.twitch.tv/?channel=justgiving" />
+                    <StreamWindow title="Charity Stream" width="auto" height="100%" url="https://player.twitch.tv/?channel=justgiving" />
                     <PlayerList />
                 </div>
                 

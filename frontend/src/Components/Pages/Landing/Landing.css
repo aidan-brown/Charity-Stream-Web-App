@@ -2,6 +2,7 @@
     display: grid;
     grid-template-columns: 3fr 1fr;
     grid-template-rows: 25rem;
+    padding: 2rem 5%;
 }
 
 .stream-player .StreamWindow{
@@ -17,4 +18,11 @@
     border-color: #B0197E;
     border-bottom-left-radius: 4rem;
 
+}
+
+@media only screen and (max-width: 1079px){
+    .stream-player{
+        grid-template-columns: 100%;
+        grid-template-rows: .5fr 1fr;
+    }
 }

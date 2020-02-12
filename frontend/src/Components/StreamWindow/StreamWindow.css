@@ -1,3 +1,12 @@
 .StreamWindow img{
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.StreamWindow iframe{
     display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
 }
