@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {Route, Switch} from 'react-router-dom';
 import Landing from '../Pages/Landing/Landing';
-import Store from '../Pages/Store/Store';
+import StoreLanding from '../Store/StoreLanding';
 import Checkout from '../Pages/Checkout/Checkout';
 
 class Content extends Component{
@@ -10,7 +10,7 @@ class Content extends Component{
             <div className="Content">
                 <Switch>
                     <Route path='/Checkout' render={() => (<Checkout/>)} />
-                    <Route path="/Store" render={() => (<Store/>)} />
+                    <Route path="/Store" render={() => (<StoreLanding/>)} />
                     <Route path="/" render={() => (<Landing/>)} />
                 </Switch>
             </div>
