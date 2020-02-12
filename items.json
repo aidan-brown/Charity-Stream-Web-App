@@ -270,6 +270,127 @@
                 "protection": 2,
                 "durability": 78
             }
+        },
+        {
+            "id": 27,
+            "name": "Gold Chestplate",
+            "description": "The chestplate of a protective but breakable armor set. Keep your favorite player alive!",
+            "price": 1.60,
+            "type": {
+                "name": "armor",
+                "protection": 5,
+                "durability": 113
+            }
+        },
+        {
+            "id": 28,
+            "name": "Gold Leggings",
+            "description": "The leggings of a protective but breakable armor set. Keep your favorite player alive!",
+            "price": 1.40,
+            "type": {
+                "name": "armor",
+                "protection": 3,
+                "durability": 106
+            }
+        },
+        {
+            "id": 29,
+            "name": "Gold Boots",
+            "description": "The boots of a protective but breakable armor set. Keep your favorite player alive!",
+            "price": 0.80,
+            "type": {
+                "name": "armor",
+                "protection": 1,
+                "durability": 92
+            }
+        },
+        {
+            "id": 30,
+            "name": "Iron Helmet",
+            "description": "The helm of the clasic armor set, it's protective and durable. Keep your favorite player alive!",
+            "price": 1.25,
+            "type": {
+                "name": "armor",
+                "protection": 2,
+                "durability": 166
+            }
+        },
+        {
+            "id": 31,
+            "name": "Iron Chestplate",
+            "description": "The chestplate of the clasic armor set, it's protective and durable. Keep your favorite player alive!",
+            "price": 2.00,
+            "type": {
+                "name": "armor",
+                "protection": 6,
+                "durability": 241
+            }
+        },
+        {
+            "id": 32,
+            "name": "Iron Leggings",
+            "description": "The leggings of the clasic armor set, it's protective and durable. Keep your favorite player alive!",
+            "price": 1.75,
+            "type": {
+                "name": "armor",
+                "protection": 5,
+                "durability": 226
+            }
+        },
+        {
+            "id": 33,
+            "name": "Iron Boots",
+            "description": "The boots of the clasic armor set, it's protective and durable. Keep your favorite player alive!",
+            "price": 1.00,
+            "type": {
+                "name": "armor",
+                "protection": 2,
+                "durability": 196
+            }
+        },
+        {
+            "id": 34,
+            "name": "Diamond Helmet",
+            "description": "The helm of the ultimate armor set; a full set will make any player tough as nails. Keep your favorite player alive!",
+            "price": 4.75,
+            "type": {
+                "name": "armor",
+                "protection": 3,
+                "durability": 364
+            }
+        },
+        {
+            "id": 35,
+            "name": "Diamond Chestplate",
+            "description": "The chestplate of the ultimate armor set; a full set will make any player tough as nails. Keep your favorite player alive!",
+            "price": 7.50,
+            "type": {
+                "name": "armor",
+                "protection": 8,
+                "durability": 529
+            }
+        },
+        {
+            "id": 36,
+            "name": "Diamond Leggings",
+            "description": "The leggings of the ultimate armor set; a full set will make any player tough as nails. Keep your favorite player alive!",
+            "price": 6.75,
+            "type": {
+                "name": "armor",
+                "protection": 6,
+                "durability": 496
+            }
+        },
+        {
+            "id": 37,
+            "name": "Diamond Boots",
+            "description": "The boots of the ultimate armor set, a full set will make any player tough as nails. Keep your favorite player alive!",
+            "price": 3.75,
+            "type": {
+                "name": "armor",
+                "protection": 3,
+                "durability": 430
+            }
         }
     ]
 }
