@@ -1,0 +1,9 @@
+.container{
+    height: 100%;
+
+    overflow-y: scroll;
+}
+
+.list-element:nth-child(even){
+    background-color: grey;
+}

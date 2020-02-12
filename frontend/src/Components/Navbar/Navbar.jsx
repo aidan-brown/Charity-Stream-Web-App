@@ -37,7 +37,7 @@ class Navbar extends Component{
                                 <Link className='nav-link' onClick={e => this.setLinkActive(e)} to='/Store'>Store</Link>
                             </li>
                             <li className='nav-item'>
-                                <a className='nav-link' onClick={e => this.setLinkActive(e)} href='#'>JustGiving Page</a>
+                                <a className='nav-link' href='#'>JustGiving Page</a>
                             </li>
                         </ul>
                     </div>

@@ -1,16 +1,22 @@
 import React, { Component } from 'react';
+import './Landing.css';
 import PlayerList from '../../Players/PlayerList';
+import StreamWindow from '../../StreamWindow/StreamWindow';
 
 class Landing extends Component{
+    constructor(props){
+        super(props);
+        this.state = {};
+    }
+
     render(){
         return(
             <div className='Landing'>
-                <h1>Landing</h1>
-
-                <div className="Twitch-Embed">
-
+                <div className="jumbotron stream-player">
+                    <StreamWindow title="Charity Stream" width="100%" height="100%" url="https://player.twitch.tv/?channel=justgiving" />
+                    <PlayerList />
                 </div>
-                <PlayerList />
+                
                 <div className="flavor-text">
                     
                 </div>
