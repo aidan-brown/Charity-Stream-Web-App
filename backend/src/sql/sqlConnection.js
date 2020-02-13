@@ -1,17 +1,19 @@
-import mysql from "mysql";
+const mysql = require("mysql");
 
-export function SqlConnect(){
-    let connection = mysql.createConnection({
-        host: process.env.MCHOST,
-        database: process.env.MCDB,
-        user: process.env.MCUSER,
-        password: process.env.MCPWRD
-    });
+module.exports = {
+    SqlConnect(){
+        const connection = mysql.createConnection({
+            host: process.env.MCHOST,
+            database: process.env.MCDB,
+            user: process.env.MCUSER,
+            password: process.env.MCPWRD
+        });
+    
+        connection.connect(function(error){
+            if (error)
+                return null;
+        });
 
-    connection.connect(function(error){
-        if (error)
-            return null;
-        else 
-            return connection;
-    });
-}
+        return connection;
+    }
+} 

@@ -12,7 +12,15 @@
 //                 "property": "id",
 //                 "value": "zsdsdsdsdsdcksj-d-3-d3e3ed3-3dds"
 //             }]
-//         }]
+//         }],
+//         "range" : {
+//             "low": 3,
+//             "high": 4,
+//         },
+//         "sort" : {
+//             "property": "id",
+//             "direction": "DESC"
+//         }
 //     }
 // }
 //
@@ -53,16 +61,27 @@ function And(ORList) {
     return or;
 }
 
-export function Where(ANDList) {
-    let and = null;
-    ANDList["and"].forEach(AND => {
-        if (and){
-            and = `(${and} AND ${And(AND)})`;    
-        } else {
-            and = And(AND);
-        }
-    });
-    // Print the actual command that is generated
-    console.log(and);
-    return and;
+module.exports= {
+    Where(ANDList) {
+        let and = null;
+        ANDList["and"].forEach(AND => {
+            if (and){
+                and = `(${and} AND ${And(AND)})`;    
+            } else {
+                and = And(AND);
+            }
+        });
+
+        // TODO: Add this sorting and pagination stuff
+        // if (ANDList["sort"]){
+
+        // }
+        // if (ANDList["range"]){
+
+        // }
+
+        // Print the actual command that is generated
+        console.log(and);
+        return and;
+    }
 }

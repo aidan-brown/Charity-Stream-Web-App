@@ -1,23 +1,46 @@
-import { Select, Insert } from "../sql/sqlFunctions";
+const { Select, Insert } = require("../sql/sqlFunctions");
 
-export function GetItemsWhere(where){
-    if (where){
-        Select("items", where)
-    }
-    else {
-        return "No where clause (or id) specified!";
-    }
-}
+module.exports ={
+    GetItemsWhere(where){
+        if (where){
+            let items = Select("items", where);
+    
+            // Means that we got an error and need to return 
+            if (!items || items.code)
+                return { "error" : (items) ? items.code : "Could not find the item(s)!" };
+    
+            // Get all of the type objects for the item
+            items.forEach(item => {
+                const type = Select(item["type"]);
+                item["type"] = type;    
+            });
+    
+            return items;
+        }
+        else 
+            return "No where clause (or id) specified!";
+    },
+    CreateItem(item){
+        if (item){
+            let type = item["type"];
+            let name = type["name"];
+    
+            delete item.type;
+            delete type.name;
 
-export function CreateItem(item){
-    if (item){
-        let type = item["type"];
-        const name = type["name"];
+            type["id"] = item["id"];
 
-        Insert("items", Object.keys(item), Object.values(item));
-        Insert(name, )
+            const itemResp = Insert("items", Object.keys(item), Object.values(item));
+            const typeResp = Insert(name, Object.keys(type), Object.values(type));
+            
+            
+            return `Item insertion:
+            ${itemResp ? itemResp : " Success!"}
+            Type insertion: 
+            ${typeResp ? typeResp : " Success!"}`;  
+    
+        }
+        else 
+            return "No item was provided!";
     }
-    else {
-        "No item was povided!";
-    }
-}
+} 

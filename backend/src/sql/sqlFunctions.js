@@ -1,40 +1,55 @@
-import { SqlConnect } from "./sqlConnection";
+const { SqlConnect } = require("./sqlConnection");
 
-export function Select(table, where = null){
-    const connection = SqlConnect();
+module.exports ={
+    Select(table, where = null){
+        const connection = SqlConnect();
 
-    connection.query( 
-        `SELECT * 
-        FROM ${table} 
-        ${(where) ? `WHERE ${where}` : ''}`, 
-        (error, result) => {
-            if (error){
-                connection.end();
-                return "Query not successful!";
-            }
-            else {
-                connection.end();
-
-                return result.map(value => {
-                    var data = {};
-                    for(key in value) data[key] = value[key];
-                    return data;
-                });
-            }
+        if (connection){
+            connection.query( 
+                `SELECT * 
+                FROM ${table} 
+                ${(where) ? `WHERE ${where}` : ''}`, 
+                (error, result) => {
+                    if (error){
+                        connection.end();
+                        return error.code;
+                    }
+                    else {
+                        connection.end();
+        
+                        return result.map(value => {
+                            var data = {};
+                            for(key in value) data[key] = value[key];
+                            return data;
+                        });
+                    }
+                }
+            );
         }
-    );
-}
+        else 
+            return { "code": "COULD_NOT_CONNECT" };
+    },
+    Insert(table, keys, values){
+        const connection = SqlConnect();
 
-export function Insert(table, keys, values){
-    connection.query(
-        `INSERT INTO items 
-        (${Object.keys(item).join()}) 
-        VALUES ("${Object.values(item).join(",")}")`, 
-        (error, result) => {
-            if (error)
-                return "There was an error inserting!";
-            else 
-                return "Success!";
+        if (connection){
+            connection.query(
+                `INSERT INTO ${table} 
+                (${keys.join(",")}) 
+                VALUES ("${Object.values(values).join('","')}")`, 
+                (error) => {
+                    if (error){
+                        console.log(error.code);
+                        return error.code;
+                    }
+                    else {
+                        return null;
+                    } 
+
+                }
+            );
         }
-    );
-}
+        else 
+            return { "code": "COULD_NOT_CONNECT" };
+    }
+} 
