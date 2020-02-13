@@ -1,13 +1,88 @@
 .PlayerList{
-    width: 20rem;
+    width: 100%;
     font-size: .75rem;
-}
 
-.container{
-    height: 100%;
     overflow-y: scroll;
+    overflow-x: hidden;
 }
 
-.list-element:nth-child(even){
-    background-color: grey;
+.PlayerList::-webkit-scrollbar{
+    background: none;
+    width: 0.5rem;
+}
+
+.PlayerList::-webkit-scrollbar-thumb{
+    transition: background 500ms;
+    background: rgba(225, 28, 82, 0.5);
+    border-radius: 1rem;
+}
+
+.PlayerList::-webkit-scrollbar-thumb:hover{
+    transition: background 500ms;
+
+    background: rgba(228, 28, 82, 0.75);
+}
+
+.PlayerList::-webkit-scrollbar-track{
+    background: rgba(50, 50, 50, 0.25);
+    border-radius: 1rem;
+}
+
+.list-element{
+    position: relative;
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+    align-items: center;
+
+    overflow: hidden;
+
+    padding-left: 1rem;
+    margin-bottom: .5rem;
+
+    height: 2rem;
+    width: 20rem;
+
+    border: 2 solid rgba(0, 0, 0, 0);
+    border-radius: 2rem;
+
+    box-shadow: .15rem .15rem .25rem rgba(0, 0, 0, 0.35);
+}
+
+.list-element img{
+    position: absolute;
+    opacity: 0.25;
+    transform-origin: center;
+    transform: rotate(-10deg)
+}
+
+.list-element p{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-25%, -50%);
+
+    margin: 0;
+}
+
+
+
+.csh{
+    background: linear-gradient(-90deg, rgba(225,28,82,1) 50%, rgba(176,25,126,1) 100%);
+    color: white;
+}
+
+.csh img{
+    height: 2.75rem;
+}
+
+.blackbaud{
+    background: linear-gradient(-90deg, rgba(0,180,241,1) 0%, rgba(114,191,68,1) 100%);
+    color: white;
+}
+
+.blackbaud img{
+    opacity: 0.5;
+    height: 7.5rem;
+    left: 0rem;
 }
