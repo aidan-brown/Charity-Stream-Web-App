@@ -10,6 +10,7 @@ CREATE TABLE IF NOT EXISTS items(
     name VARCHAR(255) NOT NULL,
     description TEXT NOT NULL,
     type ENUM('weapon', 'armor', 'misc', 'tool', 'food', 'buff', 'material'),
+    price FLOAT(20, 2) NOT NULL,
     PRIMARY KEY (id, type)
 );
 
@@ -45,12 +46,5 @@ CREATE TABLE IF NOT EXISTS buff(
     id INT NOT NULL,
     seconds INT NOT NULL,
     effects TEXT NOT NULL,
-    PRIMARY KEY(id)
-);
-
-CREATE TABLE IF NOT EXISTS material(
-    id INT NOT NULL,
-    damage FLOAT(20, 2) NOT NULL,
-    durability INT NOT NULL,
     PRIMARY KEY(id)
 );

@@ -21,7 +21,7 @@ app.get("/items", (req,res) => {
         res.send("Cannot specify both id and where clause!");
     }
     else if (id && type){
-        res.send(GetItemsWhere(`id = '${id}' && type = '${type}'`));
+        res.send(GetItemsWhere(`id = '${id}' AND type = '${type}'`));
     }
     else if (where){
         res.send(GetItemsWhere(Where(where)));
@@ -34,20 +34,20 @@ app.get("/items", (req,res) => {
 // Get the players
 app.get("/players", (req,res) => {
 
-    const id = (req.body.id) ? req.body.id : null;
+    const id = (req.body.username) ? req.body.username : null;
     const where = (req.body.where) ? req.body.where : null;
 
     if (id && where){
         res.send("Cannot specify both id and where clause!");
     }
     else if (id && type){
-        res.send(GetPlayersWhere(`id = '${id}' && type = '${type}'`));
+        res.send(GetPlayersWhere(`userName = '${userName}'`));
     }
     else if (where){
         res.send(GetPlayersWhere(Where(where)));
     }
     else {
-        res.send("Must specify an id or a where clause!");
+        res.send("Must specify a userName or a where clause!");
     }
 });
 
@@ -55,11 +55,12 @@ app.get("/players", (req,res) => {
 app.get("/create/items", (req, res) => {
     if(req.body.items){
         req.body.items.forEach(item => {
-            res.send(CreateItem(item));
+            CreateItem(item);
         }); 
+        res.send("Success!");
     }
     else {
-        res.send("No items was provided!");
+        res.send("No items were provided!");
     }
 });
 
@@ -67,8 +68,9 @@ app.get("/create/items", (req, res) => {
 app.get("/create/players", (req, res) => {
     if(req.body.players){
         req.body.players.forEach(player => {
-            res.send(CreateItem(player));
+            CreateItem(player);
         }); 
+        res.send("Success!");
     }
     else {
         res.send("No players were provided!");
