@@ -1,17 +1,26 @@
 .Footer{
 	display: flex;
-	justify-content: space-evenly;
+	justify-content: space-between;
 	align-items: center;
 
 	min-height: 4rem;
+	padding: 0rem 2rem;
+}
+
+.links{
+	display: flex;
 }
 
 p{
 	margin: 0;
 }
 
-a:hover{
+a:link{
 	text-decoration: none;
+}
+
+a:hover{
+	text-decoration: underline;
 }
 
 #csh-logo{
