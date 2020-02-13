@@ -31,13 +31,13 @@ class Navbar extends Component{
                     <div className='collapse navbar-collapse' id='collapsibleNavbar'>
                         <ul className='navbar-nav'>
                             <li className='nav-item'>
-                                <Link className='nav-link active' onClick={e => this.setLinkActive(e)} to='/'>Stream</Link>
+                                <Link className='nav-link active' onClick={e => this.setLinkActive(e)} to='/'><span>Stream</span></Link>
                             </li>
                             <li className='nav-item'>
-                                <Link className='nav-link' onClick={e => this.setLinkActive(e)} to='/Store'>Store</Link>
+                                <Link className='nav-link' onClick={e => this.setLinkActive(e)} to='/Store'><span>Store</span></Link>
                             </li>
                             <li className='nav-item'>
-                                <a className='nav-link' href='#'>JustGiving Page</a>
+                                <a className='nav-link' href='#'><span>JustGiving Page</span></a>
                             </li>
                         </ul>
                     </div>
