@@ -26,6 +26,8 @@
 .PlayerList::-webkit-scrollbar-track{
     background: rgba(50, 50, 50, 0.25);
     border-radius: 1rem;
+
+    margin: .5rem 0;
 }
 
 .list-element{
@@ -38,7 +40,7 @@
     overflow: hidden;
 
     padding-left: 1rem;
-    margin-bottom: .5rem;
+    margin: .5rem 0;
 
     height: 2rem;
     width: 20rem;
@@ -51,6 +53,7 @@
 
 .list-element img{
     position: absolute;
+    height: 2.75rem;
     opacity: 0.25;
     transform-origin: center;
     transform: rotate(-10deg)
@@ -68,6 +71,7 @@
 
 
 .csh{
+    background: rgba(176,25,126,1);
     background: linear-gradient(-90deg, rgba(225,28,82,1) 50%, rgba(176,25,126,1) 100%);
     color: white;
 }
@@ -77,6 +81,7 @@
 }
 
 .blackbaud{
+    background: rgba(114,191,68,1);
     background: linear-gradient(-90deg, rgba(0,180,241,1) 0%, rgba(114,191,68,1) 100%);
     color: white;
 }
@@ -85,4 +90,37 @@
     opacity: 0.5;
     height: 7.5rem;
     left: 0rem;
+}
+
+.hogs{
+    background: rgb(226,3,3);
+    background: linear-gradient(90deg, rgba(226,3,3,1) 0%, rgba(17,20,23,1) 50%);
+    color: white;
+}
+
+.hogs img{
+    height: 4rem;
+    opacity: 0.5;
+    left: .5rem;
+    transform: rotate(-25deg);
+}
+
+.ehouse{
+    background: rgb(50,86,183);
+    background: linear-gradient(-90deg, rgba(50,86,183,1) 0%, rgba(64,178,196,1) 100%);
+    color: white;
+}
+
+.ehouse img{
+    opacity: 0.5;
+}
+
+.sse{
+    background: rgb(30,90,141);
+    background: linear-gradient(-90deg, rgba(30,90,141,1) 0%, rgba(36,106,167,1) 100%);
+    color: white;
+}
+
+.sse img{
+    opacity: 0.5;
 }

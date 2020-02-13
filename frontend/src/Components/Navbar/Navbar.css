@@ -22,9 +22,13 @@
     color: white;
 }
 
+.active{
+    height: 100%;
+    width: 100%;
+}
+
 .nav-link:active{
-    background-color: rgb(138, 20, 98);
-    transition: all 250ms;
+    border-color: rgb(255, 186, 238);
 }
 
 .nav-link:hover span{
@@ -45,7 +49,11 @@
     transition: all 250ms;
 }
 
-@media only screen and (max-width: 767px){
+.navbar-toggler img{
+    opacity: 0.5;
+}
+
+@media only screen and (max-width: 768px){
     .nav-item{
         width: 100%;
     }
