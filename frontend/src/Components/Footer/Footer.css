@@ -1,0 +1,42 @@
+.Footer{
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+
+	min-height: 4rem;
+	padding: 0rem 2rem;
+}
+
+.links{
+	display: flex;
+	flex-direction: row;
+}
+
+.github, .pubsite{
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+}
+
+p{
+	margin: 0;
+}
+
+a:link{
+	text-decoration: none;
+}
+
+a p:hover{
+	color: white;
+	text-decoration: underline;
+}
+
+#csh-logo{
+	width: 3rem;
+	margin: 0rem 1rem;
+}
+
+#github-logo{
+	width: 3rem;
+	margin: 0rem 1rem;
+}
