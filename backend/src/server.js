@@ -1,7 +1,9 @@
 const express = require("express");
+const cors = require("cors");
 const { GetItemsWhere, CreateItem } = require("./endpoints/item"); 
 const { GetPlayersWhere, CreatePlayer } = require("./endpoints/player"); 
 const { Where } = require("./extraFunctions/whereConstruction");
+
 
 // Use express
 const app = express();
@@ -9,7 +11,7 @@ const port = 8000;
 
 // Allow bodys to have json in them
 app.use(express.json());
-
+app.use(cors());
 // Getting a given item(s) based off of an id
 app.get("/items", (req,res) => {
 
