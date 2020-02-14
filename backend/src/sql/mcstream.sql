@@ -1,8 +1,8 @@
 CREATE TABLE IF NOT EXISTS players(
-    userName varchar(255) NOT NULL,
-    playerName varchar(255) NOT NULL,
+    username varchar(255) NOT NULL,
+    name varchar(255) NOT NULL,
     team varchar(255) NOT NULL,
-    PRIMARY KEY (userName)
+    PRIMARY KEY (username)
 );
 
 CREATE TABLE IF NOT EXISTS items(

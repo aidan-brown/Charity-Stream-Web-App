@@ -27,32 +27,32 @@ app.get("/items", (req,res) => {
         res.send(GetItemsWhere(Where(where)));
     }
     else {
-        res.send("Must specify an id or a where clause!");
+        res.send(GetItemsWhere(null));
     }
 });
 
 // Get the players
 app.get("/players", (req,res) => {
 
-    const id = (req.body.username) ? req.body.username : null;
+    const userName = (req.body.username) ? req.body.username : null;
     const where = (req.body.where) ? req.body.where : null;
 
-    if (id && where){
+    if (userName && where){
         res.send("Cannot specify both id and where clause!");
     }
-    else if (id && type){
+    else if (userName && type){
         res.send(GetPlayersWhere(`userName = '${userName}'`));
     }
     else if (where){
         res.send(GetPlayersWhere(Where(where)));
     }
     else {
-        res.send("Must specify a userName or a where clause!");
+        res.send(GetPlayersWhere(null));
     }
 });
 
 // Create the items into the db
-app.get("/create/items", (req, res) => {
+app.post("/create/items", (req, res) => {
     if(req.body.items){
         req.body.items.forEach(item => {
             CreateItem(item);
@@ -65,15 +65,14 @@ app.get("/create/items", (req, res) => {
 });
 
 // Create the players into the db
-app.get("/create/players", (req, res) => {
-    if(req.body.players){
-        req.body.players.forEach(player => {
-            CreateItem(player);
-        }); 
-        res.send("Success!");
+app.post("/create/players", (req, res) => {
+    const player = (req.body.player) ? req.body.player : null; 
+
+    if (player){
+        res.send(CreatePlayer(player));
     }
     else {
-        res.send("No players were provided!");
+        res.send("No player was provided!");
     }
 });
 

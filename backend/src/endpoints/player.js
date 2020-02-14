@@ -13,14 +13,14 @@ module.exports = {
             return players;
         }
         else 
-            return "No where clause (or id) specified!";
+            return Select("players", null);
     },
     CreatePlayer(player){
         if (player){
-            const player = Insert("players", Object.keys(player), Object.values(player));
+            const playerResp = Insert("players", Object.keys(player), Object.values(player));
             
             return `Player insertion:
-            ${player ? player : " Success!"}`;
+            ${playerResp ? playerResp : " Success!"}`;
         }
         else 
             "No player was provided!";
