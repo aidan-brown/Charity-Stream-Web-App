@@ -9,6 +9,13 @@
 
 .links{
 	display: flex;
+	flex-direction: row;
+}
+
+.github, .pubsite{
+	display: flex;
+	flex-direction: row;
+	align-items: center;
 }
 
 p{
@@ -19,7 +26,8 @@ a:link{
 	text-decoration: none;
 }
 
-a:hover{
+a p:hover{
+	color: white;
 	text-decoration: underline;
 }
 
