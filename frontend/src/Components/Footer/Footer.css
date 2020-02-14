@@ -10,6 +10,12 @@
 .links{
 	display: flex;
 	flex-direction: row;
+	justify-content: flex-end;
+	width: 25%;
+}
+
+.authors{
+	width: 55%;
 }
 
 .github, .pubsite{
@@ -18,25 +24,39 @@
 	align-items: center;
 }
 
-p{
+.Footer p{
 	margin: 0;
+	font-size: .75rem;
 }
 
-a:link{
+.Footer a{
+	display: flex;
+	flex-direction: row;
+	width: 100%;
+}
+
+.Footer a:link{
 	text-decoration: none;
 }
 
-a p:hover{
-	color: white;
-	text-decoration: underline;
+.Footer a:hover p{
+	color: rgb(255, 186, 238);
+
+    transition: all 250ms;
 }
 
 #csh-logo{
-	width: 3rem;
+	width: 2.65rem;
 	margin: 0rem 1rem;
 }
 
 #github-logo{
 	width: 3rem;
 	margin: 0rem 1rem;
+}
+
+@media only screen and (max-width: 768px){
+	.Footer a p{
+		display: none;
+	}
 }
