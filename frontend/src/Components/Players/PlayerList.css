@@ -1,0 +1,126 @@
+.PlayerList{
+    width: 100%;
+    font-size: .75rem;
+
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+.PlayerList::-webkit-scrollbar{
+    background: none;
+    width: 0.5rem;
+}
+
+.PlayerList::-webkit-scrollbar-thumb{
+    transition: background 500ms;
+    background: rgba(225, 28, 82, 0.5);
+    border-radius: 1rem;
+}
+
+.PlayerList::-webkit-scrollbar-thumb:hover{
+    transition: background 500ms;
+
+    background: rgba(228, 28, 82, 0.75);
+}
+
+.PlayerList::-webkit-scrollbar-track{
+    background: rgba(50, 50, 50, 0.25);
+    border-radius: 1rem;
+
+    margin: .5rem 0;
+}
+
+.list-element{
+    position: relative;
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+    align-items: center;
+
+    overflow: hidden;
+
+    padding-left: 1rem;
+    margin: .5rem 0;
+
+    height: 2rem;
+    width: 20rem;
+
+    border: 2 solid rgba(0, 0, 0, 0);
+    border-radius: 2rem;
+
+    box-shadow: .15rem .15rem .25rem rgba(0, 0, 0, 0.35);
+}
+
+.list-element img{
+    position: absolute;
+    height: 2.75rem;
+    opacity: 0.25;
+    transform-origin: center;
+    transform: rotate(-10deg)
+}
+
+.list-element p{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-25%, -50%);
+
+    margin: 0;
+}
+
+
+
+.csh{
+    background: rgba(176,25,126,1);
+    background: linear-gradient(-90deg, rgba(225,28,82,1) 50%, rgba(176,25,126,1) 100%);
+    color: white;
+}
+
+.csh img{
+    height: 2.75rem;
+}
+
+.blackbaud{
+    background: rgba(114,191,68,1);
+    background: linear-gradient(-90deg, rgba(0,180,241,1) 0%, rgba(114,191,68,1) 100%);
+    color: white;
+}
+
+.blackbaud img{
+    opacity: 0.5;
+    height: 7.5rem;
+    left: 0rem;
+}
+
+.hogs{
+    background: rgb(226,3,3);
+    background: linear-gradient(90deg, rgba(226,3,3,1) 0%, rgba(17,20,23,1) 50%);
+    color: white;
+}
+
+.hogs img{
+    height: 4rem;
+    opacity: 0.5;
+    left: .5rem;
+    transform: rotate(-25deg);
+}
+
+.ehouse{
+    background: rgb(50,86,183);
+    background: linear-gradient(-90deg, rgba(50,86,183,1) 0%, rgba(64,178,196,1) 100%);
+    color: white;
+}
+
+.ehouse img{
+    opacity: 0.5;
+}
+
+.sse{
+    background: rgb(30,90,141);
+    background: linear-gradient(-90deg, rgba(30,90,141,1) 0%, rgba(36,106,167,1) 100%);
+    color: white;
+}
+
+.sse img{
+    opacity: 0.5;
+}

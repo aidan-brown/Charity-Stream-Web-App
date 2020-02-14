@@ -1,0 +1,62 @@
+.Footer{
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+
+	min-height: 4rem;
+	padding: 0rem 2rem;
+}
+
+.links{
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-end;
+	width: 25%;
+}
+
+.authors{
+	width: 55%;
+}
+
+.github, .pubsite{
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+}
+
+.Footer p{
+	margin: 0;
+	font-size: .75rem;
+}
+
+.Footer a{
+	display: flex;
+	flex-direction: row;
+	width: 100%;
+}
+
+.Footer a:link{
+	text-decoration: none;
+}
+
+.Footer a:hover p{
+	color: rgb(255, 186, 238);
+
+    transition: all 250ms;
+}
+
+#csh-logo{
+	width: 2.65rem;
+	margin: 0rem 1rem;
+}
+
+#github-logo{
+	width: 3rem;
+	margin: 0rem 1rem;
+}
+
+@media only screen and (max-width: 768px){
+	.Footer a p{
+		display: none;
+	}
+}
