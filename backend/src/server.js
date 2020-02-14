@@ -12,8 +12,9 @@ const port = 8000;
 // Allow bodys to have json in them
 app.use(express.json());
 app.use(cors());
+
 // Getting a given item(s) based off of an id
-app.get("/items", (req,res) => {
+app.get("/items", async (req,res) => {
 
     const id = (req.body.id) ? req.body.id : null;
     const type = (req.body.type) ? req.body.type : null;
@@ -23,18 +24,18 @@ app.get("/items", (req,res) => {
         res.send("Cannot specify both id and where clause!");
     }
     else if (id && type){
-        res.send(GetItemsWhere(`id = '${id}' AND type = '${type}'`));
+        res.json(await GetItemsWhere(`id = '${id}' AND type = '${type}'`));
     }
     else if (where){
-        res.send(GetItemsWhere(Where(where)));
+        res.json(await GetItemsWhere(Where(where)));
     }
     else {
-        res.send(GetItemsWhere(null));
+        res.send(await GetItemsWhere(null));
     }
 });
 
 // Get the players
-app.get("/players", (req,res) => {
+app.get("/players",async (req,res) => {
 
     const userName = (req.body.username) ? req.body.username : null;
     const where = (req.body.where) ? req.body.where : null;
@@ -43,13 +44,13 @@ app.get("/players", (req,res) => {
         res.send("Cannot specify both id and where clause!");
     }
     else if (userName && type){
-        res.send(GetPlayersWhere(`userName = '${userName}'`));
+        res.send(await GetPlayersWhere(`userName = '${userName}'`));
     }
     else if (where){
-        res.send(GetPlayersWhere(Where(where)));
+        res.send(await GetPlayersWhere(Where(where)));
     }
     else {
-        res.send(GetPlayersWhere(null));
+        res.send(await GetPlayersWhere(null));
     }
 });
 
@@ -67,11 +68,11 @@ app.post("/create/items", (req, res) => {
 });
 
 // Create the players into the db
-app.post("/create/players", (req, res) => {
+app.post("/create/players", async (req, res) => {
     const player = (req.body.player) ? req.body.player : null; 
 
     if (player){
-        res.send(CreatePlayer(player));
+        res.send(await CreatePlayer(player));
     }
     else {
         res.send("No player was provided!");

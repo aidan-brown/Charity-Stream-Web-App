@@ -2,11 +2,11 @@ const { SqlConnect } = require("./sqlConnection");
 
 module.exports ={
     Select(table, where = null){
-        return new Promise((success, error) =>{
-            const connection = SqlConnect();
-
-            const query = `SELECT * 
-            FROM ${table} 
+        const connection = SqlConnect();
+        
+        return new Promise((success, failure) =>{
+            const query = `SELECT *\ 
+            FROM ${table}\
             ${(where) ? `WHERE ${where}` : ''}`;
 
             console.log(query);
@@ -17,13 +17,10 @@ module.exports ={
                     (error, result) => {
                         if (error){
                             connection.end();
-                            console.log(error);
-                            console.log(error.code);
-                            failure(error.code);
+                            failure({ code: error.code, "message": "Failed to retrieve!" });
                         }
                         else {
                             connection.end();
-                            
                             success(result.map(value => {
                                 var data = {};
                                 for(key in value) data[key] = value[key];
@@ -34,35 +31,34 @@ module.exports ={
                 );
             }
             else 
-                return { "code": "COULD_NOT_CONNECT" };
+            failure({ code: 500, message: "Could not connect to MySQL server!" });
         });
     },
     Insert(table, keys, values){
         const connection = SqlConnect();
 
-        const query = `INSERT INTO ${table} 
-        (${keys.join(",")}) 
+        const query = `INSERT INTO ${table}\
+        (${keys.join(",")})\
         VALUES ("${Object.values(values).join('","')}")` 
 
-        console.log(`command run: [${query}]`);
+        console.log(`command run: ${query}`);
 
-        if (connection){
-            connection.query(
-                query, 
-                (error) => {
-                    if (error){
-                        console.log(error);
-                        console.log(error.code);
-                        return error.code;
+        return new Promise((success, failure) => {
+            if (connection){
+                connection.query(
+                    query, 
+                    (error) => {
+                        if (error){
+                            failure({ code: error.code, "message": "Failed to create!" });
+                        }
+                        else {
+                            success({ code: 200, "message": "Success" });
+                        } 
                     }
-                    else {
-                        return null;
-                    } 
-
-                }
-            );
-        }
-        else 
-            return { "code": "COULD_NOT_CONNECT" };
+                );
+            }
+            else 
+                failure({ code: 500, message: "Could not connect to MySQL server!" });
+        });
     }
 } 

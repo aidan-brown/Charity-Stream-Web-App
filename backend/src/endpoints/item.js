@@ -2,29 +2,22 @@ const { Select, Insert } = require("../sql/sqlFunctions");
 
 module.exports ={
     async GetItemsWhere(where){
-        if (where){
-            let items = await Select("items", where);
-    
-            console.log(items);
+        let items = await Select("items", where);
 
-            // Means that we got an error and need to return 
-            if (!items || items.code)
-                return { "error" : (items) ? items.code : "Could not find the item(s)!" };
-    
-            // Get all of the type objects for the item
-            items.forEach(async item => {
-                if (item["type"] != "material" && item["type"] != "misc"){
-                    const type = await Select(item["type"]);
-                    item["type"] = type;
-                }
-            });
-            
-            Promise.resolve(items);
 
-            return items;
-        }
-        else 
-            return "No where clause (or id) specified!";
+        // Means that we got an error and need to return 
+        if (!items || items.code)
+            return { "error" : (items) ? items.code : "Could not find the item(s)!" };
+
+        // Get all of the type objects for the item
+        await items.forEach(async item => {
+            if (item["type"] != "material" && item["type"] != "misc"){
+                const type = await Select(item["type"]);
+                item["type"] = type;
+            }
+        });
+        
+        return items;
     },
     CreateItem(item){
         if (item){
