@@ -77,7 +77,7 @@
     box-shadow: .45rem .45rem .25rem rgba(0, 0, 0, 0.25);
 }
 
-@media only screen and (max-width: 768px){
+@media only screen and (max-device-width: 768px){
     .stream-player{
         flex-direction: column;
         height: fit-content;
