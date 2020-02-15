@@ -79,19 +79,19 @@ class PlayerList extends Component{
 
     componentDidMount(){
         this.setState({playerList: document.querySelector('.PlayerList')}, () => {
-            // let req = new XMLHttpRequest();
-            // req.open('get', 'http://tunnel.csh.rit.edu:8000/players')
+            let req = new XMLHttpRequest();
+            req.open('get', 'http://tunnel.csh.rit.edu:8000/players')
 
-            // req.onload = () => {
-            //     console.log(req.responseText);
-            //     this.setState({players: JSON.parse(req.responseText)}, () => this.renderPlayers());
-            // };
+            req.onload = () => {
+                console.log(req.responseText);
+                this.setState({players: JSON.parse(req.responseText)}, () => this.renderPlayers());
+            };
 
-            // req.send();
+            req.send();
 
-            this.state.players.push({name:'First Last', username: 'Username', team: 'arthouse'});
+            // this.state.players.push({name:'First Last', username: 'Username', team: 'arthouse'});
 
-            this.renderPlayers();
+            // this.renderPlayers();
         })
     }
 }
