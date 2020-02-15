@@ -118,4 +118,10 @@
     .stream-player .PlayerList .list-element{
         width: 100%;
     }
+
+    .flavor-text{
+        margin: 3rem 0;
+
+        box-shadow: .25rem .45rem .25rem rgba(0, 0, 0, 0.25);
+    }
 }
