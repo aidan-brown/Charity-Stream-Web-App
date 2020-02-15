@@ -6,10 +6,15 @@ module.exports = {
         
         const query = `SELECT *\ 
         FROM ${tableOne}\
-        ${(where) ? `WHERE ${where}` : ''}\
-        ${(join) ? `${join} ${tableTwo}\
-        ON ${tableOne}.${joinKey}=${tableTwo}.${joinKey}` : ``}\
-        ${(orderBy) ? `ORDER BY ${orderBy} ${direction}` : ``}`;
+        ${(where && !join) ? `WHERE ${where}` : ''}\
+        ${(join) ? `LEFT JOIN ${tableTwo} 
+        ON ${tableOne}.${joinKey} = ${tableTwo}.${joinKey}\ 
+        UNION 
+        SELECT * FROM ${tableOne}\ 
+        RIGHT JOIN ${tableTwo}\ 
+        ON ${tableOne}.${joinKey} = ${tableTwo}.${joinKey}` : ``}\ 
+        ${(orderBy) ? `ORDER BY ${orderBy} ${direction}` : ``}\
+        ${(where && join) ? `WHERE ${where}` : ''}`;
 
         console.log(query);
 
