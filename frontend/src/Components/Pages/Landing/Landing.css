@@ -1,7 +1,9 @@
 .Landing{
     overflow-y: auto;
-    overflow-x: hidden;
-    background-color: rgb(255, 220, 229);
+    overflow-x: auto;
+    background-color: rgb(255, 255, 255);
+
+    width: 100%;
 }
 
 .stream-player{
@@ -10,6 +12,8 @@
 
     display: flex;
     flex-direction: row;
+
+    padding: 0 2rem;
 }
 
 .stream-player .StreamWindow{
@@ -27,18 +31,20 @@
 .btn{
     padding: 0;
     border-radius: 0;
+
+    background: rgb(199, 24, 71);
 }
 
 #player-list{
-    background-color: rgb(255, 220, 229);
-    border-bottom: .25rem solid #E11C52;
+    background: rgb(232,232,232);
+    background: linear-gradient(120deg, rgba(232,232,232,1) 0%, rgba(218,218,218,1) 100%);
 }
 
 #player-list.show{
     transition: all 500ms;
 
     height: 100%;
-    width: 25rem;
+    width: 35rem;
 
     padding: 0 .5rem 0 1rem;
 }
@@ -50,6 +56,8 @@
     width: 0rem;
 
     padding: 0;
+
+    overflow-y: hidden;
 }
 
 #arrow{
@@ -77,10 +85,12 @@
     box-shadow: .45rem .45rem .25rem rgba(0, 0, 0, 0.25);
 }
 
-@media only screen and (max-device-width: 768px){
+@media only screen and (max-width: 768px){
     .stream-player{
         flex-direction: column;
         height: fit-content;
+
+        padding: 0;
     }
 
     .stream-player .StreamWindow{
