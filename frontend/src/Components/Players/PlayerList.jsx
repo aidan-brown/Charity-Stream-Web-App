@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
 import './PlayerList.css';
 
 import CSHLogo from '../../images/csh.svg'
@@ -81,7 +82,7 @@ class PlayerList extends Component{
                 listElement.append(teamIcon);
                 listElement.append(shoppingLogo);
 
-                this.state.playerList.append(listElement)
+                this.state.playerList.append(listElement);
             })
         }
     }
@@ -111,10 +112,6 @@ class PlayerList extends Component{
             };
 
             req.send();
-
-            // this.state.players.push({name:'First Last', username: 'Username', team: 'csh'});
-
-            // this.renderPlayers();
         })
     }
 }
