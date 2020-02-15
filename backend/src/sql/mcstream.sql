@@ -1,7 +1,7 @@
 CREATE TABLE IF NOT EXISTS players(
     username varchar(255) NOT NULL,
     name varchar(255) NOT NULL,
-    team varchar(255) NOT NULL,
+    type ENUM('csh', 'blackbaud', 'hogs', 'ehouse', 'sse', 'arthouse', 'rit'),
     PRIMARY KEY (username)
 );
 
