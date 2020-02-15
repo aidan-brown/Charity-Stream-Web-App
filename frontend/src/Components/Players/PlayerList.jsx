@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
 import './PlayerList.css';
 
 import CSHLogo from '../../images/csh.svg'
@@ -6,6 +7,9 @@ import BlackbaudLogo from '../../images/blackbaud.svg';
 import HOGSLogo from '../../images/hogs.svg';
 import EHouseLogo from '../../images/ehouse.svg';
 import SSELogo from '../../images/sse.svg';
+import ArtHouseLogo from '../../images/arthouse.svg';
+import RITLogo from '../../images/rit.svg';
+import CartLogo from '../../images/shopping-cart.svg';
 
 class PlayerList extends Component{
     constructor(props){
@@ -20,15 +24,19 @@ class PlayerList extends Component{
 
     renderPlayers(){
         if(this.state.playerList){
+            this.state.playerList.innerHTML = '';
             this.state.players.forEach(player => {
                 let listElement = document.createElement('div');
-                listElement.className = `list-element ${player.team}`;
+                listElement.className = `list-element ${player.team.toLowerCase()}`;
 
                 let playerName = document.createElement('p');
                 playerName.innerHTML = `${player.name} [${player.username}]`;
 
                 let teamIcon = document.createElement('img');
-                switch(player.team){
+                teamIcon.className = 'team-logo';
+
+                console.log(player.team);
+                switch(player.team.toLowerCase()){
                     case 'csh':
                         teamIcon.src = CSHLogo;
                         teamIcon.alt = 'CSH Logo'
@@ -53,12 +61,28 @@ class PlayerList extends Component{
                         teamIcon.src = SSELogo;
                         teamIcon.alt = 'SSE Logo'
                         break;
+
+                    case 'arthouse':
+                        teamIcon.src = ArtHouseLogo;
+                        teamIcon.alt = 'ArtHouse Logo';
+                        break;
+
+                    default:
+                        teamIcon.src = RITLogo;
+                        teamIcon.alt = 'RIT Logo';
+                        break;
                 }
+
+                let shoppingLogo = document.createElement('img');
+                shoppingLogo.src = CartLogo;
+                shoppingLogo.alt = 'Shop Logo';
+                shoppingLogo.className = 'shop-logo';
 
                 listElement.append(playerName);
                 listElement.append(teamIcon);
+                listElement.append(shoppingLogo);
 
-                this.state.playerList.append(listElement)
+                this.state.playerList.append(listElement);
             })
         }
     }
@@ -73,13 +97,21 @@ class PlayerList extends Component{
 
     componentDidMount(){
         this.setState({playerList: document.querySelector('.PlayerList')}, () => {
-            this.state.players.push({name: 'Aidan Brown', username: 'fastturtle123', team: 'csh'});
-            this.state.players.push({name: 'Aidan Brown', username: 'fastturtle123', team: 'blackbaud'});
-            this.state.players.push({name: 'Aidan Brown', username: 'fastturtle123', team: 'hogs'});
-            this.state.players.push({name: 'Aidan Brown', username: 'fastturtle123', team: 'ehouse'});
-            this.state.players.push({name: 'Aidan Brown', username: 'fastturtle123', team: 'sse'});
+            let req = new XMLHttpRequest();
+            req.open('get', 'http://tunnel.csh.rit.edu:8000/players')
 
-            this.renderPlayers();
+            req.onload = () => {
+                console.log(req.responseText);
+                const response = JSON.parse(req.responseText);
+                if(response && response.code == 200){
+                    this.setState({players: response.data}, () => this.renderPlayers());
+                }
+                else{
+                    console.error(response.code);
+                }
+            };
+
+            req.send();
         })
     }
 }
