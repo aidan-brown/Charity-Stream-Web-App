@@ -6,7 +6,7 @@ import "./Footer.css";
 class Footer extends Component{
     render(){
         return(
-            <div className="Footer bg-csh-primary-gradient">
+            <footer className="Footer bg-csh-primary-gradient">
                 <div className="authors">
                     <p className="authors-names font-csh-dark">Site created by Aidan Brown, River Marks, Corey Rigney, and Rhys Stever</p>
                 </div>
@@ -20,7 +20,7 @@ class Footer extends Component{
                         <img id='csh-logo' src={CSHLogo} alt='CSH logo'/>
                     </a>
                 </div>
-            </div>
+            </footer>
         )
     }
 }

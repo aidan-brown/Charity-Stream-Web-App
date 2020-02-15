@@ -30,7 +30,7 @@ class Landing extends Component{
             <div className='Landing'>
                 <div className='stream-player'>
                     <StreamWindow title='Charity Stream' width='100%' height='100%' url='https://player.twitch.tv/?channel=justgiving' />
-                    <button className='btn bg-csh-secondary' onClick={this.togglePlayerList}><img id='arrow' className='show' src={Arrow}/></button>
+                    <button className='btn' onClick={this.togglePlayerList}><img id='arrow' className='show' src={Arrow}/></button>
                     <div id='player-list' className='show'>
                         <PlayerList/>
                     </div>

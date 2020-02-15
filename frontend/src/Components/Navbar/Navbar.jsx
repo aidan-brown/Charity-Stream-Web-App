@@ -35,7 +35,7 @@ class Navbar extends Component{
                     </a>
 
                     <div className='collapse navbar-collapse' id='collapsibleNavbar'>
-                        <ul className='navbar-nav'>
+                        <ul className='navbar-nav justify-content-center'>
                             <li className='nav-item'>
                                 <Link id='stream' className='nav-link' onClick={e => this.setLinkActive(e)} to='/'><span>Stream</span></Link>
                             </li>
@@ -43,7 +43,7 @@ class Navbar extends Component{
                                 <Link id='store' className='nav-link' onClick={e => this.setLinkActive(e)} to='/Store'><span>Store</span></Link>
                             </li>
                             <li className='nav-item'>
-                                <a className='nav-link' href='#'><span>JustGiving Page</span></a>
+                                <a className='nav-link' href='#'><span>Donate</span></a>
                             </li>
                         </ul>
                     </div>
