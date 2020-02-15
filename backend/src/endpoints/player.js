@@ -6,12 +6,12 @@ module.exports = {
         if (where){
             return await Select("players", Where(where))
                 .catch((error) => { return error; } )
-                .then((result) => { return result; } );
+                .then((result) => { return { code: 200, data: result } } );
         }
         else 
             return await Select("players")
                 .catch((error) => { return error; } )   
-                .then((result) => { return result; } );
+                .then((result) => { return { code: 200, data: result } } );
     },
     async CreatePlayer(player){
         if (player){

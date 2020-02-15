@@ -2,10 +2,10 @@ const { Select, Insert } = require("../sql/sqlFunctions");
 
 module.exports ={
     async GetItemsWhere(table, where){
-        const items = await Select(table, where)
+        return await Select(table, where)
             .catch((error) => { return error; } )
-        return items;
-    },
+            .then((result) => { return { code: 200, data: result } } );
+        },
     async CreateItem(item){
         if (item){
             let type = item.type;

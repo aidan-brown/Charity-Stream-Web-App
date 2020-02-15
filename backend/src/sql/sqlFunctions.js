@@ -11,7 +11,7 @@ module.exports = {
         ON ${tableOne}.${joinKey}=${tableTwo}.${joinKey}` : ``}\
         ${(orderBy) ? `ORDER BY ${orderBy} ${direction}` : ``}`;
 
-        //console.log(query);
+        console.log(query);
 
         return new Promise((success, failure) =>{
             if (connection){
