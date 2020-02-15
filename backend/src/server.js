@@ -24,26 +24,26 @@ app.get("/items", async (req,res) => {
         res.send("Cannot specify both id and where clause!");
     }
     else if (id && type){
-        res.json(await GetItemsWhere(`id = '${id}' AND type = '${type}'`));
+        res.json(await GetItemsWhere("items", `id = '${id}' AND type = '${type}'`, type));
     }
     else if (where){
-        res.json(await GetItemsWhere(Where(where)));
+        res.json(await GetItemsWhere("items", Where(where)));
     }
     else {
-        res.send(await GetItemsWhere(null));
+        res.json(await GetItemsWhere("items", null));
     }
 });
 
 // Get the players
-app.get("/players",async (req,res) => {
+app.get("/players", async (req,res) => {
 
     const userName = (req.body.username) ? req.body.username : null;
     const where = (req.body.where) ? req.body.where : null;
 
     if (userName && where){
-        res.send("Cannot specify both id and where clause!");
+        res.send("Cannot specify both username and where clause!");
     }
-    else if (userName && type){
+    else if (userName){
         res.send(await GetPlayersWhere(`userName = '${userName}'`));
     }
     else if (where){
@@ -55,12 +55,20 @@ app.get("/players",async (req,res) => {
 });
 
 // Create the items into the db
-app.post("/create/items", (req, res) => {
+app.post("/create/items", async (req, res) => {
+    let messages = [];
+
     if(req.body.items){
-        req.body.items.forEach(item => {
-            CreateItem(item);
-        }); 
-        res.send("Success!");
+        res.send({
+            code: 300,
+            message: new Promise(async (success) => {
+                req.body.items.forEach(async item => {
+                    messages.push(await CreateItem(item));
+                }); 
+                console.log(`[${messages}]`);
+                success(messages);
+            }).then((result) => { return result; }) 
+        })
     }
     else {
         res.send("No items were provided!");
@@ -69,14 +77,7 @@ app.post("/create/items", (req, res) => {
 
 // Create the players into the db
 app.post("/create/players", async (req, res) => {
-    const player = (req.body.player) ? req.body.player : null; 
-
-    if (player){
-        res.send(await CreatePlayer(player));
-    }
-    else {
-        res.send("No player was provided!");
-    }
+    res.send(await CreatePlayer(req.body.player));
 });
 
 // Establish outwards connections

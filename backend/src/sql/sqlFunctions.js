@@ -1,16 +1,19 @@
 const { SqlConnect } = require("./sqlConnection");
 
-module.exports ={
-    Select(table, where = null){
+module.exports = {
+    Select(tableOne, where = null, tableTwo = null, join = null, joinKey = null, orderBy = null, direction = null){
         const connection = SqlConnect();
         
+        const query = `SELECT *\ 
+        FROM ${tableOne}\
+        ${(where) ? `WHERE ${where}` : ''}\
+        ${(join) ? `${join} ${tableTwo}\
+        ON ${tableOne}.${joinKey}=${tableTwo}.${joinKey}` : ``}\
+        ${(orderBy) ? `ORDER BY ${orderBy} ${direction}` : ``}`;
+
+        //console.log(query);
+
         return new Promise((success, failure) =>{
-            const query = `SELECT *\ 
-            FROM ${table}\
-            ${(where) ? `WHERE ${where}` : ''}`;
-
-            console.log(query);
-
             if (connection){
                 connection.query( 
                     query, 

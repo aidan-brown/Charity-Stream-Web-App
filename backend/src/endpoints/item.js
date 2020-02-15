@@ -1,25 +1,12 @@
 const { Select, Insert } = require("../sql/sqlFunctions");
 
 module.exports ={
-    async GetItemsWhere(where){
-        let items = await Select("items", where);
-
-
-        // Means that we got an error and need to return 
-        if (!items || items.code)
-            return { "error" : (items) ? items.code : "Could not find the item(s)!" };
-
-        // Get all of the type objects for the item
-        await items.forEach(async item => {
-            if (item["type"] != "material" && item["type"] != "misc"){
-                const type = await Select(item["type"]);
-                item["type"] = type;
-            }
-        });
-        
+    async GetItemsWhere(table, where){
+        const items = await Select(table, where)
+            .catch((error) => { return error; } )
         return items;
     },
-    CreateItem(item){
+    async CreateItem(item){
         if (item){
             let type = item.type;
             let name = type.name;
@@ -29,22 +16,18 @@ module.exports ={
             item["type"] = type.name;
             type.id = item.id;
 
-            const itemResp = Insert("items", Object.keys(item), Object.values(item));
-            
-            let typeResp;
-            if (item["type"] != "misc" && item["type"] != "material" ){
-                delete type.name;
-                typeResp = Insert(name, Object.keys(type), Object.values(type));
-            }
-            
-            
-            return `Item insertion:
-            ${itemResp ? itemResp : " Success!"}
-            Type insertion: 
-            ${typeResp ? typeResp : " Success!"}`;  
-    
+            return await Insert("items", Object.keys(item), Object.values(item))
+                .catch((error) => { return error; } )
+                .then( async (result) => { 
+                    if (item["type"] != "misc" && item["type"] != "material" ){
+                        delete type.name;
+                        return await Insert(name, Object.keys(type), Object.values(type))
+                            .catch((error) => { return error; } )
+                            .then((finalResult) => { return [ result, finalResult ]; } );
+                    }
+                } );
         }
         else 
-            return "No item was provided!";
+            return { code: 429, message: "No item provided" }
     }
 } 

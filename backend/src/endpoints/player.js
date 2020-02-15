@@ -4,7 +4,7 @@ const { Where } = ("../extraFunctions/whereConstruction");
 module.exports = {
     async GetPlayersWhere(where){
         if (where){
-            await Select("players", Where(where))
+            return await Select("players", Where(where))
                 .catch((error) => { return error; } )
                 .then((result) => { return result; } );
         }
