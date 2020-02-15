@@ -9,7 +9,9 @@ module.exports = {
                 .then((result) => { return result; } );
         }
         else 
-            return await Select("players");
+            return await Select("players")
+                .catch((error) => { return error; } )   
+                .then((result) => { return result; } );
     },
     async CreatePlayer(player){
         if (player){
