@@ -5,6 +5,28 @@ module.exports ={
         return await Select(table, where)
             .catch((error) => { return error; } )
             .then((result) => { return { code: 200, data: result } } );
+
+        // let items = [];
+        // items.concat(await Select(table, `type="weapon"`, "weapon", true, "id")
+        //     .then((result) => { console.log(result); return result; })
+        //     .catch((error) => { console.log(error); }));
+        // items.concat(await Select(table, `type="armor"`, "armor", true, "id")
+        //     .then((result) => { return result; })
+        //     .catch((error) => { console.log(error); }));
+        // items.concat(await Select(table, `type="tool"`, "tool", true, "id")
+        //     .then((result) => { return result; })
+        //     .catch((error) => { console.log(error); }));
+        // items.concat(await Select(table, `type="food"`, "food", true, "id")
+        //     .then((result) => { return result; })
+        //     .catch((error) => { console.log(error); }));
+        // items.concat(await Select(table, `type="buff"`, "buff", true, "id")
+        //     .then((result) => { return result; })
+        //     .catch((error) => { console.log(error); }));
+        // items.concat(await Select(table, `type="material" OR type="misc"`)
+        //     .then((result) => { return result; })
+        //     .catch((error) => { console.log(error); }));
+        // console.log(items);
+        // return items;
         },
     async CreateItem(item){
         if (item){
