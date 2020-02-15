@@ -84,7 +84,13 @@ class PlayerList extends Component{
 
             req.onload = () => {
                 console.log(req.responseText);
-                this.setState({players: JSON.parse(req.responseText)}, () => this.renderPlayers());
+                const response = JSON.parse(req.responseText);
+                if(response && response.code == 200){
+                    this.setState({players: response.data}, () => this.renderPlayers());
+                }
+                else{
+                    console.error(response.code);
+                }
             };
 
             req.send();
