@@ -7,6 +7,8 @@ import HOGSLogo from '../../images/hogs.svg';
 import EHouseLogo from '../../images/ehouse.svg';
 import SSELogo from '../../images/sse.svg';
 import ArtHouseLogo from '../../images/arthouse.svg';
+import RITLogo from '../../images/rit.svg';
+import CartLogo from '../../images/shopping-cart.svg';
 
 class PlayerList extends Component{
     constructor(props){
@@ -24,13 +26,16 @@ class PlayerList extends Component{
             this.state.playerList.innerHTML = '';
             this.state.players.forEach(player => {
                 let listElement = document.createElement('div');
-                listElement.className = `list-element ${player.team}`;
+                listElement.className = `list-element ${player.team.toLowerCase()}`;
 
                 let playerName = document.createElement('p');
                 playerName.innerHTML = `${player.name} [${player.username}]`;
 
                 let teamIcon = document.createElement('img');
-                switch(player.team){
+                teamIcon.className = 'team-logo';
+
+                console.log(player.team);
+                switch(player.team.toLowerCase()){
                     case 'csh':
                         teamIcon.src = CSHLogo;
                         teamIcon.alt = 'CSH Logo'
@@ -59,10 +64,22 @@ class PlayerList extends Component{
                     case 'arthouse':
                         teamIcon.src = ArtHouseLogo;
                         teamIcon.alt = 'ArtHouse Logo';
+                        break;
+
+                    default:
+                        teamIcon.src = RITLogo;
+                        teamIcon.alt = 'RIT Logo';
+                        break;
                 }
+
+                let shoppingLogo = document.createElement('img');
+                shoppingLogo.src = CartLogo;
+                shoppingLogo.alt = 'Shop Logo';
+                shoppingLogo.className = 'shop-logo';
 
                 listElement.append(playerName);
                 listElement.append(teamIcon);
+                listElement.append(shoppingLogo);
 
                 this.state.playerList.append(listElement)
             })
@@ -95,7 +112,7 @@ class PlayerList extends Component{
 
             req.send();
 
-            // this.state.players.push({name:'First Last', username: 'Username', team: 'arthouse'});
+            // this.state.players.push({name:'First Last', username: 'Username', team: 'csh'});
 
             // this.renderPlayers();
         })
