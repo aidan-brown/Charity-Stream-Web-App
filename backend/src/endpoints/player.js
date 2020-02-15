@@ -2,27 +2,24 @@ const { Select, Insert } = require("../sql/sqlFunctions");
 const { Where } = ("../extraFunctions/whereConstruction");
 
 module.exports = {
-    GetPlayersWhere(where){
+    async GetPlayersWhere(where){
         if (where){
-            let players = Select("players", Where(where));
-    
-            // Means that we got an error and need to return 
-            if (!players || players.code)
-                return { "error" : (players) ? players.code : "Could not find the item(s)!" };
-    
-            return players;
+            return await Select("players", Where(where))
+                .catch((error) => { return error; } )
+                .then((result) => { return { code: 200, data: result } } );
         }
         else 
-            return "No where clause (or id) specified!";
+            return await Select("players")
+                .catch((error) => { return error; } )   
+                .then((result) => { return { code: 200, data: result } } );
     },
-    CreatePlayer(player){
+    async CreatePlayer(player){
         if (player){
-            const player = Insert("players", Object.keys(player), Object.values(player));
-            
-            return `Player insertion:
-            ${player ? player : " Success!"}`;
+            return await Insert("players", Object.keys(player), Object.values(player))
+                .catch((error) => { return error; } )
+                .then((result) => { return result; } ); 
         }
         else 
-            "No player was provided!";
+            return { code: 429, message: "No player provided!"};
     }
 }

@@ -1,8 +1,8 @@
 CREATE TABLE IF NOT EXISTS players(
-    userName varchar(255) NOT NULL,
-    playerName varchar(255) NOT NULL,
-    team varchar(255) NOT NULL,
-    PRIMARY KEY (userName)
+    username varchar(255) NOT NULL,
+    name varchar(255) NOT NULL,
+    type ENUM('csh', 'blackbaud', 'hogs', 'ehouse', 'sse', 'arthouse', 'rit'),
+    PRIMARY KEY (username)
 );
 
 CREATE TABLE IF NOT EXISTS items(
@@ -10,6 +10,7 @@ CREATE TABLE IF NOT EXISTS items(
     name VARCHAR(255) NOT NULL,
     description TEXT NOT NULL,
     type ENUM('weapon', 'armor', 'misc', 'tool', 'food', 'buff', 'material'),
+    price FLOAT(20, 2) NOT NULL,
     PRIMARY KEY (id, type)
 );
 
@@ -45,12 +46,5 @@ CREATE TABLE IF NOT EXISTS buff(
     id INT NOT NULL,
     seconds INT NOT NULL,
     effects TEXT NOT NULL,
-    PRIMARY KEY(id)
-);
-
-CREATE TABLE IF NOT EXISTS material(
-    id INT NOT NULL,
-    damage FLOAT(20, 2) NOT NULL,
-    durability INT NOT NULL,
     PRIMARY KEY(id)
 );

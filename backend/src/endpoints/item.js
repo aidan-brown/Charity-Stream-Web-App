@@ -1,46 +1,33 @@
 const { Select, Insert } = require("../sql/sqlFunctions");
 
 module.exports ={
-    GetItemsWhere(where){
-        if (where){
-            let items = Select("items", where);
-    
-            // Means that we got an error and need to return 
-            if (!items || items.code)
-                return { "error" : (items) ? items.code : "Could not find the item(s)!" };
-    
-            // Get all of the type objects for the item
-            items.forEach(item => {
-                const type = Select(item["type"]);
-                item["type"] = type;    
-            });
-    
-            return items;
-        }
-        else 
-            return "No where clause (or id) specified!";
-    },
-    CreateItem(item){
+    async GetItemsWhere(table, where){
+        return await Select(table, where)
+            .catch((error) => { return error; } )
+            .then((result) => { return { code: 200, data: result } } );
+        },
+    async CreateItem(item){
         if (item){
-            let type = item["type"];
-            let name = type["name"];
-    
+            let type = item.type;
+            let name = type.name;
+            
             delete item.type;
-            delete type.name;
 
-            type["id"] = item["id"];
+            item["type"] = type.name;
+            type.id = item.id;
 
-            const itemResp = Insert("items", Object.keys(item), Object.values(item));
-            const typeResp = Insert(name, Object.keys(type), Object.values(type));
-            
-            
-            return `Item insertion:
-            ${itemResp ? itemResp : " Success!"}
-            Type insertion: 
-            ${typeResp ? typeResp : " Success!"}`;  
-    
+            return await Insert("items", Object.keys(item), Object.values(item))
+                .catch((error) => { return error; } )
+                .then( async (result) => { 
+                    if (item["type"] != "misc" && item["type"] != "material" ){
+                        delete type.name;
+                        return await Insert(name, Object.keys(type), Object.values(type))
+                            .catch((error) => { return error; } )
+                            .then((finalResult) => { return [ result, finalResult ]; } );
+                    }
+                } );
         }
         else 
-            return "No item was provided!";
+            return { code: 429, message: "No item provided" }
     }
 } 

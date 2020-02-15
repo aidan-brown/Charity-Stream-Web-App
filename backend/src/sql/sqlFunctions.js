@@ -1,55 +1,67 @@
 const { SqlConnect } = require("./sqlConnection");
 
-module.exports ={
-    Select(table, where = null){
+module.exports = {
+    Select(tableOne, where = null, tableTwo = null, join = null, joinKey = null, orderBy = null, direction = null){
         const connection = SqlConnect();
-
-        if (connection){
-            connection.query( 
-                `SELECT * 
-                FROM ${table} 
-                ${(where) ? `WHERE ${where}` : ''}`, 
-                (error, result) => {
-                    if (error){
-                        connection.end();
-                        return error.code;
-                    }
-                    else {
-                        connection.end();
         
-                        return result.map(value => {
-                            var data = {};
-                            for(key in value) data[key] = value[key];
-                            return data;
-                        });
+        const query = `SELECT *\ 
+        FROM ${tableOne}\
+        ${(where) ? `WHERE ${where}` : ''}\
+        ${(join) ? `${join} ${tableTwo}\
+        ON ${tableOne}.${joinKey}=${tableTwo}.${joinKey}` : ``}\
+        ${(orderBy) ? `ORDER BY ${orderBy} ${direction}` : ``}`;
+
+        console.log(query);
+
+        return new Promise((success, failure) =>{
+            if (connection){
+                connection.query( 
+                    query, 
+                    (error, result) => {
+                        if (error){
+                            connection.end();
+                            failure({ code: error.code, "message": "Failed to retrieve!" });
+                        }
+                        else {
+                            connection.end();
+                            success(result.map(value => {
+                                var data = {};
+                                for(key in value) data[key] = value[key];
+                                return data;
+                            }));
+                        }
                     }
-                }
-            );
-        }
-        else 
-            return { "code": "COULD_NOT_CONNECT" };
+                );
+            }
+            else 
+            failure({ code: 500, message: "Could not connect to MySQL server!" });
+        });
     },
     Insert(table, keys, values){
         const connection = SqlConnect();
 
-        if (connection){
-            connection.query(
-                `INSERT INTO ${table} 
-                (${keys.join(",")}) 
-                VALUES ("${Object.values(values).join('","')}")`, 
-                (error) => {
-                    if (error){
-                        console.log(error.code);
-                        return error.code;
-                    }
-                    else {
-                        return null;
-                    } 
+        const query = `INSERT INTO ${table}\
+        (${keys.join(",")})\
+        VALUES ("${Object.values(values).join('","')}")` 
 
-                }
-            );
-        }
-        else 
-            return { "code": "COULD_NOT_CONNECT" };
+        console.log(`command run: ${query}`);
+
+        return new Promise((success, failure) => {
+            if (connection){
+                connection.query(
+                    query, 
+                    (error) => {
+                        if (error){
+                            failure({ code: error.code, "message": "Failed to create!" });
+                        }
+                        else {
+                            success({ code: 200, "message": "Success" });
+                        } 
+                    }
+                );
+            }
+            else 
+                failure({ code: 500, message: "Could not connect to MySQL server!" });
+        });
     }
 } 
