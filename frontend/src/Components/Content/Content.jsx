@@ -8,13 +8,13 @@ import Checkout from '../Pages/Checkout/Checkout';
 class Content extends Component{
     render(){
         return(
-            <div className="Content">
+            <main className="Content">
                 <Switch>
                     <Route path='/Checkout' render={() => (<Checkout/>)} />
                     <Route path="/Store" render={() => (<Store/>)} />
                     <Route path="/" render={() => (<Landing/>)} />
                 </Switch>
-            </div>
+            </main>
         )
     }
 }

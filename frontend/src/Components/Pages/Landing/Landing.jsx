@@ -17,11 +17,11 @@ class Landing extends Component{
         let arrow = document.querySelector('#arrow');
         if(playerList.className === 'show'){
             playerList.className = 'hide';
-            arrow.className = 'hide';
+            arrow.className = 'btn show';
         }
         else{
             playerList.className = 'show';
-            arrow.className = 'show';
+            arrow.className = 'btn hide';
         }
     }
 
@@ -30,7 +30,7 @@ class Landing extends Component{
             <div className='Landing'>
                 <div className='stream-player'>
                     <StreamWindow title='Charity Stream' width='100%' height='100%' url='https://player.twitch.tv/?channel=justgiving' />
-                    <button className='btn' onClick={this.togglePlayerList}><img id='arrow' className='show' src={Arrow}/></button>
+                    <button id='arrow' className='btn hide' onClick={this.togglePlayerList}><img className='show' src={Arrow}/></button>
                     <div id='player-list' className='show'>
                         <PlayerList/>
                     </div>
