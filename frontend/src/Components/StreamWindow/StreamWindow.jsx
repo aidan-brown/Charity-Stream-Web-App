@@ -1,7 +1,21 @@
 import React, { Component } from 'react';
 import './StreamWindow.css';
 
+/** Class for constructing the stream window component **/
 class StreamWindow extends Component{
+    /*
+    * @construction
+    * @param {object} props - holds the props passed through to the component
+    **      @param {string} title - holds the title for the stream window
+    **      @param {string} url - holds the url for the stream
+    **      @param {number} width - holds the width of the stream window
+    **      @param {number} height - holds the height of the stream window
+    * @param {object} state - holds the curent state of the component
+    **      @param {string} title - holds the title for the stream window
+    **      @param {string} url - holds the url for the stream
+    **      @param {number} width - holds the width of the stream window
+    **      @param {number} height - holds the height of the stream window
+    */
     constructor(props){
         super(props);
         this.state = {
@@ -12,6 +26,10 @@ class StreamWindow extends Component{
         }
     }
 
+    /*
+    Handles the rendering of the component - Contains the routes to each of the content pages
+    * @return {JSX Element} the stream window
+    */
     render(){
         return(
             <div className='StreamWindow'>

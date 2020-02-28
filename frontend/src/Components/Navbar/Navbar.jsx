@@ -5,7 +5,13 @@ import ToggleIcon from '../../images/toggler.svg';
 import './Navbar.css';
 import '../Bootstrap-Colors/palette.css';
 
+/** Class for constructing the main navbar of the page **/
 class Navbar extends Component{
+    /*
+    * @construction
+    * @param {object} props - holds the props passed through to the component
+    * @param {object} state - holds the curent state of the component
+    */
     constructor(props){
         super(props);
         this.state = {};
@@ -13,6 +19,9 @@ class Navbar extends Component{
         this.setLinkActive = this.setLinkActive.bind(this);
     }
     
+    /*
+    Handles setting the active link on the navbar
+    */
     setLinkActive(event){
         document.querySelector('.Navbar .active').className = 'nav-link';
         if(event.target.className === 'nav-link' || event.target.className === 'nav-link active'){
@@ -23,16 +32,20 @@ class Navbar extends Component{
         }
     }
 
+    /*
+    Handles the rendering of the component
+    * @return {JSX Element} the navbar
+    */
     render(){
         return(
             <nav className='Navbar'>
                 <div className='navbar navbar-expand-md bg-csh-primary-gradient'>
+                    <a className='navbar-brand order-md-first' href='https://www.csh.rit.edu/' target='_blank' rel="noopener noreferrer">
+                            <img id='csh-logo' src={Logo} alt='CSH logo' />
+                    </a>
                     <button className='navbar-toggler' type='button' data-toggle='collapse' data-target='#collapsibleNavbar'>
                         <img src={ToggleIcon} height="100%" />
                     </button>
-                    <a className='navbar-brand order-md-last' href='https://www.csh.rit.edu/' target='_blank' rel="noopener noreferrer">
-                            <img id='csh-logo' src={Logo} alt='CSH logo' />
-                    </a>
 
                     <div className='collapse navbar-collapse' id='collapsibleNavbar'>
                         <ul className='navbar-nav justify-content-center'>
@@ -52,6 +65,9 @@ class Navbar extends Component{
         )
     }
 
+    /*
+    Is run after the component successfully mounted and handles setting of the active link
+    */
     componentDidMount(){
         let activeLink;
         switch(window.location.pathname){

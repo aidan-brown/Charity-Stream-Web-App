@@ -4,7 +4,13 @@ import PlayerList from '../../Players/PlayerList';
 import StreamWindow from '../../StreamWindow/StreamWindow';
 import Arrow from '../../../images/arrow.svg';
 
+/** Class for constructing the landing/stream page **/
 class Landing extends Component{
+    /*
+    * @constructor
+    * @param {object} props - holds the props passed through to the component
+    * @param {object} state - holds the curent state of the component
+    */
     constructor(props){
         super(props);
         this.state = {};
@@ -12,6 +18,9 @@ class Landing extends Component{
         this.togglePlayerList = this.togglePlayerList.bind(this);
     }
 
+    /*
+    Handles the toggling of the player list, changing the class name of the list and arrow to the appropriate state
+    */
     togglePlayerList(){
         let playerList = document.querySelector('#player-list');
         let arrow = document.querySelector('#arrow');
@@ -25,6 +34,10 @@ class Landing extends Component{
         }
     }
 
+    /*
+    Handles the rendering of the component
+    * @return {JSX Element} the content for the landing page
+    */
     render(){
         return(
             <div className='Landing'>
