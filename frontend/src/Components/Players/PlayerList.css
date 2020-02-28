@@ -1,36 +1,44 @@
-.PlayerList{
+/* The ul element that holds the player list */
+.PlayerList {
     width: 100%;
     font-size: .75rem;
+    list-style: none;
+    padding-left: 0;
 
     overflow-x: hidden;
     overflow-y: scroll;
 }
 
-.PlayerList::-webkit-scrollbar{
+/* The scrollbar for the player list */
+.PlayerList::-webkit-scrollbar {
     background: none;
     width: 0.5rem;
 }
 
-.PlayerList::-webkit-scrollbar-thumb{
+/* The scrollbar thumb for the player list */
+.PlayerList::-webkit-scrollbar-thumb {
     transition: background 500ms;
     background: rgba(225, 28, 82, 0.5);
     border-radius: 1rem;
 }
 
-.PlayerList::-webkit-scrollbar-thumb:hover{
+/* When hovering over the scrollbar thumb for the player list */
+.PlayerList::-webkit-scrollbar-thumb:hover {
     transition: background 500ms;
 
     background: rgba(228, 28, 82, 0.75);
 }
 
-.PlayerList::-webkit-scrollbar-track{
+/* The scrollbar track for the player list */
+.PlayerList::-webkit-scrollbar-track {
     background: rgba(50, 50, 50, 0.25);
     border-radius: 1rem;
 
     margin: .5rem 0;
 }
 
-.list-element{
+/* The div tag that holds each player's information */
+.list-element {
     position: relative;
     display: flex;
     flex-direction: row-reverse;
@@ -53,13 +61,18 @@
 
     transition: all 150ms;
 
-    -webkit-user-select: none; /* Safari */        
-    -moz-user-select: none; /* Firefox */
-    -ms-user-select: none; /* IE10+/Edge */
-    user-select: none; /* Standard */
+    -webkit-user-select: none;
+    /* Safari */
+    -moz-user-select: none;
+    /* Firefox */
+    -ms-user-select: none;
+    /* IE10+/Edge */
+    user-select: none;
+    /* Standard */
 }
 
-.list-element .team-logo{
+/* The img tag that holds the players team logo */
+.list-element .team-logo {
     position: absolute;
     height: 2.75rem;
     opacity: 0.25;
@@ -67,7 +80,8 @@
     transform: rotate(-10deg)
 }
 
-.list-element p{
+/* The p tag that holds the player's name and username */
+.list-element p {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -78,7 +92,8 @@
     margin: 0;
 }
 
-.list-element .shop-logo{
+/* The img tag that holds the shop logo for each player element */
+.list-element .shop-logo {
     transition: all 150ms;
     position: absolute;
     right: .5rem;
@@ -86,99 +101,117 @@
     opacity: 0.2;
 }
 
-.list-element:hover{
+/* When the player element is hovered over */
+.list-element:hover {
     transition: all 150ms;
 
     transform: scaleY(1.05);
     box-shadow: .25rem .25rem .25rem rgba(0, 0, 0, 0.35);
 }
 
-.list-element:hover .shop-logo{
+/* When the shop logo is hovered over */
+.list-element:hover .shop-logo {
     transition: all 150ms;
     opacity: 0.75;
 }
 
-.list-element:active{
+/* When the list element is clicked */
+.list-element:active {
     transition: all 150ms;
 
     transform: scaleY(1);
     box-shadow: .15rem .15rem .25rem rgba(0, 0, 0, 0.35);
 }
 
+/* ==Team Styles== */
 
-.csh{
-    background: rgba(176,25,126,1);
-    background: linear-gradient(-90deg, rgba(225,28,82,1) 50%, rgba(176,25,126,1) 100%);
+/* CSH */
+
+.csh {
+    background: rgba(176, 25, 126, 1);
+    background: linear-gradient(-90deg, rgba(225, 28, 82, 1) 50%, rgba(176, 25, 126, 1) 100%);
     color: white;
 }
 
-.csh .team-logo{
+.csh .team-logo {
     height: 2.75rem;
 }
 
-.blackbaud{
-    background: rgba(114,191,68,1);
-    background: linear-gradient(-90deg, rgba(0,180,241,1) 0%, rgba(114,191,68,1) 100%);
+/* Blackbaud */
+
+.blackbaud {
+    background: rgba(114, 191, 68, 1);
+    background: linear-gradient(-90deg, rgba(0, 180, 241, 1) 0%, rgba(114, 191, 68, 1) 100%);
     color: white;
 }
 
-.blackbaud .team-logo{
+.blackbaud .team-logo {
     opacity: 0.5;
     height: 7.5rem;
     left: 0rem;
 }
 
-.hogs{
-    background: rgb(226,3,3);
-    background: linear-gradient(90deg, rgba(226,3,3,1) 0%, rgba(17,20,23,1) 50%);
+/* HOGS */
+
+.hogs {
+    background: rgb(226, 3, 3);
+    background: linear-gradient(90deg, rgba(226, 3, 3, 1) 0%, rgba(17, 20, 23, 1) 50%);
     color: white;
 }
 
-.hogs .team-logo{
+.hogs .team-logo {
     height: 4rem;
     opacity: 0.5;
     left: .5rem;
     transform: rotate(-25deg);
 }
 
-.ehouse{
-    background: rgb(50,86,183);
-    background: linear-gradient(-90deg, rgba(50,86,183,1) 0%, rgba(64,178,196,1) 100%);
+/* EHouse */
+
+.ehouse {
+    background: rgb(50, 86, 183);
+    background: linear-gradient(-90deg, rgba(50, 86, 183, 1) 0%, rgba(64, 178, 196, 1) 100%);
     color: white;
 }
 
-.ehouse .team-logo{
+.ehouse .team-logo {
     opacity: 0.5;
 }
 
-.sse{
-    background: rgb(30,90,141);
-    background: linear-gradient(-90deg, rgba(30,90,141,1) 0%, rgba(36,106,167,1) 100%);
+/* SSE */
+
+.sse {
+    background: rgb(30, 90, 141);
+    background: linear-gradient(-90deg, rgba(30, 90, 141, 1) 0%, rgba(36, 106, 167, 1) 100%);
     color: white;
 }
 
-.sse .team-logo{
+.sse .team-logo {
     opacity: 0.5;
 }
 
-.arthouse{
-    background: rgb(6,182,177);
-    background: linear-gradient(90deg, rgba(6,182,177,1) 0%, rgba(248,165,253,1) 100%);
+/* Art House */
+
+.arthouse {
+    background: rgb(6, 182, 177);
+    background: linear-gradient(90deg, rgba(6, 182, 177, 1) 0%, rgba(248, 165, 253, 1) 100%);
     color: white;
 }
 
-.arthouse .team-logo{
+.arthouse .team-logo {
     opacity: 0.5;
     height: 3rem;
 }
 
-.rit{
-    background: rgb(247,105,2);
-    background: linear-gradient(90deg, rgba(247,105,2,1) 0%, rgba(172,163,154,1) 100%);
+/* RIT/Default */
+
+.rit {
+    background: rgb(247, 105, 2);
+    background: linear-gradient(90deg, rgba(247, 105, 2, 1) 0%, rgba(172, 163, 154, 1) 100%);
     color: white;
 }
 
-.rit .team-logo{
+.rit .team-logo {
     opacity: 0.5;
     height: 4rem;
     left: .25rem;

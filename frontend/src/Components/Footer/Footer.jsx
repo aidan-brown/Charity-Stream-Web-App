@@ -3,7 +3,12 @@ import CSHLogo from '../../images/csh.svg';
 import GithubLogo from '../../images/github.svg';
 import "./Footer.css";
 
+/** Class for constructing the footer component **/
 class Footer extends Component{
+    /*
+    Handles the rendering of the component
+    * @return {JSX Element} the footer
+    */
     render(){
         return(
             <footer className="Footer bg-csh-primary-gradient">

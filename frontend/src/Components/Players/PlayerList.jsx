@@ -11,7 +11,15 @@ import ArtHouseLogo from '../../images/arthouse.svg';
 import RITLogo from '../../images/rit.svg';
 import CartLogo from '../../images/shopping-cart.svg';
 
+/** Class for constructing the player list component **/
 class PlayerList extends Component{
+    /*
+    * @constructor
+    * @param {object} props - holds the props passed through to the component
+    * @param {object} state - holds the curent state of the component
+    **      @param {Element} playerList - holds the element where all the player elements will be appended
+    **      @param {Array} players - holds all the player objects that needs to be rendered
+    */
     constructor(props){
         super(props);
         this.state = {
@@ -22,6 +30,9 @@ class PlayerList extends Component{
         this.renderPlayers = this.renderPlayers.bind(this);
     }
 
+    /*
+    Handles the construction and rendering of each player element in the list of players
+    */
     renderPlayers(){
         if(this.state.playerList){
             this.state.playerList.innerHTML = '';
@@ -87,23 +98,32 @@ class PlayerList extends Component{
         }
     }
 
+    /*
+    Handles the rendering of the component
+    * @return {JSX Element} the list of players 
+    */
     render(){
         return(
-            <div className='PlayerList'>
+            <ul className='PlayerList'>
                
-            </div>
+            </ul>
         )
     }
 
+    /*
+    Is run when the component successfully mounts and handles the requesting of player information and rendering the player list
+    */
     componentDidMount(){
+        // Sets the player list to the div rendered above
         this.setState({playerList: document.querySelector('.PlayerList')}, () => {
+            // Hits the backend with a get request for the players and then renders the players when the request s complete
             let req = new XMLHttpRequest();
             req.open('get', 'http://tunnel.csh.rit.edu:8000/players')
 
             req.onload = () => {
-                console.log(req.responseText);
                 const response = JSON.parse(req.responseText);
-                if(response && response.code == 200){
+                // If the response has data and a 200 code it uses that data to render the players, if not the response code is logged
+                if(response.data && response.code == 200){
                     this.setState({players: response.data}, () => this.renderPlayers());
                 }
                 else{

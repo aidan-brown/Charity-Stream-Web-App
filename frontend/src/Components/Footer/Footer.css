@@ -1,4 +1,5 @@
-.Footer{
+/* The footer tag that holds all the footer information */
+.Footer {
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
@@ -7,56 +8,67 @@
 	padding: 0rem 2rem;
 }
 
-.links{
+/* The div tag that holds all the relevant links for the footer */
+.links {
 	display: flex;
 	flex-direction: row;
 	justify-content: flex-end;
 	width: 25%;
 }
 
-.authors{
+/* The div tag that holds all of the author information */
+.authors {
 	width: 55%;
 }
 
-.github, .pubsite{
+/* The a tags that hold the images and text that are relevant to the links */
+.github,
+.pubsite {
 	display: flex;
 	flex-direction: row;
 	align-items: center;
 }
 
-.Footer p{
+/* All the p tags in the footer */
+.Footer p {
 	margin: 0;
 	font-size: .75rem;
 }
 
-.Footer a{
+/* All the a tags in the footer */
+.Footer a {
 	display: flex;
 	flex-direction: row;
 	width: 100%;
 }
 
-.Footer a:link{
+/* All the a links in the footer */
+.Footer a:link {
 	text-decoration: none;
 }
 
-.Footer a:hover p{
+/* The p tag when the a tag is hovered over */
+.Footer a:hover p {
 	color: rgb(255, 186, 238);
 
-    transition: all 250ms;
+	transition: all 250ms;
 }
 
-#csh-logo{
+/* The img tag that holds the CSH logo */
+#csh-logo {
 	width: 2.65rem;
 	margin: 0rem 1rem;
 }
 
-#github-logo{
+/* The img tag that holds the Github logo */
+#github-logo {
 	width: 3rem;
 	margin: 0rem 1rem;
 }
 
-@media only screen and (max-width: 768px){
-	.Footer a p{
+/* Breakpoint when the window reaches medium width (768px) */
+@media only screen and (max-width: 768px) {
+	.Footer a p {
 		display: none;
 	}
 }
