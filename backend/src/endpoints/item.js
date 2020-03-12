@@ -1,32 +1,24 @@
 const { Select, Insert } = require("../sql/sqlFunctions");
 
 module.exports ={
-    async GetItemsWhere(table, where){
-        return await Select(table, where)
+    async GetItemsWhere(){
+        const customQuery = `
+        SELECT *
+        FROM items
+        LEFT JOIN armor
+        ON items.id = armor.id
+        LEFT JOIN buff
+        ON items.id = buff.id
+        LEFT JOIN food
+        ON items.id = food.id
+        LEFT JOIN tool
+        ON items.id = tool.id
+        LEFT JOIN weapon
+        ON items.id = weapon.id`
+
+        return await Select(custom = customQuery)
             .catch((error) => { return error; } )
             .then((result) => { return { code: 200, data: result } } );
-
-        // let items = [];
-        // items.concat(await Select(table, `type="weapon"`, "weapon", true, "id")
-        //     .then((result) => { console.log(result); return result; })
-        //     .catch((error) => { console.log(error); }));
-        // items.concat(await Select(table, `type="armor"`, "armor", true, "id")
-        //     .then((result) => { return result; })
-        //     .catch((error) => { console.log(error); }));
-        // items.concat(await Select(table, `type="tool"`, "tool", true, "id")
-        //     .then((result) => { return result; })
-        //     .catch((error) => { console.log(error); }));
-        // items.concat(await Select(table, `type="food"`, "food", true, "id")
-        //     .then((result) => { return result; })
-        //     .catch((error) => { console.log(error); }));
-        // items.concat(await Select(table, `type="buff"`, "buff", true, "id")
-        //     .then((result) => { return result; })
-        //     .catch((error) => { console.log(error); }));
-        // items.concat(await Select(table, `type="material" OR type="misc"`)
-        //     .then((result) => { return result; })
-        //     .catch((error) => { console.log(error); }));
-        // console.log(items);
-        // return items;
         },
     async CreateItem(item){
         if (item){

@@ -4,12 +4,12 @@ const { Where } = ("../extraFunctions/whereConstruction");
 module.exports = {
     async GetPlayersWhere(where){
         if (where){
-            return await Select("players", Where(where))
+            return await Select(tableOne = "players", where = Where(where))
                 .catch((error) => { return error; } )
                 .then((result) => { return { code: 200, data: result } } );
         }
         else 
-            return await Select("players")
+            return await Select(tableOne = "players")
                 .catch((error) => { return error; } )   
                 .then((result) => { return { code: 200, data: result } } );
     },
