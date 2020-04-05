@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
+import ImageArray from './ImageArray'
 import All from './StoreTabs/All';
 
 class StoreLanding extends Component{
@@ -8,8 +9,9 @@ class StoreLanding extends Component{
     }
 
     render(){
+
         return (
-            <All />
+            <All imgs={ImageArray.images}/>
         );  
     }
 }
