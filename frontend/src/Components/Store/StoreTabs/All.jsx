@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Cart from '../../Cart/Cart'
 import arrow from '../../../images/arrow.png'
 import bow from '../../../images/Bow.png'
 import bread from '../../../images/Bread.png'
@@ -43,6 +44,8 @@ class All extends Component{
         this.state = {
             allItemsList: null,
             allItems: new Array(),
+            itemsInCartList: null,
+            itemsInCart: new Array(),
             images: {
                 "Bow": bow,
                 "Iron Ingot": iron_ingot,
@@ -88,8 +91,36 @@ class All extends Component{
         this.addToCart = this.addToCart.bind(this);
     }
 
-    addToCart(e){
-        console.log("Clicked");
+    addToCart(item){
+        this.state.itemsInCart.push(item);
+        console.log(`added ${item.name} to cart`);
+
+        if(this.state.itemsInCart){
+            this.state.itemsInCartList.innerHTML = '';
+            this.state.itemsInCart.forEach(item => {
+                let listElement = document.createElement('div');
+                listElement.className = `list-element ${item.id}`;
+
+                let imgElement = document.createElement('img');
+                imgElement.className = `imgElementCart`;
+                imgElement.src = this.state.images[`${item.name}`];
+                imgElement.alt = `${item.name}`;
+
+                let nameElement = document.createElement('h4');
+                nameElement.className = `nameElementCart`;
+                nameElement.innerHTML = `${item.name}`;
+
+                let priceElement = document.createElement('p');
+                priceElement.className = `cartPriceElement`;
+                priceElement.innerHTML = `${item.price}`;
+
+                listElement.append(imgElement);
+                listElement.append(nameElement);
+                listElement.append(priceElement);
+
+                this.state.itemsInCartList.append(listElement);
+            });
+        }
     }
 
     renderItems(){
@@ -121,7 +152,8 @@ class All extends Component{
                 let addElement = document.createElement('h5');
                 addElement.className = 'shopButton';
                 addElement.innerHTML = 'Add to Cart';
-                addElement.onclick = this.addToCart;
+                addElement.onclick = () => this.addToCart(item);
+                
 
                 imgContainer.append(imgElement);
                 imgContainer.append(priceElement);
@@ -139,15 +171,21 @@ class All extends Component{
 
     render(){
         return (
-            <ul className="allItemsList">
+            <div className="StoreAll">
+                <ul className="allItemsList">
 
-            </ul>
+                </ul>
+                <div className="itemsInCartList">
+                    
+                </div>
+            </div>
+            
         )   
     }
 
     componentDidMount(){
 
-        // Sets the items list to the div rendered above
+        // Sets the items list to the store items div rendered above
         this.setState({allItemsList: document.querySelector('.allItemsList')}, () => {
             // Hits the backend with a get request for all items and then renders the items when the request s complete
             let req = new XMLHttpRequest();
@@ -166,6 +204,9 @@ class All extends Component{
 
             req.send();
         })
+
+        // Sets the cart items list to the div rendered above
+        this.setState({itemsInCartList: document.querySelector('.itemsInCartList')});
     }
 }
 
