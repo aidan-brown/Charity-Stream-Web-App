@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Cart from '../../Cart/Cart'
+import './All.css'
 import arrow from '../../../images/arrow.png'
 import bow from '../../../images/Bow.png'
 import bread from '../../../images/Bread.png'
@@ -84,11 +85,44 @@ class All extends Component{
                 "Diamond Chestplate": diamond_chest,
                 "Diamond Leggings": diamond_leggings,
                 "Diamond Boots": diamond_boots
-            }       
+            },
+            JG_FUNDRAISING_ID: '11777099',
+            allPlayersList: new Array(),
+            allPlayersHtml: null,
+            player: "none"    
         }
 
         this.renderItems = this.renderItems.bind(this);
         this.addToCart = this.addToCart.bind(this);
+        this.checkout = this.checkout.bind(this);
+        this.renderPlayers = this.renderPlayers.bind(this);
+    }
+
+    checkout(){
+        let outUrl = `http://link.justgiving.com/v1/fundraisingpage/donate/pageId/` + this.state.JG_FUNDRAISING_ID;
+        let idList = ``;
+        let priceList = 0.0;
+        let player = this.state.player;
+        if(this.state.itemsInCart){
+            this.state.itemsInCart.forEach(item => {
+                idList = idList + `{${item.id}}`;
+                priceList += item.price;
+            });
+        }
+        outUrl += '?amount='
+        outUrl += priceList.toString();
+        outUrl += '&currency=USD&reference=bbcsh&message='
+        outUrl += '{user:'
+        outUrl += player;
+        outUrl += '}'
+        outUrl += idList;
+
+        console.log(outUrl);
+
+        response.writeHead(301,
+            {Location: outUrl}
+        );
+        response.end();
     }
 
     addToCart(item){
@@ -99,14 +133,14 @@ class All extends Component{
             this.state.itemsInCartList.innerHTML = '';
             this.state.itemsInCart.forEach(item => {
                 let listElement = document.createElement('div');
-                listElement.className = `list-element ${item.id}`;
+                listElement.className = `list-element-cart ${item.id}`;
 
                 let imgElement = document.createElement('img');
                 imgElement.className = `imgElementCart`;
                 imgElement.src = this.state.images[`${item.name}`];
                 imgElement.alt = `${item.name}`;
 
-                let nameElement = document.createElement('h4');
+                let nameElement = document.createElement('p');
                 nameElement.className = `nameElementCart`;
                 nameElement.innerHTML = `${item.name}`;
 
@@ -123,12 +157,19 @@ class All extends Component{
         }
     }
 
+    renderPlayers(){
+        if(this.state.allItemsList){
+            this.state.allPlayersHtml.innerHTML = '';
+            
+        }
+    }
+
     renderItems(){
         if(this.state.allItemsList){
             this.state.allItemsList.innerHTML = '';
             this.state.allItems.forEach(item => {
                 let listElement = document.createElement('div');
-                listElement.className = `list-element ${item.id}`;
+                listElement.className = `list-element-store ${item.id}`;
 
                 let imgContainer = document.createElement('div');
                 imgContainer.className = 'imgContainer';
@@ -138,9 +179,13 @@ class All extends Component{
                 imgElement.src = this.state.images[`${item.name}`];
                 imgElement.alt = `${item.name}`;
 
-                let priceElement = document.createElement('h4');
+                let nameElement = document.createElement('p');
+                nameElement.className = `nameElement`;
+                nameElement.innerHTML = `${item.name}`;
+
+                let priceElement = document.createElement('p');
                 priceElement.className = 'priceElement';
-                priceElement.innerHTML = `${item.price}`;
+                priceElement.innerHTML = `$${item.price}`;
 
                 let descContainer = document.createElement('div');
                 descContainer.className = 'descContainer';
@@ -149,7 +194,7 @@ class All extends Component{
                 descElement.className = 'descElement';
                 descElement.innerHTML = `${item.description}`;
 
-                let addElement = document.createElement('h5');
+                let addElement = document.createElement('p');
                 addElement.className = 'shopButton';
                 addElement.innerHTML = 'Add to Cart';
                 addElement.onclick = () => this.addToCart(item);
@@ -157,6 +202,7 @@ class All extends Component{
 
                 imgContainer.append(imgElement);
                 imgContainer.append(priceElement);
+                imgContainer.append(nameElement);
 
                 descContainer.append(descElement);
                 descContainer.append(addElement);
@@ -171,12 +217,22 @@ class All extends Component{
 
     render(){
         return (
-            <div className="StoreAll">
+            <div className="storeAll">
                 <ul className="allItemsList">
 
                 </ul>
-                <div className="itemsInCartList">
+                <div className="Cart">
+                    <div className="itemsInCartList">
                     
+                    </div>
+                    <div className="checkoutPlayer">
+                        <select className="playerList">
+
+                        </select>
+                    </div>
+                    <div className="checkoutBtn" onClick={checkout}>
+                        <p>Checkout</p>
+                    </div>
                 </div>
             </div>
             
@@ -207,6 +263,26 @@ class All extends Component{
 
         // Sets the cart items list to the div rendered above
         this.setState({itemsInCartList: document.querySelector('.itemsInCartList')});
+
+        //Set up the list of players
+        this.setState({allPlayersHtml: document.querySelector('.playerList')}, () => {
+            // Hits the backend with a get request for all items and then renders the items when the request s complete
+            let req = new XMLHttpRequest();
+            req.open('get', 'http://corona.headass.house:8000/players')
+
+            req.onload = () => {
+                const response = JSON.parse(req.responseText);
+                // If the response has data and a 200 code it uses that data to render all items, if not the response code is logged
+                if(response.data && response.code == 200){
+                    this.setState({allPlayersList: response.data}, () => this.renderPlayers());
+                }
+                else{
+                    console.error(response.code);
+                }
+            };
+
+            req.send();
+        })
     }
 }
 

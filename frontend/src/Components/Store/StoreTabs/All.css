@@ -1,0 +1,42 @@
+.storeAll {
+    display: flex;
+    flex-direction: row;
+}
+
+.allItemsList {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.itemsInCartList {
+    display: flex;
+    flex-direction: column;
+}
+
+.list-element-store {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 12rem;
+    margin: 2rem;
+}
+
+.imgContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.imgElement {
+    display: block;
+    max-width: 512px;
+    max-height: 512px;
+    width: 32px;
+    height: 32px;
+}
+
+.descContainer {
+
+}
