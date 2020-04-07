@@ -1,0 +1,76 @@
+.storeAll {
+    display: flex;
+    flex-direction: column;
+}
+
+.allItemsList {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    margin: 2rem;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.Cart {
+    margin: 2rem;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.itemsInCartList {
+    display: flex;
+    flex-direction: column;
+}
+
+.list-element-store {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 12rem;
+    margin: 2rem;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    padding-top: 0.5rem;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.imgContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.imgElement {
+    display: block;
+    max-width: 512px;
+    max-height: 512px;
+    width: 32px;
+    height: 32px;
+}
+
+.descContainer {
+
+}
+
+.titleTextBox {
+    width: 75%;
+    height: 3rem;
+    background-color: rgb(138, 20, 98);
+    margin: auto;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+.itemsWrapper {
+    display: flex;
+    flex-direction: row;
+    box-shadow: 10px 10px 5px grey;
+    margin-bottom: 2rem;
+    margin-left: 2rem;
+    margin-right: 2rem;
+}
+
+.titleText {
+    font-size: 2rem;
+    color: white;
+}

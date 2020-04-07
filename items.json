@@ -5,8 +5,8 @@
             "name": "Iron Ingot",
             "description": "An ingot full of potential. Can be used to craft iron armor, weapons, and tools.",
             "price": 0.25,
-            "type": { 
-            	"name":"material"
+            "type": {
+                "name": "material"
             }
         },
         {
@@ -25,7 +25,8 @@
             "price": 1.00,
 			"type": { 
             	"name":"material"
-            }        },
+            }        
+		},
         {
             "id": 4,
             "name": "Iron Pickaxe",
