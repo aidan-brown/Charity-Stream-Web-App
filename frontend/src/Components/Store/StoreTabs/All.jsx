@@ -1,6 +1,9 @@
+//Import components
 import React, { Component } from 'react';
 import Cart from '../../Cart/Cart'
 import './All.css'
+
+//Import images
 import arrow from '../../../images/arrow.png'
 import bow from '../../../images/Bow.png'
 import bread from '../../../images/Bread.png'
@@ -43,10 +46,13 @@ class All extends Component{
     constructor(props){
         super(props);
         this.state = {
+            //Store items and the items in cart in state so they update
             allItemsList: null,
             allItems: new Array(),
             itemsInCartList: null,
             itemsInCart: new Array(),
+
+            //Store the image objs in an array for easy access by item.name
             images: {
                 "Bow": bow,
                 "Iron Ingot": iron_ingot,
@@ -86,11 +92,16 @@ class All extends Component{
                 "Diamond Leggings": diamond_leggings,
                 "Diamond Boots": diamond_boots
             },
+
+            //Fundraising page ID - CURRENTLY SET TO TEST PAGE
             JG_FUNDRAISING_ID: '11777099',
+
+            //Store the player html
             allPlayersList: new Array(),
             allPlayersHtml: null, 
         }
 
+        //Bind functions to this component for 'this.' functionality
         this.renderItems = this.renderItems.bind(this);
         this.addToCart = this.addToCart.bind(this);
         this.checkout = this.checkout.bind(this);
@@ -98,6 +109,7 @@ class All extends Component{
     }
 
     checkout(){
+        //Assemble a valid url from class variables
         let outUrl = `http://link.justgiving.com/v1/fundraisingpage/donate/pageId/` + this.state.JG_FUNDRAISING_ID;
         let idList = ``;
         let priceList = 0.0;
@@ -118,13 +130,15 @@ class All extends Component{
 
         console.log(outUrl);
 
-        //window.location = outUrl;
+        window.location = outUrl;
     }
 
     addToCart(item){
+        //Update the state
         this.state.itemsInCart.push(item);
         console.log(`added ${item.name} to cart`);
 
+        //Build the html based on the state
         if(this.state.itemsInCart){
             this.state.itemsInCartList.innerHTML = '';
             this.state.itemsInCart.forEach(item => {
@@ -154,6 +168,7 @@ class All extends Component{
     }
 
     renderPlayers(){
+        //Build the select list based on the players table
         if(this.state.allItemsList){
             this.state.allPlayersHtml.innerHTML = '';
             this.state.allPlayersList.forEach(player => {
@@ -169,6 +184,7 @@ class All extends Component{
     }
 
     renderItems(){
+        //Builds the html for each store item from the items table
         if(this.state.allItemsList){
             this.state.allItemsList.innerHTML = '';
             this.state.allItems.forEach(item => {
@@ -220,6 +236,7 @@ class All extends Component{
     }
 
     render(){
+        //Returns the base html skeleton to be populated by the component
         return (
             <div className="storeAll">
                 <div className="titleTextBox">
@@ -275,7 +292,7 @@ class All extends Component{
 
         //Set up the list of players
         this.setState({allPlayersHtml: document.querySelector('.playerList')}, () => {
-            // Hits the backend with a get request for all items and then renders the items when the request s complete
+            // Hits the backend with a get request for all players and then renders the players when the request is complete
             let req = new XMLHttpRequest();
             req.open('get', 'http://corona.headass.house:8000/players')
 
