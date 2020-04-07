@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import './PlayerList.css';
+import {BACKENDURL} from '../App/constants';
 
 import CSHLogo from '../../images/csh.svg'
 import BlackbaudLogo from '../../images/blackbaud.svg';
@@ -118,7 +119,8 @@ class PlayerList extends Component{
         this.setState({playerList: document.querySelector('.PlayerList')}, () => {
             // Hits the backend with a get request for the players and then renders the players when the request s complete
             let req = new XMLHttpRequest();
-            req.open('get', 'http://tunnel.csh.rit.edu:8000/players')
+            req.open('get', `${BACKENDURL}/players`)
+            req.setRequestHeader("Content-Type", "application/json");
 
             req.onload = () => {
                 const response = JSON.parse(req.responseText);
