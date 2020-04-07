@@ -88,8 +88,7 @@ class All extends Component{
             },
             JG_FUNDRAISING_ID: '11777099',
             allPlayersList: new Array(),
-            allPlayersHtml: null,
-            player: "none"    
+            allPlayersHtml: null, 
         }
 
         this.renderItems = this.renderItems.bind(this);
@@ -102,7 +101,7 @@ class All extends Component{
         let outUrl = `http://link.justgiving.com/v1/fundraisingpage/donate/pageId/` + this.state.JG_FUNDRAISING_ID;
         let idList = ``;
         let priceList = 0.0;
-        let player = this.state.player;
+        let player = document.getElementById('players').value;
         if(this.state.itemsInCart){
             this.state.itemsInCart.forEach(item => {
                 idList = idList + `{${item.id}}`;
@@ -119,10 +118,7 @@ class All extends Component{
 
         console.log(outUrl);
 
-        response.writeHead(301,
-            {Location: outUrl}
-        );
-        response.end();
+        //window.location = outUrl;
     }
 
     addToCart(item){
@@ -160,7 +156,15 @@ class All extends Component{
     renderPlayers(){
         if(this.state.allItemsList){
             this.state.allPlayersHtml.innerHTML = '';
-            
+            this.state.allPlayersList.forEach(player => {
+                let playerInList = document.createElement('option');
+                playerInList.id = `${player.username}`;
+                playerInList.className = "playerListItem";
+                playerInList.value = `${player.username}`;
+                playerInList.innerHTML = `${player.name}`;
+
+                this.state.allPlayersHtml.append(playerInList);
+            })
         }
     }
 
@@ -218,20 +222,25 @@ class All extends Component{
     render(){
         return (
             <div className="storeAll">
-                <ul className="allItemsList">
+                <div className="titleTextBox">
+                    <p className="titleText">All proceeds to charity!</p>
+                </div>
+                <div className="itemsWrapper">
+                    <ul className="allItemsList">
 
-                </ul>
-                <div className="Cart">
-                    <div className="itemsInCartList">
-                    
-                    </div>
-                    <div className="checkoutPlayer">
-                        <select className="playerList">
+                    </ul>
+                    <div className="Cart">
+                        <div className="itemsInCartList">
+                        
+                        </div>
+                        <div className="checkoutPlayer">
+                            <select className="playerList" id="players">
 
-                        </select>
-                    </div>
-                    <div className="checkoutBtn" onClick={checkout}>
-                        <p>Checkout</p>
+                            </select>
+                        </div>
+                        <div className="checkoutBtn" onClick={this.checkout}>
+                            <p>Checkout</p>
+                        </div>
                     </div>
                 </div>
             </div>
