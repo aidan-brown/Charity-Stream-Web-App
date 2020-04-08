@@ -1,20 +1,13 @@
 const { SqlConnect } = require("./sqlConnection");
 
 module.exports = {
-    Select(tableOne, where = null, tableTwo = null, join = null, joinKey = null, orderBy = null, direction = null){
+    Select( custom = null, tableOne = null, where = null, orderBy = null, direction = "ASC"){
         const connection = SqlConnect();
         
-        const query = `SELECT *\ 
-        FROM ${tableOne}\
-        ${(where && !join) ? `WHERE ${where}` : ''}\
-        ${(join) ? `LEFT JOIN ${tableTwo} 
-        ON ${tableOne}.${joinKey} = ${tableTwo}.${joinKey}\ 
-        UNION 
-        SELECT * FROM ${tableOne}\ 
-        RIGHT JOIN ${tableTwo}\ 
-        ON ${tableOne}.${joinKey} = ${tableTwo}.${joinKey}` : ``}\ 
-        ${(orderBy) ? `ORDER BY ${orderBy} ${direction}` : ``}\
-        ${(where && join) ? `WHERE ${where}` : ''}`;
+        const query =`
+            ${(custom) ? custom : `SELECT * FROM ${tableOne}`}\
+            ${(where) ? `WHERE ${where}` : ''}\
+            ${(orderBy) ? `ORDER BY ${orderBy} ${direction}` : ``}`
 
         console.log(query);
 
@@ -31,7 +24,10 @@ module.exports = {
                             connection.end();
                             success(result.map(value => {
                                 var data = {};
-                                for(key in value) data[key] = value[key];
+                                for(key in value) {
+                                    if (value[key])
+                                        data[key] = value[key];
+                                }
                                 return data;
                             }));
                         }
@@ -68,5 +64,5 @@ module.exports = {
             else 
                 failure({ code: 500, message: "Could not connect to MySQL server!" });
         });
-    }
+    },
 } 
