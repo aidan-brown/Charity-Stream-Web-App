@@ -24,13 +24,13 @@ app.get("/items", async (req,res) => {
         res.send("Cannot specify both id and where clause!");
     }
     else if (id && type){
-        res.json(await GetItemsWhere("items", `id = '${id}' AND type = '${type}'`, type));
+        res.json(await GetItemsWhere(`id = '${id}' AND type = '${type}'`));
     }
     else if (where){
-        res.json(await GetItemsWhere("items", Where(where)));
+        res.json(await GetItemsWhere(Where(where)));
     }
     else {
-        res.json(await GetItemsWhere("items", null));
+        res.json(await GetItemsWhere(null));
     }
 });
 
