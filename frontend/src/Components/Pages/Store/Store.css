@@ -1,0 +1,72 @@
+.Store{
+    height: 100%;
+    width: 100%;
+}
+
+.store-window{
+    width: 80%;
+    height: 100%;
+
+    margin: 2rem 10%;
+
+    display: grid;
+    grid-template-rows: 2rem 40rem;
+    grid-template-columns: 100%;
+    grid-template-areas: 
+    "store-nav"
+    "store-content";
+
+    background: #B0197E;
+    border: .5rem solid #B0197E;
+    border-radius: 1rem;
+
+    color: white;
+}
+
+.store-nav ul{
+    list-style: none;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.store-content{
+    background: #F8F8FF;
+    border: .5rem solid #B0197E;
+    border-radius: 1rem;
+    height: 100%;
+    width: 100%;
+
+    display: grid;
+    grid-template-columns: repeat(auto-fill, 20rem);
+    grid-template-rows: repeat(auto-fill, 20rem);
+
+    margin: auto;
+
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+.store-item{
+    width: 19rem;
+    height: 19rem;
+
+    background: #B0197E;
+    border: .5rem solid #B0197E;
+    border-radius: .5rem;
+
+    margin: .5rem;
+}
+
+.store-item .item-image{
+    background: #F8F8FF;
+    border: .5rem solid #B0197E;
+    border-radius: 1rem;
+
+    padding: 2rem;
+}
+
+.store-item .item-image img{
+    width: 2rem;
+}

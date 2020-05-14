@@ -94,7 +94,7 @@ class All extends Component{
             },
 
             //Fundraising page ID - CURRENTLY SET TO TEST PAGE
-            JG_FUNDRAISING_ID: '11777099',
+            JG_FUNDRAISING_ID: '12995533',
 
             //Store the player html
             allPlayersList: new Array(),
