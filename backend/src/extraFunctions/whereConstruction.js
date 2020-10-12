@@ -24,64 +24,58 @@
 //     }
 // }
 //
-// This translates to SELECT * FROM maps WHERE id="kjd8ddf9isd93k3-d-3-d3e3ed3-3dds" OR id="zsdsdsdsdsdcksj-d-3-d3e3ed3-3dds"
+// This translates to
+// SELECT *
+// FROM maps
+// WHERE id="kjd8ddf9isd93k3-d-3-d3e3ed3-3dds" OR id="zsdsdsdsdsdcksj-d-3-d3e3ed3-3dds"
 // The WHERE clause is built by the following functions
 
-function Or(filter) { 
-    try {
-        switch(filter["operation"]) {
-            case 0: // EQUALS operation
-                return `${filter.property}="${filter.value}"`;
-            case 1: // CONTAINS operation
-                return `${filter.property} LIKE ("%${filter.value}%")`;
-            case 2: // LT operation
-                return `${filter.property}<${Number(filter.value)}`;                    
-            case 3: // LTE operation
-                return `${filter.property}<=${Number(filter.value)}`;                                        
-            case 4: // GT operation
-                return `${filter.property}>${Number(filter.value)}`;                                                    
-            case 5: // GTE operation
-                return `${filter.property}>=${Number(filter.value)}`;                                                    
-        }
+function Or(filter) {
+  try {
+    switch (filter.operation) {
+      case 0: // EQUALS operation
+        return `${filter.property}="${filter.value}"`;
+      case 1: // CONTAINS operation
+        return `${filter.property} LIKE ("%${filter.value}%")`;
+      case 2: // LT operation
+        return `${filter.property}<${Number(filter.value)}`;
+      case 3: // LTE operation
+        return `${filter.property}<=${Number(filter.value)}`;
+      case 4: // GT operation
+        return `${filter.property}>${Number(filter.value)}`;
+      case 5: // GTE operation
+        return `${filter.property}>=${Number(filter.value)}`;
+      default:
+        throw new Error('NOT_OP');
     }
-    catch(e) {
-        return new Error("Data type could not be properly compared!")
-    }
+  } catch (e) {
+    return new Error('Data type could not be properly compared!');
+  }
 }
 
 function And(ORList) {
-    let or = null; 
-    ORList["or"].forEach(OR => {
-        if (or){
-            or = `(${or} OR ${Or(OR)})`;    
-        } else {
-            or = Or(OR);
-        }
-    });
-    return or;
-}
-
-module.exports= {
-    Where(ANDList) {
-        let and = null;
-        ANDList["and"].forEach(AND => {
-            if (and){
-                and = `(${and} AND ${And(AND)})`;    
-            } else {
-                and = And(AND);
-            }
-        });
-
-        // TODO: Add this sorting and pagination stuff
-        // if (ANDList["sort"]){
-
-        // }
-        // if (ANDList["range"]){
-
-        // }
-
-        // Print the actual command that is generated
-        console.log(and);
-        return and;
+  let or = null;
+  ORList.or.forEach((OR) => {
+    if (or) {
+      or = `(${or} OR ${Or(OR)})`;
+    } else {
+      or = Or(OR);
     }
+  });
+  return or;
 }
+
+module.exports = {
+  Where(ANDList) {
+    let and = null;
+    ANDList.and.forEach((AND) => {
+      if (and) {
+        and = `(${and} AND ${And(AND)})`;
+      } else {
+        and = And(AND);
+      }
+    });
+
+    return and;
+  },
+};

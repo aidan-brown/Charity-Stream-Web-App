@@ -4,7 +4,8 @@
     "description": "The backend for the CSH Minecraft Charity stream",
     "main": "server.js",
     "scripts": {
-        "start": "node src/server.js"
+        "start": "nodemon src/server.js",
+        "start-prod": "node src/server.js"
     },
     "author": {
         "email": "pr@csh.rit.edu",
@@ -18,5 +19,10 @@
         "express": "^4.17.1",
         "mysql": "^2.17.1"
     },
-    "devDependencies": {}
+    "devDependencies": {
+        "eslint": "^7.10.0",
+        "eslint-config-airbnb-base": "^14.2.0",
+        "eslint-plugin-import": "^2.22.1",
+        "nodemon": "^2.0.4"
+    }
 }

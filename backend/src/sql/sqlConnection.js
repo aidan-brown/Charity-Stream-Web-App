@@ -1,19 +1,20 @@
-const mysql = require("mysql");
+const mysql = require('mysql');
 
 module.exports = {
-    SqlConnect(){
-        const connection = mysql.createConnection({
-            host: process.env.MCHOST,
-            database: process.env.MCDB,
-            user: process.env.MCUSER,
-            password: process.env.MCPWRD
-        });
-    
-        connection.connect(function(error){
-            if (error)
-                return null;
-        });
+  SqlConnect: () => {
+    const connection = mysql.createConnection({
+      host: process.env.MCHOST,
+      database: process.env.MCDB,
+      user: process.env.MCUSER,
+      password: process.env.MCPWRD,
+    });
 
-        return connection;
+    try {
+      connection.connect();
+    } catch (err) {
+      throw new Error(JSON.stringify({ code: 500, message: 'Could not connect to the DB' }));
     }
-} 
+
+    return connection;
+  },
+};
