@@ -1,0 +1,74 @@
+/* The footer tag that holds all the footer information */
+.Footer {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+
+	min-height: 4rem;
+	padding: 0rem 2rem;
+}
+
+/* The div tag that holds all the relevant links for the footer */
+.links {
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-end;
+	width: 25%;
+}
+
+/* The div tag that holds all of the author information */
+.authors {
+	width: 55%;
+}
+
+/* The a tags that hold the images and text that are relevant to the links */
+.github,
+.pubsite {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+}
+
+/* All the p tags in the footer */
+.Footer p {
+	margin: 0;
+	font-size: .75rem;
+}
+
+/* All the a tags in the footer */
+.Footer a {
+	display: flex;
+	flex-direction: row;
+	width: 100%;
+}
+
+/* All the a links in the footer */
+.Footer a:link {
+	text-decoration: none;
+}
+
+/* The p tag when the a tag is hovered over */
+.Footer a:hover p {
+	color: rgb(255, 186, 238);
+
+	transition: all 250ms;
+}
+
+/* The img tag that holds the CSH logo */
+#csh-logo {
+	width: 2.65rem;
+	margin: 0rem 1rem;
+}
+
+/* The img tag that holds the Github logo */
+#github-logo {
+	width: 3rem;
+	margin: 0rem 1rem;
+}
+
+/* Breakpoint when the window reaches medium width (768px) */
+@media only screen and (max-width: 768px) {
+	.Footer a p {
+		display: none;
+	}
+}

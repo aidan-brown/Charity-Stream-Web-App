@@ -1,0 +1,188 @@
+/* The div tag that holds the entire landing/stream page */
+.Landing {
+    overflow-y: auto;
+    overflow-x: auto;
+    background-color: rgb(255, 255, 255);
+
+    width: 100%;
+}
+
+/* The div tag that holds the stream window and the player list */
+.stream-player {
+    width: 100%;
+    height: 90vh;
+
+    display: flex;
+    flex-direction: row;
+
+    padding: 1rem 2rem 0 2rem;
+}
+
+/* The StreamWindow element in the stream player div */
+.stream-player .StreamWindow {
+    height: 100%;
+    width: 100%;
+}
+
+/* The PlayerList element in the stream player div */
+.stream-player .PlayerList {
+    height: 100%;
+    width: 100%;
+
+    padding-right: .5rem;
+}
+
+/* The div tag that holds the PlayerList element */
+#player-list {
+    background: rgb(232, 232, 232);
+    background: linear-gradient(120deg, rgba(232, 232, 232, 1) 0%, rgba(218, 218, 218, 1) 100%);
+
+    border-top-right-radius: .5rem;
+    border-bottom-right-radius: .5rem;
+}
+
+/* The player list when in the active state */
+#player-list.show {
+    transition: all 500ms;
+
+    height: 100%;
+    width: 35rem;
+
+    padding: 0 .5rem 0 1rem;
+}
+
+/* The player list when in the inactive state */
+#player-list.hide {
+    transition: all 500ms;
+
+    height: 100%;
+    width: 0rem;
+
+    padding: 0;
+
+    overflow-y: hidden;
+}
+
+/* The button tag that toggles the player list */
+#arrow {
+    padding: 0;
+    border-radius: 0;
+
+    background: rgb(199, 24, 71);
+}
+
+/* The state of the button when the player list is hidden */
+#arrow.show {
+    border-top-right-radius: .5rem;
+    border-bottom-right-radius: .5rem;
+
+    transition: all 500ms;
+}
+
+/* The state of the button when the player list is shown */
+#arrow.hide {
+    border-radius: 0;
+
+    transition: all 500ms;
+}
+
+/* The img tag that holds the arrow svg of the button */
+#arrow img {
+    width: 1.5rem;
+    opacity: 0.5;
+
+    padding: 0;
+    margin: 0;
+}
+
+/* The state of the arrow when the player list is hidden */
+#arrow.show img {
+    transition: all 1000ms;
+    transform: rotate(-90deg);
+}
+
+/* The state of the arrow when the player list is shown */
+#arrow.hide img {
+    transition: all 1000ms;
+    transform: rotate(90deg);
+}
+
+/* The div tag that holds the flavor text for the stream */
+.flavor-text {
+    margin: 3rem 5rem;
+    padding: 2rem;
+    color: white;
+    box-shadow: .45rem .45rem .25rem rgba(0, 0, 0, 0.25);
+}
+
+/* Breakpoint when the window reaches medium width (768px) */
+@media only screen and (max-width: 768px) {
+    .stream-player {
+        flex-direction: column;
+        height: fit-content;
+
+        padding: 0;
+    }
+
+    .stream-player .StreamWindow {
+        height: 75vh;
+    }
+
+    #arrow.show {
+        border-radius: 0;
+        border-bottom-right-radius: .5rem;
+        border-bottom-left-radius: .5rem;
+
+        transition: all 500ms;
+    }
+
+    #arrow.hide {
+        border-radius: 0;
+
+        transition: all 500ms;
+    }
+
+    #arrow.show img {
+        transition: all 1000ms;
+        transform: rotate(180deg);
+    }
+
+    #arrow.hide img {
+        transition: all 1000ms;
+        transform: rotate(0deg);
+    }
+
+    #player-list {
+        border-radius: 0;
+        border-bottom-right-radius: .5rem;
+        border-bottom-left-radius: .5rem;
+    }
+
+    #player-list.show {
+        transition: all 500ms;
+
+        height: 20rem;
+        width: 100%;
+
+        padding: 0 .5rem 0 1rem;
+    }
+
+    #player-list.hide {
+        transition: all 500ms;
+
+        height: 0;
+        width: 100%;
+
+        padding: 0;
+    }
+
+    .stream-player .PlayerList .list-element {
+        width: 100%;
+    }
+
+    .flavor-text {
+        margin: 3rem 0;
+
+        box-shadow: .25rem .45rem .25rem rgba(0, 0, 0, 0.25);
+    }
+}

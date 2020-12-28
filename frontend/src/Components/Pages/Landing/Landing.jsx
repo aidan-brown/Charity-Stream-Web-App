@@ -1,18 +1,56 @@
 import React, { Component } from 'react';
+import './Landing.css';
 import PlayerList from '../../Players/PlayerList';
+import StreamWindow from '../../StreamWindow/StreamWindow';
+import Arrow from '../../../images/arrow.svg';
 
+/** Class for constructing the landing/stream page **/
 class Landing extends Component{
+    /*
+    * @constructor
+    * @param {object} props - holds the props passed through to the component
+    * @param {object} state - holds the curent state of the component
+    */
+    constructor(props){
+        super(props);
+        this.state = {};
+
+        this.togglePlayerList = this.togglePlayerList.bind(this);
+    }
+
+    /*
+    Handles the toggling of the player list, changing the class name of the list and arrow to the appropriate state
+    */
+    togglePlayerList(){
+        let playerList = document.querySelector('#player-list');
+        let arrow = document.querySelector('#arrow');
+        if(playerList.className === 'show'){
+            playerList.className = 'hide';
+            arrow.className = 'btn show';
+        }
+        else{
+            playerList.className = 'show';
+            arrow.className = 'btn hide';
+        }
+    }
+
+    /*
+    Handles the rendering of the component
+    * @return {JSX Element} the content for the landing page
+    */
     render(){
         return(
             <div className='Landing'>
-                <h1>Landing</h1>
-
-                <div className="Twitch-Embed">
-
+                <div className='stream-player'>
+                    <StreamWindow title='Charity Stream' width='100%' height='100%' url='https://player.twitch.tv/?channel=justgiving' />
+                    <button id='arrow' className='btn hide' onClick={this.togglePlayerList}><img className='show' src={Arrow}/></button>
+                    <div id='player-list' className='show'>
+                        <PlayerList/>
+                    </div>
                 </div>
-                <PlayerList />
-                <div className="flavor-text">
-                    
+                
+                <div className='flavor-text bg-csh-secondary-gradient'>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Laborum quos incidunt, aspernatur error quisquam nesciunt quo rerum commodi porro adipisci obcaecati dolores at excepturi, dolore veniam eos, impedit dolorum nemo libero amet quis rem illo esse distinctio! Illum expedita officia corporis vitae odit maiores eos iure ut facilis impedit. Sunt, ex ullam tempore tenetur fugit corporis expedita velit dicta nisi consequuntur itaque repellendus aspernatur architecto explicabo cum? Qui esse, quaerat nobis tempora aperiam sunt beatae? Dolore, doloribus libero corporis, autem natus quae porro sequi deserunt ut culpa, tempore accusantium fuga et quisquam pariatur. Ducimus reprehenderit saepe non quasi obcaecati ullam.</p>
                 </div>
             </div>
         );

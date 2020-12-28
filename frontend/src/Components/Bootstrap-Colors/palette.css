@@ -1,0 +1,29 @@
+.bg-csh-primary{
+    background-color: #B0197E;
+}
+
+.bg-csh-primary-gradient{
+    background: rgb(176,25,126);
+    background: linear-gradient(180deg, rgba(176,25,126,1) 0%, rgba(154,23,111,1) 100%);
+}
+
+.bg-csh-secondary{
+    background-color: #E11C52;
+}
+
+.bg-csh-secondary-gradient{
+    background: rgba(225,28,82,1);
+    background: linear-gradient(180deg, rgba(225,28,82,1) 0%, rgba(205,27,76,1) 100%);
+}
+
+.bg-csh-light{
+    background-color: white;
+}
+
+.font-csh-dark{
+    color: white;
+}
+
+.font-csh-light{
+    color: black;
+}
