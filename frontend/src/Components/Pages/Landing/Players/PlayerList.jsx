@@ -1,16 +1,16 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import './PlayerList.css';
-import {BACKENDURL} from '../App/constants';
+import {BACKENDURL} from '../../../App/constants';
 
-import CSHLogo from '../../images/csh.svg'
-import BlackbaudLogo from '../../images/blackbaud.svg';
-import HOGSLogo from '../../images/hogs.svg';
-import EHouseLogo from '../../images/ehouse.svg';
-import SSELogo from '../../images/sse.svg';
-import ArtHouseLogo from '../../images/arthouse.svg';
-import RITLogo from '../../images/rit.svg';
-import CartLogo from '../../images/shopping-cart.svg';
+import CSHLogo from '../../../../images/csh.svg'
+import BlackbaudLogo from '../../../../images/blackbaud.svg';
+import HOGSLogo from '../../../../images/hogs.svg';
+import EHouseLogo from '../../../../images/ehouse.svg';
+import SSELogo from '../../../../images/sse.svg';
+import ArtHouseLogo from '../../../../images/arthouse.svg';
+import RITLogo from '../../../../images/rit.svg';
+import CartLogo from '../../../../images/shopping-cart.svg';
 
 /** Class for constructing the player list component **/
 class PlayerList extends Component{

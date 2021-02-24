@@ -1,11 +1,8 @@
 /* The footer tag that holds all the footer information */
 .Footer {
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
 
 	min-height: 4rem;
-	padding: 0rem 2rem;
+	padding: 2rem;
 }
 
 /* The div tag that holds all the relevant links for the footer */
@@ -71,4 +68,30 @@
 	.Footer a p {
 		display: none;
 	}
+}
+
+.footer-row{
+	margin: 1rem 0;
+	width: 100%;
+	display: flex;
+	justify-content: space-around;
+
+	color: white;
+}
+
+.footer-row a:link{
+	color: white;
+}
+
+.footer-row a:visited{
+	color: white;
+}
+
+.footer-row a:hover{
+	color: lightgrey;
+	text-decoration: underline;
+}
+
+.footer-row a:active{
+	color: white;
 }

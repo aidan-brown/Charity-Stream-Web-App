@@ -4,69 +4,64 @@
 }
 
 .store-window{
-    width: 80%;
-    height: 100%;
+    width: 1700px;
+    height: 1050px;
 
-    margin: 2rem 10%;
+    margin: 2rem auto;
 
     display: grid;
-    grid-template-rows: 2rem 40rem;
-    grid-template-columns: 100%;
+    grid-template-rows: 100%;
+    grid-template-columns: 8rem 92.5%;
     grid-template-areas: 
-    "store-nav"
-    "store-content";
-
-    background: #B0197E;
-    border: .5rem solid #B0197E;
-    border-radius: 1rem;
+    "store-nav store-content";
 
     color: white;
 }
 
-.store-nav ul{
+.store-nav{
+    background: #E11C52;
+    width: 100%;
+    padding: 1rem;
+
     list-style: none;
     display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    align-items: center;
+    flex-direction: column;
 }
 
-.store-content{
-    background: #F8F8FF;
-    border: .5rem solid #B0197E;
-    border-radius: 1rem;
-    height: 100%;
-    width: 100%;
-
-    display: grid;
-    grid-template-columns: repeat(auto-fill, 20rem);
-    grid-template-rows: repeat(auto-fill, 20rem);
-
-    margin: auto;
-
-    overflow-y: scroll;
-    overflow-x: hidden;
+.store-link:link{
+    color: white;
 }
 
-.store-item{
-    width: 19rem;
-    height: 19rem;
-
-    background: #B0197E;
-    border: .5rem solid #B0197E;
-    border-radius: .5rem;
-
-    margin: .5rem;
+.store-link:visited{
+    color: white;
 }
 
-.store-item .item-image{
-    background: #F8F8FF;
-    border: .5rem solid #B0197E;
-    border-radius: 1rem;
+.store-link:hover{
+    color: lightgrey;
+    text-decoration: none;
 
-    padding: 2rem;
+    margin-top: 0;
 }
 
-.store-item .item-image img{
-    width: 2rem;
+.store-link:hover .icon{
+    fill: lightgrey;
+    width: 5.5rem;
+}
+
+.store-link{
+    transition: all 200ms;
+    margin: 0.5rem;
+    text-align: center;
+}
+
+.store-link .icon{
+    width: 5rem;
+    margin: 0 auto;
+    transition: all 200ms;
+}
+
+@media only screen and (max-width: 1700px){
+    .store-window{
+        width: 90%;
+    }
 }

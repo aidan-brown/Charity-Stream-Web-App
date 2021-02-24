@@ -12,18 +12,22 @@ class Footer extends Component{
     render(){
         return(
             <footer className="Footer bg-csh-primary-gradient">
-                <div className="authors">
-                    <p className="authors-names font-csh-dark">Site created by Aidan Brown, River Marks, Corey Rigney, and Rhys Stever</p>
+                <div class="footer-row">
+                    <img src="https://assets.csh.rit.edu/pubsite/rit_csh.png" />
                 </div>
-                <div className="links">
-                    <a href="https://github.com/aidan-brown/Charity-Stream-Web-App" className="github">
-                        <p className="githubLink font-csh-dark">Check out this site on Github!</p>
-                        <img id='github-logo' src={GithubLogo} alt='Github logo'/>
-                    </a>
-                    <a href="https://csh.rit.edu" className="pubsite">
-                        <p className="pubsiteLink font-csh-dark">Check out CSH!</p>
-                        <img id='csh-logo' src={CSHLogo} alt='CSH logo'/>
-                    </a>
+                <div class="footer-row">
+                    <i>Getting more done after 2am than most people do all day.</i>
+                </div>
+                <div class="footer-row">
+                    <div>
+                        <a href="mailto:charity@csh.rit.edu">charity.csh.rit.edu</a>
+                    </div>
+                    <div>
+                        @ 2020 Computer Science House
+                    </div>
+                    <div>
+                        <a href="https://github.com/aidan-brown/Charity-Stream-Web-App">Website on Github</a>
+                    </div>
                 </div>
             </footer>
         )
