@@ -1,150 +1,53 @@
-import React, { Component } from 'react';
+import React, {useState, useEffect} from 'react';
 import Placeholder from '../../../../images/placeholder.png';
+import {BACKENDURL} from '../../../App/constants';
 
 import './StoreContent.css';
 
-class Store extends Component{
-    /*
-    Handles the rendering of the component - Contains the routes to each of the content pages
-    * @return {JSX Element} the store page
-    */
-    render(){
-        return(
-            <div className='StoreContent'>
-                <span className='store-item'>
-                    <p className='item-name'>Item Name</p>
-                    <div className='item-image'>
-                        <img src={Placeholder} alt='item placeholder image'/>
-                    </div>
-                    <dl className='item-stats'>
-                        <dt>Amount:</dt>
-                        <dd>64</dd>
-                    </dl>
-                    <p className='item-price'>Price: $0.00</p>
-                </span>
+const Store = ({filterTag}) => {
+    const[items, setItems] = useState([]);
+    const[itemElem, setItemElem] = useState({});
 
-                <span className='store-item'>
-                    <p className='item-name'>Item Name</p>
-                    <div className='item-image'>
-                        <img src={Placeholder} alt='item placeholder image'/>
-                    </div>
-                    <dl className='item-stats'>
-                        <dt>Amount:</dt>
-                        <dd>64</dd>
-                    </dl>
-                    <p className='item-price'>Price: $0.00</p>
-                </span>
+    useEffect(() => {
+        fetch(`${BACKENDURL}/items`)
+        .then(res => res.json())
+        .then(res => {
+            console.log(res)
+            setItems(res);
+            const counters = {};
 
-                <span className='store-item'>
-                    <p className='item-name'>Item Name</p>
-                    <div className='item-image'>
-                        <img src={Placeholder} alt='item placeholder image'/>
-                    </div>
-                    <dl className='item-stats'>
-                        <dt>Amount:</dt>
-                        <dd>64</dd>
-                    </dl>
-                    <p className='item-price'>Price: $0.00</p>
-                </span>
+            res.forEach((_, index) => {
+                counters[index] = 1;
+            })
+            setItemElem(counters);
+        })
+        .catch(err => console.error(err))
+    }, []);
 
-                <span className='store-item'>
-                    <p className='item-name'>Item Name</p>
-                    <div className='item-image'>
-                        <img src={Placeholder} alt='item placeholder image'/>
-                    </div>
-                    <dl className='item-stats'>
-                        <dt>Amount:</dt>
-                        <dd>64</dd>
-                    </dl>
-                    <p className='item-price'>Price: $0.00</p>
-                </span>
-
-                <span className='store-item'>
-                    <p className='item-name'>Item Name</p>
-                    <div className='item-image'>
-                        <img src={Placeholder} alt='item placeholder image'/>
-                    </div>
-                    <dl className='item-stats'>
-                        <dt>Amount:</dt>
-                        <dd>64</dd>
-                    </dl>
-                    <p className='item-price'>Price: $0.00</p>
-                </span>
-
-                <span className='store-item'>
-                    <p className='item-name'>Item Name</p>
-                    <div className='item-image'>
-                        <img src={Placeholder} alt='item placeholder image'/>
-                    </div>
-                    <dl className='item-stats'>
-                        <dt>Amount:</dt>
-                        <dd>64</dd>
-                    </dl>
-                    <p className='item-price'>Price: $0.00</p>
-                </span>
-
-                <span className='store-item'>
-                    <p className='item-name'>Item Name</p>
-                    <div className='item-image'>
-                        <img src={Placeholder} alt='item placeholder image'/>
-                    </div>
-                    <dl className='item-stats'>
-                        <dt>Amount:</dt>
-                        <dd>64</dd>
-                    </dl>
-                    <p className='item-price'>Price: $0.00</p>
-                </span>
-
-                <span className='store-item'>
-                    <p className='item-name'>Item Name</p>
-                    <div className='item-image'>
-                        <img src={Placeholder} alt='item placeholder image'/>
-                    </div>
-                    <dl className='item-stats'>
-                        <dt>Amount:</dt>
-                        <dd>64</dd>
-                    </dl>
-                    <p className='item-price'>Price: $0.00</p>
-                </span>
-
-                <span className='store-item'>
-                    <p className='item-name'>Item Name</p>
-                    <div className='item-image'>
-                        <img src={Placeholder} alt='item placeholder image'/>
-                    </div>
-                    <dl className='item-stats'>
-                        <dt>Amount:</dt>
-                        <dd>64</dd>
-                    </dl>
-                    <p className='item-price'>Price: $0.00</p>
-                </span>
-
-                <span className='store-item'>
-                    <p className='item-name'>Item Name</p>
-                    <div className='item-image'>
-                        <img src={Placeholder} alt='item placeholder image'/>
-                    </div>
-                    <dl className='item-stats'>
-                        <dt>Amount:</dt>
-                        <dd>64</dd>
-                    </dl>
-                    <p className='item-price'>Price: $0.00</p>
-                </span>
-
-                <span className='store-item'>
-                    <p className='item-name'>Item Name</p>
-                    <div className='item-image'>
-                        <img src={Placeholder} alt='item placeholder image'/>
-                    </div>
-                    <dl className='item-stats'>
-                        <dt>Amount:</dt>
-                        <dd>64</dd>
-                    </dl>
-                    <p className='item-price'>Price: $0.00</p>
-                </span>
-            </div>
-        );
-    }
+    return(
+        <div className='StoreContent'>
+            {items.filter(item => filterTag === 'all' || item.type === filterTag).map((item, index) => {
+                return <span key={index} className='store-item'>
+                        <p className='item-name'>{item.name}</p>
+                        <div className='item-image'>
+                            <img src={Placeholder} alt='item placeholder image'></img>
+                        </div>
+                        <dl className='item-stats'>
+                            
+                        </dl>
+                        <div className='item-price'>
+                            <p>Amount:</p>
+                            <span className='item-amount'>
+                                <button disabled={itemElem[index] <= 1} onClick={() => setItemElem({...itemElem, [index]: itemElem[index] - 1})}>-</button>
+                                {itemElem[index]}
+                                <button onClick={() => setItemElem({...itemElem, [index]: itemElem[index] + 1})}>+</button>
+                            </span>
+                            <p className='item-price'>Price: ${(itemElem[index] * item.price).toFixed(2)}</p>
+                        </div>
+                    </span>
+            })}
+        </div>
+    );
 }
 
 export default Store;

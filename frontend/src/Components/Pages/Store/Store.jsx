@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, {useState} from 'react';
 import StoreContent from './StoreContent/StoreContent';
 import './Store.css';
 
@@ -6,30 +6,26 @@ let Icon = <svg className="icon" fill="white" enable-background="new 0 0 512 512
 
 
 /** Responsible for constructing the store page component **/
-class Store extends Component{
-    /*
-    Handles the rendering of the component - Contains the routes to each of the content pages
-    * @return {JSX Element} the store page
-    */
-    render(){
-        return(
-            <div className='Store'>
-                <div className='store-window'>
-                    <nav className='store-nav'>
-                        <a id='a-all' className='store-link'>{Icon}All</a>
-                        <a id='a-tools' className='store-link'>{Icon}Tools</a>
-                        <a id='a-weapons' className='store-link'>{Icon}Weapons</a>
-                        <a id='a-armor' className='store-link'>{Icon}Armor</a>
-                        <a id='a-armor' className='store-link'>{Icon}Food</a>
-                        <a id='a-armor' className='store-link'>{Icon}Buffs</a>
-                        <a id='a-armor' className='store-link'>{Icon}Materials</a>
-                        <a id='a-armor' className='store-link'>{Icon}Kits</a>
-                    </nav>
-                    <StoreContent/>
-                </div>
+const Store = () => {
+    const[filterTag, setFilterTag] = useState('all');
+
+    return(
+        <div className='Store'>
+            <div className='store-window'>
+                <nav className='store-nav'>
+                    <span id='store-all' className='store-link' onClick={() => setFilterTag('all')}>{Icon}All</span>
+                    <span id='a-tools' className='store-link' onClick={() => setFilterTag('tool')}>{Icon}Tools</span>
+                    <span id='a-weapons' className='store-link' onClick={() => setFilterTag('weapon')}>{Icon}Weapons</span>
+                    <span id='a-armor' className='store-link' onClick={() => setFilterTag('armor')}>{Icon}Armor</span>
+                    <span id='a-food' className='store-link' onClick={() => setFilterTag('food')}>{Icon}Food</span>
+                    <span id='a-buffs' className='store-link' onClick={() => setFilterTag('buff')}>{Icon}Buffs</span>
+                    <span id='a-materials' className='store-link' onClick={() => setFilterTag('material')}>{Icon}Materials</span>
+                    <span id='a-kits' className='store-link' onClick={() => setFilterTag('kit')}>{Icon}Kits</span>
+                </nav>
+                <StoreContent filterTag={filterTag}/>
             </div>
-        );
-    }
+        </div>
+    );
 }
 
 export default Store;

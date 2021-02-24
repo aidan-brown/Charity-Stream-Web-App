@@ -49,19 +49,56 @@
 
     background: #B0197E;
     border: .5rem solid #B0197E;
+    border-radius: 7.55px;
 
     margin: .5rem auto;
+    font-size: 0.75rem;
 }
 
 .store-item .item-image{
     background: #F8F8FF;
-    border: .5rem solid #B0197E;
+    border: .5rem solid #F8F8FF;
+    border-radius: 7.55px;
 
     padding: 2rem;
 }
 
 .store-item .item-image img{
     width: 2rem;
+}
+
+.store-item .item-amount{
+    height: 1rem;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    text-align: center;
+}
+
+.store-item .item-amount button{
+    background: none;
+    border: none;
+    color: white;
+
+    transition: all 200ms;
+    cursor: pointer;
+}
+
+.store-item .item-amount button:hover{
+    font-size: 0.9rem;
+}
+
+.store-item .item-amount button:focus{
+    outline: none;
+}
+
+.store-item .item-amount button:disabled{
+    color: lightgray;
+    cursor: default;
+}
+
+.store-item .item-amount button:disabled:hover{
+    font-size: 0.75rem;
 }
 
 @media only screen and (max-width: 1700px){
