@@ -41,10 +41,14 @@
 	margin: 1rem 0;
 	width: 100%;
 	display: flex;
-	justify-content: space-around;
+	justify-content: center;
 	align-items: center;
 
 	color: white;
+}
+
+.footer-row div{
+	margin: 0 2rem;
 }
 
 .footer-row a:link{

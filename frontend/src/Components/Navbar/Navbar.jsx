@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Logo from '../../images/csh.svg';
 import ToggleIcon from '../../images/toggler.svg';
@@ -45,7 +45,7 @@ const Navbar = () => {
                         <img id='csh-logo' src={Logo} alt='CSH logo' />
                 </a>
                 <button className='navbar-toggler' type='button' data-toggle='collapse' data-target='#collapsibleNavbar'>
-                    <img src={ToggleIcon} height="100%" />
+                    <img src={ToggleIcon} height="100%" alt="open nav menu" />
                 </button>
 
                 <div className='collapse navbar-collapse' id='collapsibleNavbar'>
@@ -54,10 +54,10 @@ const Navbar = () => {
                             <Link id='stream' className='nav-link' onClick={setLinkActive} to='/'><span>Stream</span></Link>
                         </li>
                         <li className='nav-item'>
-                            <Link id='store' className='nav-link' onClick={setLinkActive} to='/Store'><span>Store</span></Link>
+                            <Link id='store' className='nav-link' onClick={setLinkActive} to='/Store'><span>Donation Shop</span></Link>
                         </li>
                         <li className='nav-item'>
-                            <a className='nav-link' href='#'><span>Donate</span></a>
+                            <a className='nav-link' href='#'><span>Learn More</span></a>
                         </li>
                     </ul>
                 </div>

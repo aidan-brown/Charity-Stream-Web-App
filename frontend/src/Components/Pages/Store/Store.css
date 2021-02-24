@@ -19,9 +19,10 @@
 }
 
 .store-nav{
-    background: #E11C52;
     width: 100%;
     padding: auto;
+
+    border-radius: 7.5px 0 0 7.5px;
 
     list-style: none;
     display: flex;
@@ -73,11 +74,15 @@
     }
 }
 
-@media only screen and (max-width: 850px){
+@media only screen and (max-width: 1000px){
     .store-window{
         width: 100%;
-        margin: 1rem 0 2rem 0;
+        margin: 0 0 2rem 0;
         grid-template-columns: 20% 80%;
+    }
+
+    .store-nav{
+        border-radius: 0;
     }
 
     .store-link{

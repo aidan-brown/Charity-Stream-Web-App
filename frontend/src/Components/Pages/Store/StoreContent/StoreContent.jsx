@@ -27,10 +27,10 @@ const Store = ({filterTag}) => {
     return(
         <div className='StoreContent'>
             {items.filter(item => filterTag === 'all' || item.type === filterTag).map((item, index) => {
-                return <span key={index} className='store-item'>
+                return <span key={index} className='store-item bg-csh-primary-gradient'>
                         <p className='item-name'>{item.name}</p>
                         <div className='item-image'>
-                            <img src={Placeholder} alt='item placeholder image'></img>
+                            <img src={Placeholder} alt='item placeholder'></img>
                         </div>
                         <dl className='item-stats'>
                             

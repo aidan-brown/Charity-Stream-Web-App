@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useRef} from 'react';
 import './Landing.css';
 import PlayerList from './Players/PlayerList';
 import StreamWindow from './StreamWindow/StreamWindow';
@@ -6,6 +6,12 @@ import Arrow from '../../../images/arrow.svg';
 
 /** Class for constructing the landing/stream page **/
 const Landing = () => {
+    const streamDiv = useRef();
+
+    useEffect(() => {
+        streamDiv.current.style.height = `${window.screen.height * 0.8}px`;
+    }, [])
+
     /*
     Handles the toggling of the player list, changing the class name of the list and arrow to the appropriate state
     */
@@ -24,9 +30,9 @@ const Landing = () => {
 
     return(
         <div className='Landing'>
-            <div className='stream-player'>
+            <div className='stream-player' ref={streamDiv}>
                 <StreamWindow title='Charity Stream' width='100%' height='100%' url='https://player.twitch.tv/?channel=justgiving' />
-                <button id='arrow' className='btn hide' onClick={togglePlayerList}><img className='show' src={Arrow}/></button>
+                <button id='arrow' className='btn hide' onClick={togglePlayerList}><img className='show' src={Arrow} alt="toggle playerlist"/></button>
                 <div id='player-list' className='show'>
                     <PlayerList/>
                 </div>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './StreamWindow.css';
 
 /** Class for constructing the stream window component **/
