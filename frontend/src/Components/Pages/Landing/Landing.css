@@ -10,7 +10,7 @@
 /* The div tag that holds the stream window and the player list */
 .stream-player {
     width: 100%;
-    height: 90vh;
+    height: 680px;
 
     display: flex;
     flex-direction: row;

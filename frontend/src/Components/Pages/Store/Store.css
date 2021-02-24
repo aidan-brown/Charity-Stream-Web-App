@@ -5,9 +5,9 @@
 
 .store-window{
     width: 1700px;
-    height: 1050px;
+    height: 680px;
 
-    margin: 2rem auto;
+    margin: 1rem auto 2rem auto;
 
     display: grid;
     grid-template-rows: 100%;
@@ -21,11 +21,12 @@
 .store-nav{
     background: #E11C52;
     width: 100%;
-    padding: 1rem;
+    padding: auto;
 
     list-style: none;
     display: flex;
     flex-direction: column;
+    justify-content: center;
 }
 
 .store-link:link{
@@ -45,17 +46,20 @@
 
 .store-link:hover .icon{
     fill: lightgrey;
-    width: 5.5rem;
+    width: 3.25rem;
 }
 
 .store-link{
     transition: all 200ms;
     margin: 0.5rem;
     text-align: center;
+
+    display: flex;
+    flex-direction: column;
 }
 
 .store-link .icon{
-    width: 5rem;
+    width: 2.75rem;
     margin: 0 auto;
     transition: all 200ms;
 }
@@ -63,5 +67,27 @@
 @media only screen and (max-width: 1700px){
     .store-window{
         width: 90%;
+        grid-template-columns: 8rem 90%;
+    }
+}
+
+@media only screen and (max-width: 850px){
+    .store-window{
+        width: 100%;
+        margin: 1rem 0 2rem 0;
+        grid-template-columns: 20% 80%;
+    }
+
+    .store-link{
+        font-size: 0.75rem;
+        margin: 0.5rem 0;
+    }
+
+    .store-link:hover .icon{
+        width: 2.75rem;
+    }
+    
+    .store-link .icon{
+        width: 2.25rem;
     }
 }
