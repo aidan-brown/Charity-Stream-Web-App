@@ -4,69 +4,97 @@
 }
 
 .store-window{
-    width: 80%;
-    height: 100%;
+    width: 1700px;
+    height: 680px;
 
-    margin: 2rem 10%;
+    margin: 1rem auto 2rem auto;
 
     display: grid;
-    grid-template-rows: 2rem 40rem;
-    grid-template-columns: 100%;
+    grid-template-rows: 100%;
+    grid-template-columns: 8rem 92.5%;
     grid-template-areas: 
-    "store-nav"
-    "store-content";
-
-    background: #B0197E;
-    border: .5rem solid #B0197E;
-    border-radius: 1rem;
+    "store-nav store-content";
 
     color: white;
 }
 
-.store-nav ul{
+.store-nav{
+    width: 100%;
+    padding: auto;
+
+    border-radius: 7.5px 0 0 7.5px;
+
     list-style: none;
     display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    align-items: center;
+    flex-direction: column;
+    justify-content: center;
 }
 
-.store-content{
-    background: #F8F8FF;
-    border: .5rem solid #B0197E;
-    border-radius: 1rem;
-    height: 100%;
-    width: 100%;
-
-    display: grid;
-    grid-template-columns: repeat(auto-fill, 20rem);
-    grid-template-rows: repeat(auto-fill, 20rem);
-
-    margin: auto;
-
-    overflow-y: scroll;
-    overflow-x: hidden;
+.store-link:link{
+    color: white;
 }
 
-.store-item{
-    width: 19rem;
-    height: 19rem;
-
-    background: #B0197E;
-    border: .5rem solid #B0197E;
-    border-radius: .5rem;
-
-    margin: .5rem;
+.store-link:visited{
+    color: white;
 }
 
-.store-item .item-image{
-    background: #F8F8FF;
-    border: .5rem solid #B0197E;
-    border-radius: 1rem;
+.store-link:hover{
+    color: lightgrey;
+    text-decoration: none;
 
-    padding: 2rem;
+    margin-top: 0;
 }
 
-.store-item .item-image img{
-    width: 2rem;
+.store-link:hover .icon{
+    fill: lightgrey;
+    width: 3.25rem;
+}
+
+.store-link{
+    transition: all 200ms;
+    margin: 0.5rem;
+    text-align: center;
+
+    display: flex;
+    flex-direction: column;
+
+    cursor: pointer;
+}
+
+.store-link .icon{
+    width: 2.75rem;
+    margin: 0 auto;
+    transition: all 200ms;
+}
+
+@media only screen and (max-width: 1700px){
+    .store-window{
+        width: 90%;
+        grid-template-columns: 8rem 90%;
+    }
+}
+
+@media only screen and (max-width: 1000px){
+    .store-window{
+        width: 100%;
+        margin: 0 0 2rem 0;
+        grid-template-columns: 20% 80%;
+    }
+
+    .store-nav{
+        border-radius: 0;
+    }
+
+    .store-link{
+        font-size: 0.75rem;
+        margin: 0.5rem 0;
+    }
+
+    .store-link:hover .icon{
+        width: 2.75rem;
+    }
+    
+    .store-link .icon{
+        width: 2.25rem;
+    }
 }

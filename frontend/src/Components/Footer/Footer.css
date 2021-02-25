@@ -1,24 +1,7 @@
 /* The footer tag that holds all the footer information */
 .Footer {
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-
 	min-height: 4rem;
-	padding: 0rem 2rem;
-}
-
-/* The div tag that holds all the relevant links for the footer */
-.links {
-	display: flex;
-	flex-direction: row;
-	justify-content: flex-end;
-	width: 25%;
-}
-
-/* The div tag that holds all of the author information */
-.authors {
-	width: 55%;
+	padding: 2rem;
 }
 
 /* The a tags that hold the images and text that are relevant to the links */
@@ -54,21 +37,51 @@
 	transition: all 250ms;
 }
 
-/* The img tag that holds the CSH logo */
-#csh-logo {
-	width: 2.65rem;
-	margin: 0rem 1rem;
+.footer-row{
+	margin: 1rem 0;
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	color: white;
 }
 
-/* The img tag that holds the Github logo */
-#github-logo {
-	width: 3rem;
-	margin: 0rem 1rem;
+.footer-row div{
+	margin: 0 2rem;
 }
 
-/* Breakpoint when the window reaches medium width (768px) */
-@media only screen and (max-width: 768px) {
-	.Footer a p {
-		display: none;
+.footer-row a:link{
+	color: white;
+}
+
+.footer-row a:visited{
+	color: white;
+}
+
+.footer-row a:hover{
+	color: lightgrey;
+	text-decoration: underline;
+}
+
+.footer-row a:active{
+	color: white;
+}
+
+.footer-row img{
+	width: 30rem;
+}
+
+@media only screen and (max-width: 850px){
+	.footer-row{
+		flex-direction: column;
+	}
+
+	.footer-row div{
+		margin: 0.75rem 0;
+	}
+
+	.footer-row img{
+		width: 25rem;
 	}
 }
