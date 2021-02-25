@@ -5,7 +5,7 @@ import './StreamWindow.css';
 const StreamWindow = ({title, url, width, height}) => {
     return(
         <div className='StreamWindow'>
-            <iframe className="embed-responsive-item" title={title} width={width} height={height} src={url} frameBorder="0" allowFullScreen></iframe>
+            <iframe className="embed-responsive-item" src={url} title={title} width={width} height={height} frameBorder="0" allowFullScreen={true}></iframe>
         </div>
     );
 }

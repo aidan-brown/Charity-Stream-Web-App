@@ -31,7 +31,7 @@ const Landing = () => {
     return(
         <div className='Landing'>
             <div className='stream-player' ref={streamDiv}>
-                <StreamWindow title='Charity Stream' width='100%' height='100%' url='https://player.twitch.tv/?channel=justgiving' />
+                <StreamWindow title='Charity Stream' width='100%' height='100%' url={`https://player.twitch.tv/?channel=justgiving&muted=true&parent=${window.location.hostname}`} />
                 <button id='arrow' className='btn hide' onClick={togglePlayerList}><img className='show' src={Arrow} alt="toggle playerlist"/></button>
                 <div id='player-list' className='show'>
                     <PlayerList/>
