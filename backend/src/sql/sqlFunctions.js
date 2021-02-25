@@ -11,6 +11,8 @@ module.exports = {
 
       return new Promise((resolve, reject) => {
         connection.query(query, (error, result) => {
+          connection.end();
+
           if (error) {
             reject(
               new Error(
@@ -21,13 +23,15 @@ module.exports = {
               ),
             );
           }
-          resolve(result.map((value) => {
-            const data = {};
-            Object.keys(value).forEach((key) => {
-              if (value[key]) data[key] = value[key];
-            });
-            return data;
-          }));
+          else {
+            resolve(result.map((value) => {
+              const data = {};
+              Object.keys(value).forEach((key) => {
+                if (value[key]) data[key] = value[key];
+              });
+              return data;
+            }));
+          }
         });
       });
     } catch (error) {
@@ -51,6 +55,8 @@ module.exports = {
         connection.query(
           query,
           (error) => {
+            connection.end();
+
             if (error) {
               failure(
                 new Error(

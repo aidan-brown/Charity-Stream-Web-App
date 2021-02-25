@@ -1,4 +1,5 @@
 const { Select, Insert } = require('../sql/sqlFunctions');
+const safeJsonParse = require('../extraFunctions/safeJsonParse');
 
 module.exports = {
   getItems: async (req, res) => {
@@ -31,7 +32,7 @@ module.exports = {
 
       res.status(200).send(await Select(customQuery, null, where));
     } catch (error) {
-      const { code, message } = JSON.parse(error.message);
+      const { code = 500, message = error.message } = safeJsonParse(error.message);
       res.status(code).send(message);
     }
   },
@@ -64,7 +65,7 @@ module.exports = {
 
       res.status(200).send('success');
     } catch (error) {
-      const { code, message } = JSON.parse(error.message);
+      const { code = 500, message = error.message } = safeJsonParse(error.message);
       res.status(code).send(message);
     }
   },
