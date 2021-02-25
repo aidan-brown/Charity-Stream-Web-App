@@ -1,5 +1,6 @@
 const { Select, Insert } = require('../sql/sqlFunctions');
 const { Where } = require('../extraFunctions/whereConstruction');
+const safeJsonParse = require('../extraFunctions/safeJsonParse');
 
 module.exports = {
   getPlayers: async (req, res) => {
@@ -18,7 +19,7 @@ module.exports = {
       }
       res.status(200).send(await Select(null, 'players'));
     } catch (error) {
-      const { code, message } = JSON.parse(error.message);
+      const { code = 500, message = error.message } = safeJsonParse(error.message);
       res.status(code).send(message);
     }
   },
@@ -33,7 +34,7 @@ module.exports = {
         res.status(400).send('No Player provided');
       }
     } catch (error) {
-      const { code, message } = JSON.parse(error.message);
+      const { code = 500, message = error.message } = safeJsonParse(error.message);
       res.status(code).send(message);
     }
   },
