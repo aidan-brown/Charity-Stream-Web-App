@@ -1,2 +1,1 @@
-export const BACKENDURL = 'http://corona.headass.house:8000';
-export const FRONTENDURL = "http://frontend-charity-stream.cs.house/"
+export const BACKENDURL = 'https://14defac6c403.ngrok.io';
