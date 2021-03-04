@@ -5,8 +5,8 @@ import App from './Components/App/App';
 import { datadogRum } from '@datadog/browser-rum';
 
 datadogRum.init({
-    applicationId: process.env.DDAPPID,
-    clientToken: process.env.DDCLITOKEN,
+    applicationId: window._env_.DDAPPID,
+    clientToken: window._env_.DDCLITOKEN,
     site: 'datadoghq.com',
     service: 'Minecraft-Charity-Stream',
 //  env: 'production',

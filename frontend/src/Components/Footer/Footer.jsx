@@ -13,7 +13,7 @@ const Footer = () => {
             </div>
             <div className="footer-row">
                 <div>
-                    <a href="mailto:charity@csh.rit.edu">charity.csh.rit.edu</a>
+                    <a href="mailto:charity@csh.rit.edu">charity@csh.rit.edu</a>
                 </div>
                 <div>
                     @ 2020 Computer Science House
