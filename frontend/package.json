@@ -4,13 +4,13 @@
   "private": true,
   "dependencies": {
     "@datadog/browser-rum": "^2.5.5",
-    "@testing-library/jest-dom": "^4.2.4",
-    "@testing-library/react": "^9.4.0",
-    "@testing-library/user-event": "^7.2.1",
-    "react": "^16.12.0",
-    "react-dom": "^16.12.0",
-    "react-router-dom": "^5.1.2",
-    "react-scripts": "3.3.0"
+    "@testing-library/jest-dom": "^5.11.9",
+    "@testing-library/react": "^11.2.5",
+    "@testing-library/user-event": "^12.8.1",
+    "react": "^17.0.0",
+    "react-dom": "^17.0.0",
+    "react-router-dom": "^5.2.0",
+    "react-scripts": "4.0.3"
   },
   "scripts": {
     "start": "npm run-script build && /bin/sh env.sh && node server.js",
