@@ -30,6 +30,11 @@ const Landing = () => {
 
     return(
         <div className='Landing'>
+            <div className='flavor-text bg-csh-secondary-gradient'>
+                <h2>Under Construction</h2>
+                <p>We're constantly improving this site, so you may encounter some bugs or find a missing feature that we're currently upgrading. All upgrades and bugfixes will be complete by April 7th.</p>
+            </div>
+
             <div className='stream-player' ref={streamDiv}>
                 <StreamWindow title='Charity Stream' width='100%' height='100%' url={`https://player.twitch.tv/?channel=justgiving&muted=true&parent=${window.location.hostname}`} />
                 <button id='arrow' className='btn hide' onClick={togglePlayerList}><img className='show' src={Arrow} alt="toggle playerlist"/></button>
