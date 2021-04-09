@@ -1,13 +1,15 @@
 .Store{
     height: 100%;
     width: 100%;
+    position: relative;
 }
 
 .store-window{
     width: 1700px;
     height: 680px;
 
-    margin: 1rem auto 2rem auto;
+    margin: 0 auto 2rem auto;
+    padding-top: 1rem;
 
     display: grid;
     grid-template-rows: 100%;

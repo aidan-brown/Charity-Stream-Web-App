@@ -2,9 +2,11 @@ import React, {useState, useEffect} from 'react';
 import Placeholder from '../../../../images/placeholder.png';
 import {BACKENDURL} from '../../../App/constants';
 
+import CartLogo from '../../../../images/shopping-cart.svg';
+
 import './StoreContent.css';
 
-const Store = ({filterTag}) => {
+const Store = ({filterTag, addItemToCart}) => {
     const[items, setItems] = useState([]);
     const[itemElem, setItemElem] = useState({});
 
@@ -26,6 +28,19 @@ const Store = ({filterTag}) => {
 
     return(
         <div className='StoreContent'>
+            <span className='store-item bg-csh-primary-gradient'>
+                <p className='item-name'>Test</p>
+                <div className='item-image'>
+                    <img src={Placeholder} alt='item placeholder'></img>
+                </div>
+                <dl className='item-stats'>
+                    
+                </dl>
+                <div className='item-price'>
+                    <p className='item-price'>Price: $1.00</p>
+                </div>
+                <img src={CartLogo} alt='Add to cart' className='add-cart' onClick={() => addItemToCart({name: 'Test', price: 1.00, amount: 1})}></img>
+            </span>
             {items.filter(item => filterTag === 'all' || item.type === filterTag).map((item, index) => {
                 return <span key={index} className='store-item bg-csh-primary-gradient'>
                         <p className='item-name'>{item.name}</p>
@@ -44,6 +59,7 @@ const Store = ({filterTag}) => {
                             </span>
                             <p className='item-price'>Price: ${(itemElem[index] * item.price).toFixed(2)}</p>
                         </div>
+                        <img src={CartLogo} alt='Add to cart' className='add-cart' onClick={() => addItemToCart({...item, amount: itemElem[index]})}></img>
                     </span>
             })}
         </div>

@@ -39,6 +39,8 @@
 
     border-top-right-radius: .5rem;
     border-bottom-right-radius: .5rem;
+
+    z-index: 1;
 }
 
 /* The player list when in the active state */
