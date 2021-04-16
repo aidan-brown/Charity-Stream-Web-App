@@ -11,6 +11,7 @@ const Store = () => {
     const[filterTag, setFilterTag] = useState('all');
     const[cartItems, setCartItems] = useState([]);
     const[player, setPlayer] = useState('');
+    const[showCart, setShowCart] = useState('no');
 
     const storeDiv = useRef();
 
@@ -36,9 +37,14 @@ const Store = () => {
         console.error('Not implemented');
     }
 
+    const toggleCartMenu = () => {
+        setShowCart(showCart == 'yes' ? 'no' : 'yes');
+    }
+
     return(
         <div className='Store'>
-            <Cart cartItems={cartItems} removeItemFromCart={removeItemFromCart} proceedToCheckout={proceedToCheckout} />
+            <button className='toggle-cart' onClick={toggleCartMenu} data-showCart={showCart}>Open Cart</button>
+            <Cart cartItems={cartItems} removeItemFromCart={removeItemFromCart} proceedToCheckout={proceedToCheckout} showCart={showCart} />
             <div className='store-window' ref={storeDiv}>
                 <nav className='store-nav bg-csh-secondary-gradient'>
                     <span id='store-all' className='store-link' onClick={() => setFilterTag('all')}>{Icon}All</span>

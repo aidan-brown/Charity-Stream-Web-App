@@ -69,6 +69,22 @@
     transition: all 200ms;
 }
 
+.toggle-cart{
+    position: absolute;
+    top: 50px;
+    z-index: 1;
+
+    transition: all 200ms;
+}
+
+.toggle-cart[data-showCart='yes']{
+    right: 200px;
+}
+
+.toggle-cart[data-showCart='no']{
+    right: 0;
+}
+
 @media only screen and (max-width: 1700px){
     .store-window{
         width: 90%;
