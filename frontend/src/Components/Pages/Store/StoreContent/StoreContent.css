@@ -54,6 +54,8 @@
 
     margin: .5rem auto;
     font-size: 0.75rem;
+
+    position: relative;
 }
 
 .store-item .item-image{
@@ -100,6 +102,27 @@
 
 .store-item .item-amount button:disabled:hover{
     font-size: 0.75rem;
+}
+
+.store-item .add-cart{
+    width: 20%;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    opacity: 0.5;
+    cursor: pointer;
+
+    transition: all 150ms;
+}
+
+.store-item .add-cart:hover{
+    opacity: 1;
+    transform: scale(1.25);
+}
+
+.store-item .add-cart:active{
+    opacity: 0.75;
+    transform: scale(1);
 }
 
 @media only screen and (max-width: 1700px){
