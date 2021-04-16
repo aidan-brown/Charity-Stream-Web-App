@@ -1,1 +1,1 @@
-export const BACKENDURL = 'https://14defac6c403.ngrok.io';
+export const BACKENDURL = 'https://charity-stream-minecraft-charity-stream.apps.okd4.csh.rit.edu';
