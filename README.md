@@ -1,8 +1,6 @@
 # CSH Minecraft Charity Stream Store
 
-[frontend-charity-stream.cs.house](http://frontend-charity-stream.cs.house/) is where this website is currently hosted. Check it out to see as the design improves!
-
-[minecraftstream.csh.rit.edu](https://minecraftstream.csh.rit.edu) is the official website for my annual Computer Science House Minecraft Charity Tournament, and will eventually host this site. Currently, it hosts the original website, from  [this GitHub](https://github.com/crigney3/CharityStreamApp). For the new website, see the first link.
+[Come check out the site](https://minecraftstream.csh.rit.edu/) for updates, new content, and to donate to charity!
 
 ## The Event
 
@@ -20,20 +18,20 @@ In the end, we had a triumphant winner and had raised $300 for the Mental Health
 ---
 #### Second Annual Tournament (TBD, 2020 (Delayed for COVID-19))
 
-The second tournament is being planned, and will have new and improved features to update the flow of gameplay and make the best viewing/playing experience, including:
+The second tournament is being hosted on May 17th, 2021, and will have new and improved features to update the flow of gameplay and make the best viewing/playing experience, including:
 * Smoother website experience
 * No server crashes
 * New interface plugin
 * Events in between minigames
 * More minigames
 * Interactive lobby maps with secrets
-* More donation effect variety
+* More donation effect variety, including mobs and potion affects
 
 ## The Website
 
 #### The Purpose
 
-We developed [frontend-charity-stream.cs.house](http://frontend-charity-stream.cs.house/), and originally [this website](https://github.com/crigney3/CharityStreamApp) to add a unique twist to this tournament. We wanted to create something so that donations would automatically change the course of the game. We came up with the idea of having donations grant items to players in the tournament. We was able to create this through this site, and our first tournament resulted in some amazing swings caused by donations. 
+We developed [this site](https://minecraftstream.csh.rit.edu/), and originally [this website](https://github.com/crigney3/CharityStreamApp) to add a unique twist to a minecraft tournament. We wanted to create something so that donations would automatically change the course of the game. We came up with the idea of having donations grant items to players in the tournament. Thanks to our work on the site and our server, our first tournament resulted in some amazing swings caused by donations. 
 
 #### How it works
 
