@@ -12,7 +12,7 @@ function useForceUpdate(){
 }
 
 /** Responsible for constructing the store page component **/
-const Store = () => {
+const Store = ({selectedPlayer}) => {
     const[filterTag, setFilterTag] = useState('all');
     const[cartItems, setCartItems] = useState([]);
     const[player, setPlayer] = useState('');
@@ -24,7 +24,17 @@ const Store = () => {
 
     useEffect(() => {
         storeDiv.current.style.height = `${window.screen.height * 0.8}px`;
+
+        if(selectedPlayer){
+            setPlayer(selectedPlayer);
+        } else {
+            setPlayer('fastturtle123');
+        }
     }, [])
+
+    useEffect(() => {
+        console.log(player);
+    }, [player])
 
     const addItemToCart = (item) => {
         if(!cartItems.find(e => e.name === item.name)){
@@ -69,7 +79,7 @@ const Store = () => {
     return(
         <div className='Store'>
             <button className='bg-csh-tertiary toggle-cart' onClick={toggleCartMenu} data-showcart={showCart}><span className='material-icons'>{showCart == 'yes' ? 'arrow_back' : 'shopping_cart'}</span></button>
-            <Cart cartItems={cartItems} changeCartAmount={changeCartAmount} proceedToCheckout={proceedToCheckout} showCart={showCart} />
+            <Cart selectedPlayer={player} setPlayer={setPlayer} cartItems={cartItems} changeCartAmount={changeCartAmount} proceedToCheckout={proceedToCheckout} showCart={showCart} />
             <div className='store-window' ref={storeDiv}>
                 <nav className='store-nav bg-csh-secondary-gradient'>
                     <span id='store-all' className='store-link' onClick={() => setFilterTag('all')}>{Icon}All</span>

@@ -5,7 +5,7 @@ import StreamWindow from './StreamWindow/StreamWindow';
 import Arrow from '../../../images/arrow.svg';
 
 /** Class for constructing the landing/stream page **/
-const Landing = () => {
+const Landing = ({setSelectedPlayer}) => {
     const streamDiv = useRef();
 
     useEffect(() => {
@@ -39,7 +39,7 @@ const Landing = () => {
                 <StreamWindow title='Charity Stream' width='100%' height='100%' url={`https://player.twitch.tv/?channel=justgiving&muted=true&parent=${window.location.hostname}`} />
                 <button id='arrow' className='btn hide' onClick={togglePlayerList}><img className='show' src={Arrow} alt="toggle playerlist"/></button>
                 <div id='player-list' className='show'>
-                    <PlayerList/>
+                    <PlayerList setSelectedPlayer={setSelectedPlayer}/>
                 </div>
             </div>
             
