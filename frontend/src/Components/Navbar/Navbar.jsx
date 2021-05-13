@@ -6,7 +6,7 @@ import './Navbar.css';
 import '../Bootstrap-Colors/palette.css';
 
 /** Class for constructing the main navbar of the page **/
-const Navbar = () => { 
+const Navbar = () => {
 
     useEffect(() => {
         let activeLink;

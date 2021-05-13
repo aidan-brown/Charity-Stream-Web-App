@@ -1,9 +1,21 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
 import './Cart.css';
 import Placeholder from '../../../../images/placeholder.png';
+import {BACKENDURL} from '../../../App/constants.js';
 
-const Cart = ({cartItems, changeCartAmount, proceedToCheckout, showCart}) => {
+const Cart = ({selectedPlayer, setPlayer, cartItems, changeCartAmount, proceedToCheckout, showCart}) => {
+    const[playerList, setPlayerList] = useState([]);
+    const playerSelectRef = useRef();
+
+    useEffect(() => {
+        fetch(`${BACKENDURL}/players`)
+            .then(res => res.json())
+            .then(res => {
+                setPlayerList(res);
+            })
+            .catch(err => console.error(err));
+    }, [])
     
     const calculateTotal = () => {
         let total = 0;
@@ -13,6 +25,21 @@ const Cart = ({cartItems, changeCartAmount, proceedToCheckout, showCart}) => {
 
     return(
         <div className="Cart bg-csh-tertiary" data-showcart={showCart}>
+            <div className='cart-playerselect'>
+                <select name='players' ref={playerSelectRef} defaultValue={selectedPlayer} onInput={() => setPlayer(playerSelectRef.current.value)}>
+                    {playerList.sort((a, b) => {
+                            if(a.name > b.name){
+                                return 1;
+                            } else if(a.name < b.name){
+                                return -1;
+                            }
+                            return 0;
+                        }).map((player, index) => {
+                            return <option value={player.username} key={index}>{`${player.name} [${player.username}]`}</option>
+                        })
+                    }
+                </select>
+            </div>
             <div className="cart-content">
                 {cartItems.map((item, index) => {
                     return <CartItem key={index} item={item} changeCartAmount={changeCartAmount}/>

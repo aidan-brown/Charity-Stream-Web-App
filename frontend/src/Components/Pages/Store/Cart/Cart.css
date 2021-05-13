@@ -33,6 +33,10 @@
     margin: auto;
 }
 
+.cart-playerselect{
+    margin: 1rem auto;
+}
+
 .cart-item {
     width: 90%;
     background: linear-gradient(120deg, rgba(232, 232, 232, 1) 0%, rgba(218, 218, 218, 1) 100%);
@@ -112,7 +116,7 @@
     max-height: 375px;
     overflow-y: scroll;
     overflow-x: hidden;
-    margin: 3rem auto;
+    margin: 0.5rem auto;
 }
 
 .cart-amount{

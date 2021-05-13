@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import './PlayerList.css';
 import {BACKENDURL} from '../../../App/constants';
 
@@ -22,7 +23,7 @@ const logos = {
 }
 
 /** Class for constructing the player list component **/
-const PlayerList = () => {
+const PlayerList = ({setSelectedPlayer}) => {
     const[playerList, setPlayerList] = useState([]);
 
     useEffect(() => {
@@ -50,12 +51,11 @@ const PlayerList = () => {
                     return 0;
                 }
             }).map((player, index) => {
-                console.log(player)
-                return <div key={index} className={`list-element ${player.type.toLowerCase()}`}>
+                return <Link key={index} className={`list-element ${player.type.toLowerCase()}`} onClick={() => setSelectedPlayer(player.username)} to='/Store'>
                     <p>{`${player.name} [${player.username}]`}</p>
                     <img src={logos[`${player.type.toLowerCase()}Logo`]} alt={`${player.type} Logo`} className = 'team-logo'></img>
                     <img src={CartLogo} alt='Shop logo' className='shop-logo'></img>
-                </div>
+                </Link>
             })}
         </ul>
     )
