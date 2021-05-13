@@ -6,7 +6,7 @@ import './Navbar.css';
 import '../Bootstrap-Colors/palette.css';
 
 /** Class for constructing the main navbar of the page **/
-const Navbar = () => { 
+const Navbar = () => {
 
     useEffect(() => {
         let activeLink;
@@ -57,7 +57,7 @@ const Navbar = () => {
                             <Link id='store' className='nav-link' onClick={setLinkActive} to='/Store'><span>Donation Shop</span></Link>
                         </li>
                         <li className='nav-item'>
-                            <a className='nav-link' href='#'><span>Learn More</span></a>
+                            <a id='learn-more' className='nav-link' href='https://www.justgiving.com/fundraising/csh-minecraft-3' target='_blank' rel="noopener noreferrer"><span>Learn More</span></a>
                         </li>
                     </ul>
                 </div>

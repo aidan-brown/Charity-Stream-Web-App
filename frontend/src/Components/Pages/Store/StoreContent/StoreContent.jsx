@@ -2,8 +2,6 @@ import React, {useState, useEffect} from 'react';
 import Placeholder from '../../../../images/placeholder.png';
 import {BACKENDURL} from '../../../App/constants';
 
-import CartLogo from '../../../../images/shopping-cart.svg';
-
 import './StoreContent.css';
 
 const Store = ({filterTag, addItemToCart}) => {
@@ -46,7 +44,7 @@ const Store = ({filterTag, addItemToCart}) => {
                             </span>
                             <p className='item-price'>Price: ${(itemElem[index] * item.price).toFixed(2)}</p>
                         </div>
-                        <img src={CartLogo} alt='Add to cart' className='add-cart' onClick={() => addItemToCart({...item, amount: itemElem[index]})}></img>
+                        <span className='add-cart material-icons' onClick={() => addItemToCart({...item, amount: itemElem[index]})}>add_shopping_cart</span>
                     </span>
             })}
         </div>

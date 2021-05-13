@@ -1,5 +1,5 @@
 .Cart{
-    position: absolute;
+    position: fixed;
     top: 100px;
 
     display: flex;
@@ -8,48 +8,138 @@
     align-items: center;
 
     height: fit-content;
-    max-height: 600px;
+    max-height: 80vh;
+    min-height: 150px;
     width: 400px;
     border-radius: 7.5px 0 0 7.5px;
-    z-index: 2;
+    z-index: 1;
+
+    filter:drop-shadow(0px 3px 4px rgba(44, 44, 44, 0.438));
 
     transition: all 200ms;
 }
 
-.Cart[data-showCart='yes']{
+.Cart[data-showcart='yes']{
     right: 0;
 }
 
-.Cart[data-showCart='no']{
+.Cart[data-showcart='no']{
     right: -400px;
+}
+
+.Cart hr{
+    width: 75%;
+    height: 2px;
+    margin: auto;
+}
+
+.cart-playerselect{
+    margin: 1rem auto;
 }
 
 .cart-item {
     width: 90%;
     background: linear-gradient(120deg, rgba(232, 232, 232, 1) 0%, rgba(218, 218, 218, 1) 100%);
     position: relative;
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(2, 50%);
+
     flex-direction: row;
     justify-content: flex-start;
     align-items: center;
 
-    overflow: hidden;
+    margin: 1.5rem auto;
 
-    margin: .15rem auto;
-
-    height: 1.5rem;
+    height: 100px;
+    width: 250px;
 
     border: 2 solid rgba(0, 0, 0, 0);
-    border-radius: .25rem;
+    border-radius: .5rem;
+    filter:drop-shadow(2px 3px 2px rgba(44, 44, 44, 0.438));
+}
+
+.cart-item-image{
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 0 .5rem .5rem 0;
+}
+
+.cart-item-image img{
+    width: 2rem;
+}
+
+.cart-item-counter{
+    color: black;
+    z-index: 3;
+    position: absolute;
+    bottom: -10px;
+    left: -10px;
+    display: grid;
+    grid-template-columns: repeat(3, 25px 2px);
+    grid-template-rows: 25px;
+    filter: drop-shadow(2px 3px 2px rgba(44, 44, 44, 0.103));
+}
+
+.cart-item-counter .vr{
+    border-right: 1px solid rgba(0, 0, 0, 0.37);
+    height: 50%;
+    width: 2px;
+    margin: auto 0;
+}
+
+.cart-item-count-control{
+    cursor: pointer;
+
+    transition: all 200ms;
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Old versions of Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome, Edge, Opera and Firefox */
+}
+
+.cart-item-count-control:hover{
+    transform: scale(1.1);
+}
+
+.cart-item-count-control:active{
+    transform: scale(1.05);
 }
 
 .cart-content{
     width: 100%;
+    max-height: 375px;
     overflow-y: scroll;
     overflow-x: hidden;
+    margin: 0.5rem auto;
 }
 
-/* The scrollbar for the player list */
+.cart-amount{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 75%;
+}
+
+.cart-checkout{
+    color: white;
+    border-radius: 25px 25px 25px 25px;
+    border: none;
+    cursor: pointer;
+    filter:drop-shadow(2px 3px 4px rgba(44, 44, 44, 0.438));
+
+    height: 50px;
+    width: 250px;
+    margin: 1rem auto;
+}
+
+/* The scrollbar for the item list */
 .cart-content::-webkit-scrollbar {
     background: none;
     width: 0.5rem;
