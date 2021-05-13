@@ -69,12 +69,18 @@ const Store = ({selectedPlayer}) => {
         }
     } 
 
+    const calculateTotal = () => {
+        let total = 0;
+        cartItems.forEach(item => total += (item.amount * item.price));
+        return total;
+    }
+
     const proceedToCheckout = () => {
         if(cartItems.length == 0) {
             console.error("No items in cart!");
             return;
         }
-        let stringsObj = [];
+        let stringsObj = "";
         for(let i = 0; i < cartItems.length; i++){
             let stringIndividual;
             switch(cartItems[i].type){
@@ -105,15 +111,21 @@ const Store = ({selectedPlayer}) => {
             }
 
             if(i != cartItems.length - 1) stringIndividual += ",";
+
+            console.log(stringIndividual);
             
-            stringsObj.push(stringIndividual);
+            stringsObj += stringIndividual;
         }
         console.log(stringsObj);
 
         let JGURL = "http://link.justgiving.com/v1/fundraisingpage/donate/pageId/" 
             + JG_FUNDRAISING_ID
-            + "?amount=";
-            //+ ;
+            + "?amount="
+            + calculateTotal()
+            + "&currency=USD&reference=bbcsh&message={jsonPOST}{jsonBlock:"
+            + stringsObj + "}";
+
+        console.log(JGURL);
     }
 
     const toggleCartMenu = () => {
@@ -123,7 +135,7 @@ const Store = ({selectedPlayer}) => {
     return(
         <div className='Store'>
             <button className='bg-csh-tertiary toggle-cart' onClick={toggleCartMenu} data-showcart={showCart}><span className='material-icons'>{showCart == 'yes' ? 'arrow_back' : 'shopping_cart'}</span></button>
-            <Cart selectedPlayer={player} setPlayer={setPlayer} cartItems={cartItems} changeCartAmount={changeCartAmount} proceedToCheckout={proceedToCheckout} showCart={showCart} />
+            <Cart selectedPlayer={player} setPlayer={setPlayer} cartItems={cartItems} changeCartAmount={changeCartAmount} proceedToCheckout={proceedToCheckout} showCart={showCart} calculateTotal={calculateTotal} />
             <div className='store-window' ref={storeDiv}>
                 <nav className='store-nav bg-csh-secondary-gradient'>
                     <span id='store-all' className='store-link' onClick={() => setFilterTag('all')}>{Icon}All</span>

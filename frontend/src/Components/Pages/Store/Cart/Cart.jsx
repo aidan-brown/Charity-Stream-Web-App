@@ -4,7 +4,7 @@ import './Cart.css';
 import Placeholder from '../../../../images/placeholder.png';
 import {BACKENDURL} from '../../../App/constants.js';
 
-const Cart = ({selectedPlayer, setPlayer, cartItems, changeCartAmount, proceedToCheckout, showCart}) => {
+const Cart = ({selectedPlayer, setPlayer, cartItems, changeCartAmount, proceedToCheckout, showCart, calculateTotal}) => {
     const[playerList, setPlayerList] = useState([]);
     const playerSelectRef = useRef();
 
@@ -16,12 +16,6 @@ const Cart = ({selectedPlayer, setPlayer, cartItems, changeCartAmount, proceedTo
             })
             .catch(err => console.error(err));
     }, [])
-    
-    const calculateTotal = () => {
-        let total = 0;
-        cartItems.forEach(item => total += (item.amount * item.price));
-        return total;
-    }
 
     return(
         <div className="Cart bg-csh-tertiary" data-showcart={showCart}>
