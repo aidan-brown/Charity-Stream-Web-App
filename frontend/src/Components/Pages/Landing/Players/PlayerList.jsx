@@ -36,7 +36,20 @@ const PlayerList = () => {
 
     return(
         <ul className='PlayerList'>
-            {playerList.map((player, index) => {
+            {playerList.sort((a, b) => {
+                if(a.type > b.type){
+                    return 1;
+                } else if (a.type < b.type) {
+                    return -1;
+                } else {
+                    if(a.name > b.name){
+                        return 1;
+                    } else {
+                        return -1;
+                    }
+                    return 0;
+                }
+            }).map((player, index) => {
                 console.log(player)
                 return <div key={index} className={`list-element ${player.type.toLowerCase()}`}>
                     <p>{`${player.name} [${player.username}]`}</p>

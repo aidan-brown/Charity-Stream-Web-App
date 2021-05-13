@@ -16,8 +16,8 @@
     background: linear-gradient(180deg, rgba(225,28,82,1) 0%, rgba(205,27,76,1) 100%);
 }
 
-.bg-csh-light{
-    background-color: white;
+.bg-csh-tertiary{
+    background-color: #F8F8FF;
 }
 
 .font-csh-dark{
