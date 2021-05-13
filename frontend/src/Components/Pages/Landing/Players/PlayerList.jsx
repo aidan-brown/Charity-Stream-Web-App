@@ -35,6 +35,12 @@ const PlayerList = ({setSelectedPlayer}) => {
             .catch(err => console.error(err));
     }, [])
 
+    const playerOnClick = (player) => {
+        setSelectedPlayer(player.username);
+        document.querySelector('.Navbar .active').className = 'nav-link';
+        document.querySelector('#store').className = 'nav-link active'
+    }
+
     return(
         <ul className='PlayerList'>
             {playerList.sort((a, b) => {
@@ -51,7 +57,7 @@ const PlayerList = ({setSelectedPlayer}) => {
                     return 0;
                 }
             }).map((player, index) => {
-                return <Link key={index} className={`list-element ${player.type.toLowerCase()}`} onClick={() => setSelectedPlayer(player.username)} to='/Store'>
+                return <Link key={index} className={`list-element ${player.type.toLowerCase()}`} onClick={() => playerOnClick(player)} to='/Store'>
                     <p>{`${player.name} [${player.username}]`}</p>
                     <img src={logos[`${player.type.toLowerCase()}Logo`]} alt={`${player.type} Logo`} className = 'team-logo'></img>
                     <img src={CartLogo} alt='Shop logo' className='shop-logo'></img>

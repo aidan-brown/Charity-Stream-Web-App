@@ -39,6 +39,7 @@
 
 /* The div tag that holds each player's information */
 .list-element {
+    color: white;
     position: relative;
     display: flex;
     flex-direction: row-reverse;
@@ -107,6 +108,7 @@
 
     transform: scaleY(1.05);
     box-shadow: .25rem .25rem .25rem rgba(0, 0, 0, 0.35);
+    color: white;
 }
 
 /* When the shop logo is hovered over */

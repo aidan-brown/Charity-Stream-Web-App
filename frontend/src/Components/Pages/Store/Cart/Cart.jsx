@@ -4,15 +4,17 @@ import './Cart.css';
 import Placeholder from '../../../../images/placeholder.png';
 import {BACKENDURL} from '../../../App/constants.js';
 
-const Cart = ({selectedPlayer, setPlayer, cartItems, changeCartAmount, proceedToCheckout, showCart, calculateTotal}) => {
+const Cart = ({player, setPlayer, cartItems, changeCartAmount, proceedToCheckout, showCart, calculateTotal}) => {
     const[playerList, setPlayerList] = useState([]);
     const playerSelectRef = useRef();
 
     useEffect(() => {
+
         fetch(`${BACKENDURL}/players`)
             .then(res => res.json())
             .then(res => {
                 setPlayerList(res);
+                playerSelectRef.current.value = player;
             })
             .catch(err => console.error(err));
     }, [])
@@ -20,7 +22,7 @@ const Cart = ({selectedPlayer, setPlayer, cartItems, changeCartAmount, proceedTo
     return(
         <div className="Cart bg-csh-tertiary" data-showcart={showCart}>
             <div className='cart-playerselect'>
-                <select name='players' ref={playerSelectRef} defaultValue={selectedPlayer} onInput={() => setPlayer(playerSelectRef.current.value)}>
+                <select name='players' ref={playerSelectRef} onChange={() => setPlayer(playerSelectRef.current.value)}>
                     {playerList.sort((a, b) => {
                             if(a.name > b.name){
                                 return 1;
