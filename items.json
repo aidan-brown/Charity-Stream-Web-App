@@ -1,7 +1,7 @@
 {
     "items": [
         {
-            "id": 1,
+            "id": "265",
             "name": "Iron Ingot",
             "description": "An ingot full of potential. Can be used to craft iron armor, weapons, and tools.",
             "price": 0.25,
@@ -10,7 +10,7 @@
             }
         },
         {
-            "id": 2,
+            "id": "266",
             "name": "Gold Ingot",
             "description": "An ingot full of potential. Can be used to craft gold armor, weapons, and tools.",
             "price": 0.20,
@@ -19,7 +19,7 @@
             }
         },
         {
-            "id": 3,
+            "id": "264",
             "name": "Diamond",
             "description": "A shiny gem. Can be used to craft powerful diamond armor, weapons, and tools.",
             "price": 1.00,
@@ -28,7 +28,7 @@
             }        
 		},
         {
-            "id": 4,
+            "id": "257",
             "name": "Iron Pickaxe",
             "description": "A basic but durable pickaxe. Breaks rocks!",
             "price": 0.65,
@@ -39,7 +39,7 @@
             }
         },
         {
-            "id": 5,
+            "id": "285",
             "name": "Gold Pickaxe",
             "description": "A fast but flimsy pickaxe. Breaks rocks!",
             "price": 0.50,
@@ -51,7 +51,7 @@
             
         },
         {
-            "id": 6,
+            "id": "278",
             "name": "Diamond Pickaxe",
             "description": "A very fast and durable pickaxe. Breaks rocks!",
             "price": 3.00,
@@ -62,7 +62,7 @@
             }
         },
         {
-            "id": 7,
+            "id": "256",
             "name": "Iron Shovel",
             "description": "A basic but durable shovel. Breaks dirt/gravel/sand!",
             "price": 0.30,
@@ -73,7 +73,7 @@
             }
         },
         {
-            "id": 8,
+            "id": "284",
             "name": "Gold Shovel",
             "description": "A fast but flimsy shovel. Breaks dirt/gravel/sand!",
             "price": 0.25,
@@ -84,7 +84,7 @@
             }
         },
         {
-            "id": 9,
+            "id": "277",
             "name": "Diamond Shovel",
             "description": "A very fast and durable shovel. Breaks dirt/gravel/sand!",
             "price": 1.00,
@@ -95,7 +95,7 @@
             }
         },
         {
-            "id": 10,
+            "id": "258",
             "name": "Iron Axe",
             "description": "A basic but durable axe. Chops wood!",
             "price": 0.65,
@@ -106,7 +106,7 @@
             }
         },
         {
-            "id": 11,
+            "id": "286",
             "name": "Gold Axe",
             "description": "A fast but flimsy axe. Chops wood!",
             "price": 0.50,
@@ -117,7 +117,7 @@
             }
         },
         {
-            "id": 12,
+            "id": "279",
             "name": "Diamond Axe",
             "description": "A very fast and durable axe. Chops wood!",
             "price": 3.00,
@@ -128,7 +128,7 @@
             }
         },
         {
-            "id": 13,
+            "id": "297",
             "name": "Bread",
             "description": "A good basic food.",
             "price": 0.25,
@@ -139,7 +139,7 @@
             }
         },
         {
-            "id": 14,
+            "id": "364",
             "name": "Steak",
             "description": "A very filling food.",
             "price": 0.50,
@@ -150,7 +150,7 @@
             }
         },
         {
-            "id": 15,
+            "id": "322:0",
             "name": "Golden Apple",
             "description": "Filled with magic, this powerful apple grants you extra health!",
             "price": 1.00,
@@ -161,7 +161,7 @@
             }
         },
         {
-            "id": 16,
+            "id": "322:1",
             "name": "Golden 'God' Apple",
             "description": "The ultimate food, this apple makes the player tough and filled with vitality!",
             "price": 10.00,
@@ -172,7 +172,7 @@
             }
         },
         {
-            "id": 17,
+            "id": 272,
             "name": "Stone Sword",
             "description": "The basic weapon for combat. Help your favorite player triump in battle!",
             "price": 0.30,
@@ -183,7 +183,7 @@
             }
         },
         {
-            "id": 18,
+            "id": 267,
             "name": "Iron Sword",
             "description": "An upgraded sword for combat. Help your favorite player triump in battle!",
             "price": 0.50,
@@ -194,7 +194,7 @@
             }
         },
         {
-            "id": 19,
+            "id": 276,
             "name": "Diamond Sword",
             "description": "The ultimate sword for combat. Help your favorite player triump in battle with style!",
             "price": 2.00,
@@ -205,7 +205,7 @@
             }
         },
         {
-            "id": 20,
+            "id": 261,
             "name": "Bow",
             "description": "Minecraft's signature ranged weapon. Can take out foes at a distance!",
             "price": 1.50,
@@ -216,7 +216,7 @@
             }
         },
         {
-            "id": 21,
+            "id": 262,
             "name": "10x Arrows",
             "description": "The basic ammo for the bow. Comes with 10 arrows!",
             "price": 0.60,
@@ -225,8 +225,8 @@
             }        
         },
         {
-            "id": 22,
-            "name": "Leather Helmet",
+            "id": 298,
+            "name": "Leather Cap",
             "description": "The helm of the most basic armor set. Keep your favorite player alive!",
             "price": 0.50,
             "type": {
@@ -236,9 +236,9 @@
             }
         },
         {
-            "id": 23,
-            "name": "Leather Chestplate",
-            "description": "The chestplate of the most basic armor set. Keep your favorite player alive!",
+            "id": 299,
+            "name": "Leather Tunic",
+            "description": "The tunic of the most basic armor set. Keep your favorite player alive!",
             "price": 0.80,
             "type": {
                 "name": "armor",
@@ -247,9 +247,9 @@
             }
         },
         {
-            "id": 24,
-            "name": "Leather Leggings",
-            "description": "The leggings of the most basic armor set. Keep your favorite player alive!",
+            "id": 300,
+            "name": "Leather Pants",
+            "description": "The pants of the most basic armor set. Keep your favorite player alive!",
             "price": 0.70,
             "type": {
                 "name": "armor",
@@ -258,7 +258,7 @@
             }
         },
         {
-            "id": 25,
+            "id": 301,
             "name": "Leather Boots",
             "description": "The boots of the most basic armor set. Keep your favorite player alive!",
             "price": 0.40,
@@ -269,7 +269,7 @@
             }
         },
         {
-            "id": 26,
+            "id": 314,
             "name": "Gold Helmet",
             "description": "The helm of a protective but breakable armor set. Keep your favorite player alive!",
             "price": 1.00,
@@ -280,7 +280,7 @@
             }
         },
         {
-            "id": 27,
+            "id": 315,
             "name": "Gold Chestplate",
             "description": "The chestplate of a protective but breakable armor set. Keep your favorite player alive!",
             "price": 1.60,
@@ -291,7 +291,7 @@
             }
         },
         {
-            "id": 28,
+            "id": 316,
             "name": "Gold Leggings",
             "description": "The leggings of a protective but breakable armor set. Keep your favorite player alive!",
             "price": 1.40,
@@ -302,7 +302,7 @@
             }
         },
         {
-            "id": 29,
+            "id": 317,
             "name": "Gold Boots",
             "description": "The boots of a protective but breakable armor set. Keep your favorite player alive!",
             "price": 0.80,
@@ -313,7 +313,7 @@
             }
         },
         {
-            "id": 30,
+            "id": 306,
             "name": "Iron Helmet",
             "description": "The helm of the clasic armor set, it's protective and durable. Keep your favorite player alive!",
             "price": 1.25,
@@ -324,7 +324,7 @@
             }
         },
         {
-            "id": 31,
+            "id": 307,
             "name": "Iron Chestplate",
             "description": "The chestplate of the clasic armor set, it's protective and durable. Keep your favorite player alive!",
             "price": 2.00,
@@ -335,7 +335,7 @@
             }
         },
         {
-            "id": 32,
+            "id": 308,
             "name": "Iron Leggings",
             "description": "The leggings of the clasic armor set, it's protective and durable. Keep your favorite player alive!",
             "price": 1.75,
@@ -346,7 +346,7 @@
             }
         },
         {
-            "id": 33,
+            "id": 309,
             "name": "Iron Boots",
             "description": "The boots of the clasic armor set, it's protective and durable. Keep your favorite player alive!",
             "price": 1.00,
@@ -357,7 +357,7 @@
             }
         },
         {
-            "id": 34,
+            "id": 310,
             "name": "Diamond Helmet",
             "description": "The helm of the ultimate armor set; a full set will make any player tough as nails. Keep your favorite player alive!",
             "price": 4.75,
@@ -368,7 +368,7 @@
             }
         },
         {
-            "id": 35,
+            "id": 311,
             "name": "Diamond Chestplate",
             "description": "The chestplate of the ultimate armor set; a full set will make any player tough as nails. Keep your favorite player alive!",
             "price": 7.50,
@@ -379,7 +379,7 @@
             }
         },
         {
-            "id": 36,
+            "id": 312,
             "name": "Diamond Leggings",
             "description": "The leggings of the ultimate armor set; a full set will make any player tough as nails. Keep your favorite player alive!",
             "price": 6.75,
@@ -390,7 +390,7 @@
             }
         },
         {
-            "id": 37,
+            "id": 313,
             "name": "Diamond Boots",
             "description": "The boots of the ultimate armor set, a full set will make any player tough as nails. Keep your favorite player alive!",
             "price": 3.75,
