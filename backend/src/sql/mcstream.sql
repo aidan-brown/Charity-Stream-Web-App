@@ -15,35 +15,35 @@ CREATE TABLE IF NOT EXISTS items(
 );
 
 CREATE TABLE IF NOT EXISTS weapon(
-    id INT NOT NULL,
+    id VARCHAR(255) NOT NULL,
     damage FLOAT(20, 2) NOT NULL,
     durability INT NOT NULL,
     PRIMARY KEY(id)
 );
 
 CREATE TABLE IF NOT EXISTS armor(
-    id INT NOT NULL,
+    id VARCHAR(255) NOT NULL,
     protection INT NOT NULL,
     durability INT NOT NULL,
     PRIMARY KEY(id)
 );
 
 CREATE TABLE IF NOT EXISTS tool(
-    id INT NOT NULL,
+    id VARCHAR(255) NOT NULL,
     speed INT NOT NULL,
     durability INT NOT NULL,
     PRIMARY KEY(id)
 );
 
 CREATE TABLE IF NOT EXISTS food(
-    id INT NOT NULL,
+    id VARCHAR(255) NOT NULL,
     hungerFill FLOAT(4, 2) NOT NULL,
     effects TEXT NOT NULL,
     PRIMARY KEY(id)
 );
 
 CREATE TABLE IF NOT EXISTS buff(
-    id INT NOT NULL,
+    id VARCHAR(255) NOT NULL,
     seconds INT NOT NULL,
     effects TEXT NOT NULL,
     PRIMARY KEY(id)

@@ -2,20 +2,8 @@ const { Select, Insert } = require('../sql/sqlFunctions');
 const safeJsonParse = require('../extraFunctions/safeJsonParse');
 
 module.exports = {
-  getItems: async (req, res) => {
-    const id = (req.body.id) ? req.body.id : null;
-    const type = (req.body.type) ? req.body.type : null;
-    let where = (req.body.where) ? req.body.where : null;
-
-    if (id && where) {
-      res.status(400).send('Cannot specify both id and where clause!');
-    } else if (id && type) {
-      where = `id = '${id}' AND type = '${type}'`;
-    }
-
+  getItems: async (_, res) => {
     try {
-      if (where) res.status(200).send(await Select(null, 'items', where));
-
       const customQuery = `
         SELECT *
         FROM items
@@ -30,7 +18,11 @@ module.exports = {
         LEFT JOIN weapon
         ON items.id = weapon.id`;
 
-      res.status(200).send(await Select(customQuery, null, where));
+      const items = await Select(customQuery, null, where);
+
+      console.log(items);
+
+      res.status(200).send(items);
     } catch (error) {
       const { code = 500, message = error.message } = safeJsonParse(error.message);
       res.status(code).send(message);
