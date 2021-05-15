@@ -18,7 +18,7 @@ module.exports = {
         LEFT JOIN weapon
         ON items.id = weapon.id`;
 
-      const items = await Select(customQuery, null, where);
+      const items = await Select(customQuery, null, null);
 
       console.log(items);
 
