@@ -172,7 +172,7 @@
             }
         },
         {
-            "id": 272,
+            "id": "272",
             "name": "Stone Sword",
             "description": "The basic weapon for combat. Help your favorite player triump in battle!",
             "price": 0.30,
@@ -183,7 +183,7 @@
             }
         },
         {
-            "id": 267,
+            "id": "267",
             "name": "Iron Sword",
             "description": "An upgraded sword for combat. Help your favorite player triump in battle!",
             "price": 0.50,
@@ -194,7 +194,7 @@
             }
         },
         {
-            "id": 276,
+            "id": "276",
             "name": "Diamond Sword",
             "description": "The ultimate sword for combat. Help your favorite player triump in battle with style!",
             "price": 2.00,
@@ -205,7 +205,7 @@
             }
         },
         {
-            "id": 261,
+            "id": "261",
             "name": "Bow",
             "description": "Minecraft's signature ranged weapon. Can take out foes at a distance!",
             "price": 1.50,
@@ -216,7 +216,7 @@
             }
         },
         {
-            "id": 262,
+            "id": "262",
             "name": "10x Arrows",
             "description": "The basic ammo for the bow. Comes with 10 arrows!",
             "price": 0.60,
@@ -225,7 +225,7 @@
             }        
         },
         {
-            "id": 298,
+            "id": "298",
             "name": "Leather Cap",
             "description": "The helm of the most basic armor set. Keep your favorite player alive!",
             "price": 0.50,
@@ -236,7 +236,7 @@
             }
         },
         {
-            "id": 299,
+            "id": "299",
             "name": "Leather Tunic",
             "description": "The tunic of the most basic armor set. Keep your favorite player alive!",
             "price": 0.80,
@@ -247,7 +247,7 @@
             }
         },
         {
-            "id": 300,
+            "id": "300",
             "name": "Leather Pants",
             "description": "The pants of the most basic armor set. Keep your favorite player alive!",
             "price": 0.70,
@@ -258,7 +258,7 @@
             }
         },
         {
-            "id": 301,
+            "id": "301",
             "name": "Leather Boots",
             "description": "The boots of the most basic armor set. Keep your favorite player alive!",
             "price": 0.40,
@@ -269,7 +269,7 @@
             }
         },
         {
-            "id": 314,
+            "id": "314",
             "name": "Gold Helmet",
             "description": "The helm of a protective but breakable armor set. Keep your favorite player alive!",
             "price": 1.00,
@@ -280,7 +280,7 @@
             }
         },
         {
-            "id": 315,
+            "id": "315",
             "name": "Gold Chestplate",
             "description": "The chestplate of a protective but breakable armor set. Keep your favorite player alive!",
             "price": 1.60,
@@ -291,7 +291,7 @@
             }
         },
         {
-            "id": 316,
+            "id": "316",
             "name": "Gold Leggings",
             "description": "The leggings of a protective but breakable armor set. Keep your favorite player alive!",
             "price": 1.40,
@@ -302,7 +302,7 @@
             }
         },
         {
-            "id": 317,
+            "id": "317",
             "name": "Gold Boots",
             "description": "The boots of a protective but breakable armor set. Keep your favorite player alive!",
             "price": 0.80,
@@ -313,7 +313,7 @@
             }
         },
         {
-            "id": 306,
+            "id": "306",
             "name": "Iron Helmet",
             "description": "The helm of the clasic armor set, it's protective and durable. Keep your favorite player alive!",
             "price": 1.25,
@@ -324,7 +324,7 @@
             }
         },
         {
-            "id": 307,
+            "id": "307",
             "name": "Iron Chestplate",
             "description": "The chestplate of the clasic armor set, it's protective and durable. Keep your favorite player alive!",
             "price": 2.00,
@@ -335,7 +335,7 @@
             }
         },
         {
-            "id": 308,
+            "id": "308",
             "name": "Iron Leggings",
             "description": "The leggings of the clasic armor set, it's protective and durable. Keep your favorite player alive!",
             "price": 1.75,
@@ -346,7 +346,7 @@
             }
         },
         {
-            "id": 309,
+            "id": "309",
             "name": "Iron Boots",
             "description": "The boots of the clasic armor set, it's protective and durable. Keep your favorite player alive!",
             "price": 1.00,
@@ -357,7 +357,7 @@
             }
         },
         {
-            "id": 310,
+            "id": "310",
             "name": "Diamond Helmet",
             "description": "The helm of the ultimate armor set; a full set will make any player tough as nails. Keep your favorite player alive!",
             "price": 4.75,
@@ -368,7 +368,7 @@
             }
         },
         {
-            "id": 311,
+            "id": "311",
             "name": "Diamond Chestplate",
             "description": "The chestplate of the ultimate armor set; a full set will make any player tough as nails. Keep your favorite player alive!",
             "price": 7.50,
@@ -379,7 +379,7 @@
             }
         },
         {
-            "id": 312,
+            "id": "312",
             "name": "Diamond Leggings",
             "description": "The leggings of the ultimate armor set; a full set will make any player tough as nails. Keep your favorite player alive!",
             "price": 6.75,
@@ -390,7 +390,7 @@
             }
         },
         {
-            "id": 313,
+            "id": "313",
             "name": "Diamond Boots",
             "description": "The boots of the ultimate armor set, a full set will make any player tough as nails. Keep your favorite player alive!",
             "price": 3.75,

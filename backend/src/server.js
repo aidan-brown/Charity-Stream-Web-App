@@ -9,8 +9,9 @@ const {
   getItems, 
   getPlayers, 
   getEffects, 
-  getMobs 
+  getMobs,
 } = require('./handlers');
+const { getImages } = require('./images');
 
 const app = express();
 const port = 8000;
@@ -26,5 +27,6 @@ app.get('/items', getItems);
 app.get('/players', getPlayers);
 app.get('/effects', getEffects);
 app.get('/mobs', getMobs);
+app.get('/images/:type/:image', getImages);
 
 app.listen(port, console.log(`Listening on port at http://localhost:${port}`));
