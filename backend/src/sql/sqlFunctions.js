@@ -27,7 +27,8 @@ module.exports = {
             resolve(result.map((value) => {
               const data = {};
               Object.keys(value).forEach((key) => {
-                if (value[key]) data[key] = value[key];
+                if (value[key] !== null && value[key] !== undefined) 
+                  data[key.toLowerCase()] = value[key];
               });
               return data;
             }));

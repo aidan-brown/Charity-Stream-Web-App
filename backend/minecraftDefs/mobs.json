@@ -6,7 +6,7 @@
     "price": 0.10,
     "loopAmount": 10,
     "optionalDataTag": "",
-    "disabled": false
+    "disabled": 0
   },
   {
     "id": "minecraft:blaze",
@@ -15,7 +15,7 @@
     "price": 0.50,
     "loopAmount": 5,
     "optionalDataTag": "",
-    "disabled": false
+    "disabled": 0
   },
   {
     "id": "minecraft:cave_spider",
@@ -24,7 +24,7 @@
     "price": 0.25,
     "loopAmount": 3,
     "optionalDataTag": "",
-    "disabled": false
+    "disabled": 0
   },
   {
     "id": "minecraft:chicken",
@@ -33,7 +33,7 @@
     "price": 0.10,
     "loopAmount": 10,
     "optionalDataTag": "",
-    "disabled": false
+    "disabled": 0
   },
   {
     "id": "minecraft:cow",
@@ -42,7 +42,7 @@
     "price": 0.20,
     "loopAmount": 10,
     "optionalDataTag": "",
-    "disabled": false
+    "disabled": 0
   },
   {
     "id": "minecraft:creeper",
@@ -51,7 +51,7 @@
     "price": 0.50,
     "loopAmount": 10,
     "optionalDataTag": "",
-    "disabled": false
+    "disabled": 0
   },
   {
     "id": "minecraft:donkey",
@@ -60,7 +60,7 @@
     "price": 0.10,
     "loopAmount": 1,
     "optionalDataTag": "",
-    "disabled": false
+    "disabled": 0
   },
   {
     "id": "minecraft:ender_dragon",
@@ -69,7 +69,7 @@
     "price": 50,
     "loopAmount": 1,
     "optionalDataTag": "{DragonPhase:0}",
-    "disabled": false
+    "disabled": 0
   },
   {
     "id": "minecraft:enderman",
@@ -78,7 +78,7 @@
     "price": 0.5,
     "loopAmount": 3,
     "optionalDataTag": "",
-    "disabled": false
+    "disabled": 0
   },
   {
     "id": "minecraft:endermite",
@@ -87,7 +87,7 @@
     "price": 0.50,
     "loopAmount": 10,
     "optionalDataTag": "",
-    "disabled": false
+    "disabled": 0
   },
 
   
@@ -98,7 +98,7 @@
     "price": 0.75,
     "loopAmount": 10,
     "optionalDataTag": "",
-    "disabled": false
+    "disabled": 0
   },
   {
     "id": "minecraft:ghast",
@@ -107,7 +107,7 @@
     "price": 1,
     "loopAmount": 5,
     "optionalDataTag": "",
-    "disabled": false
+    "disabled": 0
   },
   {
     "id": "minecraft:husk",
@@ -116,7 +116,7 @@
     "price": 0.50,
     "loopAmount": 10,
     "optionalDataTag": "",
-    "disabled": false
+    "disabled": 0
   },
   {
     "id": "minecraft:illusion_illager",
@@ -125,7 +125,7 @@
     "price": 0.75,
     "loopAmount": 10,
     "optionalDataTag": "",
-    "disabled": false
+    "disabled": 0
   },
   {
     "id": "minecraft:lightning_bolt",
@@ -134,7 +134,7 @@
     "price": 1,
     "loopAmount": 1,
     "optionalDataTag": "",
-    "disabled": false
+    "disabled": 0
   },
   {
     "id": "minecraft:llama",
@@ -143,7 +143,7 @@
     "price": 0.75,
     "loopAmount": 10,
     "optionalDataTag": "",
-    "disabled": false
+    "disabled": 0
   },
   {
     "id": "minecraft:pig",
@@ -152,7 +152,7 @@
     "price": 0.25,
     "loopAmount": 10,
     "optionalDataTag": "",
-    "disabled": false
+    "disabled": 0
   },
   {
     "id": "minecraft:polar_bear",
@@ -161,7 +161,7 @@
     "price": 1,
     "loopAmount": 1,
     "optionalDataTag": "",
-    "disabled": false
+    "disabled": 0
   },
   {
     "id": "minecraft:skeleton",
@@ -170,7 +170,7 @@
     "price": 2,
     "loopAmount": 10,
     "optionalDataTag": "",
-    "disabled": false
+    "disabled": 0
   },
   {
     "id": "minecraft:spider",
@@ -179,7 +179,7 @@
     "price": 2,
     "loopAmount": 10,
     "optionalDataTag": "",
-    "disabled": false
+    "disabled": 0
   },
   {
     "id": "minecraft:witch",
@@ -188,7 +188,7 @@
     "price": 3,
     "loopAmount": 10,
     "optionalDataTag": "",
-    "disabled": false
+    "disabled": 0
   },
   {
     "id": "minecraft:wither",
@@ -197,7 +197,7 @@
     "price": 50,
     "loopAmount": 1,
     "optionalDataTag": "",
-    "disabled": false
+    "disabled": 0
   },
   {
     "id": "minecraft:wither_skeleton",
@@ -206,7 +206,7 @@
     "price": 3,
     "loopAmount": 5,
     "optionalDataTag": "",
-    "disabled": false
+    "disabled": 0
   },
   {
     "id": "minecraft:zombie",
@@ -215,6 +215,6 @@
     "price": 2,
     "loopAmount": 10,
     "optionalDataTag": "",
-    "disabled": false
+    "disabled": 0
   }]
 }
