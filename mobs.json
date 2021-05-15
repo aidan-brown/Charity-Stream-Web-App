@@ -1,0 +1,220 @@
+{
+  "mobs": [{
+    "id": "minecraft:bat",
+    "name": "Bat",
+    "description": "'Chirp Chirp' -some bat somewhere probably.",
+    "price": 0.10,
+    "loopAmount": 10,
+    "optionalDataTag": "",
+    "disabled": false
+  },
+  {
+    "id": "minecraft:blaze",
+    "name": "Blaze",
+    "description": "Fireball, do do do doo doo do *whoop whoop*.",
+    "price": 0.50,
+    "loopAmount": 5,
+    "optionalDataTag": "",
+    "disabled": false
+  },
+  {
+    "id": "minecraft:cave_spider",
+    "name": "Cave Spider",
+    "description": "Cave spiders, really? You hate a player that much?",
+    "price": 0.25,
+    "loopAmount": 3,
+    "optionalDataTag": "",
+    "disabled": false
+  },
+  {
+    "id": "minecraft:chicken",
+    "name": "Chicken",
+    "description": "Like cooked chicken but they have to put in some elbow grease.",
+    "price": 0.10,
+    "loopAmount": 10,
+    "optionalDataTag": "",
+    "disabled": false
+  },
+  {
+    "id": "minecraft:cow",
+    "name": "Cow",
+    "description": "'Moo' -Jerald the Cow",
+    "price": 0.20,
+    "loopAmount": 10,
+    "optionalDataTag": "",
+    "disabled": false
+  },
+  {
+    "id": "minecraft:creeper",
+    "name": "Creeper",
+    "description": "Tssssssss *BOOM*",
+    "price": 0.50,
+    "loopAmount": 10,
+    "optionalDataTag": "",
+    "disabled": false
+  },
+  {
+    "id": "minecraft:donkey",
+    "name": "Donkey",
+    "description": "Shrek's pet, idk I didn't watch the movie",
+    "price": 0.10,
+    "loopAmount": 1,
+    "optionalDataTag": "",
+    "disabled": false
+  },
+  {
+    "id": "minecraft:ender_dragon",
+    "name": "Ender Dragon",
+    "description": "You really want to Summon an Ender Dragon? In this Economy?",
+    "price": 50,
+    "loopAmount": 1,
+    "optionalDataTag": "{DragonPhase:0}",
+    "disabled": false
+  },
+  {
+    "id": "minecraft:enderman",
+    "name": "Enderman",
+    "description": "He picks things up and puts them down.",
+    "price": 0.5,
+    "loopAmount": 3,
+    "optionalDataTag": "",
+    "disabled": false
+  },
+  {
+    "id": "minecraft:endermite",
+    "name": "Endermite",
+    "description": "A telleporting mini bug.",
+    "price": 0.50,
+    "loopAmount": 10,
+    "optionalDataTag": "",
+    "disabled": false
+  },
+
+  
+  {
+    "id": "minecraft:evocation_illager",
+    "name": "Evoker",
+    "description": "He Evoke. He protec.",
+    "price": 0.75,
+    "loopAmount": 10,
+    "optionalDataTag": "",
+    "disabled": false
+  },
+  {
+    "id": "minecraft:ghast",
+    "name": "Ghast",
+    "description": "[:O]=",
+    "price": 1,
+    "loopAmount": 5,
+    "optionalDataTag": "",
+    "disabled": false
+  },
+  {
+    "id": "minecraft:husk",
+    "name": "Husk",
+    "description": "Like corn meets a zombie",
+    "price": 0.50,
+    "loopAmount": 10,
+    "optionalDataTag": "",
+    "disabled": false
+  },
+  {
+    "id": "minecraft:illusion_illager",
+    "name": "Illusioner",
+    "description": "Magician but make it minecraft and less witchy.",
+    "price": 0.75,
+    "loopAmount": 10,
+    "optionalDataTag": "",
+    "disabled": false
+  },
+  {
+    "id": "minecraft:lightning_bolt",
+    "name": "Lightning Bolt",
+    "description": "Basically just kill someone.",
+    "price": 1,
+    "loopAmount": 1,
+    "optionalDataTag": "",
+    "disabled": false
+  },
+  {
+    "id": "minecraft:llama",
+    "name": "Llama",
+    "description": "It'll probably just spit on people.",
+    "price": 0.75,
+    "loopAmount": 10,
+    "optionalDataTag": "",
+    "disabled": false
+  },
+  {
+    "id": "minecraft:pig",
+    "name": "Pig",
+    "description": "This is some bougie pork.",
+    "price": 0.25,
+    "loopAmount": 10,
+    "optionalDataTag": "",
+    "disabled": false
+  },
+  {
+    "id": "minecraft:polar_bear",
+    "name": "Polar Bear",
+    "description": "They changed the dogs in Minecraft!",
+    "price": 1,
+    "loopAmount": 1,
+    "optionalDataTag": "",
+    "disabled": false
+  },
+  {
+    "id": "minecraft:skeleton",
+    "name": "Skeleton",
+    "description": "Bone shooty man.",
+    "price": 2,
+    "loopAmount": 10,
+    "optionalDataTag": "",
+    "disabled": false
+  },
+  {
+    "id": "minecraft:spider",
+    "name": "Spider",
+    "description": "♫ Spiderman, Spiderman, does whatever a spider can... ♫",
+    "price": 2,
+    "loopAmount": 10,
+    "optionalDataTag": "",
+    "disabled": false
+  },
+  {
+    "id": "minecraft:witch",
+    "name": "Witch",
+    "description": "He he he.",
+    "price": 3,
+    "loopAmount": 10,
+    "optionalDataTag": "",
+    "disabled": false
+  },
+  {
+    "id": "minecraft:wither",
+    "name": "Wither",
+    "description": "Literally just a chaos thing with three heads.",
+    "price": 50,
+    "loopAmount": 1,
+    "optionalDataTag": "",
+    "disabled": false
+  },
+  {
+    "id": "minecraft:wither_skeleton",
+    "name": "Wither Skeleton",
+    "description": "Wither minions for the Wither TM.",
+    "price": 3,
+    "loopAmount": 5,
+    "optionalDataTag": "",
+    "disabled": false
+  },
+  {
+    "id": "minecraft:zombie",
+    "name": "Zombie",
+    "description": "...Brains...",
+    "price": 2,
+    "loopAmount": 10,
+    "optionalDataTag": "",
+    "disabled": false
+  }]
+}

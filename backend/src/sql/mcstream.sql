@@ -6,7 +6,7 @@ CREATE TABLE IF NOT EXISTS players(
 );
 
 CREATE TABLE IF NOT EXISTS items(
-    id INT NOT NULL,
+    id VARCHAR(255) NOT NULL,
     name VARCHAR(255) NOT NULL,
     description TEXT NOT NULL,
     type ENUM('weapon', 'armor', 'misc', 'tool', 'food', 'buff', 'material'),
@@ -46,5 +46,27 @@ CREATE TABLE IF NOT EXISTS buff(
     id INT NOT NULL,
     seconds INT NOT NULL,
     effects TEXT NOT NULL,
+    PRIMARY KEY(id)
+);
+
+CREATE TABLE IF NOT EXISTS effects(
+    id VARCHAR(255) NOT NULL,
+    name VARCHAR(255) NOT NULL,
+    description TEXT NOT NULL,
+    price INT NOT NULL,
+    time INT NOT NULL,
+    power INT NOT NULL,
+    disabled BOOLEAN NOT NULL,
+    PRIMARY KEY(id)
+);
+
+CREATE TABLE IF NOT EXISTS mobs(
+    id VARCHAR(255) NOT NULL,
+    name VARCHAR(255) NOT NULL,
+    description TEXT NOT NULL,
+    price INT NOT NULL,
+    loopAmount INT NOT NULL,
+    optionalDataTag TEXT NOT NULL,
+    disabled BOOLEAN NOT NULL,
     PRIMARY KEY(id)
 );
