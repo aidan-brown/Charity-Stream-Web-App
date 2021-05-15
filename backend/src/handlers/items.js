@@ -4,25 +4,24 @@ const safeJsonParse = require('../extraFunctions/safeJsonParse');
 module.exports = {
   getItems: async (_, res) => {
     try {
-      const customQuery = `
-        SELECT *
-        FROM items
-        LEFT JOIN armor
-        ON items.id = armor.id
-        LEFT JOIN buff
-        ON items.id = buff.id
-        LEFT JOIN food
-        ON items.id = food.id
-        LEFT JOIN tool
-        ON items.id = tool.id
-        LEFT JOIN weapon
-        ON items.id = weapon.id`;
+      const items = await Select(null, 'items', null);
+      
+      const mappedItems = await Promise.all(items.map(async item => {
+        const { type, id } = item;
 
-      const items = await Select(customQuery, null, null);
+        if (type !== 'misc' && type !== 'material') {
+          const [typeInfo] = await Select(null, type, `id ='${id}'`);
 
-      console.log(items);
+          return {
+            ...item,
+            ...typeInfo,
+          };
+        }
+        
+        return item;
+      }));
 
-      res.status(200).send(items);
+      res.status(200).send(mappedItems);
     } catch (error) {
       const { code = 500, message = error.message } = safeJsonParse(error.message);
       res.status(code).send(message);
