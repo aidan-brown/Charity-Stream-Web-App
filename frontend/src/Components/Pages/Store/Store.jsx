@@ -51,7 +51,6 @@ const Store = ({selectedPlayer}) => {
         localStorage.setItem('player', player);
     }, [player])
     useEffect(() => {
-        console.log(cartItems)
         localStorage.setItem('cartItems', JSON.stringify(cartItems));
     }, [cartItems])
 
@@ -143,19 +142,29 @@ const Store = ({selectedPlayer}) => {
             let stringIndividual;
             switch(cartItems[i].type){
                 case "effect":
+                    //id, time, power
                     stringIndividual = "effect-";
                     stringIndividual += player;
                     stringIndividual += "-";
+                    stringIndividual += cartItems[i].id;
+                    stringIndividual += "-";
+                    stringIndividual += cartItems[i].time;
+                    stringIndividual += "-";
+                    stringIndividual += cartItems[i].power;
                     break;
                 case "mob":
+                    //id, loop, dataTags
                     stringIndividual = "summon-";
                     stringIndividual += player;
                     stringIndividual += "-";
-                    stringIndividual += cartItems[i].name;
+                    stringIndividual += cartItems[i].id;
                     stringIndividual += "-";
                     stringIndividual += cartItems[i].amount;
+                    stringIndividual += "-";
+                    stringIndividual += cartItems[i].optionalDataTag;
                     break;
                 default:
+                    //id, amount (items)
                     stringIndividual = "give-";
                     stringIndividual += player;
                     stringIndividual += "-";
@@ -183,6 +192,8 @@ const Store = ({selectedPlayer}) => {
             + stringsObj + "}";
 
         console.log(JGURL);
+
+        window.open(JGURL, "_blank");
     }
 
     const toggleCartMenu = () => {
