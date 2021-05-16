@@ -157,8 +157,11 @@
 
 @media only screen and (max-width: 700px){
     .StoreContent{
-        grid-template-columns: 100%;
-        grid-gap: 0.25rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+        align-items: center;
+        width: 100%;
     }
 
     .store-item{

@@ -44,7 +44,7 @@
 
 .cart-item {
     width: 90%;
-    background: linear-gradient(120deg, rgba(232, 232, 232, 1) 0%, rgba(218, 218, 218, 1) 100%);
+    background: linear-gradient(120deg, rgb(248, 248, 248) 0%, rgb(245, 245, 245) 100%);
     position: relative;
     display: grid;
     grid-template-columns: repeat(2, 50%);

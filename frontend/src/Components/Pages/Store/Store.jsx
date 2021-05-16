@@ -20,12 +20,39 @@ const Store = ({selectedPlayer}) => {
     const[showCart, setShowCart] = useState('no');
 
     const storeDiv = useRef();
+    const itemAddRef = useRef();
 
     const forceUpdate = useForceUpdate();
 
     useEffect(() => {
         storeDiv.current.style.height = `${window.screen.height * 0.8}px`;
+
+        let lsGet = localStorage.getItem('filterTag');
+        if(lsGet){
+            setFilterTag(lsGet);
+        }
+        lsGet = localStorage.getItem('player');
+        console.log(lsGet)
+        if(!selectedPlayer && lsGet){
+            setPlayer(lsGet);
+        } else if(selectedPlayer == ''){
+            setPlayer('fastturtle123');
+        }
+        lsGet = localStorage.getItem('cartItems');
+        if(lsGet){
+            setCartItems(JSON.parse(lsGet));
+        }
     }, [])
+
+    useEffect(() => {
+        localStorage.setItem('filterTag', filterTag);
+    }, [filterTag])
+    useEffect(() => {
+        localStorage.setItem('player', player);
+    }, [player])
+    useEffect(() => {
+        localStorage.setItem('cartItems', JSON.stringify(cartItems));
+    }, [cartItems])
 
     const addItemToCart = (item) => {
         if(!cartItems.find(e => e.name === item.name)){
@@ -40,6 +67,10 @@ const Store = ({selectedPlayer}) => {
                 }
             }
         }
+
+        itemAddRef.current.src = item.img;
+        itemAddRef.current.dataset.show = 'yes';
+        setTimeout(() => itemAddRef.current.dataset.show = 'no', 100)
     }
 
     const removeItemFromCart = (item) => {
@@ -61,6 +92,7 @@ const Store = ({selectedPlayer}) => {
                 removeItemFromCart(i);
             } else {
                 forceUpdate();
+                localStorage.setItem('cartItems', JSON.stringify(cartItems));
             }
         } else {
             console.error("Item does not exist in cart");
@@ -72,6 +104,7 @@ const Store = ({selectedPlayer}) => {
         if(i){
             i.power = value;
             forceUpdate();
+            localStorage.setItem('cartItems', JSON.stringify(cartItems));
         } else {
             console.error("Item does not exist in cart");
         }
@@ -82,6 +115,7 @@ const Store = ({selectedPlayer}) => {
         if(i){
             i.time = value;
             forceUpdate();
+            localStorage.setItem('cartItems', JSON.stringify(cartItems));
         } else {
             console.error("Item does not exist in cart");
         }
@@ -158,6 +192,7 @@ const Store = ({selectedPlayer}) => {
     return(
         <div className='Store'>
             <button className='bg-csh-tertiary toggle-cart' onClick={toggleCartMenu} data-showcart={showCart}><span className='material-icons'>{showCart === 'yes' ? 'arrow_back' : 'shopping_cart'}</span></button>
+            <img className='cart-add-item' ref={itemAddRef} src='' alt='item added to cart' data-show='no'></img>
             <Cart player={player} setPlayer={setPlayer} cartItems={cartItems} changeCartAmount={changeCartAmount} changeEffectPower={changeEffectPower} changeEffectTime={changeEffectTime} removeFromCart={removeItemFromCart} proceedToCheckout={proceedToCheckout} showCart={showCart} calculateTotal={calculateTotal} />
             <div className='store-window' ref={storeDiv}>
                 <nav className='store-nav bg-csh-secondary-gradient'>

@@ -1,6 +1,7 @@
 /* The img tag that holds the CSH logo */
 #csh-logo {
     width: 2rem;
+    margin-left: 10px;
 }
 
 /* The div tag that is responsible for holding the entirity of the navbar */
