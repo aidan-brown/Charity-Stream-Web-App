@@ -31,11 +31,19 @@ const Store = ({selectedPlayer}) => {
         if(!cartItems.find(e => e.name === item.name)){
             setCartItems([...cartItems, item]);
         } else {
-            changeCartAmount(item, 1);
+            if (!('power' in item)){
+                changeCartAmount(item, 1);
+            } else {
+                let time = cartItems.find(e => e.name === item.name).time;
+                if(time < 300){
+                    changeEffectTime(item, time + 30);
+                }
+            }
         }
     }
 
-    const removeItemFromCart = (index) => {
+    const removeItemFromCart = (item) => {
+        let index = cartItems.indexOf(item);
         if(index < cartItems.length){
             let tempArr = [...cartItems];
             tempArr.splice(index, 1);
@@ -50,7 +58,7 @@ const Store = ({selectedPlayer}) => {
         if(i){
             i.amount += change;
             if(i.amount <= 0){
-                removeItemFromCart(cartItems.indexOf(i));
+                removeItemFromCart(i);
             } else {
                 forceUpdate();
             }
@@ -59,14 +67,39 @@ const Store = ({selectedPlayer}) => {
         }
     } 
 
+    const changeEffectPower = (item, value=0) => {
+        let i = cartItems.find(e => e.name === item.name);
+        if(i){
+            i.power = value;
+            forceUpdate();
+        } else {
+            console.error("Item does not exist in cart");
+        }
+    } 
+
+    const changeEffectTime = (item, value=30) => {
+        let i = cartItems.find(e => e.name === item.name);
+        if(i){
+            i.time = value;
+            forceUpdate();
+        } else {
+            console.error("Item does not exist in cart");
+        }
+    } 
+
     const calculateTotal = () => {
         let total = 0;
-        cartItems.forEach(item => total += (item.amount * item.price));
+        cartItems.forEach(item => {
+            if(!('power' in item))
+                total += (item.amount * item.price);
+            else
+                total += ((item.power + 1) * (item.time / 30 * item.price));
+        });
         return total;
     }
 
     const proceedToCheckout = () => {
-        if(cartItems.length == 0) {
+        if(cartItems.length === 0) {
             console.error("No items in cart!");
             return;
         }
@@ -100,7 +133,7 @@ const Store = ({selectedPlayer}) => {
                     break;
             }
 
-            if(i != cartItems.length - 1) stringIndividual += ",";
+            if(i !== cartItems.length - 1) stringIndividual += ",";
 
             console.log(stringIndividual);
             
@@ -119,13 +152,13 @@ const Store = ({selectedPlayer}) => {
     }
 
     const toggleCartMenu = () => {
-        setShowCart(showCart == 'yes' ? 'no' : 'yes');
+        setShowCart(showCart === 'yes' ? 'no' : 'yes');
     }
 
     return(
         <div className='Store'>
-            <button className='bg-csh-tertiary toggle-cart' onClick={toggleCartMenu} data-showcart={showCart}><span className='material-icons'>{showCart == 'yes' ? 'arrow_back' : 'shopping_cart'}</span></button>
-            <Cart player={player} setPlayer={setPlayer} cartItems={cartItems} changeCartAmount={changeCartAmount} proceedToCheckout={proceedToCheckout} showCart={showCart} calculateTotal={calculateTotal} />
+            <button className='bg-csh-tertiary toggle-cart' onClick={toggleCartMenu} data-showcart={showCart}><span className='material-icons'>{showCart === 'yes' ? 'arrow_back' : 'shopping_cart'}</span></button>
+            <Cart player={player} setPlayer={setPlayer} cartItems={cartItems} changeCartAmount={changeCartAmount} changeEffectPower={changeEffectPower} changeEffectTime={changeEffectTime} removeFromCart={removeItemFromCart} proceedToCheckout={proceedToCheckout} showCart={showCart} calculateTotal={calculateTotal} />
             <div className='store-window' ref={storeDiv}>
                 <nav className='store-nav bg-csh-secondary-gradient'>
                     <span id='store-all' className='store-link' onClick={() => setFilterTag('all')}>{Icon}All</span>
@@ -133,11 +166,13 @@ const Store = ({selectedPlayer}) => {
                     <span id='a-weapons' className='store-link' onClick={() => setFilterTag('weapon')}>{Icon}Weapons</span>
                     <span id='a-armor' className='store-link' onClick={() => setFilterTag('armor')}>{Icon}Armor</span>
                     <span id='a-food' className='store-link' onClick={() => setFilterTag('food')}>{Icon}Food</span>
-                    <span id='a-buffs' className='store-link' onClick={() => setFilterTag('buff')}>{Icon}Buffs</span>
                     <span id='a-materials' className='store-link' onClick={() => setFilterTag('material')}>{Icon}Materials</span>
-                    <span id='a-kits' className='store-link' onClick={() => setFilterTag('kit')}>{Icon}Kits</span>
+                    <span id='a-effects' className='store-link' onClick={() => setFilterTag('effects')}>{Icon}Effects</span>
+                    <span id='a-mobs' className='store-link' onClick={() => setFilterTag('mobs')}>{Icon}Mobs</span>
                 </nav>
-                <StoreContent filterTag={filterTag} addItemToCart={addItemToCart} />
+                <div className='store-content'>
+                    <StoreContent filterTag={filterTag} addItemToCart={addItemToCart} />
+                </div>
             </div>
         </div>
     );

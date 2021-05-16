@@ -35,6 +35,11 @@
 
 .cart-playerselect{
     margin: 1rem auto;
+    width: 70%;
+}
+
+.cart-playerselect-select{
+    width: 100% !important;
 }
 
 .cart-item {
@@ -58,6 +63,22 @@
     filter:drop-shadow(2px 3px 2px rgba(44, 44, 44, 0.438));
 }
 
+.cart-item-description{
+    text-align: left;
+    margin-left: 10px;
+}
+
+.cart-item-header{
+    font-size: medium;
+    margin: 0;
+}
+
+.cart-item-price{
+    font-size: small;
+    margin: 0;
+    opacity: 0.75;
+}
+
 .cart-item-image{
     height: 100%;
     display: flex;
@@ -79,6 +100,19 @@
     left: -10px;
     display: grid;
     grid-template-columns: repeat(3, 25px 2px);
+    grid-template-rows: 25px;
+    filter: drop-shadow(2px 3px 2px rgba(44, 44, 44, 0.103));
+}
+
+.cart-effect-stats{
+    color: black;
+    z-index: 3;
+    position: absolute;
+    bottom: -10px;
+    left: -10px;
+    width: 125px;
+    display: grid;
+    grid-template-columns: 40% 60%;
     grid-template-rows: 25px;
     filter: drop-shadow(2px 3px 2px rgba(44, 44, 44, 0.103));
 }
@@ -128,15 +162,61 @@
 }
 
 .cart-checkout{
-    color: white;
-    border-radius: 25px 25px 25px 25px;
-    border: none;
-    cursor: pointer;
-    filter:drop-shadow(2px 3px 4px rgba(44, 44, 44, 0.438));
+    color: white !important;
+    border-radius: 25px !important;
+    border: none !important;
+    filter:drop-shadow(2px 3px 4px rgba(44, 44, 44, 0.438)) !important;
 
-    height: 50px;
-    width: 250px;
-    margin: 1rem auto;
+    height: 50px !important;
+    width: 250px !important;
+    margin: 1rem auto !important;
+    transition: all 200ms !important;
+}
+
+.cart-checkout:focus{
+    outline: none;
+}
+
+.cart-checkout:hover{
+    transform: scale(1.05);
+}
+
+.cart-checkout:active{
+    transform: scale(1.025);
+}
+
+.cart-item-remove{
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    background: #f44336;
+    width: 25px;
+    height: 25px;
+    border-radius: 12.5px;
+    color: white;
+    filter: drop-shadow(2px 3px 2px rgba(44, 44, 44, 0.103));
+    cursor: pointer;
+    transition: all 200ms;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Old versions of Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome, Edge, Opera and Firefox */
+}
+
+.cart-item-remove:hover{
+    transform: scale(1.1);
+}
+
+.cart-item-remove:active{
+    transform: scale(1.05);
 }
 
 /* The scrollbar for the item list */

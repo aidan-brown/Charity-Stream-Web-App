@@ -54,7 +54,6 @@ const PlayerList = ({setSelectedPlayer}) => {
                     } else {
                         return -1;
                     }
-                    return 0;
                 }
             }).map((player, index) => {
                 return <Link key={index} className={`list-element ${player.type.toLowerCase()}`} onClick={() => playerOnClick(player)} to='/Store'>

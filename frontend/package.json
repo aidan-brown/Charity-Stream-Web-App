@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@datadog/browser-rum-recorder": "^2.7.4",
+    "@material-ui/core": "^4.11.4",
     "@testing-library/jest-dom": "^5.11.9",
     "@testing-library/react": "^11.2.5",
     "@testing-library/user-event": "^12.8.1",
@@ -13,7 +14,7 @@
     "react-scripts": "4.0.3"
   },
   "scripts": {
-    "start": "npm run-script build && /bin/sh env.sh && node server.js",
+    "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
