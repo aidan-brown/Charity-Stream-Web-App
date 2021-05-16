@@ -32,10 +32,9 @@ const Store = ({selectedPlayer}) => {
             setFilterTag(lsGet);
         }
         lsGet = localStorage.getItem('player');
-        console.log(lsGet)
         if(!selectedPlayer && lsGet){
             setPlayer(lsGet);
-        } else if(selectedPlayer == ''){
+        } else if(selectedPlayer === ''){
             setPlayer('fastturtle123');
         }
         lsGet = localStorage.getItem('cartItems');

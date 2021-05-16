@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
 import './Cart.css';
-import Placeholder from '../../../../images/placeholder.png';
 import {BACKENDURL} from '../../../App/constants.js';
 import { Button, MenuItem, Select } from '@material-ui/core';
 
