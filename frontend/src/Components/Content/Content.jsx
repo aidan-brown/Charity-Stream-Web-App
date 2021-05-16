@@ -6,7 +6,7 @@ import Store from '../Pages/Store/Store';
 
 /** Class for constructing the main content component **/
 const Content = () => {
-    const[selectedPlayer, setSelectedPlayer] = useState('fastturtle123');
+    const[selectedPlayer, setSelectedPlayer] = useState('');
 
     return(
         <main className="Content">

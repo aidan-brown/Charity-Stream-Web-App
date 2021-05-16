@@ -20,22 +20,60 @@ const Store = ({selectedPlayer}) => {
     const[showCart, setShowCart] = useState('no');
 
     const storeDiv = useRef();
+    const itemAddRef = useRef();
 
     const forceUpdate = useForceUpdate();
 
     useEffect(() => {
         storeDiv.current.style.height = `${window.screen.height * 0.8}px`;
+
+        let lsGet = localStorage.getItem('filterTag');
+        if(lsGet){
+            setFilterTag(lsGet);
+        }
+        lsGet = localStorage.getItem('player');
+        if(!selectedPlayer && lsGet){
+            setPlayer(lsGet);
+        } else if(selectedPlayer === ''){
+            setPlayer('fastturtle123');
+        }
+        lsGet = localStorage.getItem('cartItems');
+        if(lsGet){
+            setCartItems(JSON.parse(lsGet));
+        }
     }, [])
+
+    useEffect(() => {
+        localStorage.setItem('filterTag', filterTag);
+    }, [filterTag])
+    useEffect(() => {
+        localStorage.setItem('player', player);
+    }, [player])
+    useEffect(() => {
+        localStorage.setItem('cartItems', JSON.stringify(cartItems));
+    }, [cartItems])
 
     const addItemToCart = (item) => {
         if(!cartItems.find(e => e.name === item.name)){
             setCartItems([...cartItems, item]);
         } else {
-            changeCartAmount(item, 1);
+            if (!('power' in item)){
+                changeCartAmount(item, 1);
+            } else {
+                let time = cartItems.find(e => e.name === item.name).time;
+                if(time < 300){
+                    changeEffectTime(item, time + 30);
+                }
+            }
         }
+
+        itemAddRef.current.src = item.img;
+        itemAddRef.current.dataset.show = 'yes';
+        setTimeout(() => itemAddRef.current.dataset.show = 'no', 100)
     }
 
-    const removeItemFromCart = (index) => {
+    const removeItemFromCart = (item) => {
+        let index = cartItems.indexOf(item);
         if(index < cartItems.length){
             let tempArr = [...cartItems];
             tempArr.splice(index, 1);
@@ -50,10 +88,33 @@ const Store = ({selectedPlayer}) => {
         if(i){
             i.amount += change;
             if(i.amount <= 0){
-                removeItemFromCart(cartItems.indexOf(i));
+                removeItemFromCart(i);
             } else {
                 forceUpdate();
+                localStorage.setItem('cartItems', JSON.stringify(cartItems));
             }
+        } else {
+            console.error("Item does not exist in cart");
+        }
+    } 
+
+    const changeEffectPower = (item, value=0) => {
+        let i = cartItems.find(e => e.name === item.name);
+        if(i){
+            i.power = value;
+            forceUpdate();
+            localStorage.setItem('cartItems', JSON.stringify(cartItems));
+        } else {
+            console.error("Item does not exist in cart");
+        }
+    } 
+
+    const changeEffectTime = (item, value=30) => {
+        let i = cartItems.find(e => e.name === item.name);
+        if(i){
+            i.time = value;
+            forceUpdate();
+            localStorage.setItem('cartItems', JSON.stringify(cartItems));
         } else {
             console.error("Item does not exist in cart");
         }
@@ -61,12 +122,17 @@ const Store = ({selectedPlayer}) => {
 
     const calculateTotal = () => {
         let total = 0;
-        cartItems.forEach(item => total += (item.amount * item.price));
+        cartItems.forEach(item => {
+            if(!('power' in item))
+                total += (item.amount * item.price);
+            else
+                total += ((item.power + 1) * (item.time / 30 * item.price));
+        });
         return total;
     }
 
     const proceedToCheckout = () => {
-        if(cartItems.length == 0) {
+        if(cartItems.length === 0) {
             console.error("No items in cart!");
             return;
         }
@@ -74,21 +140,30 @@ const Store = ({selectedPlayer}) => {
         for(let i = 0; i < cartItems.length; i++){
             let stringIndividual;
             switch(cartItems[i].type){
-                //Need river's input on effect and mob
-                /*case "effect":
+                case "effect":
+                    //id, time, power
                     stringIndividual = "effect-";
                     stringIndividual += player;
                     stringIndividual += "-";
-                    break;*/
+                    stringIndividual += cartItems[i].id;
+                    stringIndividual += "-";
+                    stringIndividual += cartItems[i].time;
+                    stringIndividual += "-";
+                    stringIndividual += cartItems[i].power;
+                    break;
                 case "mob":
+                    //id, loop, dataTags
                     stringIndividual = "summon-";
                     stringIndividual += player;
                     stringIndividual += "-";
-                    stringIndividual += cartItems[i].name;
+                    stringIndividual += cartItems[i].id;
                     stringIndividual += "-";
                     stringIndividual += cartItems[i].amount;
+                    stringIndividual += "-";
+                    stringIndividual += cartItems[i].optionalDataTag;
                     break;
                 default:
+                    //id, amount (items)
                     stringIndividual = "give-";
                     stringIndividual += player;
                     stringIndividual += "-";
@@ -100,7 +175,7 @@ const Store = ({selectedPlayer}) => {
                     break;
             }
 
-            if(i != cartItems.length - 1) stringIndividual += ",";
+            if(i !== cartItems.length - 1) stringIndividual += ",";
 
             console.log(stringIndividual);
             
@@ -116,16 +191,19 @@ const Store = ({selectedPlayer}) => {
             + stringsObj + "}";
 
         console.log(JGURL);
+
+        window.open(JGURL, "_blank");
     }
 
     const toggleCartMenu = () => {
-        setShowCart(showCart == 'yes' ? 'no' : 'yes');
+        setShowCart(showCart === 'yes' ? 'no' : 'yes');
     }
 
     return(
         <div className='Store'>
-            <button className='bg-csh-tertiary toggle-cart' onClick={toggleCartMenu} data-showcart={showCart}><span className='material-icons'>{showCart == 'yes' ? 'arrow_back' : 'shopping_cart'}</span></button>
-            <Cart player={player} setPlayer={setPlayer} cartItems={cartItems} changeCartAmount={changeCartAmount} proceedToCheckout={proceedToCheckout} showCart={showCart} calculateTotal={calculateTotal} />
+            <button className='bg-csh-tertiary toggle-cart' onClick={toggleCartMenu} data-showcart={showCart}><span className='material-icons'>{showCart === 'yes' ? 'arrow_back' : 'shopping_cart'}</span></button>
+            <img className='cart-add-item' ref={itemAddRef} src='' alt='item added to cart' data-show='no'></img>
+            <Cart player={player} setPlayer={setPlayer} cartItems={cartItems} changeCartAmount={changeCartAmount} changeEffectPower={changeEffectPower} changeEffectTime={changeEffectTime} removeFromCart={removeItemFromCart} proceedToCheckout={proceedToCheckout} showCart={showCart} calculateTotal={calculateTotal} />
             <div className='store-window' ref={storeDiv}>
                 <nav className='store-nav bg-csh-secondary-gradient'>
                     <span id='store-all' className='store-link' onClick={() => setFilterTag('all')}>{Icon}All</span>
@@ -133,11 +211,13 @@ const Store = ({selectedPlayer}) => {
                     <span id='a-weapons' className='store-link' onClick={() => setFilterTag('weapon')}>{Icon}Weapons</span>
                     <span id='a-armor' className='store-link' onClick={() => setFilterTag('armor')}>{Icon}Armor</span>
                     <span id='a-food' className='store-link' onClick={() => setFilterTag('food')}>{Icon}Food</span>
-                    <span id='a-buffs' className='store-link' onClick={() => setFilterTag('buff')}>{Icon}Buffs</span>
                     <span id='a-materials' className='store-link' onClick={() => setFilterTag('material')}>{Icon}Materials</span>
-                    <span id='a-kits' className='store-link' onClick={() => setFilterTag('kit')}>{Icon}Kits</span>
+                    <span id='a-effects' className='store-link' onClick={() => setFilterTag('effects')}>{Icon}Effects</span>
+                    <span id='a-mobs' className='store-link' onClick={() => setFilterTag('mobs')}>{Icon}Mobs</span>
                 </nav>
-                <StoreContent filterTag={filterTag} addItemToCart={addItemToCart} />
+                <div className='store-content'>
+                    <StoreContent filterTag={filterTag} addItemToCart={addItemToCart} />
+                </div>
             </div>
         </div>
     );

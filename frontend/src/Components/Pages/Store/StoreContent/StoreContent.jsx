@@ -1,25 +1,30 @@
 import React, {useState, useEffect} from 'react';
-import Placeholder from '../../../../images/placeholder.png';
 import {BACKENDURL} from '../../../App/constants';
 
 import './StoreContent.css';
 
-const Store = ({filterTag, addItemToCart}) => {
+const StoreContent = ({filterTag, addItemToCart}) => {
     const[items, setItems] = useState([]);
-    const[itemElem, setItemElem] = useState({});
+    const[effects, setEffects] = useState([]);
+    const[mobs, setMobs] = useState([]);
 
     useEffect(() => {
         fetch(`${BACKENDURL}/items`)
         .then(res => res.json())
         .then(res => {
-            console.log(res)
             setItems(res);
-            const counters = {};
-
-            res.forEach((_, index) => {
-                counters[index] = 1;
-            })
-            setItemElem(counters);
+        })
+        .catch(err => console.error(err))
+        fetch(`${BACKENDURL}/mobs`)
+        .then(res => res.json())
+        .then(res => {
+            setMobs(res);
+        })
+        .catch(err => console.error(err))
+        fetch(`${BACKENDURL}/effects`)
+        .then(res => res.json())
+        .then(res => {
+            setEffects(res);
         })
         .catch(err => console.error(err))
     }, []);
@@ -27,28 +32,141 @@ const Store = ({filterTag, addItemToCart}) => {
     return(
         <div className='StoreContent'>
             {items.filter(item => filterTag === 'all' || item.type === filterTag).map((item, index) => {
-                return <span key={index} className='store-item bg-csh-primary-gradient'>
-                        <p className='item-name'>{item.name}</p>
-                        <div className='item-image'>
-                            <img src={Placeholder} alt='item placeholder'></img>
-                        </div>
-                        <dl className='item-stats'>
-                            
-                        </dl>
-                        <div className='item-price'>
-                            <p>Amount:</p>
-                            <span className='item-amount'>
-                                <button disabled={itemElem[index] <= 1} onClick={() => setItemElem({...itemElem, [index]: itemElem[index] - 1})}>-</button>
-                                {itemElem[index]}
-                                <button onClick={() => setItemElem({...itemElem, [index]: itemElem[index] + 1})}>+</button>
-                            </span>
-                            <p className='item-price'>Price: ${(itemElem[index] * item.price).toFixed(2)}</p>
-                        </div>
-                        <span className='add-cart material-icons' onClick={() => addItemToCart({...item, amount: itemElem[index]})}>add_shopping_cart</span>
-                    </span>
+                return <StoreItem item={item} addItemToCart={() => addItemToCart({...item, amount: 1, img: `${BACKENDURL}/images/items/${item.id}.png`})} key={index} />
+            })}
+            {mobs.filter(mob => filterTag === 'all' || filterTag === 'mobs').map((mob, index) => {
+                return <StoreMob mob={mob} addItemToCart={() => addItemToCart({...mob, amount: 1, img: `${BACKENDURL}/images/mobs/${mob.id}.png`, type: 'mob'})} key={index}/>
+            })}
+            {effects.filter(effect => filterTag === 'all' || filterTag === 'effects').map((effect, index) => {
+                return <StoreEffect effect={effect} addItemToCart={() => addItemToCart({...effect, time: 30, power: 0, img: `${BACKENDURL}/images/effects/${effect.id}.png`, type: 'effect'})} key={index}/>
             })}
         </div>
     );
 }
 
-export default Store;
+const StoreItem = ({item, addItemToCart}) => {
+    let additionalDescriptors = [];
+    switch(item.type){
+        case 'tool':
+            additionalDescriptors.push(
+                <span key={0}>
+                    <dt>Speed Rating</dt>
+                    <dd>{item.speed}</dd>
+                </span>);
+            additionalDescriptors.push(
+                <span key={7}>
+                    <dt>Durability</dt>
+                    <dd>{item.durability}</dd>
+                </span>);
+            break;
+            
+        case 'weapon':
+            additionalDescriptors.push(
+                <span key={1}>
+                    <dt>Damage Rating</dt>
+                    <dd>{item.damage}</dd>
+                </span>);
+            additionalDescriptors.push(
+                <span key={6}>
+                    <dt>Durability</dt>
+                    <dd>{item.durability}</dd>
+                </span>);
+            break;
+
+        case 'armor':
+            additionalDescriptors.push(
+                <span key={2}>
+                    <dt>Armor Rating</dt>
+                    <dd>{item.protection}</dd>
+                </span>);
+            additionalDescriptors.push(
+                <span key={5}>
+                    <dt>Durability</dt>
+                    <dd>{item.durability}</dd>
+                </span>);
+            break;
+
+        case 'food':
+            additionalDescriptors.push(
+                <span key={3}>
+                    <dt>Special Effects</dt>
+                    <dd>{item.effects}</dd>
+                </span>);
+            additionalDescriptors.push(
+                <span key={4}>
+                    <dt>Food Rating</dt>
+                    <dd>{item.hungerFill}</dd>
+                </span>);
+            break;
+
+        default:
+            break;
+    }
+
+    return (
+    <span className='store-item bg-csh-tertiary' onClick={addItemToCart}>
+        <div className='store-item-image bg-csh-primary-gradient'>
+            <img src={`${BACKENDURL}/images/items/${item.id}.png`} alt={item.name}></img>
+            <p className='store-item-name'>{item.name}</p>
+            <p className='store-item-price'>${item.price.toFixed(2)}</p>
+        </div>
+        <div className='store-item-description'>
+            <dl className='store-item-stats'>
+                <span>
+                    <dt>Description</dt>
+                    <dd>{item.description}</dd>
+                </span>
+                {additionalDescriptors}
+            </dl>
+        </div>
+        <span className='add-cart material-icons md-36'>add_shopping_cart</span>
+    </span>
+    );
+}
+
+const StoreMob = ({mob, addItemToCart}) => {
+
+    return (
+    <span className='store-item bg-csh-tertiary' onClick={addItemToCart}>
+        <div className='store-item-image bg-csh-primary-gradient'>
+            <img src={`${BACKENDURL}/images/mobs/${mob.id}.png`} alt={mob.name}></img>
+            <p className='store-item-name'>{mob.name}</p>
+            <p className='store-item-price'>${mob.price.toFixed(2)}</p>
+        </div>
+        <div className='store-item-description'>
+            <dl className='store-item-stats'>
+                <span>
+                    <dt>Description</dt>
+                    <dd>{mob.description}</dd>
+                </span>
+            </dl>
+        </div>
+        <span className='add-cart material-icons md-36'>add_shopping_cart</span>
+    </span>
+    );
+}
+
+const StoreEffect = ({effect, addItemToCart}) => {
+
+    return (
+    <span className='store-item bg-csh-tertiary' onClick={addItemToCart}>
+        <div className='store-item-image bg-csh-primary-gradient'>
+            <img src={`${BACKENDURL}/images/effects/${effect.id}.png`} alt={effect.name}></img>
+            <p className='store-item-name'>{effect.name}</p>
+            <p className='store-item-price'>${effect.price.toFixed(2)}</p>
+        </div>
+        <div className='store-item-description'>
+            <dl className='store-item-stats'>
+                <span>
+                    <dt>Description</dt>
+                    <dd>{effect.description}</dd>
+                </span>
+            </dl>
+        </div>
+
+        <span className='add-cart material-icons md-36'>add_shopping_cart</span>
+    </span>
+    );
+}
+
+export default StoreContent;

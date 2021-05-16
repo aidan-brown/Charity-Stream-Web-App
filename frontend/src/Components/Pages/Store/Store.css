@@ -40,22 +40,11 @@
     color: white;
 }
 
-.store-link:hover{
-    color: lightgrey;
-    text-decoration: none;
-
-    margin-top: 0;
-}
-
-.store-link:hover .icon{
-    fill: lightgrey;
-    width: 3.25rem;
-}
-
 .store-link{
     transition: all 200ms;
     margin: 0.5rem;
     text-align: center;
+    opacity: 0.85;
 
     display: flex;
     flex-direction: column;
@@ -67,6 +56,18 @@
     width: 2.75rem;
     margin: 0 auto;
     transition: all 200ms;
+}
+
+.store-link:hover{
+    text-decoration: none;
+
+    transform: scale(1.05);
+    opacity: 1;
+}
+
+.store-link:active{
+    transform: scale(1.025);
+    opacity: 0.9;
 }
 
 .toggle-cart{
@@ -115,6 +116,66 @@
 
 .toggle-cart[data-showcart='no']{
     right: 0;
+}
+
+.cart-add-item{
+    transition: all 200ms;
+    position: fixed;
+    top: 100px;
+    right: 10px;
+    width: 35px;
+    height: 35px;
+}
+
+.cart-add-item[data-show='yes']{
+    top: 155px;
+    opacity: 0.5;
+    transition: opacity 100ms;
+}
+
+.cart-add-item[data-show='no']{
+    top: 100px;
+    opacity: 0;
+}
+
+.store-content{
+    background: linear-gradient(120deg, rgba(232, 232, 232, 1) 0%, rgba(218, 218, 218, 1) 100%);
+    height: 100%;
+    width: 100%;
+    border-radius: 0 7.5px 7.5px 0;
+    
+    margin: auto;
+
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+/* The scrollbar for the player list */
+.store-content::-webkit-scrollbar {
+    background: none;
+    width: 0.5rem;
+}
+
+/* The scrollbar thumb for the player list */
+.store-content::-webkit-scrollbar-thumb {
+    transition: background 500ms;
+    background: rgba(225, 28, 82, 0.5);
+    border-radius: 1rem;
+}
+
+/* When hovering over the scrollbar thumb for the player list */
+.store-content::-webkit-scrollbar-thumb:hover {
+    transition: background 500ms;
+
+    background: rgba(228, 28, 82, 0.75);
+}
+
+/* The scrollbar track for the player list */
+.store-content::-webkit-scrollbar-track {
+    background: rgba(50, 50, 50, 0.25);
+    border-radius: 1rem;
+
+    margin: .5rem 0;
 }
 
 @media only screen and (max-width: 1700px){
