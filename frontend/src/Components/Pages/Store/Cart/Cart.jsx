@@ -83,8 +83,9 @@ const CartItem = ({item, changeCartAmount, removeFromCart}) => {
                 <p className='cart-item-header'>{item.name}</p>
                 <p className='cart-item-price'>${(item.amount * item.price).toFixed(2)}</p>
             </div>
-            <div className='cart-item-image bg-csh-primary-gradient'>
-                <img src={item.img} alt='Placeholder'></img>
+            <div className='cart-item-brand bg-csh-primary-gradient'>
+                <img className='cart-item-icon' src={item.icon} alt={item.name}></img>
+                <img className='cart-item-image' src={item.img} alt={item.name}></img>
             </div>
             <div className='cart-item-counter bg-csh-tertiary'>
                 <span className="material-icons cart-item-count-control" onClick={() => changeCartAmount(item, -1)}>remove</span>
@@ -108,8 +109,9 @@ const CartEffect = ({effect, changeEffectPower, changeEffectTime, removeFromCart
                 <p className='cart-item-header'>{effect.name}</p>
                 <p className='cart-item-price'>${(((effect.power + 1) * (effect.time / 30 * effect.price))).toFixed(2)}</p>
             </div>
-            <div className='cart-item-image bg-csh-primary-gradient'>
-                <img src={effect.img} alt='Placeholder'></img>
+            <div className='cart-item-brand bg-csh-primary-gradient'>
+                <img className='cart-item-icon' src={effect.icon} alt={effect.name}></img>
+                <img className='cart-item-image' src={effect.img} alt={effect.name}></img>
             </div>
             <div className='cart-effect-stats bg-csh-tertiary'>
                 <Select value={effect.power} onChange={e => changeEffectPower(effect, e.target.value)}>
