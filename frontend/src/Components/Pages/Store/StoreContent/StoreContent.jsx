@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import {BACKENDURL} from '../../../App/constants';
+import PLACEHOLDER from '../../../../images/256-full.jpg'
 
 import './StoreContent.css';
 
@@ -32,13 +33,13 @@ const StoreContent = ({filterTag, addItemToCart}) => {
     return(
         <div className='StoreContent'>
             {items.filter(item => filterTag === 'all' || item.type === filterTag).map((item, index) => {
-                return <StoreItem item={item} addItemToCart={() => addItemToCart({...item, amount: 1, img: `${BACKENDURL}/images/items/${item.id}.png`})} key={index} />
+                return <StoreItem item={item} addItemToCart={() => addItemToCart({...item, amount: 1, icon: `${BACKENDURL}/images/items/${item.id}.png`, img: `${BACKENDURL}/images/items/${item.id}-full.jpg`})} key={index} />
             })}
             {mobs.filter(mob => filterTag === 'all' || filterTag === 'mobs').map((mob, index) => {
-                return <StoreMob mob={mob} addItemToCart={() => addItemToCart({...mob, amount: 1, img: `${BACKENDURL}/images/mobs/${mob.id}.png`, type: 'mob'})} key={index}/>
+                return <StoreMob mob={mob} addItemToCart={() => addItemToCart({...mob, amount: 1, icon: `${BACKENDURL}/images/mobs/${mob.id}.png`, img: `${BACKENDURL}/images/mobs/${mob.id}-full.jpg`, type: 'mob'})} key={index}/>
             })}
             {effects.filter(effect => filterTag === 'all' || filterTag === 'effects').map((effect, index) => {
-                return <StoreEffect effect={effect} addItemToCart={() => addItemToCart({...effect, time: 30, power: 0, img: `${BACKENDURL}/images/effects/${effect.id}.png`, type: 'effect'})} key={index}/>
+                return <StoreEffect effect={effect} addItemToCart={() => addItemToCart({...effect, time: 30, power: 0, icon: `${BACKENDURL}/images/effects/${effect.id}.png`, img: `${BACKENDURL}/images/effects/${effect.id}-full.jpg`, type: 'effect'})} key={index}/>
             })}
         </div>
     );
@@ -105,8 +106,9 @@ const StoreItem = ({item, addItemToCart}) => {
 
     return (
     <span className='store-item bg-csh-tertiary' onClick={addItemToCart}>
-        <div className='store-item-image bg-csh-primary-gradient'>
-            <img src={`${BACKENDURL}/images/items/${item.id}.png`} alt={item.name}></img>
+        <div className='store-item-header bg-csh-primary-gradient'>
+            <img className='store-item-image' src={`${BACKENDURL}/images/items/${item.id}-full.jpg`} alt={item.name}></img>
+            <img className='store-item-icon' src={`${BACKENDURL}/images/items/${item.id}.png`} alt={item.name}></img>
             <p className='store-item-name'>{item.name}</p>
             <p className='store-item-price'>${item.price.toFixed(2)}</p>
         </div>
@@ -128,8 +130,9 @@ const StoreMob = ({mob, addItemToCart}) => {
 
     return (
     <span className='store-item bg-csh-tertiary' onClick={addItemToCart}>
-        <div className='store-item-image bg-csh-primary-gradient'>
-            <img src={`${BACKENDURL}/images/mobs/${mob.id}.png`} alt={mob.name}></img>
+        <div className='store-item-header bg-csh-primary-gradient'>
+            <img className='store-item-image' src={`${BACKENDURL}/images/mobs/${mob.id}-full.jpg`} alt={mob.name}></img>
+            <img className='store-item-icon' src={`${BACKENDURL}/images/mobs/${mob.id}.png`} alt={mob.name}></img>
             <p className='store-item-name'>{mob.name}</p>
             <p className='store-item-price'>${mob.price.toFixed(2)}</p>
         </div>
@@ -150,8 +153,9 @@ const StoreEffect = ({effect, addItemToCart}) => {
 
     return (
     <span className='store-item bg-csh-tertiary' onClick={addItemToCart}>
-        <div className='store-item-image bg-csh-primary-gradient'>
-            <img src={`${BACKENDURL}/images/effects/${effect.id}.png`} alt={effect.name}></img>
+        <div className='store-item-header bg-csh-primary-gradient'>
+            <img className='store-item-image' src={`${BACKENDURL}/images/effects/${effect.id}-full.jpg`} alt={effect.name}></img>
+            <img className='store-item-icon' src={`${BACKENDURL}/images/effects/${effect.id}.png`} alt={effect.name}></img>
             <p className='store-item-name'>{effect.name}</p>
             <p className='store-item-price'>${effect.price.toFixed(2)}</p>
         </div>
