@@ -1,4 +1,3 @@
-import { InputLabel, MenuItem, Select } from '@material-ui/core';
 import React, {useState, useEffect} from 'react';
 import {BACKENDURL} from '../../../App/constants';
 
@@ -13,21 +12,18 @@ const StoreContent = ({filterTag, addItemToCart}) => {
         fetch(`${BACKENDURL}/items`)
         .then(res => res.json())
         .then(res => {
-            console.log(res)
             setItems(res);
         })
         .catch(err => console.error(err))
         fetch(`${BACKENDURL}/mobs`)
         .then(res => res.json())
         .then(res => {
-            console.log(res)
             setMobs(res);
         })
         .catch(err => console.error(err))
         fetch(`${BACKENDURL}/effects`)
         .then(res => res.json())
         .then(res => {
-            console.log(res)
             setEffects(res);
         })
         .catch(err => console.error(err))
