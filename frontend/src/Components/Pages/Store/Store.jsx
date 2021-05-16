@@ -51,6 +51,7 @@ const Store = ({selectedPlayer}) => {
         localStorage.setItem('player', player);
     }, [player])
     useEffect(() => {
+        console.log(cartItems)
         localStorage.setItem('cartItems', JSON.stringify(cartItems));
     }, [cartItems])
 

@@ -39,10 +39,10 @@ const StoreContent = ({filterTag, addItemToCart}) => {
                 return <StoreItem item={item} addItemToCart={() => addItemToCart({...item, amount: 1, img: `${BACKENDURL}/images/items/${item.id}.png`})} key={index} />
             })}
             {mobs.filter(mob => filterTag === 'all' || filterTag === 'mobs').map((mob, index) => {
-                return <StoreMob mob={mob} addItemToCart={() => addItemToCart({...mob, amount: 1, img: `${BACKENDURL}/images/mobs/${mob.id}.png`})} key={index}/>
+                return <StoreMob mob={mob} addItemToCart={() => addItemToCart({...mob, amount: 1, img: `${BACKENDURL}/images/mobs/${mob.id}.png`, type: 'mob'})} key={index}/>
             })}
             {effects.filter(effect => filterTag === 'all' || filterTag === 'effects').map((effect, index) => {
-                return <StoreEffect effect={effect} addItemToCart={() => addItemToCart({...effect, time: 30, power: 0, img: `${BACKENDURL}/images/effects/${effect.id}.png`})} key={index}/>
+                return <StoreEffect effect={effect} addItemToCart={() => addItemToCart({...effect, time: 30, power: 0, img: `${BACKENDURL}/images/effects/${effect.id}.png`, type: 'effect'})} key={index}/>
             })}
         </div>
     );
