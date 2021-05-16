@@ -1,6 +1,6 @@
 {
   "mobs": [{
-    "id": "minecraft:bat",
+    "id": "bat",
     "name": "Bat",
     "description": "'Chirp Chirp' -some bat somewhere probably.",
     "price": 0.10,
@@ -9,7 +9,7 @@
     "disabled": 0
   },
   {
-    "id": "minecraft:blaze",
+    "id": "blaze",
     "name": "Blaze",
     "description": "Fireball, do do do doo doo do *whoop whoop*.",
     "price": 0.50,
@@ -18,7 +18,7 @@
     "disabled": 0
   },
   {
-    "id": "minecraft:cave_spider",
+    "id": "cave_spider",
     "name": "Cave Spider",
     "description": "Cave spiders, really? You hate a player that much?",
     "price": 0.25,
@@ -27,7 +27,7 @@
     "disabled": 0
   },
   {
-    "id": "minecraft:chicken",
+    "id": "chicken",
     "name": "Chicken",
     "description": "Like cooked chicken but they have to put in some elbow grease.",
     "price": 0.10,
@@ -36,7 +36,7 @@
     "disabled": 0
   },
   {
-    "id": "minecraft:cow",
+    "id": "cow",
     "name": "Cow",
     "description": "'Moo' -Jerald the Cow",
     "price": 0.20,
@@ -45,7 +45,7 @@
     "disabled": 0
   },
   {
-    "id": "minecraft:creeper",
+    "id": "creeper",
     "name": "Creeper",
     "description": "Tssssssss *BOOM*",
     "price": 0.50,
@@ -54,7 +54,7 @@
     "disabled": 0
   },
   {
-    "id": "minecraft:donkey",
+    "id": "donkey",
     "name": "Donkey",
     "description": "Shrek's pet, idk I didn't watch the movie",
     "price": 0.10,
@@ -63,7 +63,7 @@
     "disabled": 0
   },
   {
-    "id": "minecraft:ender_dragon",
+    "id": "ender_dragon",
     "name": "Ender Dragon",
     "description": "You really want to Summon an Ender Dragon? In this Economy?",
     "price": 50,
@@ -72,7 +72,7 @@
     "disabled": 0
   },
   {
-    "id": "minecraft:enderman",
+    "id": "enderman",
     "name": "Enderman",
     "description": "He picks things up and puts them down.",
     "price": 0.5,
@@ -81,7 +81,7 @@
     "disabled": 0
   },
   {
-    "id": "minecraft:endermite",
+    "id": "endermite",
     "name": "Endermite",
     "description": "A telleporting mini bug.",
     "price": 0.50,
@@ -92,7 +92,7 @@
 
   
   {
-    "id": "minecraft:evocation_illager",
+    "id": "evocation_illager",
     "name": "Evoker",
     "description": "He Evoke. He protec.",
     "price": 0.75,
@@ -101,7 +101,7 @@
     "disabled": 0
   },
   {
-    "id": "minecraft:ghast",
+    "id": "ghast",
     "name": "Ghast",
     "description": "[:O]=",
     "price": 1,
@@ -110,7 +110,7 @@
     "disabled": 0
   },
   {
-    "id": "minecraft:husk",
+    "id": "husk",
     "name": "Husk",
     "description": "Like corn meets a zombie",
     "price": 0.50,
@@ -119,7 +119,7 @@
     "disabled": 0
   },
   {
-    "id": "minecraft:illusion_illager",
+    "id": "illusion_illager",
     "name": "Illusioner",
     "description": "Magician but make it minecraft and less witchy.",
     "price": 0.75,
@@ -128,7 +128,7 @@
     "disabled": 0
   },
   {
-    "id": "minecraft:lightning_bolt",
+    "id": "lightning_bolt",
     "name": "Lightning Bolt",
     "description": "Basically just kill someone.",
     "price": 1,
@@ -137,7 +137,7 @@
     "disabled": 0
   },
   {
-    "id": "minecraft:llama",
+    "id": "llama",
     "name": "Llama",
     "description": "It'll probably just spit on people.",
     "price": 0.75,
@@ -146,7 +146,7 @@
     "disabled": 0
   },
   {
-    "id": "minecraft:pig",
+    "id": "pig",
     "name": "Pig",
     "description": "This is some bougie pork.",
     "price": 0.25,
@@ -155,7 +155,7 @@
     "disabled": 0
   },
   {
-    "id": "minecraft:polar_bear",
+    "id": "polar_bear",
     "name": "Polar Bear",
     "description": "They changed the dogs in Minecraft!",
     "price": 1,
@@ -164,7 +164,7 @@
     "disabled": 0
   },
   {
-    "id": "minecraft:skeleton",
+    "id": "skeleton",
     "name": "Skeleton",
     "description": "Bone shooty man.",
     "price": 2,
@@ -173,7 +173,7 @@
     "disabled": 0
   },
   {
-    "id": "minecraft:spider",
+    "id": "spider",
     "name": "Spider",
     "description": "♫ Spiderman, Spiderman, does whatever a spider can... ♫",
     "price": 2,
@@ -182,7 +182,7 @@
     "disabled": 0
   },
   {
-    "id": "minecraft:witch",
+    "id": "witch",
     "name": "Witch",
     "description": "He he he.",
     "price": 3,
@@ -191,7 +191,7 @@
     "disabled": 0
   },
   {
-    "id": "minecraft:wither",
+    "id": "wither",
     "name": "Wither",
     "description": "Literally just a chaos thing with three heads.",
     "price": 50,
@@ -200,7 +200,7 @@
     "disabled": 0
   },
   {
-    "id": "minecraft:wither_skeleton",
+    "id": "wither_skeleton",
     "name": "Wither Skeleton",
     "description": "Wither minions for the Wither TM.",
     "price": 3,
@@ -209,7 +209,7 @@
     "disabled": 0
   },
   {
-    "id": "minecraft:zombie",
+    "id": "zombie",
     "name": "Zombie",
     "description": "...Brains...",
     "price": 2,
