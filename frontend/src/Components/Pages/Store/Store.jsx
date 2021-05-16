@@ -141,12 +141,11 @@ const Store = ({selectedPlayer}) => {
         for(let i = 0; i < cartItems.length; i++){
             let stringIndividual;
             switch(cartItems[i].type){
-                //Need river's input on effect and mob
-                /*case "effect":
+                case "effect":
                     stringIndividual = "effect-";
                     stringIndividual += player;
                     stringIndividual += "-";
-                    break;*/
+                    break;
                 case "mob":
                     stringIndividual = "summon-";
                     stringIndividual += player;
