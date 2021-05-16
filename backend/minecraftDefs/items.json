@@ -150,7 +150,7 @@
             }
         },
         {
-            "id": "322:0",
+            "id": "322-0",
             "name": "Golden Apple",
             "description": "Filled with magic, this powerful apple grants you extra health!",
             "price": 1.00,
@@ -161,7 +161,7 @@
             }
         },
         {
-            "id": "322:1",
+            "id": "322-1",
             "name": "Golden 'God' Apple",
             "description": "The ultimate food, this apple makes the player tough and filled with vitality!",
             "price": 10.00,
