@@ -2,7 +2,7 @@ const { getItems, createItems } = require('./items');
 const { getPlayers, createPlayer } = require('./players');
 const { getEffects, createEffects } = require('./effects');
 const { getMobs, createMobs } = require('./mobs');
-const { disableCheckout, disableElement } = require('./disable');
+const { getCheckoutStatus, disableCheckout, disableElement } = require('./disable');
 
 module.exports = {
   createItems,
@@ -12,6 +12,7 @@ module.exports = {
   getItems,
   getPlayers,
   getEffects,
+  getCheckoutStatus,
   getMobs,
   disableCheckout,
   disableElement,

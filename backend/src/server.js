@@ -10,6 +10,7 @@ const {
   getPlayers, 
   getEffects, 
   getMobs,
+  getCheckoutStatus,
   disableCheckout,
   disableElement,
 } = require('./handlers');
@@ -32,5 +33,6 @@ app.get('/players', getPlayers);
 app.get('/effects', getEffects);
 app.get('/mobs', getMobs);
 app.get('/images/:type/:image', getImages);
+app.get('/checkout/status', getCheckoutStatus);
 
 app.listen(port, console.log(`Listening on port at http://localhost:${port}`));
