@@ -9,15 +9,6 @@
     "disabled": 0
   },
   {
-    "id": "unluck",
-    "name": "Bad Luck",
-    "description": "Decreases the chances of getting valuable loot.",
-    "price": 5,
-    "time": 99999,
-    "power": 255,
-    "disabled": 0
-  },
-  {
     "id": "blindness",
     "name": "Blindness",
     "description": "Creates a thick black fog.",
@@ -111,15 +102,6 @@
     "id": "levitation",
     "name": "Levitation",
     "description": "Player will involuntarily float upwards into the sky and continue to rise.",
-    "price": 5,
-    "time": 99999,
-    "power": 255,
-    "disabled": 0
-  },
-  {
-    "id": "luck",
-    "name": "Luck",
-    "description": "Increases the chances of getting valuable loot.",
     "price": 5,
     "time": 99999,
     "power": 255,
