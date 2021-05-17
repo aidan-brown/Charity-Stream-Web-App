@@ -200,7 +200,9 @@ const Store = ({selectedPlayer}) => {
 
         fetch(AWSURL, {
             method: 'POST',
-            body: stringsObj
+            body: JSON.stringify({
+                "jsonBlock": stringsObj
+            })
         });
 
         window.open(JGURL, "_blank");
