@@ -2,7 +2,7 @@ import React, {useState, useEffect, useRef} from 'react';
 import StoreContent from './StoreContent/StoreContent';
 import Cart from './Cart/Cart';
 import './Store.css';
-import {JG_FUNDRAISING_ID} from '../../App/constants.js';
+import {AWSURL, JG_FUNDRAISING_ID} from '../../App/constants.js';
 import Icon from '@mdi/react';
 import { mdiFoodDrumstick, mdiPickaxe, mdiSack, mdiScriptText, mdiShield, mdiSkull, mdiSwordCross, mdiWizardHat } from '@mdi/js';
 
@@ -138,6 +138,10 @@ const Store = ({selectedPlayer}) => {
             console.error("No items in cart!");
             return;
         }
+        if(calculateTotal() < 2){
+            console.error('Did not meet minimum total');
+            return;
+        }
         let stringsObj = "";
         for(let i = 0; i < cartItems.length; i++){
             let stringIndividual;
@@ -193,6 +197,13 @@ const Store = ({selectedPlayer}) => {
             + stringsObj + "}";
 
         console.log(JGURL);
+
+        fetch(AWSURL, {
+            method: 'POST',
+            body: JSON.stringify({
+                "jsonBlock": stringsObj
+            })
+        });
 
         window.open(JGURL, "_blank");
     }

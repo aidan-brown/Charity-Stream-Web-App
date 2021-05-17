@@ -85,6 +85,7 @@ const Cart = ({player, setPlayer, cartItems, changeCartAmount, changeEffectPower
                 })}
                 {}
             </div>
+            <p className='cart-disclaimer'>Minimum of $2.00 per donation</p>
             <span className='cart-amount'><p>Total Amount</p><p>${calculateTotal().toFixed(2)}</p></span>
             <hr/>
             <Button className='cart-checkout bg-csh-secondary-gradient' onClick={proceedToCheckout} disabled={checkoutDisabled}>{checkoutDisabled ? 'Waiting For Game To Start' : 'Proceed To Checkout'}</Button>
