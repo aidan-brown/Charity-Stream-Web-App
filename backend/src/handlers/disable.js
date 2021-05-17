@@ -2,6 +2,16 @@ const { Select, Update } = require('../sql/sqlFunctions');
 const safeJsonParse = require('../extraFunctions/safeJsonParse');
 
 module.exports = {
+  getCheckoutStatus: async (_, res) => {
+    try {
+      const [{ disabled }] = await Select(null, 'checkout');
+
+      res.status(200).send(!!disabled);
+  } catch (error) {
+    const { code = 500, message = error.message } = safeJsonParse(error.message);
+    res.status(code).send(message);
+  }
+  },
   disableCheckout: async (_, res) => {
     try {
         const [element] = await Select(null, 'checkout');
