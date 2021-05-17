@@ -12,6 +12,46 @@ function useForceUpdate(){
     return () => setValue(value => value + 1); // update the state to force render
 }
 
+const idToInternal = {
+    '256':'iron_shovel',
+    '257':'iron_pickaxe',
+    '258':'iron_axe',
+    '262':'arrow',
+    '261':'bow',
+    '264':'diamond',
+    '265':'iron_ingot',
+    '266':'gold_ingot',
+    '267':'iron_sword',
+    '272':'stone_sword',
+    '276':'diamond_sword',
+    '277':'diamond_shovel',
+    '278':'diamond_pickaxe',
+    '279':'diamond_axe',
+    '284':'gold_shovel',
+    '285':'gold_pickaxe',
+    '286':'gold_axe',
+    '297':'bread',
+    '298':'leather_helmet',
+    '299':'leather_chestplate',
+    '300':'leather_leggings',
+    '301':'leather_boots',
+    '306':'iron_helmet',
+    '307':'iron_chestplate',
+    '308':'iron_leggings',
+    '309':'iron_boots',
+    '310':'diamond_helmet',
+    '311':'diamond_chestplate',
+    '312':'diamond_leggings',
+    '313':'diamond_boots',
+    '314':'golden_helmet',
+    '315':'golden_chestplate',
+    '316':'golden_leggings',
+    '317':'golden_boots',
+    '322-0':'golden_apple',
+    '322-1':'golden_god_apple',
+    '364':'cooked_beef',
+}
+
 /** Responsible for constructing the store page component **/
 const Store = ({selectedPlayer}) => {
     const[filterTag, setFilterTag] = useState('all');
@@ -173,7 +213,7 @@ const Store = ({selectedPlayer}) => {
                     stringIndividual = "give-";
                     stringIndividual += player;
                     stringIndividual += "-";
-                    stringIndividual += cartItems[i].id;
+                    stringIndividual += idToInternal[cartItems[i].id];
                     stringIndividual += "-";
                     stringIndividual += cartItems[i].amount;
                     stringIndividual += "-";
