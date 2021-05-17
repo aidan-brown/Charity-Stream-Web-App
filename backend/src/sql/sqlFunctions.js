@@ -82,4 +82,43 @@ module.exports = {
       );
     }
   },
+  Update(table, item, where) {
+    try {
+      const connection = SqlConnect();
+
+      const query = `UPDATE ${table} SET\
+        ${Object.keys(item).map(key => `${key} = "${item[key]}"`).join(',')}\
+        WHERE ${where}`;
+
+      return new Promise((success, failure) => {
+        connection.query(
+          query,
+          (error) => {
+            connection.end();
+
+            if (error) {
+              failure(
+                new Error(
+                  JSON.stringify({
+                    code: error.code,
+                    message: error.message,
+                  }),
+                ),
+              );
+            } else {
+              success();
+            }
+          },
+        );
+      });
+    } catch (error) {
+      console.log(error);
+      throw new Error(
+        JSON.stringify({
+          code: 500,
+          message: error,
+        }),
+      );
+    }
+  },
 };

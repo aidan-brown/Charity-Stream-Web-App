@@ -10,6 +10,8 @@ const {
   getPlayers, 
   getEffects, 
   getMobs,
+  disableCheckout,
+  disableElement,
 } = require('./handlers');
 const { getImages } = require('./images');
 
@@ -19,6 +21,8 @@ const port = 8000;
 app.use(express.json());
 app.use(cors());
 
+app.put('/disable/:type/:id', disableElement);
+app.put('/disable', disableCheckout);
 app.post('/create/items', createItems);
 app.post('/create/players', createPlayer);
 app.post('/create/effects', createEffects);
