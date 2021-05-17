@@ -195,6 +195,10 @@
     transform: scale(1.025);
 }
 
+.cart-checkout:disabled{
+    opacity: 0.35;
+}
+
 .cart-item-remove{
     position: absolute;
     top: -10px;

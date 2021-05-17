@@ -31,6 +31,7 @@ const Time_Levels = {
 
 const Cart = ({player, setPlayer, cartItems, changeCartAmount, changeEffectPower, changeEffectTime, removeFromCart, proceedToCheckout, showCart, calculateTotal}) => {
     const[playerList, setPlayerList] = useState([]);
+    const[checkoutDisabled, setCheckoutDisabled] = useState(false);
 
     useEffect(() => {
 
@@ -40,7 +41,23 @@ const Cart = ({player, setPlayer, cartItems, changeCartAmount, changeEffectPower
                 setPlayerList(res);
             })
             .catch(err => console.error(err));
+
+        fetchCheckoutStatus();
+
+        let checkoutPoll = setInterval(fetchCheckoutStatus, 10000);
+        return () => {
+            clearInterval(checkoutPoll);
+        }
     }, [])
+
+    const fetchCheckoutStatus = () => {
+        fetch(`${BACKENDURL}/checkout/status`)
+            .then(res => res.json())
+            .then(res => {
+                setCheckoutDisabled(res)
+            })
+            .catch(err => console.error(err));
+    }
 
     return(
         <div className="Cart bg-csh-tertiary" data-showcart={showCart}>
@@ -70,7 +87,7 @@ const Cart = ({player, setPlayer, cartItems, changeCartAmount, changeEffectPower
             </div>
             <span className='cart-amount'><p>Total Amount</p><p>${calculateTotal().toFixed(2)}</p></span>
             <hr/>
-            <Button className='cart-checkout bg-csh-secondary-gradient' onClick={proceedToCheckout}>Proceed To Checkout</Button>
+            <Button className='cart-checkout bg-csh-secondary-gradient' onClick={proceedToCheckout} disabled={checkoutDisabled}>{checkoutDisabled ? 'Waiting For Game To Start' : 'Proceed To Checkout'}</Button>
         </div>
     )
 }

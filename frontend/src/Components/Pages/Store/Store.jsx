@@ -4,7 +4,7 @@ import Cart from './Cart/Cart';
 import './Store.css';
 import {JG_FUNDRAISING_ID} from '../../App/constants.js';
 import Icon from '@mdi/react';
-import { mdiBottleTonic, mdiFoodDrumstick, mdiPickaxe, mdiSack, mdiScriptText, mdiShield, mdiSkull, mdiSword, mdiSwordCross, mdiWizardHat } from '@mdi/js';
+import { mdiFoodDrumstick, mdiPickaxe, mdiSack, mdiScriptText, mdiShield, mdiSkull, mdiSwordCross, mdiWizardHat } from '@mdi/js';
 
 
 function useForceUpdate(){
@@ -54,22 +54,24 @@ const Store = ({selectedPlayer}) => {
     }, [cartItems])
 
     const addItemToCart = (item) => {
-        if(!cartItems.find(e => e.name === item.name)){
-            setCartItems([...cartItems, item]);
-        } else {
-            if (!('power' in item)){
-                changeCartAmount(item, 1);
+        if(item.disabled === 0) {
+            if(!cartItems.find(e => e.name === item.name)){
+                setCartItems([...cartItems, item]);
             } else {
-                let time = cartItems.find(e => e.name === item.name).time;
-                if(time < 300){
-                    changeEffectTime(item, time + 30);
+                if (!('power' in item)){
+                    changeCartAmount(item, 1);
+                } else {
+                    let time = cartItems.find(e => e.name === item.name).time;
+                    if(time < 300){
+                        changeEffectTime(item, time + 30);
+                    }
                 }
             }
-        }
 
-        itemAddRef.current.src = item.img;
-        itemAddRef.current.dataset.show = 'yes';
-        setTimeout(() => itemAddRef.current.dataset.show = 'no', 100)
+            itemAddRef.current.src = item.icon;
+            itemAddRef.current.dataset.show = 'yes';
+            setTimeout(() => itemAddRef.current.dataset.show = 'no', 100)
+        }
     }
 
     const removeItemFromCart = (item) => {
