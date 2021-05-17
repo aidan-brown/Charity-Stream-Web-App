@@ -52,7 +52,7 @@
     cursor: pointer;
 }
 
-.store-link .icon{
+.store-link svg{
     width: 2.75rem;
     margin: 0 auto;
     transition: all 200ms;
