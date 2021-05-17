@@ -14,10 +14,10 @@ module.exports = {
   },
   disableCheckout: async (_, res) => {
     try {
-        const [element] = await Select(null, 'checkout');
+        const [{ disabled }] = await Select(null, 'checkout');
 
-        await Update(type, { disabled: element.disabled === 0 ? 1 : 0 },`id = '${id}'`);
-        res.status(200).send(`Successfully ${element.disabled === 0 ? 'disabled' : 'enabled'} checkout`);
+        await Update('checkout', { disabled: disabled === 0 ? 1 : 0 },`id = '1'`);
+        res.status(200).send(`Successfully ${disabled === 0 ? 'disabled' : 'enabled'} checkout`);
     } catch (error) {
       const { code = 500, message = error.message } = safeJsonParse(error.message);
       res.status(code).send(message);
