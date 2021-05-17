@@ -174,7 +174,7 @@ const StoreEffect = ({effect, addItemToCart}) => {
             <img className='store-item-image' src={`${BACKENDURL}/images/effects/${effect.id}-full.jpg`} alt={effect.name}></img>
             <img className='store-item-icon' src={`${BACKENDURL}/images/effects/${effect.id}.png`} alt={effect.name}></img>
             <p className='store-item-name'>{effect.name}</p>
-            <p className='store-item-price'>${effect.price.toFixed(2)}</p>
+            <p className='store-item-price'>${effect.price.toFixed(2)}/30sec * Power Level</p>
         </div>
         <div className='store-item-description'>
             <dl className='store-item-stats'>
