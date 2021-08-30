@@ -1,5 +1,6 @@
 const { Select, Insert } = require('../sql/sqlFunctions');
 const safeJsonParse = require('../extraFunctions/safeJsonParse');
+const { isAuthenticated } = require('../handlers/authentication')
 
 module.exports = {
   getMobs: async (_, res) => {
@@ -11,15 +12,20 @@ module.exports = {
     }
   },
   createMobs: async (req, res) => {
-    const { mobs } = req.body;
+    const { isAuthenticated: isAuthed, error } = isAuthenticated(req.headers.authorization);
 
-    try {
-      mobs.forEach(async mob => await Insert('mobs', Object.keys(mob), Object.values(mob)));
+    if (isAuthed) {
+      const { mobs } = req.body;
 
-      res.status(200).send('success');
-    } catch (error) {
-      const { code = 500, message = error.message } = safeJsonParse(error.message);
-      res.status(code).send(message);
+      try {
+        mobs.forEach(async mob => await Insert('mobs', Object.keys(mob), Object.values(mob)));
+  
+        res.status(200).send('success');
+      } catch (error) {
+        const { code = 500, message = error.message } = safeJsonParse(error.message);
+        res.status(code).send(message);
+      }
     }
+    else res.status(401).send(error);
   },
 };

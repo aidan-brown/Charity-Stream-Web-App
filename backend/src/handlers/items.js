@@ -1,5 +1,6 @@
 const { Select, Insert } = require('../sql/sqlFunctions');
 const safeJsonParse = require('../extraFunctions/safeJsonParse');
+const { isAuthenticated } = require('../handlers/authentication')
 
 module.exports = {
   getItems: async (_, res) => {
@@ -28,36 +29,41 @@ module.exports = {
     }
   },
   createItems: async (req, res) => {
-    const { items } = req.body;
+    const { isAuthenticated: isAuthed, error } = isAuthenticated(req.headers.authorization);
 
-    try {
-      items.forEach(async (item) => {
-        if (item) {
-          const tableItem = {
-            ...item,
-            type: item.type.name,
-          };
+    if (isAuthed) {
+      const { items } = req.body;
 
-          const type = {
-            ...item.type,
-            id: item.id,
-          };
+      try {
+        items.forEach(async (item) => {
+          if (item) {
+            const tableItem = {
+              ...item,
+              type: item.type.name,
+            };
 
-          await Insert('items', Object.keys(tableItem), Object.values(tableItem));
+            const type = {
+              ...item.type,
+              id: item.id,
+            };
 
-          if (item.type !== 'misc' && item.type !== 'material') {
-            const { name } = type;
-            delete type.name;
+            await Insert('items', Object.keys(tableItem), Object.values(tableItem));
 
-            await Insert(name, Object.keys(type), Object.values(type));
+            if (item.type !== 'misc' && item.type !== 'material') {
+              const { name } = type;
+              delete type.name;
+
+              await Insert(name, Object.keys(type), Object.values(type));
+            }
           }
-        }
-      });
+        });
 
-      res.status(200).send('success');
-    } catch (error) {
-      const { code = 500, message = error.message } = safeJsonParse(error.message);
-      res.status(code).send(message);
+        res.status(200).send('success');
+      } catch (error) {
+        const { code = 500, message = error.message } = safeJsonParse(error.message);
+        res.status(code).send(message);
+      }
     }
+    else res.status(401).send(error);
   },
 };

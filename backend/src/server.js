@@ -1,4 +1,5 @@
 /* eslint-disable no-console */
+require('dotenv').config()
 const express = require('express');
 const cors = require('cors');
 const {
@@ -13,6 +14,8 @@ const {
   getCheckoutStatus,
   disableCheckout,
   disableElement,
+  dataCallback,
+  getData,
 } = require('./handlers');
 const { getImages } = require('./images');
 
@@ -28,9 +31,11 @@ app.post('/create/items', createItems);
 app.post('/create/players', createPlayer);
 app.post('/create/effects', createEffects);
 app.post('/create/mobs', createMobs);
+app.post('/data-callback', dataCallback);
 app.get('/items', getItems);
 app.get('/players', getPlayers);
 app.get('/effects', getEffects);
+app.get('/data', getData);
 app.get('/mobs', getMobs);
 app.get('/images/:type/:image', getImages);
 app.get('/checkout/status', getCheckoutStatus);

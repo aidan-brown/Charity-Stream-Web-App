@@ -1,6 +1,7 @@
 const { Select, Insert } = require('../sql/sqlFunctions');
 const { Where } = require('../extraFunctions/whereConstruction');
 const safeJsonParse = require('../extraFunctions/safeJsonParse');
+const { isAuthenticated } = require('../handlers/authentication')
 
 module.exports = {
   getPlayers: async (req, res) => {
@@ -24,18 +25,23 @@ module.exports = {
     }
   },
   createPlayer: async (req, res) => {
-    const { player } = req.body;
+    const { isAuthenticated: isAuthed, error } = isAuthenticated(req.headers.authorization);
 
-    try {
-      if (player) {
-        await Insert('players', Object.keys(player), Object.values(player));
-        res.status(200).send('Success');
-      } else {
-        res.status(400).send('No Player provided');
+    if (isAuthed) {
+      const { player } = req.body;
+
+      try {
+        if (player) {
+          await Insert('players', Object.keys(player), Object.values(player));
+          res.status(200).send('Success');
+        } else {
+          res.status(400).send('No Player provided');
+        }
+      } catch (error) {
+        const { code = 500, message = error.message } = safeJsonParse(error.message);
+        res.status(code).send(message);
       }
-    } catch (error) {
-      const { code = 500, message = error.message } = safeJsonParse(error.message);
-      res.status(code).send(message);
     }
+    else res.status(401).send(error);
   },
 };
