@@ -1,6 +1,5 @@
 const { Select, Insert } = require('../sql/sqlFunctions');
 const safeJsonParse = require('../extraFunctions/safeJsonParse');
-const { isAuthenticated } = require('../handlers/authentication')
 
 module.exports = {
   getItems: async (_, res) => {
@@ -29,41 +28,36 @@ module.exports = {
     }
   },
   createItems: async (req, res) => {
-    const { isAuthenticated: isAuthed, error } = isAuthenticated(req.headers.authorization);
+    const items = req.body;
 
-    if (isAuthed) {
-      const { items } = req.body;
+    try {
+      items.forEach(async (item) => {
+        if (item) {
+          const tableItem = {
+            ...item,
+            type: item.type.name,
+          };
 
-      try {
-        items.forEach(async (item) => {
-          if (item) {
-            const tableItem = {
-              ...item,
-              type: item.type.name,
-            };
+          const type = {
+            ...item.type,
+            id: item.id,
+          };
 
-            const type = {
-              ...item.type,
-              id: item.id,
-            };
+          await Insert('items', Object.keys(tableItem), Object.values(tableItem));
 
-            await Insert('items', Object.keys(tableItem), Object.values(tableItem));
+          if (item.type !== 'misc' && item.type !== 'material') {
+            const { name } = type;
+            delete type.name;
 
-            if (item.type !== 'misc' && item.type !== 'material') {
-              const { name } = type;
-              delete type.name;
-
-              await Insert(name, Object.keys(type), Object.values(type));
-            }
+            await Insert(name, Object.keys(type), Object.values(type));
           }
-        });
+        }
+      });
 
-        res.status(200).send('success');
-      } catch (error) {
-        const { code = 500, message = error.message } = safeJsonParse(error.message);
-        res.status(code).send(message);
-      }
+      res.status(200).send('success');
+    } catch (error) {
+      const { code = 500, message = error.message } = safeJsonParse(error.message);
+      res.status(code).send(message);
     }
-    else res.status(401).send(error);
   },
 };
