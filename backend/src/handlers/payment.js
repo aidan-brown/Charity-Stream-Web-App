@@ -40,16 +40,25 @@ async function verifyPurchase(product){
   return false;
 }
 
+async function verifyPlayer(username){
+  let data = await Get('players', username, 'username').then(token => { return token } );
+  if (data.length == 0){
+    return null;
+  }
+  return data[0]['name'];
+}
+
 module.exports = {
   createCheckout : async (req, res) => {
     try {
       let line = [];
+      let realName = await verifyPlayer(req.body['username']);
       for( var i = 0; i < req.body['cart'].length; i++ ){
         element = req.body['cart'][i]
         await verifyPurchase(element).then(verify => {
           console.log(`${element.id} | ${verify}`);
           if ( verify ){
-            let name = element.name;
+            let name = `${req.body['username']} [${realName}] | ${element.name}`;
             let cost;
             let amount;
             let cmd;
@@ -78,7 +87,7 @@ module.exports = {
           }
         });
       }
-      if (line.length == req.body['cart'].length){
+      if (line.length == req.body['cart'].length && realName != null){
         const session = await stripe.checkout.sessions.create({
           line_items: line,
           mode: 'payment',
