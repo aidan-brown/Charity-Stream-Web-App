@@ -14,7 +14,7 @@ module.exports = {
     const { mobs } = req.body;
 
     try {
-      mobs.forEach(async mob => await Insert('mobs', Object.keys(mob), Object.values(mob)));
+      mobs.forEach((mob) => Insert('mobs', Object.keys(mob), Object.values(mob)));
 
       res.status(200).send('success');
     } catch (error) {

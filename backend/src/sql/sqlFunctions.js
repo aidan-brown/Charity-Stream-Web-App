@@ -22,13 +22,13 @@ module.exports = {
                 }),
               ),
             );
-          }
-          else {
+          } else {
             resolve(result.map((value) => {
               const data = {};
               Object.keys(value).forEach((key) => {
-                if (value[key] !== null) 
+                if (value[key] !== null) {
                   data[key] = value[key];
+                }
               });
               return data;
             }));
@@ -87,7 +87,7 @@ module.exports = {
       const connection = SqlConnect();
 
       const query = `UPDATE ${table} SET\
-        ${Object.keys(item).map(key => `${key} = "${item[key]}"`).join(',')}\
+        ${Object.keys(item).map((key) => `${key} = "${item[key]}"`).join(',')}\
         WHERE ${where}`;
 
       return new Promise((success, failure) => {
@@ -112,7 +112,6 @@ module.exports = {
         );
       });
     } catch (error) {
-      console.log(error);
       throw new Error(
         JSON.stringify({
           code: 500,
@@ -190,7 +189,6 @@ module.exports = {
         );
       });
     } catch (error) {
-      console.log(error);
       throw new Error(
         JSON.stringify({
           code: 500,

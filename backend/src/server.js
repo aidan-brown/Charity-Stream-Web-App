@@ -1,14 +1,14 @@
-require('dotenv').config()
+require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const {
-  createItems, 
-  createPlayer, 
-  createEffects, 
-  createMobs, 
-  getItems, 
-  getPlayers, 
-  getEffects, 
+  createItems,
+  createPlayer,
+  createEffects,
+  createMobs,
+  getItems,
+  getPlayers,
+  getEffects,
   getMobs,
   getCheckoutStatus,
   disableCheckout,
@@ -46,4 +46,5 @@ app.post('/create/effects', createEffects);
 app.post('/create/mobs', createMobs);
 app.post('/data-callback', dataCallback);
 
+// eslint-disable-next-line no-console
 app.listen(port, console.log(`Listening on port at http://localhost:${port}`));
