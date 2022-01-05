@@ -23,19 +23,19 @@ async function verifyPurchase(product){
     if (key.length == 0){
       return false;
     }
-    return product.price == key[0]['price']*product.amount; 
+    return product.price == key[0]['price'] && !key[0]['disabled']; 
   } else if (product.type == 'mob'){
     let key = await Get('mobs', product.id).then(token => { return token } );
     if (key.length == 0){
       return false;
     }
-    return product.price == key[0]['price']*product.amount;
+    return product.price == key[0]['price'] && !key[0]['disabled'];
   } else if (product.type == 'effect'){
     let key = await Get('effects', product.id).then(token => { return token } );
     if (key.length == 0){
       return false;
     }
-    return product.price == key[0]['price'] * (product.power+1) * (product.time/30) && product.power < 10 && product.time <= 300;
+    return product.price == key[0]['price'] && product.power < 10 && product.time <= 300 && !key[0]['disabled'];
   }
   return false;
 }
@@ -59,16 +59,15 @@ module.exports = {
           console.log(`${element.id} | ${verify}`);
           if ( verify ){
             let name = `${req.body['username']} [${realName}] | ${element.name}`;
-            let cost;
+            let cost = element.price*100;
             let amount;
             let cmd;
             if (element.type == "effect"){
               name += ` ${romans[element.power+1]} (${element.time}s)`;
-              cost = element.price*100;
+              cost *= (element.time/30)*(element.power+1);
               amount = 1;
               cmd = `effect give ${req.body['username']} ${element.id} ${element.time} ${element.power+1}`;
             } else {
-              cost = element.price/element.amount*100;
               amount = element.amount;
               cmd = `give ${req.body['username']} minecraft:${element.id}`;
               if (element.id == 'arrow'){
