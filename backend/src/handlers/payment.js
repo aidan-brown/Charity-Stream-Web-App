@@ -66,9 +66,14 @@ module.exports = {
               name += ` ${romans[element.power+1]} (${element.time}s)`;
               cost = element.price*100;
               amount = 1;
+              cmd = `effect give ${req.body['username']} ${element.id} ${element.time} ${element.power+1}`;
             } else {
               cost = element.price/element.amount*100;
               amount = element.amount;
+              cmd = `give ${req.body['username']} minecraft:${element.id}`;
+              if (element.id == 'arrow'){
+                cmd += ' 10';
+              }
             }
             line.push(
               {
@@ -78,6 +83,9 @@ module.exports = {
                     name: name,
                     description: element.description,
                     images: [element.icon],
+                    metadata: {
+                      command: cmd
+                    }
                   },
                   unit_amount: cost
                 },
