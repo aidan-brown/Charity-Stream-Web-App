@@ -5,8 +5,7 @@ module.exports = {
   getItems: async (_, res) => {
     try {
       const items = await Select(null, 'items', null);
-      
-      const mappedItems = await Promise.all(items.map(async item => {
+      const mappedItems = await Promise.all(items.map(async (item) => {
         const { type, id } = item;
 
         if (type !== 'misc' && type !== 'material') {
@@ -17,7 +16,7 @@ module.exports = {
             ...typeInfo,
           };
         }
-        
+
         return item;
       }));
 
@@ -28,7 +27,7 @@ module.exports = {
     }
   },
   createItems: async (req, res) => {
-    const { items } = req.body;
+    const items = req.body;
 
     try {
       items.forEach(async (item) => {

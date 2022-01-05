@@ -1,8 +1,7 @@
-module.exports = obj => {
+module.exports = (obj) => {
   try {
     return JSON.parse(obj);
-  }
-  catch(_) {
+  } catch (_) {
     return obj;
   }
-}
+};
