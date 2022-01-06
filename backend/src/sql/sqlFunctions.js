@@ -1,6 +1,41 @@
 const { SqlConnect } = require('./sqlConnection');
 
 module.exports = {
+  Get: async (table, id, col='id') => {
+    const connection = SqlConnect();
+    return new Promise((resolve, reject) => {
+      connection.query("SELECT * FROM ?? WHERE ?? = ? LIMIT 1",
+        [
+          table,
+          col,
+          id
+        ],
+        function(error, result){
+          connection.end();
+
+          if (error) {
+            reject(
+              new Error(
+                JSON.stringify({
+                  code: 500,
+                  message: error.message,
+                }),
+              ),
+            );
+          } else {
+            resolve(result.map((value) => {
+              const data = {};
+              Object.keys(value).forEach((key) => {
+                if (value[key] !== null)
+                  data[key] = value[key];
+              });
+              return data;
+            }));
+          }
+        }
+      );
+    });
+  },
   Select: async (custom = null, tableOne = null, where = null, orderBy = null, direction = 'ASC') => {
     try {
       const connection = SqlConnect();

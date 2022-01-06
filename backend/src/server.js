@@ -10,6 +10,7 @@ const {
   getPlayers,
   getEffects,
   getMobs,
+  createCheckout,
   getCheckoutStatus,
   disableCheckout,
   disableElement,
@@ -32,7 +33,8 @@ app.get('/effects', getEffects);
 app.get('/data', getData);
 app.get('/mobs', getMobs);
 app.get('/images/:type/:image', getImages);
-app.get('/checkout/status', getCheckoutStatus);
+app.post('/checkout', createCheckout);
+
 
 // This tells node to use auth for the routes below here
 app.use(basicAuth);
