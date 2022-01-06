@@ -14,7 +14,7 @@ module.exports = {
     const { effects } = req.body;
 
     try {
-      effects.forEach(async effect => await Insert('effects', Object.keys(effect), Object.values(effect)));
+      effects.forEach((effect) => Insert('effects', Object.keys(effect), Object.values(effect)));
 
       res.status(200).send('success');
     } catch (error) {

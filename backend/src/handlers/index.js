@@ -1,3 +1,4 @@
+const { dataCallback, getData } = require('./data');
 const { getItems, createItems } = require('./items');
 const { getPlayers, createPlayer } = require('./players');
 const { getEffects, createEffects } = require('./effects');
@@ -6,16 +7,18 @@ const { getCheckoutStatus, disableCheckout, disableElement } = require('./disabl
 const { createCheckout } = require('./payment');
 
 module.exports = {
-  createItems,
-  createPlayer,
   createEffects,
+  createItems,
   createMobs,
-  getItems,
-  getPlayers,
-  getEffects,
-  getCheckoutStatus,
-  getMobs,
+  createPlayer,
+  dataCallback,
   disableCheckout,
   disableElement,
   createCheckout,
+  getCheckoutStatus,
+  getData,
+  getEffects,
+  getItems,
+  getMobs,
+  getPlayers,
 };
