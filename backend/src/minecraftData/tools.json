@@ -1,0 +1,98 @@
+[
+  {
+    "id": "iron_pickaxe",
+    "displayName": "Iron Pickaxe",
+    "description": "A basic but durable pickaxe. Breaks rocks!",
+    "price": 0.65,
+    "speed": 1,
+    "durability": 250
+  },
+  {
+    "id": "gold_pickaxe",
+    "displayName": "Gold Pickaxe",
+    "description": "A fast but flimsy pickaxe. Breaks rocks!",
+    "price": 0.50,
+    "speed": 1.5,
+    "durability": 32
+  },
+  {
+    "id": "diamond_pickaxe",
+    "displayName": "Diamond Pickaxe",
+    "description": "A very fast and durable pickaxe. Breaks rocks!",
+    "price": 3.00,
+    "speed": 4,
+    "durability": 1561
+  },
+  {
+    "id": "netherite_pickaxe",
+    "displayName": "Netherite Pickaxe",
+    "description": "A very very fast and durable pickaxe. Breaks rocks!",
+    "price": 3.50,
+    "speed": 5,
+    "durability": 2031
+  },
+  {
+    "id": "iron_shovel",
+    "displayName": "Iron Shovel",
+    "description": "A basic but durable shovel. Breaks dirt/gravel/sand!",
+    "price": 0.30,
+    "speed": 1,
+    "durability": 250
+  },
+  {
+    "id": "gold_shovel",
+    "displayName": "Gold Shovel",
+    "description": "A fast but flimsy shovel. Breaks dirt/gravel/sand!",
+    "price": 0.25,
+    "speed": 1.5,
+    "durability": 32
+  },
+  {
+    "id": "diamond_shovel",
+    "displayName": "Diamond Shovel",
+    "description": "A very fast and durable shovel. Breaks dirt/gravel/sand!",
+    "price": 1.00,
+    "speed": 4,
+    "durability": 1561
+  },
+  {
+    "id": "netherite_shovel",
+    "displayName": "Netherite Shovel",
+    "description": "A very very fast and durable shovel. Breaks dirt/gravel/sand!",
+    "price": 1.50,
+    "speed": 5,
+    "durability": 2031
+  },
+  {
+    "id": "iron_axe",
+    "displayName": "Iron Axe",
+    "description": "A basic but durable axe. Chops wood!",
+    "price": 0.65,
+    "speed": 1,
+    "durability": 250
+  },
+  {
+    "id": "gold_axe",
+    "displayName": "Gold Axe",
+    "description": "A fast but flimsy axe. Chops wood!",
+    "price": 0.50,
+    "speed": 1.5,
+    "durability": 32
+  },
+  {
+    "id": "diamond_axe",
+    "displayName": "Diamond Axe",
+    "description": "A very fast and durable axe. Chops wood!",
+    "price": 3.00,
+    "speed": 4,
+    "durability": 1561
+  },
+  {
+    "id": "netherite_axe",
+    "displayName": "Netherite Axe",
+    "description": "A very very fast and durable axe. Chops wood!",
+    "price": 3.50,
+    "speed": 5,
+    "durability": 2031
+  }
+]

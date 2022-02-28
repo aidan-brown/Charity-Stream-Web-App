@@ -1,5 +1,5 @@
 const { Replace, Select, Delete } = require('../sql/sqlFunctions');
-const safeJsonParse = require('../extraFunctions/safeJsonParse');
+const safeJsonParse = require('../utils/safeJsonParse');
 
 const getData = async (_, res) => {
   try {
