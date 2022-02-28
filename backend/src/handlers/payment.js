@@ -58,51 +58,59 @@ module.exports = {
       const realName = await verifyPlayer(req.body.username);
       for (let i = 0; i < req.body.cart.length; i += 1) {
         const element = req.body.cart[i];
-        // eslint-disable-next-line no-await-in-loop
-        const verify = await verifyPurchase(element);
-        if (verify) {
-          let name = `${req.body.username} [${realName}] | ${element.name}`;
-          let cost = element.price * 100;
-          let amount;
-          let cmd;
-          if (element.type === 'effect') {
-            name += ` ${romans[element.power + 1]} (${element.time}s)`;
-            cost *= (element.time / 30) * (element.power + 1);
-            amount = 1;
-            cmd = `effect give ${req.body.username} ${element.id} ${element.time} ${element.power + 1}`;
-          } else {
-            amount = element.amount;
-            cmd = `give ${req.body.username} minecraft:${element.id}`;
-            if (element.id === 'arrow') {
-              cmd += ' 10';
+        await verifyPurchase(element).then((verify) => {
+          if (verify) {
+            let name = `${req.body.username} [${realName}] | ${element.name}`;
+            let cost = element.price * 100;
+            let amount;
+            let cmd;
+            if (element.type === 'effect') {
+              name += ` ${romans[element.power + 1]} (${element.time}s)`;
+              cost *= (element.time / 30) * (element.power + 1);
+              amount = 1;
+              cmd = `effect give ${req.body.username} ${element.id} ${element.time} ${element.power + 1}`;
+              commands.push(cmd);
+            } else if (element.type === 'mob') {
+              amount = element.amount;
+              for (let j = 0; j < amount; j += 1) {
+                cmd = `execute at ${req.body.username} run summon ${element.id} ~ ~ ~`;
+                commands.push(cmd);
+              }
+            } else {
+              amount = element.amount;
+              cmd = `give ${req.body.username} ${element.id}`;
+              if (element.id === 'arrow') {
+                const totalArrows = element.amount * 10;
+                cmd += ` ${totalArrows}`;
+              } else {
+                cmd += ` ${element.amount}`;
+              }
+              commands.push(cmd);
             }
-          }
-          line.push(
-            {
-              price_data: {
-                currency: 'usd',
-                product_data: {
-                  name,
-                  description: element.description,
-                  images: [element.icon],
+            line.push(
+              {
+                price_data: {
+                  currency: 'usd',
+                  product_data: {
+                    name,
+                    description: element.description,
+                    images: [element.icon],
+                  },
+                  unit_amount: cost,
                 },
-                unit_amount: cost,
+                quantity: amount,
               },
-              quantity: amount,
-            },
-          );
-          commands.push(cmd);
-        }
+            );
+          }
+        });
       }
       if (line.length === req.body.cart.length && realName != null) {
         const session = await stripe.checkout.sessions.create({
           line_items: line,
           mode: 'payment',
-          metadata: {
-            commands: JSON.stringify(commands),
-          },
           success_url: `https://${process.env.DOMAIN}/?success=true`,
           cancel_url: `https://${process.env.DOMAIN}?canceled=true`,
+          metadata: commands,
         });
         res.redirect(303, session.url);
       } else {

@@ -16,16 +16,17 @@ const {
   disableElement,
   dataCallback,
   getData,
+  hook,
 } = require('./handlers');
 const { getImages } = require('./images');
 const { basicAuth } = require('./handlers/authentication');
 
 const app = express();
-const port = 8000;
+const port = 8080;
 
-app.use(express.json());
+app.post('/hook', express.raw({ type: 'application/json' }), hook);
 app.use(cors());
-
+app.use(express.json());
 // Routes that do not require auth
 app.get('/items', getItems);
 app.get('/players', getPlayers);
