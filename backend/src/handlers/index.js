@@ -5,6 +5,7 @@ const { getEffects, createEffects } = require('./effects');
 const { getMobs, createMobs } = require('./mobs');
 const { getCheckoutStatus, disableCheckout, disableElement } = require('./disable');
 const { createCheckout } = require('./payment');
+const { hook } = require('./hook');
 
 module.exports = {
   createEffects,
@@ -21,4 +22,5 @@ module.exports = {
   getItems,
   getMobs,
   getPlayers,
+  hook,
 };
