@@ -22,7 +22,7 @@ const { getImages } = require('./images');
 const { basicAuth } = require('./handlers/authentication');
 
 const app = express();
-const port = 8000;
+const port = 8080;
 
 app.post('/hook', express.raw({ type: 'application/json' }), hook);
 app.use(cors());
