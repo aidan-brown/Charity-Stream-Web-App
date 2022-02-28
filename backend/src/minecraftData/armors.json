@@ -1,0 +1,194 @@
+[
+  {
+    "displayName": "Leather Cap",
+    "id": "leather_helmet",
+    "description": "The helm of the most basic armor set. Keep your favorite player alive!",
+    "price": 0.50,
+    "protection": 1,
+    "durability": 56
+  },
+  {
+    "displayName": "Leather Tunic",
+    "id": "leather_chestplate",
+    "description": "The tunic of the most basic armor set. Keep your favorite player alive!",
+    "price": 0.80,
+    "protection": 3,
+    "durability": 81
+  },
+  {
+    "displayName": "Leather Pants",
+    "id": "leather_leggings",
+    "description": "The pants of the most basic armor set. Keep your favorite player alive!",
+    "price": 0.70,
+    "protection": 2,
+    "durability": 76
+  },
+  {
+    "displayName": "Leather Boots",
+    "id": "leather_boots",
+    "description": "The boots of the most basic armor set. Keep your favorite player alive!",
+    "price": 0.40,
+    "protection": 1,
+    "durability": 66
+  },
+  {
+    "displayName": "Chainmail Helmet",
+    "id": "chainmail_helmet",
+    "description": "The helm of the armor set. Keep your favorite player alive!",
+    "price": 0.40,
+    "protection": 1,
+    "durability": 165
+  },
+  {
+    "displayName": "Chainmail Chestplate",
+    "id": "chainmail_chestplate",
+    "description": "The chestplate of the armor set. Keep your favorite player alive!",
+    "price": 0.40,
+    "protection": 1,
+    "durability": 240
+  },
+  {
+    "displayName": "Chainmail Leggings",
+    "id": "chainmail_leggings",
+    "description": "The leggings of the armor set. Keep your favorite player alive!",
+    "price": 0.40,
+    "protection": 1,
+    "durability": 225
+  },
+  {
+    "displayName": "Chainmail Boots",
+    "id": "chainmail_boots",
+    "description": "The boots of the armor set. Keep your favorite player alive!",
+    "price": 0.40,
+    "protection": 1,
+    "durability": 195
+  },
+  {
+    "displayName": "Iron Helmet",
+    "id": "iron_helmet",
+    "description": "The helm of the clasic armor set, it's protective and durable. Keep your favorite player alive!",
+    "price": 1.25,
+    "protection": 2,
+    "durability": 166
+  },
+  {
+    "displayName": "Iron Chestplate",
+    "id": "iron_chestplate",
+    "description": "The chestplate of the clasic armor set, it's protective and durable. Keep your favorite player alive!",
+    "price": 2.00,
+    "protection": 6,
+    "durability": 241
+  },
+  {
+    "displayName": "Iron Leggings",
+    "id": "iron_leggings",
+    "description": "The leggings of the clasic armor set, it's protective and durable. Keep your favorite player alive!",
+    "price": 1.75,
+    "protection": 5,
+    "durability": 226
+  },
+  {
+    "displayName": "Iron Boots",
+    "id": "iron_boots",
+    "description": "The boots of the clasic armor set, it's protective and durable. Keep your favorite player alive!",
+    "price": 1.00,
+    "protection": 2,
+    "durability": 196
+  },
+  {
+    "displayName": "Diamond Helmet",
+    "id": "diamond_helmet",
+    "description": "The helm of the ultimate armor set; a full set will make any player tough as nails. Keep your favorite player alive!",
+    "price": 4.75,
+    "protection": 3,
+    "durability": 363
+  },
+  {
+    "displayName": "Diamond Chestplate",
+    "id": "diamond_chestplate",
+    "description": "The chestplate of the ultimate armor set; a full set will make any player tough as nails. Keep your favorite player alive!",
+    "price": 7.50,
+    "protection": 8,
+    "durability": 528
+  },
+  {
+    "displayName": "Diamond Leggings",
+    "id": "diamond_leggings",
+    "description": "The leggings of the ultimate armor set; a full set will make any player tough as nails. Keep your favorite player alive!",
+    "price": 6.75,
+    "protection": 6,
+    "durability": 495
+  },
+  {
+    "displayName": "Diamond Boots",
+    "id": "diamond_boots",
+    "description": "The boots of the ultimate armor set, a full set will make any player tough as nails. Keep your favorite player alive!",
+    "price": 3.75,
+    "protection": 3,
+    "durability": 429
+  },
+  {
+    "displayName": "Golden Helmet",
+    "id": "golden_helmet",
+    "description": "The helm of a protective but breakable armor set. Keep your favorite player alive!",
+    "price": 1.00,
+    "protection": 2,
+    "durability": 78
+  },
+  {
+    "displayName": "Golden Chestplate",
+    "id": "golden_chestplate",
+    "description": "The chestplate of a protective but breakable armor set. Keep your favorite player alive!",
+    "price": 1.60,
+    "protection": 5,
+    "durability": 113
+  },
+  {
+    "displayName": "Golden Leggings",
+    "id": "golden_leggings",
+    "description": "The leggings of a protective but breakable armor set. Keep your favorite player alive!",
+    "price": 1.40,
+    "protection": 3,
+    "durability": 106
+  },
+  {
+    "displayName": "Golden Boots",
+    "id": "golden_boots",
+    "description": "The boots of a protective but breakable armor set. Keep your favorite player alive!",
+    "price": 0.80,
+    "protection": 1,
+    "durability": 92
+  },
+  {
+    "displayName": "Netherite Helmet",
+    "id": "netherite_helmet",
+    "description": "The helmet of the most protective armor set. Keep your favorite player alive!",
+    "price": 5.00,
+    "protection": 3,
+    "durability": 407
+  },
+  {
+    "displayName": "Netherite Chestplate",
+    "id": "netherite_chestplate",
+    "description": "The chestplate of the most protective armor set. Keep your favorite player alive!",
+    "price": 8.00,
+    "protection": 8,
+    "durability": 592
+  },
+  {
+    "displayName": "Netherite Leggings",
+    "id": "netherite_leggings",
+    "description": "The leggings of the most protective armor set. Keep your favorite player alive!",
+    "price": 7.00,
+    "protection": 6,
+    "durability": 555
+  },
+  {
+    "displayName": "Netherite Boots",
+    "id": "netherite_boots",
+    "description": "The boots of the most protective armor set. Keep your favorite player alive!",
+    "price": 4.00,
+    "protection": 3,
+    "durability": 481
+  }
+]

@@ -3,21 +3,25 @@
  * @param {*} authHeader The header that would contain the username and password
  * @returns object containing boolean if they are authenticated and which piece failed
  */
-const basicAuth = (res, req, next) => {
-  // Make sure the auth header exists and is in proper format
-  const { authorization: auth } = req.headers;
+const basicAuth = (req, res, next) => {
+  if (req.headers) {
+    const { authorization: auth } = req.headers;
 
-  if (!auth || auth.indexOf('Basic ') === -1) { return res.status(401).json({ message: 'Missing Auth Header' }); }
+    if (auth && auth.indexOf('Basic ') === -1) {
+      /* eslint-disable new-cap */
+      const [username, password] = new Buffer.from(auth.split(' ')[1], 'base64').toString().split(':');
+      /* eslint-enable new-cap */
 
-  // Get the username and password
+      if (username === process.env.username && password === process.env.password) return next();
 
-  /* eslint-disable new-cap */
-  const [username, password] = new Buffer.from(auth.split(' ')[1], 'base64').toString().split(':');
-  /* eslint-enable new-cap */
+      res.status(401).send('Incorrect Credentials.');
+      return null;
+    }
+  }
 
-  if (username !== process.env.username || password !== process.env.password) { return res.status(401).json({ message: 'Invalid Credentials' }); }
-
-  return next();
+  res.set('WWW-Authenticate', 'Basic realm="401"');
+  res.status(401).send('Authentication not provided');
+  return null;
 };
 
 module.exports = {

@@ -1,5 +1,5 @@
 const { Select, Update } = require('../sql/sqlFunctions');
-const safeJsonParse = require('../extraFunctions/safeJsonParse');
+const safeJsonParse = require('../utils/safeJsonParse');
 
 module.exports = {
   getCheckoutStatus: async (_, res) => {

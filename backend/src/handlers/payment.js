@@ -1,6 +1,6 @@
 const stripe = require('stripe')(process.env.STRIPE_KEY);
 const { Get } = require('../sql/sqlFunctions');
-const safeJsonParse = require('../extraFunctions/safeJsonParse');
+const safeJsonParse = require('../utils/safeJsonParse');
 
 const romans = {
   1: 'I',

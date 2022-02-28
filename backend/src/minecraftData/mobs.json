@@ -1,202 +1,146 @@
-{
-  "mobs": [{
+[
+  {
     "id": "bat",
     "name": "Bat",
     "description": "'Chirp Chirp' -some bat somewhere probably.",
-    "price": 0.10,
-    "loopAmount": 10,
-    "optionalDataTag": "",
-    "disabled": 0
+    "price": 0.10
+  },
+  {
+    "id": "bee",
+    "name": "Bee",
+    "description": "Give someone a BEEutiful surprise.",
+    "price": 0.20
   },
   {
     "id": "blaze",
     "name": "Blaze",
     "description": "Fireball, do do do doo doo do *whoop whoop*.",
-    "price": 0.50,
-    "loopAmount": 5,
-    "optionalDataTag": "",
-    "disabled": 0
+    "price": 0.50
   },
   {
     "id": "cave_spider",
     "name": "Cave Spider",
     "description": "Cave spiders, really? You hate a player that much?",
-    "price": 0.25,
-    "loopAmount": 3,
-    "optionalDataTag": "",
-    "disabled": 0
+    "price": 0.25
   },
   {
     "id": "chicken",
     "name": "Chicken",
     "description": "Like cooked chicken but they have to put in some elbow grease.",
-    "price": 0.10,
-    "loopAmount": 10,
-    "optionalDataTag": "",
-    "disabled": 0
+    "price": 0.10
+  },
+  {
+    "id": "cod",
+    "name": "Cod",
+    "description": "GET CODDED (will spawn a lot of cod)",
+    "price": 10.00
   },
   {
     "id": "cow",
     "name": "Cow",
     "description": "'Moo' -Jerald the Cow",
-    "price": 0.20,
-    "loopAmount": 10,
-    "optionalDataTag": "",
-    "disabled": 0
+    "price": 0.20
   },
   {
     "id": "creeper",
     "name": "Creeper",
     "description": "Tssssssss *BOOM*",
-    "price": 0.50,
-    "loopAmount": 10,
-    "optionalDataTag": "",
-    "disabled": 0
+    "price": 0.50
   },
   {
     "id": "donkey",
     "name": "Donkey",
     "description": "Shrek's pet, idk I didn't watch the movie",
-    "price": 0.10,
-    "loopAmount": 1,
-    "optionalDataTag": "",
-    "disabled": 0
+    "price": 0.10
   },
   {
     "id": "enderman",
     "name": "Enderman",
     "description": "He picks things up and puts them down.",
-    "price": 0.5,
-    "loopAmount": 3,
-    "optionalDataTag": "",
-    "disabled": 0
+    "price": 0.50
   },
   {
     "id": "endermite",
     "name": "Endermite",
     "description": "A telleporting mini bug.",
-    "price": 0.50,
-    "loopAmount": 10,
-    "optionalDataTag": "",
-    "disabled": 0
+    "price": 0.50
   },
-
-  
   {
     "id": "evocation_illager",
     "name": "Evoker",
     "description": "He Evoke. He protec.",
-    "price": 0.75,
-    "loopAmount": 10,
-    "optionalDataTag": "",
-    "disabled": 0
+    "price": 0.75
   },
   {
     "id": "ghast",
     "name": "Ghast",
     "description": "[:O]=",
-    "price": 1,
-    "loopAmount": 5,
-    "optionalDataTag": "",
-    "disabled": 0
+    "price": 1.00
   },
   {
     "id": "husk",
     "name": "Husk",
     "description": "Like corn meets a zombie",
-    "price": 0.50,
-    "loopAmount": 10,
-    "optionalDataTag": "",
-    "disabled": 0
+    "price": 0.50
   },
   {
     "id": "lightning_bolt",
     "name": "Lightning Bolt",
     "description": "Basically just kill someone.",
-    "price": 1,
-    "loopAmount": 1,
-    "optionalDataTag": "",
-    "disabled": 0
+    "price": 10.00
   },
   {
     "id": "llama",
     "name": "Llama",
     "description": "It'll probably just spit on people.",
-    "price": 0.75,
-    "loopAmount": 10,
-    "optionalDataTag": "",
-    "disabled": 0
+    "price": 0.75
   },
   {
     "id": "pig",
     "name": "Pig",
     "description": "This is some bougie pork.",
-    "price": 0.25,
-    "loopAmount": 10,
-    "optionalDataTag": "",
-    "disabled": 0
+    "price": 0.25
   },
   {
     "id": "polar_bear",
     "name": "Polar Bear",
     "description": "They changed the dogs in Minecraft!",
-    "price": 1,
-    "loopAmount": 1,
-    "optionalDataTag": "",
-    "disabled": 0
+    "price": 1.00
   },
   {
     "id": "skeleton",
     "name": "Skeleton",
     "description": "Bone shooty man.",
-    "price": 2,
-    "loopAmount": 10,
-    "optionalDataTag": "",
-    "disabled": 0
+    "price": 2.00
   },
   {
     "id": "spider",
     "name": "Spider",
     "description": "♫ Spiderman, Spiderman, does whatever a spider can... ♫",
-    "price": 2,
-    "loopAmount": 10,
-    "optionalDataTag": "",
-    "disabled": 0
+    "price": 2.00
   },
   {
     "id": "witch",
     "name": "Witch",
     "description": "He he he.",
-    "price": 3,
-    "loopAmount": 10,
-    "optionalDataTag": "",
-    "disabled": 0
+    "price": 3.00
   },
   {
     "id": "wither",
     "name": "Wither",
     "description": "Literally just a chaos thing with three heads.",
-    "price": 50,
-    "loopAmount": 1,
-    "optionalDataTag": "",
-    "disabled": 0
+    "price": 50.00
   },
   {
     "id": "wither_skeleton",
     "name": "Wither Skeleton",
     "description": "Wither minions for the Wither TM.",
-    "price": 3,
-    "loopAmount": 5,
-    "optionalDataTag": "",
-    "disabled": 0
+    "price": 3.00
   },
   {
     "id": "zombie",
     "name": "Zombie",
     "description": "...Brains...",
-    "price": 2,
-    "loopAmount": 10,
-    "optionalDataTag": "",
-    "disabled": 0
-  }]
-}
+    "price": 2.00
+  }
+]
