@@ -4,5 +4,5 @@ echo "window._env_ = {
     DDCLITOKEN: \"$DDCLITOKEN\",
 }" > public/env.js
 
-mkdir -p build
-cp public/env.js build/env.js
+mkdir -p dist
+cp public/env.js dist/env.js
