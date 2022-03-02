@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './App.css';
-import { Route, Switch, BrowserRouter } from 'react-router-dom';
+import { Route, Routes, BrowserRouter } from 'react-router-dom';
 import Navbar from '../Navbar/Navbar';
 import Footer from '../Footer/Footer';
 import Landing from '../Pages/Landing/Landing';
@@ -15,16 +15,15 @@ const App = () => {
       <div className="App">
         <Navbar />
         <main className="Content">
-          <Switch>
+          <Routes>
             {/* <Route path="/data" component={PlayerData} /> */}
-            <Route path="/store" render={() => (<Store selectedPlayer={selectedPlayer} />)} />
-            <Route exact path="/" render={() => (<Landing setSelectedPlayer={setSelectedPlayer} />)} />
-          </Switch>
+            <Route path="/store" element={<Store selectedPlayer={selectedPlayer} />} />
+            <Route exact path="/" element={<Landing setSelectedPlayer={setSelectedPlayer} />} />
+          </Routes>
         </main>
         <Footer />
       </div>
     </BrowserRouter>
-
   );
 };
 

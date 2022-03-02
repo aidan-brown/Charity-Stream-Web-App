@@ -1,7 +1,7 @@
 /* The footer tag that holds all the footer information */
 .Footer {
 	min-height: 4rem;
-	padding: 2rem;
+	padding: 8px;
 }
 
 /* The a tags that hold the images and text that are relevant to the links */
@@ -38,17 +38,12 @@
 }
 
 .footer-row{
-	margin: 1rem 0;
 	width: 100%;
 	display: flex;
 	justify-content: center;
 	align-items: center;
 
 	color: white;
-}
-
-.footer-row div{
-	margin: 0 2rem;
 }
 
 .footer-row a:link{
@@ -69,19 +64,16 @@
 }
 
 .footer-row img{
-	width: 30rem;
+	width: 100%;
+	max-width: 300px;
+}
+
+.footer-row .bottom {
+	padding: 0 10px 0 10px;
 }
 
 @media only screen and (max-width: 850px){
 	.footer-row{
 		flex-direction: column;
-	}
-
-	.footer-row div{
-		margin: 0.75rem 0;
-	}
-
-	.footer-row img{
-		width: 25rem;
 	}
 }

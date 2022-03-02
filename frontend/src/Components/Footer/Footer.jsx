@@ -10,14 +10,18 @@ const Footer = () => (
     <div className="footer-row">
       <i>Getting more done after 2am than most people do all day.</i>
     </div>
-    <div className="footer-row">
-      <div>
+    <div className="footer-row stuff">
+      <div className="bottom">
         <a href="mailto:charity@csh.rit.edu">charity@csh.rit.edu</a>
       </div>
-      <div>
-        @ 2020 Computer Science House
+      <div className="bottom">
+        &copy;
+        {' '}
+        {(new Date()).getFullYear()}
+        {' '}
+        Computer Science House
       </div>
-      <div>
+      <div className="bottom">
         <a href="https://github.com/aidan-brown/Charity-Stream-Web-App">Website on Github</a>
       </div>
     </div>

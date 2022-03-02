@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { Button, MenuItem, Select } from '@material-ui/core';
+import { Button, MenuItem, Select } from '@mui/material';
 import { BACKENDURL } from '../../../App/constants';
 import CartEffect from './CartEffect';
 import CartItem from './CartItem';

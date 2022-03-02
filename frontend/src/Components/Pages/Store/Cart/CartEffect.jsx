@@ -1,7 +1,7 @@
 /* eslint-disable no-mixed-operators */
 import React from 'react';
 import PropTypes from 'prop-types';
-import { MenuItem, Select } from '@material-ui/core';
+import { MenuItem, Select } from '@mui/material';
 
 const POWER_LEVELS = {
   I: 0,
