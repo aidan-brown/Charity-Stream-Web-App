@@ -39,6 +39,11 @@ module.exports = {
   resolve: {
     extensions: ['', '.js', '.jsx'],
   },
+  performance: {
+    hints: false,
+    maxEntrypointSize: 600000,
+    maxAssetSize: 600000,
+  },
   plugins: [
     new HtmlWebpackPlugin({
       name: 'index.html',
