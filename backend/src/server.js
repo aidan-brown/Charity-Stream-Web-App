@@ -27,6 +27,7 @@ app.get('/minecraft/:type', getMinecraftData);
 app.get('/players', getPlayers);
 app.get('/data', getData);
 app.get('/images/:type/:image', getImages);
+app.get('/checkout/status', (_, res) => res.status(200).send(false));
 app.post('/checkout', createCheckout);
 
 // This tells node to use auth for the routes below here

@@ -71,6 +71,8 @@ const Store = ({ selectedPlayer }) => {
   const storeDiv = useRef();
   const itemAddRef = useRef();
 
+  console.log(cartItems);
+
   const forceUpdate = useForceUpdate();
 
   useEffect(() => {

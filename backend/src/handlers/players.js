@@ -3,11 +3,12 @@ const safeJsonParse = require('../utils/safeJsonParse');
 
 module.exports = {
   getPlayers: async (req, res) => {
-    const { userName } = req.body;
+    // const { userName } = req.body;
 
     try {
-      res.status(200).send(await Select(null, 'players', `userName = '${userName}'`));
+      res.status(200).send(await Select(null, 'players'));
     } catch (error) {
+      console.log(error);
       const { code = 500, message = error.message } = safeJsonParse(error.message);
       res.status(code).send(message);
     }

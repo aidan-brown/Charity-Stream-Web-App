@@ -12,19 +12,19 @@ const StoreContent = ({ filterTag, addItemToCart }) => {
   const [mobs, setMobs] = useState([]);
 
   const fetchShopItems = () => {
-    fetch(`${BACKENDURL}/items`)
+    fetch(`${BACKENDURL}/minecraft/items`)
       .then((res) => res.json())
       .then((res) => {
         setItems(res);
       })
       .catch(() => {});
-    fetch(`${BACKENDURL}/mobs`)
+    fetch(`${BACKENDURL}/minecraft/mobs`)
       .then((res) => res.json())
       .then((res) => {
         setMobs(res);
       })
       .catch(() => {});
-    fetch(`${BACKENDURL}/effects`)
+    fetch(`${BACKENDURL}/minecraft/effects`)
       .then((res) => res.json())
       .then((res) => {
         setEffects(res);
@@ -40,6 +40,10 @@ const StoreContent = ({ filterTag, addItemToCart }) => {
       clearInterval(shopPoll);
     };
   }, []);
+
+  console.log(items);
+  console.log(mobs);
+  console.log(effects);
 
   return (
     <div className="StoreContent">

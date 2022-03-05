@@ -34,6 +34,7 @@ const Cart = ({
     fetch(`${BACKENDURL}/players`)
       .then((res) => res.json())
       .then((res) => {
+        console.log(res);
         setPlayerList(res);
       })
       .catch(() => {});
