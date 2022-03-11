@@ -41,10 +41,6 @@ const StoreContent = ({ filterTag, addItemToCart }) => {
     };
   }, []);
 
-  console.log(items);
-  console.log(mobs);
-  console.log(effects);
-
   return (
     <div className="StoreContent">
       {items.filter((item) => item.disabled === 0 && (filterTag === 'all' || item.type === filterTag)).map((item) => (

@@ -4,8 +4,7 @@ const cors = require('cors');
 const {
   createCheckout,
   createPlayer,
-  disableCheckout,
-  disableElement,
+  disableElements,
   dataCallback,
   getData,
   getMinecraftData,
@@ -34,10 +33,10 @@ app.post('/checkout', createCheckout);
 app.use(basicAuth);
 
 // Everything below this point should require auth
-app.put('/disable/:type/:id', disableElement);
-app.put('/disable', disableCheckout);
+app.put('/disable', disableElements);
 app.post('/players', createPlayer);
 app.post('/data-callback', dataCallback);
+app.get('/', (_, res) => res.send('Success').status(200));
 
 // eslint-disable-next-line no-console
 app.listen(port, console.log(`Listening on port at http://localhost:${port}`));

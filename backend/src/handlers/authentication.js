@@ -7,7 +7,7 @@ const basicAuth = (req, res, next) => {
   if (req.headers) {
     const { authorization: auth } = req.headers;
 
-    if (auth && auth.indexOf('Basic ') === -1) {
+    if (auth && auth.indexOf('Basic ') !== -1) {
       /* eslint-disable new-cap */
       const [username, password] = new Buffer.from(auth.split(' ')[1], 'base64').toString().split(':');
       /* eslint-enable new-cap */

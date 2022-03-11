@@ -23,20 +23,25 @@ module.exports = {
       res.status(code).send(message);
     }
   },
-  disableElement: async (req, res) => {
-    const { type, id } = req.params;
-    try {
-      const [element] = await Select(null, type, `id = '${id}'`);
+  disableElements: async (req, res) => {
+    const { body: elements } = req;
 
-      if (element) {
-        await Update(type, { disabled: element.disabled === 0 ? 1 : 0 }, `id = '${id}'`);
-        res.status(200).send(`Successfully ${element.disabled === 0 ? 'disabled' : 'enabled'} '${id}'`);
-      } else {
-        res.status(400).send('That item does not exist');
-      }
-    } catch (error) {
-      const { code = 500, message = error.message } = safeJsonParse(error.message);
-      res.status(code).send(message);
-    }
+    console.log(elements);
+
+    res.send('Success').status(200);
+
+    // try {
+    //   const [element] = await Select(null, type, `id = '${id}'`);
+
+    //   if (element) {
+    //     await Update(type, { disabled: element.disabled === 0 ? 1 : 0 }, `id = '${id}'`);
+    //     res.status(200).send(`Successfully ${element.disabled === 0 ? 'disabled' : 'enabled'} '${id}'`);
+    //   } else {
+    //     res.status(400).send('That item does not exist');
+    //   }
+    // } catch (error) {
+    //   const { code = 500, message = error.message } = safeJsonParse(error.message);
+    //   res.status(code).send(message);
+    // }
   },
 };

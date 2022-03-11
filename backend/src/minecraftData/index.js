@@ -16,4 +16,4 @@ module.exports = {
   mobs,
   tools,
   weapons,
-}
+};

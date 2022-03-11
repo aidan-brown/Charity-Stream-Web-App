@@ -31,7 +31,7 @@
     opacity: 0.35;
 }
 
-.store-item-name{
+.store-item-displayName{
     margin: 0.5rem 0 0 0;
     text-align: left;
     font-size: medium;
@@ -128,7 +128,7 @@
     transform: scale(1.05);
 }
 
-.store-item[data-disabled='0']:hover .store-item-name{
+.store-item[data-disabled='0']:hover .store-item-displayName{
     opacity: 0.99;
 }
 
