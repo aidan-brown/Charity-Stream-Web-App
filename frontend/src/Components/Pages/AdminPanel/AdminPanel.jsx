@@ -57,8 +57,9 @@ const AdminPanel = () => {
       method: 'PUT',
       headers: {
         Authorization: authHeader,
+        'Content-Type': 'application/json',
       },
-      body: toDisable,
+      body: JSON.stringify(toDisable),
     }).then(() => {
       setToDisable([]);
     }).catch(() => {
@@ -106,17 +107,17 @@ const AdminPanel = () => {
       )}
       {loggedIn && (
         <>
-          <Grid>
+          <div>
             {TYPES.map((t) => (
-              <>
-                <h1 key={t}>{`${t[0].toUpperCase()}${t.slice(1, t.length)}`}</h1>
+              <div key={t}>
+                <h1>{`${t[0].toUpperCase()}${t.slice(1, t.length)}`}</h1>
                 {elements.filter((el) => el.type === t).map((element) => {
                   const {
                     id, displayName, disabled, type,
                   } = element;
 
                   return (
-                    <Grid item xs={6} md={8} key={`${id}-${type}`}>
+                    <div key={`${id}-${type}`}>
                       <div className="element" key={id}>
                         <img
                           className="image"
@@ -133,10 +134,15 @@ const AdminPanel = () => {
                               const { checked } = e.target;
 
                               if (el.id === id) {
-                                if (checked) setToDisable([...toDisable, id]);
-                                else if (toDisable.includes(id)) {
-                                  setToDisable([...toDisable.filter((item) => item !== id)]);
+                                if (toDisable.includes(id)) {
+                                  setToDisable([...toDisable.filter((item) => item.id !== id)]);
+                                } else {
+                                  setToDisable([...toDisable, {
+                                    id,
+                                    disabled: checked,
+                                  }]);
                                 }
+
                                 return {
                                   ...el,
                                   disabled: checked,
@@ -147,12 +153,12 @@ const AdminPanel = () => {
                           }}
                         />
                       </div>
-                    </Grid>
+                    </div>
                   );
                 })}
-              </>
+              </div>
             ))}
-          </Grid>
+          </div>
           <div className="button-group">
             <Button
               className="disabled-button-left"

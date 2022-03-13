@@ -23,8 +23,6 @@ const PlayerData = () => {
         .then((res) => res.json())
         .then((res) => {
           setLoading(false);
-          // setPlayers(res);
-          console.log(res);
           setPlayers([{
             armor: 0,
             health: 12.3333,

@@ -13,6 +13,8 @@ const {
 } = require('./handlers');
 const { getImages } = require('./images');
 const { basicAuth } = require('./handlers/authentication');
+const { testConnection } = require('./sql');
+const { createTables } = require('./sql/models');
 
 const app = express();
 const port = 8080;
@@ -39,4 +41,9 @@ app.post('/data-callback', dataCallback);
 app.get('/', (_, res) => res.send('Success').status(200));
 
 // eslint-disable-next-line no-console
-app.listen(port, console.log(`Listening on port at http://localhost:${port}`));
+app.listen(port, async () => {
+  await testConnection();
+  createTables();
+  // eslint-disable-next-line no-console
+  console.log(`Listening on port at http://localhost:${port}`);
+});

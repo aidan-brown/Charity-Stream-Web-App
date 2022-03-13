@@ -1,5 +1,5 @@
 const stripe = require('stripe')(process.env.STRIPE_KEY);
-const { Get } = require('../sql/sqlFunctions');
+const { Player } = require('../sql/models');
 const safeJsonParse = require('../utils/safeJsonParse');
 
 const romans = {
@@ -18,32 +18,32 @@ const romans = {
 const items = ['armor', 'tool', 'weapon', 'food', 'material'];
 
 const verifyPurchase = async (product) => {
-  const {
-    id, type, price, power, time,
-  } = product;
-  if (items.includes(type)) {
-    const [key] = await Get('items', id);
-    if (key) {
-      return price === key.price && !key.disabled;
-    }
-  }
-  if (type === 'mob') {
-    const [key] = await Get('mobs', id);
-    if (key) {
-      return price === key.price && !key.disabled;
-    }
-  }
-  if (type === 'effect') {
-    const [key] = await Get('effects', id);
-    if (key) {
-      return price === key.price && power < 10 && time <= 300 && !key.disabled;
-    }
-  }
-  return false;
+  // const {
+  //   id, type, price, power, time,
+  // } = product;
+  // if (items.includes(type)) {
+  //   const [key] = await Get('items', id);
+  //   if (key) {
+  //     return price === key.price && !key.disabled;
+  //   }
+  // }
+  // if (type === 'mob') {
+  //   const [key] = await Get('mobs', id);
+  //   if (key) {
+  //     return price === key.price && !key.disabled;
+  //   }
+  // }
+  // if (type === 'effect') {
+  //   const [key] = await Get('effects', id);
+  //   if (key) {
+  //     return price === key.price && power < 10 && time <= 300 && !key.disabled;
+  //   }
+  // }
+  // return false;
 };
 
 const verifyPlayer = async (username) => {
-  const data = await Get('players', username, 'username');
+  const data = await Player.findAll({ where: { username } });
   if (data.length === 0) {
     return null;
   }

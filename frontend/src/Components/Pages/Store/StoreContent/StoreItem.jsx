@@ -98,7 +98,7 @@ StoreItem.propTypes = {
   item: PropTypes.shape({
     id: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
-    hungerFill: PropTypes.string,
+    hungerFill: PropTypes.number,
     speed: PropTypes.number,
     durability: PropTypes.number,
     effects: PropTypes.string,

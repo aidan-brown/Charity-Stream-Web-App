@@ -1,10 +1,10 @@
-const { Select, Update } = require('../sql/sqlFunctions');
 const safeJsonParse = require('../utils/safeJsonParse');
+const { DisabledElement } = require('../sql/models');
 
 module.exports = {
   getCheckoutStatus: async (_, res) => {
     try {
-      const [{ disabled }] = await Select(null, 'checkout');
+      const [{ disabled }] = await DisabledElement.findAll({ where: { id: 'checkout' } });
 
       res.status(200).send(!!disabled);
     } catch (error) {
@@ -14,10 +14,11 @@ module.exports = {
   },
   disableCheckout: async (_, res) => {
     try {
-      const [{ disabled }] = await Select(null, 'checkout');
+      const [checkout] = await DisabledElement.findAll({ where: { id: 'checkout' } });
 
-      await Update('checkout', { disabled: disabled === 0 ? 1 : 0 }, 'id = \'1\'');
-      res.status(200).send(`Successfully ${disabled === 0 ? 'disabled' : 'enabled'} checkout`);
+      await checkout.update({ disabled: !checkout.disabled });
+
+      res.status(200).send(`Successfully ${!checkout.disabled ? 'disabled' : 'enabled'} checkout`);
     } catch (error) {
       const { code = 500, message = error.message } = safeJsonParse(error.message);
       res.status(code).send(message);
@@ -26,22 +27,19 @@ module.exports = {
   disableElements: async (req, res) => {
     const { body: elements } = req;
 
-    console.log(elements);
+    try {
+      await elements.forEach(async ({ id, disabled }) => {
+        const foundItem = await DisabledElement.findOne({ where: { id } });
 
-    res.send('Success').status(200);
+        if (!foundItem) await DisabledElement.create({ id, disabled });
+        else {
+          await DisabledElement.destroy({ where: { id } });
+        }
+      });
 
-    // try {
-    //   const [element] = await Select(null, type, `id = '${id}'`);
-
-    //   if (element) {
-    //     await Update(type, { disabled: element.disabled === 0 ? 1 : 0 }, `id = '${id}'`);
-    //     res.status(200).send(`Successfully ${element.disabled === 0 ? 'disabled' : 'enabled'} '${id}'`);
-    //   } else {
-    //     res.status(400).send('That item does not exist');
-    //   }
-    // } catch (error) {
-    //   const { code = 500, message = error.message } = safeJsonParse(error.message);
-    //   res.status(code).send(message);
-    // }
+      res.send('Success').status(200);
+    } catch (err) {
+      res.send('Failed to update elements').status(500);
+    }
   },
 };
