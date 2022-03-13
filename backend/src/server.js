@@ -4,8 +4,7 @@ const cors = require('cors');
 const {
   createCheckout,
   createPlayer,
-  disableCheckout,
-  disableElement,
+  disableElements,
   dataCallback,
   getData,
   getMinecraftData,
@@ -14,6 +13,8 @@ const {
 } = require('./handlers');
 const { getImages } = require('./images');
 const { basicAuth } = require('./handlers/authentication');
+const { testConnection } = require('./sql');
+const { createTables } = require('./sql/models');
 
 const app = express();
 const port = 8080;
@@ -27,16 +28,22 @@ app.get('/minecraft/:type', getMinecraftData);
 app.get('/players', getPlayers);
 app.get('/data', getData);
 app.get('/images/:type/:image', getImages);
+app.get('/checkout/status', (_, res) => res.status(200).send(false));
 app.post('/checkout', createCheckout);
 
 // This tells node to use auth for the routes below here
 app.use(basicAuth);
 
 // Everything below this point should require auth
-app.put('/disable/:type/:id', disableElement);
-app.put('/disable', disableCheckout);
+app.put('/disable', disableElements);
 app.post('/players', createPlayer);
 app.post('/data-callback', dataCallback);
+app.get('/', (_, res) => res.send('Success').status(200));
 
 // eslint-disable-next-line no-console
-app.listen(port, console.log(`Listening on port at http://localhost:${port}`));
+app.listen(port, async () => {
+  await testConnection();
+  createTables();
+  // eslint-disable-next-line no-console
+  console.log(`Listening on port at http://localhost:${port}`);
+});

@@ -1,20 +1,20 @@
 [
   {
     "id": "iron_ingot",
-    "name": "Iron Ingot",
+    "displayName": "Iron Ingot",
     "description": "An ingot full of potential. Can be used to craft iron armor, weapons, and tools.",
     "price": 0.25
   },
   {
-      "id": "gold_ingot",
-      "name": "Gold Ingot",
-      "description": "An ingot full of potential. Can be used to craft gold armor, weapons, and tools.",
-      "price": 0.20
+    "id": "gold_ingot",
+    "displayName": "Gold Ingot",
+    "description": "An ingot full of potential. Can be used to craft gold armor, weapons, and tools.",
+    "price": 0.20
   },
   {
-      "id": "diamond",
-      "name": "Diamond",
-      "description": "A shiny gem. Can be used to craft powerful diamond armor, weapons, and tools.",
-      "price": 1.00   
+    "id": "diamond",
+    "displayName": "Diamond",
+    "description": "A shiny gem. Can be used to craft powerful diamond armor, weapons, and tools.",
+    "price": 1.00   
   }
 ]

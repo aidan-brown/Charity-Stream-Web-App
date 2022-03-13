@@ -5,6 +5,7 @@ import Navbar from '../Navbar/Navbar';
 import Footer from '../Footer/Footer';
 import Landing from '../Pages/Landing/Landing';
 import Store from '../Pages/Store/Store';
+import AdminPanel from '../Pages/AdminPanel';
 // import PlayerData from '../PlayerData';
 
 const App = () => {
@@ -18,6 +19,7 @@ const App = () => {
           <Routes>
             {/* <Route path="/data" component={PlayerData} /> */}
             <Route path="/store" element={<Store selectedPlayer={selectedPlayer} />} />
+            <Route path="/admin-panel" element={<AdminPanel />} />
             <Route exact path="/" element={<Landing setSelectedPlayer={setSelectedPlayer} />} />
           </Routes>
         </main>

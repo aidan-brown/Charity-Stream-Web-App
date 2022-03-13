@@ -1,30 +1,24 @@
-const { Select, Insert } = require('../sql/sqlFunctions');
-const safeJsonParse = require('../utils/safeJsonParse');
+const { Player } = require('../sql/models');
 
 module.exports = {
-  getPlayers: async (req, res) => {
-    const { userName } = req.body;
-
+  getPlayers: async (_, res) => {
     try {
-      res.status(200).send(await Select(null, 'players', `userName = '${userName}'`));
-    } catch (error) {
-      const { code = 500, message = error.message } = safeJsonParse(error.message);
-      res.status(code).send(message);
+      const players = await Player.findAll();
+
+      res.send(players).status(200);
+    } catch (__) {
+      res.send('There was an error getting the players').status(500);
     }
   },
   createPlayer: async (req, res) => {
-    const { player } = req.body;
+    const player = req.body;
 
     try {
-      if (player) {
-        await Insert('players', Object.keys(player), Object.values(player));
-        res.status(200).send('Success');
-      } else {
-        res.status(400).send('No Player provided');
-      }
-    } catch (error) {
-      const { code = 500, message = error.message } = safeJsonParse(error.message);
-      res.status(code).send(message);
+      const newPlayer = await Player.create(player);
+
+      res.send(newPlayer).status(200);
+    } catch (err) {
+      res.send('There was an error creating the player').status(500);
     }
   },
 };

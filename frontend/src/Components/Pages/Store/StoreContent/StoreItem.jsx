@@ -72,9 +72,9 @@ const StoreItem = ({ item, addItemToCart }) => {
   return (
     <span tabIndex={0} role="button" className="store-item bg-csh-tertiary" onClick={addItemToCart} onKeyDown={addItemToCart} data-disabled={item.disabled}>
       <div className="store-item-header bg-csh-primary-gradient">
-        <img className="store-item-image" src={`${BACKENDURL}/images/items/${item.id}-full.jpg`} alt={item.name} />
-        <img className="store-item-icon" src={`${BACKENDURL}/images/items/${item.id}.png`} alt={item.name} />
-        <p className="store-item-name">{item.name}</p>
+        <img className="store-item-image" src={`${BACKENDURL}/images/items/${item.id}-full.jpg`} alt={item.displayName} />
+        <img className="store-item-icon" src={`${BACKENDURL}/images/items/${item.id}.png`} alt={item.displayName} />
+        <p className="store-item-displayName">{item.displayName}</p>
         <p className="store-item-price">
           $
           {item.price.toFixed(2)}
@@ -98,13 +98,13 @@ StoreItem.propTypes = {
   item: PropTypes.shape({
     id: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
-    hungerFill: PropTypes.string,
+    hungerFill: PropTypes.number,
     speed: PropTypes.number,
     durability: PropTypes.number,
     effects: PropTypes.string,
     damage: PropTypes.number,
     protection: PropTypes.number,
-    name: PropTypes.string.isRequired,
+    displayName: PropTypes.string.isRequired,
     type: PropTypes.string.isRequired,
     price: PropTypes.number.isRequired,
     disabled: PropTypes.bool.isRequired,

@@ -112,7 +112,7 @@ const Store = ({ selectedPlayer }) => {
   };
 
   const changeCartAmount = (item, change = 0) => {
-    const i = cartItems.find((e) => e.name === item.name);
+    const i = cartItems.find((e) => e.displayName === item.displayName);
     if (i) {
       i.amount += change;
       if (i.amount <= 0) {
@@ -125,7 +125,7 @@ const Store = ({ selectedPlayer }) => {
   };
 
   const changeEffectPower = (item, value = 0) => {
-    const i = cartItems.find((e) => e.name === item.name);
+    const i = cartItems.find((e) => e.displayName === item.displayName);
     if (i) {
       i.power = value;
       forceUpdate();
@@ -134,7 +134,7 @@ const Store = ({ selectedPlayer }) => {
   };
 
   const changeEffectTime = (item, value = 30) => {
-    const i = cartItems.find((e) => e.name === item.name);
+    const i = cartItems.find((e) => e.displayName === item.displayName);
     if (i) {
       i.time = value;
       forceUpdate();
@@ -152,13 +152,13 @@ const Store = ({ selectedPlayer }) => {
   };
 
   const addItemToCart = (item) => {
-    if (item.disabled === 0) {
-      if (!cartItems.find((e) => e.name === item.name)) {
+    if (!item.disabled) {
+      if (!cartItems.find((e) => e.displayName === item.displayName)) {
         setCartItems([...cartItems, item]);
       } else if (!('power' in item)) {
         changeCartAmount(item, 1);
       } else {
-        const { time } = cartItems.find((e) => e.name === item.name);
+        const { time } = cartItems.find((e) => e.displayName === item.displayName);
         if (time < 300) {
           changeEffectTime(item, time + 30);
         }

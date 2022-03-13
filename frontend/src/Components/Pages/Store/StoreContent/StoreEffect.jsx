@@ -5,9 +5,9 @@ import { BACKENDURL } from '../../../App/constants';
 const StoreEffect = ({ effect, addItemToCart }) => (
   <span tabIndex={0} role="button" className="store-item bg-csh-tertiary" onClick={addItemToCart} onKeyDown={addItemToCart} data-disabled={effect.disabled}>
     <div className="store-item-header bg-csh-primary-gradient">
-      <img className="store-item-image" src={`${BACKENDURL}/images/effects/${effect.id}-full.jpg`} alt={effect.name} />
-      <img className="store-item-icon" src={`${BACKENDURL}/images/effects/${effect.id}.png`} alt={effect.name} />
-      <p className="store-item-name">{effect.name}</p>
+      <img className="store-item-image" src={`${BACKENDURL}/images/effects/${effect.id}-full.jpg`} alt={effect.displayName} />
+      <img className="store-item-icon" src={`${BACKENDURL}/images/effects/${effect.id}.png`} alt={effect.displayName} />
+      <p className="store-item-displayName">{effect.displayName}</p>
       <p className="store-item-price">
         $
         {effect.price.toFixed(2)}
@@ -30,7 +30,7 @@ const StoreEffect = ({ effect, addItemToCart }) => (
 StoreEffect.propTypes = {
   effect: PropTypes.shape({
     id: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
+    displayName: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
     price: PropTypes.number.isRequired,
     disabled: PropTypes.bool.isRequired,

@@ -1,7 +1,7 @@
 const { dataCallback, getData } = require('./data');
-const { getCheckoutStatus, disableCheckout, disableElement } = require('./disable');
+const { getCheckoutStatus, disableCheckout, disableElements } = require('./disable');
 const { hook } = require('./hook');
-const getMinecraftData = require('./minecraftData')
+const getMinecraftData = require('./minecraftData');
 const { createCheckout } = require('./payment');
 const { getPlayers, createPlayer } = require('./players');
 
@@ -10,7 +10,7 @@ module.exports = {
   createPlayer,
   dataCallback,
   disableCheckout,
-  disableElement,
+  disableElements,
   getCheckoutStatus,
   getData,
   getMinecraftData,

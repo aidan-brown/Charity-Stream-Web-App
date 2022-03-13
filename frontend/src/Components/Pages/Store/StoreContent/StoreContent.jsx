@@ -12,19 +12,19 @@ const StoreContent = ({ filterTag, addItemToCart }) => {
   const [mobs, setMobs] = useState([]);
 
   const fetchShopItems = () => {
-    fetch(`${BACKENDURL}/items`)
+    fetch(`${BACKENDURL}/minecraft/items`)
       .then((res) => res.json())
       .then((res) => {
         setItems(res);
       })
       .catch(() => {});
-    fetch(`${BACKENDURL}/mobs`)
+    fetch(`${BACKENDURL}/minecraft/mobs`)
       .then((res) => res.json())
       .then((res) => {
         setMobs(res);
       })
       .catch(() => {});
-    fetch(`${BACKENDURL}/effects`)
+    fetch(`${BACKENDURL}/minecraft/effects`)
       .then((res) => res.json())
       .then((res) => {
         setEffects(res);
@@ -43,7 +43,7 @@ const StoreContent = ({ filterTag, addItemToCart }) => {
 
   return (
     <div className="StoreContent">
-      {items.filter((item) => item.disabled === 0 && (filterTag === 'all' || item.type === filterTag)).map((item) => (
+      {items.filter((item) => !item.disabled && (filterTag === 'all' || item.type === filterTag)).map((item) => (
         <StoreItem
           item={item}
           addItemToCart={() => addItemToCart({
@@ -52,7 +52,7 @@ const StoreContent = ({ filterTag, addItemToCart }) => {
           key={item.id}
         />
       ))}
-      {mobs.filter((mob) => mob.disabled === 0 && (filterTag === 'all' || filterTag === 'mobs')).map((mob) => (
+      {mobs.filter((mob) => !mob.disabled && (filterTag === 'all' || filterTag === 'mobs')).map((mob) => (
         <StoreMob
           mob={mob}
           addItemToCart={() => addItemToCart({
@@ -61,7 +61,7 @@ const StoreContent = ({ filterTag, addItemToCart }) => {
           key={mob.id}
         />
       ))}
-      {effects.filter((effect) => effect.disabled === 0 && (filterTag === 'all' || filterTag === 'effects')).map((effect) => (
+      {effects.filter((effect) => !effect.disabled && (filterTag === 'all' || filterTag === 'effects')).map((effect) => (
         <StoreEffect
           effect={effect}
           addItemToCart={() => addItemToCart({
@@ -70,7 +70,7 @@ const StoreContent = ({ filterTag, addItemToCart }) => {
           key={effect.id}
         />
       ))}
-      {items.filter((item) => item.disabled === 1 && (filterTag === 'all' || item.type === filterTag)).map((item) => (
+      {items.filter((item) => item.disabled && (filterTag === 'all' || item.type === filterTag)).map((item) => (
         <StoreItem
           item={item}
           addItemToCart={() => addItemToCart({
@@ -79,7 +79,7 @@ const StoreContent = ({ filterTag, addItemToCart }) => {
           key={item.id}
         />
       ))}
-      {mobs.filter((mob) => mob.disabled === 1 && (filterTag === 'all' || filterTag === 'mobs')).map((mob) => (
+      {mobs.filter((mob) => mob.disabled && (filterTag === 'all' || filterTag === 'mobs')).map((mob) => (
         <StoreMob
           mob={mob}
           addItemToCart={() => addItemToCart({
@@ -88,7 +88,7 @@ const StoreContent = ({ filterTag, addItemToCart }) => {
           key={mob.id}
         />
       ))}
-      {effects.filter((effect) => effect.disabled === 1 && (filterTag === 'all' || filterTag === 'effects')).map((effect) => (
+      {effects.filter((effect) => effect.disabled && (filterTag === 'all' || filterTag === 'effects')).map((effect) => (
         <StoreEffect
           effect={effect}
           addItemToCart={() => addItemToCart({

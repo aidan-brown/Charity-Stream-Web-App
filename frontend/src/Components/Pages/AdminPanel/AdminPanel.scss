@@ -1,0 +1,50 @@
+.admin-panel {
+  position: relative;
+  height: 100%;
+
+  .login {
+    height: 50vh;
+    // display: flex;
+    justify-content: center;
+
+    .login-inputs {
+      display: flex;
+      justify-content: center;
+  
+      .login-input {
+        display: flex;
+        padding: 5px;
+      }
+    }
+  }
+
+  .element {
+    display: flex;
+    // flex-wrap: wrap;
+    justify-content: space-between;
+    width: 100%;
+
+    .image {
+      width: 40px;
+      height: 40px;
+    }
+  }
+
+  .button-group {
+    position: fixed;
+    display: flex;
+    justify-content: space-between;
+
+    bottom: 20px;
+    right: 20px;
+
+    @media screen and (max-width: 480px) {
+      bottom: 0;
+      right: 0;
+    }
+
+    .disabled-button-left {
+      margin-right: 10px;
+    }
+  }
+}
