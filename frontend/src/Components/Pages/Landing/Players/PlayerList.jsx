@@ -45,9 +45,9 @@ const PlayerList = ({ setSelectedPlayer }) => {
   return (
     <ul className="PlayerList">
       {playerList.sort((a, b) => {
-        if (a.type > b.type) {
+        if (a.association > b.association) {
           return 1;
-        } if (a.type < b.type) {
+        } if (a.association < b.association) {
           return -1;
         }
         if (a.name > b.name) {
@@ -55,9 +55,9 @@ const PlayerList = ({ setSelectedPlayer }) => {
         }
         return -1;
       }).map((player) => (
-        <Link key={player.username} className={`list-element ${player.type.toLowerCase()}`} onClick={() => playerOnClick(player)} to="/Store">
+        <Link key={player.username} className={`list-element ${player.association.toLowerCase()}`} onClick={() => playerOnClick(player)} to="/Store">
           <p>{`${player.name} [${player.username}]`}</p>
-          <img src={logos[`${player.type.toLowerCase()}Logo`]} alt={`${player.type} Logo`} className="team-logo" />
+          <img src={logos[`${player.association.toLowerCase()}Logo`]} alt={`${player.association} Logo`} className="team-logo" />
           <img src={CartLogo} alt="Shop logo" className="shop-logo" />
         </Link>
       ))}

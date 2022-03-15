@@ -1,6 +1,7 @@
 const stripe = require('stripe')(process.env.STRIPE_KEY);
 const { Player } = require('../sql/models');
 const safeJsonParse = require('../utils/safeJsonParse');
+const { all } = require('../minecraftData');
 
 const romans = {
   1: 'I',
@@ -18,36 +19,25 @@ const romans = {
 const items = ['armor', 'tool', 'weapon', 'food', 'material'];
 
 const verifyPurchase = async (product) => {
-  // const {
-  //   id, type, price, power, time,
-  // } = product;
-  // if (items.includes(type)) {
-  //   const [key] = await Get('items', id);
-  //   if (key) {
-  //     return price === key.price && !key.disabled;
-  //   }
-  // }
-  // if (type === 'mob') {
-  //   const [key] = await Get('mobs', id);
-  //   if (key) {
-  //     return price === key.price && !key.disabled;
-  //   }
-  // }
-  // if (type === 'effect') {
-  //   const [key] = await Get('effects', id);
-  //   if (key) {
-  //     return price === key.price && power < 10 && time <= 300 && !key.disabled;
-  //   }
-  // }
-  // return false;
+  const {
+    id, type, price, power, time,
+  } = product;
+
+  if (items.includes(type)) {
+    const item = all.find((i) => i.id === id);
+    if (item) {
+      const { price: p, disabled: d } = item;
+
+      return price === p && !d && (type === 'effect' ? power < 10 && time <= 300 : true);
+    }
+  }
+  return false;
 };
 
 const verifyPlayer = async (username) => {
-  const data = await Player.findAll({ where: { username } });
-  if (data.length === 0) {
-    return null;
-  }
-  return data[0].name;
+  const [{ name }] = await Player.findAll({ where: { username } });
+
+  return name;
 };
 
 module.exports = {
@@ -112,13 +102,13 @@ module.exports = {
           cancel_url: `https://${process.env.DOMAIN}?canceled=true`,
           metadata: commands,
         });
-        res.redirect(303, session.url);
+        res.status(200).send(session.url);
       } else {
         res.status(400).send('Invalid Cart Data');
       }
     } catch (error) {
-      const { code = 500, message = error.message } = safeJsonParse(error.message);
-      res.status(code).send(`Error: ${message}`);
+      // const { code = 500, message = error.message } = safeJsonParse(error.message);
+      res.status(500).send(`Error: ${error}`);
     }
   },
 };

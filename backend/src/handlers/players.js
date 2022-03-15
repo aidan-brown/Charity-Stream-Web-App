@@ -11,14 +11,25 @@ module.exports = {
     }
   },
   createPlayer: async (req, res) => {
-    const player = req.body;
-
     try {
-      const newPlayer = await Player.create(player);
+      const existing = await Player.findAll({ where: { username: req.body.username } });
 
-      res.send(newPlayer).status(200);
+      if (existing.length === 0) {
+        const newPlayer = await Player.create(req.body);
+
+        res.send(newPlayer).status(200);
+      } else {
+        res.send('A player with that username already exists').status(400);
+      }
     } catch (err) {
-      res.send('There was an error creating the player').status(500);
+      // They supplied something that is not correct
+      if (err.name === 'SequelizeValidationError') {
+        const [{ message }] = err.errors;
+
+        res.send(message).status(400);
+      } else {
+        res.send('An unexpected error occurred with the MySQL server').status(500);
+      }
     }
   },
 };

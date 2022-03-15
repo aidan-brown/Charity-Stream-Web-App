@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { Button, MenuItem, Select } from '@mui/material';
+import { MenuItem, Select } from '@mui/material';
+import { LoadingButton } from '@mui/lab';
 import { BACKENDURL } from '../../../App/constants';
 import CartEffect from './CartEffect';
 import CartItem from './CartItem';
 import './Cart.css';
 
 const Cart = ({
+  checkoutStatus,
   player,
   setPlayer,
   cartItems,
@@ -83,12 +85,27 @@ const Cart = ({
         </p>
       </span>
       <hr />
-      <Button className="cart-checkout bg-csh-secondary-gradient" onClick={proceedToCheckout} disabled={checkoutDisabled}>{checkoutDisabled ? 'Waiting For Game To Start' : 'Proceed To Checkout'}</Button>
+      <LoadingButton
+        loading={checkoutStatus.inProgress}
+        className="cart-checkout bg-csh-secondary-gradient"
+        onClick={proceedToCheckout}
+        disabled={checkoutDisabled}
+      >
+        {(() => {
+          if (checkoutDisabled) return 'Waiting For Game To Start';
+          if (checkoutStatus.inProgress) return checkoutStatus.message;
+          return 'Proceed To Checkout';
+        })()}
+      </LoadingButton>
     </div>
   );
 };
 
 Cart.propTypes = {
+  checkoutStatus: PropTypes.shape({
+    inProgress: PropTypes.bool.isRequired,
+    message: PropTypes.string,
+  }).isRequired,
   player: PropTypes.string.isRequired,
   setPlayer: PropTypes.func.isRequired,
   cartItems: PropTypes.oneOf([

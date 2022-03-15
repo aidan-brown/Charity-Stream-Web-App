@@ -14,7 +14,7 @@ import {
 import StoreContent from './StoreContent/StoreContent';
 import Cart from './Cart/Cart';
 import './Store.css';
-import { AWSURL, JG_FUNDRAISING_ID } from '../../App/constants';
+import { BACKENDURL } from '../../App/constants';
 
 function useForceUpdate() {
   const [value, setValue] = useState(0); // integer state
@@ -67,10 +67,13 @@ const Store = ({ selectedPlayer }) => {
   const [cartItems, setCartItems] = useState([]);
   const [player, setPlayer] = useState(selectedPlayer);
   const [showCart, setShowCart] = useState('no');
+  const [checkoutStatus, setCheckoutStatus] = useState({
+    inProgress: false,
+    message: null,
+  });
 
   const storeDiv = useRef();
   const itemAddRef = useRef();
-
   const forceUpdate = useForceUpdate();
 
   useEffect(() => {
@@ -173,44 +176,30 @@ const Store = ({ selectedPlayer }) => {
   const proceedToCheckout = () => {
     if (cartItems.length === 0 || calculateTotal() < 2) return;
 
-    let stringsObj = '';
-    cartItems.forEach((cartItem, i) => {
-      let stringIndividual;
-      switch (cartItem.type) {
-        case 'effect':
-          // id, time, power
-          stringIndividual = `effect-${player}-${cartItem.id}-${cartItem.time}-${cartItem.power}`;
-          break;
-        case 'mob':
-          // id, loop, dataTags
-          stringIndividual = `summon-${player}-${cartItem.id}-${cartItem.amount}-${cartItem.optionalDataTag}`;
-          break;
-        default:
-          // id, amount (items)
-          stringIndividual = `give-${player}-${ID_TO_INTERVAL[cartItem.id]}-${cartItem.amount}-1`;
-          break;
-      }
-
-      if (i !== cartItems.length - 1) stringIndividual += ',';
-
-      stringsObj += stringIndividual;
+    setCheckoutStatus({
+      inProgress: true,
+      message: 'Redirecting to Payment...',
     });
 
-    const JGURL = `http://link.justgiving.com/v1/fundraisingpage/donate/pageId/${
-      JG_FUNDRAISING_ID
-    }?amount=${
-      calculateTotal()
-    }&currency=USD&reference=bbcsh&message={jsonPOST}{jsonBlock:${
-      stringsObj}}`;
-
-    fetch(AWSURL, {
+    fetch(`${BACKENDURL}/checkout`, {
       method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
       body: JSON.stringify({
-        jsonBlock: stringsObj,
+        cart: cartItems,
+        username: player,
       }),
-    });
-
-    window.open(JGURL, '_blank');
+    }).then((res) => res.text())
+      .then((redirectURL) => {
+        window.open(redirectURL, '_blank');
+        setCheckoutStatus({
+          inProgress: true,
+          message: 'Waiting for Payment...',
+        });
+      }).catch((err) => {
+        console.log(err);
+      });
   };
 
   const toggleCartMenu = () => {
@@ -222,6 +211,7 @@ const Store = ({ selectedPlayer }) => {
       <button type="button" className="bg-csh-tertiary toggle-cart" onClick={toggleCartMenu} data-showcart={showCart}><span className="material-icons">{showCart === 'yes' ? 'arrow_back' : 'shopping_cart'}</span></button>
       <img className="cart-add-item" ref={itemAddRef} src="" alt="item added to cart" data-show="no" />
       <Cart
+        checkoutStatus={checkoutStatus}
         player={player}
         setPlayer={setPlayer}
         cartItems={cartItems}
