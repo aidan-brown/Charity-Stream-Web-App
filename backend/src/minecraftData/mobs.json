@@ -3,31 +3,31 @@
     "id": "bat",
     "name": "Bat",
     "description": "'Chirp Chirp' -some bat somewhere probably.",
-    "price": 0.10
+    "price": 0.20
   },
   {
     "id": "bee",
     "name": "Bee",
     "description": "Give someone a BEEutiful surprise.",
-    "price": 0.20
+    "price": 0.40
   },
   {
     "id": "blaze",
     "name": "Blaze",
     "description": "Fireball, do do do doo doo do *whoop whoop*.",
-    "price": 0.50
+    "price": 1.00
   },
   {
     "id": "cave_spider",
     "name": "Cave Spider",
     "description": "Cave spiders, really? You hate a player that much?",
-    "price": 0.25
+    "price": 1.00
   },
   {
     "id": "chicken",
     "name": "Chicken",
     "description": "Like cooked chicken but they have to put in some elbow grease.",
-    "price": 0.10
+    "price": 0.20
   },
   {
     "id": "cod",
@@ -39,73 +39,73 @@
     "id": "cow",
     "name": "Cow",
     "description": "'Moo' -Jerald the Cow",
-    "price": 0.20
+    "price": 0.40
   },
   {
     "id": "creeper",
     "name": "Creeper",
     "description": "Tssssssss *BOOM*",
-    "price": 0.50
+    "price": 3.00
   },
   {
     "id": "donkey",
     "name": "Donkey",
     "description": "Shrek's pet, idk I didn't watch the movie",
-    "price": 0.10
+    "price": 0.20
   },
   {
     "id": "enderman",
     "name": "Enderman",
     "description": "He picks things up and puts them down.",
-    "price": 0.50
+    "price": 2.00
   },
   {
     "id": "endermite",
     "name": "Endermite",
     "description": "A telleporting mini bug.",
-    "price": 0.50
+    "price": 1.00
   },
   {
     "id": "evocation_illager",
     "name": "Evoker",
     "description": "He Evoke. He protec.",
-    "price": 0.75
+    "price": 1.50
   },
   {
     "id": "ghast",
     "name": "Ghast",
     "description": "[:O]=",
-    "price": 1.00
+    "price": 3.00
   },
   {
     "id": "husk",
     "name": "Husk",
     "description": "Like corn meets a zombie",
-    "price": 0.50
+    "price": 1.00
   },
   {
     "id": "lightning_bolt",
     "name": "Lightning Bolt",
     "description": "Basically just kill someone.",
-    "price": 10.00
+    "price": 8.00
   },
   {
     "id": "llama",
     "name": "Llama",
     "description": "It'll probably just spit on people.",
-    "price": 0.75
+    "price": 1.00
   },
   {
     "id": "pig",
     "name": "Pig",
     "description": "This is some bougie pork.",
-    "price": 0.25
+    "price": 0.50
   },
   {
     "id": "polar_bear",
     "name": "Polar Bear",
     "description": "They changed the dogs in Minecraft!",
-    "price": 1.00
+    "price": 1.50
   },
   {
     "id": "skeleton",
@@ -117,7 +117,7 @@
     "id": "spider",
     "name": "Spider",
     "description": "♫ Spiderman, Spiderman, does whatever a spider can... ♫",
-    "price": 2.00
+    "price": 1.50
   },
   {
     "id": "witch",
@@ -141,6 +141,6 @@
     "id": "zombie",
     "name": "Zombie",
     "description": "...Brains...",
-    "price": 2.00
+    "price": 1.00
   }
 ]
