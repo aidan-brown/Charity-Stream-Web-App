@@ -22,6 +22,7 @@ module.exports = {
         res.send('A player with that username already exists').status(400);
       }
     } catch (err) {
+      console.log(err);
       // They supplied something that is not correct
       if (err.name === 'SequelizeValidationError') {
         const [{ message }] = err.errors;
