@@ -14,52 +14,14 @@ import {
 import StoreContent from './StoreContent/StoreContent';
 import Cart from './Cart/Cart';
 import './Store.css';
-import { AWSURL, JG_FUNDRAISING_ID } from '../../App/constants';
+import { AWSURL, BACKENDURL } from '../../App/constants';
+import { useSearchParams } from 'react-router-dom';
+import { json } from 'express';
 
 function useForceUpdate() {
   const [value, setValue] = useState(0); // integer state
   return () => setValue(value + 1); // update the state to force render
 }
-
-const ID_TO_INTERVAL = {
-  256: 'iron_shovel',
-  257: 'iron_pickaxe',
-  258: 'iron_axe',
-  262: 'arrow',
-  261: 'bow',
-  264: 'diamond',
-  265: 'iron_ingot',
-  266: 'gold_ingot',
-  267: 'iron_sword',
-  272: 'stone_sword',
-  276: 'diamond_sword',
-  277: 'diamond_shovel',
-  278: 'diamond_pickaxe',
-  279: 'diamond_axe',
-  284: 'gold_shovel',
-  285: 'gold_pickaxe',
-  286: 'gold_axe',
-  297: 'bread',
-  298: 'leather_helmet',
-  299: 'leather_chestplate',
-  300: 'leather_leggings',
-  301: 'leather_boots',
-  306: 'iron_helmet',
-  307: 'iron_chestplate',
-  308: 'iron_leggings',
-  309: 'iron_boots',
-  310: 'diamond_helmet',
-  311: 'diamond_chestplate',
-  312: 'diamond_leggings',
-  313: 'diamond_boots',
-  314: 'golden_helmet',
-  315: 'golden_chestplate',
-  316: 'golden_leggings',
-  317: 'golden_boots',
-  '322-0': 'golden_apple',
-  '322-1': 'golden_god_apple',
-  364: 'cooked_beef',
-};
 
 /** Responsible for constructing the store page component * */
 const Store = ({ selectedPlayer }) => {
@@ -67,11 +29,15 @@ const Store = ({ selectedPlayer }) => {
   const [cartItems, setCartItems] = useState([]);
   const [player, setPlayer] = useState(selectedPlayer);
   const [showCart, setShowCart] = useState('no');
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const storeDiv = useRef();
   const itemAddRef = useRef();
 
   const forceUpdate = useForceUpdate();
+
+  const donationID = searchParams.get("donationId");
+  const checkoutID = searchParams.get("checkoutId");
 
   useEffect(() => {
     storeDiv.current.style.height = `${window.screen.height * 0.8}px`;
@@ -101,6 +67,22 @@ const Store = ({ selectedPlayer }) => {
   useEffect(() => {
     localStorage.setItem('cartItems', JSON.stringify(cartItems));
   }, [cartItems]);
+  useEffect(() => {
+    if(donationID && checkoutID){
+      const reqJSON = {
+        donationID: donationID,
+        checkoutID: checkoutID,
+      }
+      fetch(`${BACKENDURL}/verify-donation`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: json.stringify(reqJSON)
+      })
+      .then(() => setSearchParams())
+    }
+  }, [donationID, checkoutID]);
 
   const removeItemFromCart = (item) => {
     const index = cartItems.indexOf(item);
@@ -173,44 +155,24 @@ const Store = ({ selectedPlayer }) => {
   const proceedToCheckout = () => {
     if (cartItems.length === 0 || calculateTotal() < 2) return;
 
-    let stringsObj = '';
-    cartItems.forEach((cartItem, i) => {
-      let stringIndividual;
-      switch (cartItem.type) {
-        case 'effect':
-          // id, time, power
-          stringIndividual = `effect-${player}-${cartItem.id}-${cartItem.time}-${cartItem.power}`;
-          break;
-        case 'mob':
-          // id, loop, dataTags
-          stringIndividual = `summon-${player}-${cartItem.id}-${cartItem.amount}-${cartItem.optionalDataTag}`;
-          break;
-        default:
-          // id, amount (items)
-          stringIndividual = `give-${player}-${ID_TO_INTERVAL[cartItem.id]}-${cartItem.amount}-1`;
-          break;
-      }
+    const reqJSON = {
+      cart: cartItems,
+      username: player,
+    }
 
-      if (i !== cartItems.length - 1) stringIndividual += ',';
-
-      stringsObj += stringIndividual;
-    });
-
-    const JGURL = `http://link.justgiving.com/v1/fundraisingpage/donate/pageId/${
-      JG_FUNDRAISING_ID
-    }?amount=${
-      calculateTotal()
-    }&currency=USD&reference=bbcsh&message={jsonPOST}{jsonBlock:${
-      stringsObj}}`;
-
-    fetch(AWSURL, {
+    fetch(`${BACKENDURL}/verify-checkout`, {
       method: 'POST',
-      body: JSON.stringify({
-        jsonBlock: stringsObj,
-      }),
-    });
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(reqJSON)
+    })
+    .then(res => res.text())
+    .then(JG_URL => {
+      window.location.replace(JG_URL);
+    })
 
-    window.open(JGURL, '_blank');
+    setCartItems([]);
   };
 
   const toggleCartMenu = () => {
