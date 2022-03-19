@@ -86,7 +86,7 @@ const Cart = ({
         </p>
       </span>
       <hr />
-      <PayPal subTotal={calculateTotal} />
+      <PayPal subTotal={calculateTotal().toFixed(2)} />
       <LoadingButton
         loading={checkoutStatus.inProgress}
         className="cart-checkout bg-csh-secondary-gradient"

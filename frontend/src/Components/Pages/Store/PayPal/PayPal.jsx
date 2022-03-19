@@ -3,28 +3,28 @@ import PropTypes from 'prop-types';
 
 const PayPal = ({ subTotal }) => {
   const [loading, setLoading] = useState(true);
-  const [appended, setAppended] = useState(false);
-
-  const appendButton = () => {
-    window.PayPal.Donation.Button({
-      env: 'production',
-      amt: subTotal,
-      // hosted_button_id: '59LH5AHNQ8XZW',
-      business: 'donations@newyork.msf.org',
-      image: {
-        src: 'https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif',
-        title: 'PayPal - The safer, easier way to pay online!',
-        alt: 'Donate with PayPal button',
-      },
-      onComplete(params) {
-        console.log('Completed transaction');
-        // Your onComplete handlerhttps://www.paypal.com/pools/c/8HTJGI0cy8
-      },
-      onCancel() {
-        console.log('Cancelled transaction');
-      },
-    }).render('#paypal-donate-button-container');
+  const options = {
+    amount: String(subTotal),
+    env: 'sandbox',
+    business: '8I5t6HDR4M',
+    // image: {
+    //   src: 'https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif',
+    //   title: 'PayPal - The safer, easier way to pay online!',
+    //   alt: 'Donate with PayPal button',
+    // },
+    no_shipping: 1,
+    onComplete: (params) => {
+      console.log(params);
+      console.log('transaction complete');
+    },
+    onCancel: (params) => {
+      console.log(params);
+      console.log('Cancelled transaction');
+    },
   };
+
+  const appendButton = () => window.PayPal.Donation.Button(options).render('#paypal-donate-button-container');
+  const removeButton = () => document.getElementById('paypal-donate-button-container').childNodes.forEach((child) => child.remove());
 
   const addPaypalSdk = () => {
     const script = document.createElement('script');
@@ -46,13 +46,20 @@ const PayPal = ({ subTotal }) => {
     addPaypalSdk();
   }, []);
 
+  useEffect(() => {
+    if (!loading) {
+      removeButton();
+      appendButton();
+    }
+  }, [options, loading]);
+
   return (
     <div id="paypal-donate-button-container" />
   );
 };
 
 PayPal.propTypes = {
-  subTotal: PropTypes.func.isRequired,
+  subTotal: PropTypes.number.isRequired,
 };
 
 export default PayPal;

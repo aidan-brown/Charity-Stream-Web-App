@@ -63,6 +63,7 @@ const ID_TO_INTERVAL = {
 
 /** Responsible for constructing the store page component * */
 const Store = ({ selectedPlayer }) => {
+  const [loading, setLoading] = useState(true);
   const [filterTag, setFilterTag] = useState('all');
   const [cartItems, setCartItems] = useState([]);
   const [player, setPlayer] = useState(selectedPlayer);
@@ -93,6 +94,7 @@ const Store = ({ selectedPlayer }) => {
     if (lsGet) {
       setCartItems(JSON.parse(lsGet));
     }
+    setLoading(false);
   }, []);
 
   useEffect(() => {
@@ -210,6 +212,7 @@ const Store = ({ selectedPlayer }) => {
     <div className="Store">
       <button type="button" className="bg-csh-tertiary toggle-cart" onClick={toggleCartMenu} data-showcart={showCart}><span className="material-icons">{showCart === 'yes' ? 'arrow_back' : 'shopping_cart'}</span></button>
       <img className="cart-add-item" ref={itemAddRef} src="" alt="item added to cart" data-show="no" />
+      {!loading && (
       <Cart
         checkoutStatus={checkoutStatus}
         player={player}
@@ -223,6 +226,7 @@ const Store = ({ selectedPlayer }) => {
         showCart={showCart}
         calculateTotal={calculateTotal}
       />
+      )}
       <div className="store-window" ref={storeDiv}>
         <nav className="store-nav bg-csh-secondary-gradient">
           <span tabIndex={0} role="button" onKeyDown={() => setFilterTag('all')} id="store-all" className="store-link" onClick={() => setFilterTag('all')}>
