@@ -6,7 +6,6 @@ import { BACKENDURL } from '../../../App/constants';
 import CartEffect from './CartEffect';
 import CartItem from './CartItem';
 import './Cart.css';
-import PayPal from '../PayPal/PayPal';
 
 const Cart = ({
   checkoutStatus,
@@ -86,7 +85,6 @@ const Cart = ({
         </p>
       </span>
       <hr />
-      <PayPal subTotal={calculateTotal().toFixed(2)} />
       <LoadingButton
         loading={checkoutStatus.inProgress}
         className="cart-checkout bg-csh-secondary-gradient"

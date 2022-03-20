@@ -9,7 +9,8 @@ const {
   getData,
   getMinecraftData,
   getPlayers,
-  hook,
+  verifyCart,
+  verifyDonation,
 } = require('./handlers');
 const { getImages } = require('./images');
 const { basicAuth } = require('./handlers/authentication');
@@ -19,7 +20,6 @@ const { createTables } = require('./sql/models');
 const app = express();
 const port = 8080;
 
-app.post('/hook', express.raw({ type: 'application/json' }), hook);
 app.use(cors());
 app.use(express.json());
 
@@ -29,6 +29,8 @@ app.get('/players', getPlayers);
 app.get('/data', getData);
 app.get('/images/:type/:image', getImages);
 app.get('/checkout/status', (_, res) => res.status(200).send(false));
+app.post('/verify-checkout', verifyCart);
+app.post('/verify-donation', verifyDonation);
 app.post('/checkout', createCheckout);
 
 // This tells node to use auth for the routes below here

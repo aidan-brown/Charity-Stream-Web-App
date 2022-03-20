@@ -2,6 +2,7 @@
   {
     "id": "arrow",
     "displayName": "10x Arrows",
+    "type": "misc",
     "description": "The basic ammo for the bow. Comes with 10 arrows!",
     "price": 0.60
   }

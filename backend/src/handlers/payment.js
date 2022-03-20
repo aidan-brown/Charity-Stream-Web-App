@@ -1,6 +1,4 @@
-const stripe = require('stripe')(process.env.STRIPE_KEY);
 const { Player } = require('../sql/models');
-const safeJsonParse = require('../utils/safeJsonParse');
 const { all } = require('../minecraftData');
 
 const romans = {

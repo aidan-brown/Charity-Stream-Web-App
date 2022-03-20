@@ -1,9 +1,9 @@
 const { dataCallback, getData } = require('./data');
 const { getCheckoutStatus, disableCheckout, disableElements } = require('./disable');
-const { hook } = require('./hook');
 const getMinecraftData = require('./minecraftData');
 const { createCheckout } = require('./payment');
 const { getPlayers, createPlayer } = require('./players');
+const { verifyCart, verifyDonation } = require('./checkout');
 
 module.exports = {
   createCheckout,
@@ -15,5 +15,6 @@ module.exports = {
   getData,
   getMinecraftData,
   getPlayers,
-  hook,
+  verifyCart,
+  verifyDonation,
 };
