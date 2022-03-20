@@ -9,6 +9,7 @@
     "@mdi/js": "5.9.55",
     "@mdi/react": "1.5.0",
     "@mui/icons-material": "5.1.1",
+    "@mui/lab": "^5.0.0-alpha.73",
     "@mui/material": "5.1.1",
     "express": "^4.17.3",
     "node-polyfill-webpack-plugin": "^1.1.4",

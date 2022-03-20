@@ -7,13 +7,14 @@ const Player = sequelize.define('Player', {
   username: {
     type: DataTypes.STRING,
     allowNull: false,
+    primaryKey: true,
   },
   name: {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  type: {
-    type: DataTypes.ENUM('csh', 'blackbaud', 'hogs', 'ehouse', 'sse', 'arthouse', 'rit'),
+  association: {
+    type: DataTypes.ENUM('csh', 'blackbaud', 'hogs', 'ehouse', 'sse', 'arthouse', 'rit', 'streamer', 'other'),
     allowNull: false,
   },
 });

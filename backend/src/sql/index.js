@@ -28,7 +28,9 @@ const getConnection = () => {
 const testConnection = async () => {
   try {
     await getConnection().authenticate();
-  } catch (_) {
+  } catch (err) {
+    // eslint-disable-next-line no-console
+    console.log('There was an error connecting to the MySQL server');
     process.exit(1);
   }
 };

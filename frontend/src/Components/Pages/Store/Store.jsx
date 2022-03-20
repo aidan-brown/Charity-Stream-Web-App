@@ -15,7 +15,7 @@ import {postReq} from '../../../Utils';
 import StoreContent from './StoreContent/StoreContent';
 import Cart from './Cart/Cart';
 import './Store.css';
-import { AWSURL, BACKENDURL } from '../../App/constants';
+import { BACKENDURL } from '../../App/constants';
 import { useSearchParams } from 'react-router-dom';
 
 function useForceUpdate() {
@@ -25,6 +25,7 @@ function useForceUpdate() {
 
 /** Responsible for constructing the store page component * */
 const Store = ({ selectedPlayer }) => {
+  const [loading, setLoading] = useState(true);
   const [filterTag, setFilterTag] = useState('all');
   const [cartItems, setCartItems] = useState([]);
   const [player, setPlayer] = useState(selectedPlayer);
@@ -33,7 +34,6 @@ const Store = ({ selectedPlayer }) => {
 
   const storeDiv = useRef();
   const itemAddRef = useRef();
-
   const forceUpdate = useForceUpdate();
 
   const donationID = searchParams.get("donationId");
@@ -56,9 +56,6 @@ const Store = ({ selectedPlayer }) => {
     if (lsGet) {
       setCartItems(JSON.parse(lsGet));
     }
-
-    console.log(donationID);
-    console.log(checkoutID);
 
     if(donationID && checkoutID){
       const reqJSON = {
@@ -178,6 +175,7 @@ const Store = ({ selectedPlayer }) => {
     <div className="Store">
       <button type="button" className="bg-csh-tertiary toggle-cart" onClick={toggleCartMenu} data-showcart={showCart}><span className="material-icons">{showCart === 'yes' ? 'arrow_back' : 'shopping_cart'}</span></button>
       <img className="cart-add-item" ref={itemAddRef} src="" alt="item added to cart" data-show="no" />
+      {!loading && (
       <Cart
         player={player}
         setPlayer={setPlayer}
@@ -190,6 +188,7 @@ const Store = ({ selectedPlayer }) => {
         showCart={showCart}
         calculateTotal={calculateTotal}
       />
+      )}
       <div className="store-window" ref={storeDiv}>
         <nav className="store-nav bg-csh-secondary-gradient">
           <span tabIndex={0} role="button" onKeyDown={() => setFilterTag('all')} id="store-all" className="store-link" onClick={() => setFilterTag('all')}>
