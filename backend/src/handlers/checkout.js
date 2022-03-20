@@ -1,6 +1,8 @@
 const axios = require('axios');
 const Rcon = require('modern-rcon');
-const { Checkout, Player, DisabledElement } = require('../sql/models');
+const {
+  Checkout, Player, DisabledElement, Command,
+} = require('../sql/models');
 const { all } = require('../minecraftData');
 
 const rcon = new Rcon(process.env.MCSERVER, 25569, process.env.MCSERVERPWRD, 5000);
@@ -52,12 +54,8 @@ module.exports = {
             if (type === 'effect') {
               cost *= (time / 30) * (power + 1);
               cmd = `effect give ${username} ${id} ${time} ${power + 1}`;
-              commands.push(cmd);
             } else if (type === 'mob') {
-              for (let j = 0; j < amount; j += 1) {
-                cmd = `execute at ${username} run summon ${id} ~ ~ ~`;
-                commands.push(cmd);
-              }
+              cmd = `execute at ${username} run summon ${id} ~ ~ ~`;
             } else {
               cmd = `give ${username} ${id}`;
               if (id === 'arrow') {
@@ -66,9 +64,12 @@ module.exports = {
               } else {
                 cmd += ` ${amount}`;
               }
-
-              commands.push(cmd);
             }
+
+            commands.push({
+              count: amount,
+              commandText: cmd,
+            });
             subTotal += cost * amount;
 
             return previousItem;
@@ -79,6 +80,8 @@ module.exports = {
         if (!cartStatus) {
           res.status(400).send('There is something wrong with your cart');
         } else {
+          await Command.bulkCreate(commands);
+
           const { id } = await Checkout.create({
             subTotal: subTotal.toFixed(2),
             status: 'PENDING',

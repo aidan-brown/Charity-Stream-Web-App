@@ -1,6 +1,7 @@
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
+const cron = require('node-cron');
 const {
   createPlayer,
   disableElements,
@@ -42,8 +43,14 @@ app.get('/', (_, res) => res.send('Success').status(200));
 
 // eslint-disable-next-line no-console
 app.listen(port, async () => {
+  // Test SQL connection, we can't run if this fails
   await testConnection();
   createTables();
-  // eslint-disable-next-line no-console
-  console.log(`Listening on port at http://localhost:${port}`);
+
+  // Schedule cron job to process rcon commands every 5 seconds
+  cron.schedule('*/5 * * * * *', () => {
+    console.log('running a task every 5 seconds');
+  });
+
+  console.log(`Listening on port ${port}`);
 });
