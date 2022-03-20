@@ -2,7 +2,6 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const {
-  createCheckout,
   createPlayer,
   disableElements,
   dataCallback,
@@ -31,7 +30,6 @@ app.get('/images/:type/:image', getImages);
 app.get('/checkout/status', (_, res) => res.status(200).send(false));
 app.post('/verify-checkout', verifyCart);
 app.post('/verify-donation', verifyDonation);
-app.post('/checkout', createCheckout);
 
 // This tells node to use auth for the routes below here
 app.use(basicAuth);
