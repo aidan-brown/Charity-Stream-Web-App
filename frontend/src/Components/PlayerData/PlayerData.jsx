@@ -10,7 +10,8 @@ import {
   HalfHeart,
   HalfHunger,
 } from './Images';
-import getUrl from '../../Utils/getUrl';
+import {BACKENDURL} from '../App/constants';
+import { getReq } from '../../Utils';
 import './PlayerData.css';
 
 const PlayerData = () => {
@@ -19,7 +20,7 @@ const PlayerData = () => {
 
   useEffect(() => {
     const getPlayers = () => {
-      fetch(`${getUrl()}/data`)
+      getReq(`${BACKENDURL}/data`)
         .then((res) => res.json())
         .then((res) => {
           setLoading(false);

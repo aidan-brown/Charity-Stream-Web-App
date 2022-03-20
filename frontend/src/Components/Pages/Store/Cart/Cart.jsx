@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Button, MenuItem, Select } from '@mui/material';
 import { BACKENDURL } from '../../../App/constants';
+import {getReq} from '../../../../Utils'
 import CartEffect from './CartEffect';
 import CartItem from './CartItem';
 import './Cart.css';
@@ -22,7 +23,7 @@ const Cart = ({
   const [checkoutDisabled, setCheckoutDisabled] = useState(false);
 
   const fetchCheckoutStatus = () => {
-    fetch(`${BACKENDURL}/checkout/status`)
+    getReq(`${BACKENDURL}/checkout/status`)
       .then((res) => res.json())
       .then((res) => {
         setCheckoutDisabled(res);
@@ -31,7 +32,7 @@ const Cart = ({
   };
 
   useEffect(() => {
-    fetch(`${BACKENDURL}/players`)
+    getReq(`${BACKENDURL}/players`)
       .then((res) => res.json())
       .then((res) => {
         setPlayerList(res);
@@ -83,7 +84,13 @@ const Cart = ({
         </p>
       </span>
       <hr />
-      <Button className="cart-checkout bg-csh-secondary-gradient" onClick={proceedToCheckout} disabled={checkoutDisabled}>{checkoutDisabled ? 'Waiting For Game To Start' : 'Proceed To Checkout'}</Button>
+      <Button className="cart-checkout bg-csh-secondary-gradient" onClick={proceedToCheckout} disabled={(checkoutDisabled || calculateTotal() < 2)}>
+        {(() => {
+          if (checkoutDisabled) return 'Waiting For Game To Start';
+          else if (calculateTotal() < 2) return 'Minimum of $2.00';
+          else return 'Proceed To Checkout';
+        })()}
+      </Button>
     </div>
   );
 };

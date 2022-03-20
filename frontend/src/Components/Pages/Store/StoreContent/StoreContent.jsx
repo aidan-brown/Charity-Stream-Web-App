@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { BACKENDURL } from '../../../App/constants';
+import {getReq} from '../../../../Utils'
 import StoreItem from './StoreItem';
 import StoreMob from './StoreMob';
 import StoreEffect from './StoreEffect';
@@ -12,19 +13,19 @@ const StoreContent = ({ filterTag, addItemToCart }) => {
   const [mobs, setMobs] = useState([]);
 
   const fetchShopItems = () => {
-    fetch(`${BACKENDURL}/minecraft/items`)
+    getReq(`${BACKENDURL}/minecraft/items`)
       .then((res) => res.json())
       .then((res) => {
         setItems(res);
       })
       .catch(() => {});
-    fetch(`${BACKENDURL}/minecraft/mobs`)
+    getReq(`${BACKENDURL}/minecraft/mobs`)
       .then((res) => res.json())
       .then((res) => {
         setMobs(res);
       })
       .catch(() => {});
-    fetch(`${BACKENDURL}/minecraft/effects`)
+    getReq(`${BACKENDURL}/minecraft/effects`)
       .then((res) => res.json())
       .then((res) => {
         setEffects(res);
