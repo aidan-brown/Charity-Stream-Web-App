@@ -11,55 +11,17 @@ import {
   mdiSwordCross,
   mdiWizardHat,
 } from '@mdi/js';
+import {postReq} from '../../../Utils';
 import StoreContent from './StoreContent/StoreContent';
 import Cart from './Cart/Cart';
 import './Store.css';
 import { BACKENDURL } from '../../App/constants';
+import { useSearchParams } from 'react-router-dom';
 
 function useForceUpdate() {
   const [value, setValue] = useState(0); // integer state
   return () => setValue(value + 1); // update the state to force render
 }
-
-const ID_TO_INTERVAL = {
-  256: 'iron_shovel',
-  257: 'iron_pickaxe',
-  258: 'iron_axe',
-  262: 'arrow',
-  261: 'bow',
-  264: 'diamond',
-  265: 'iron_ingot',
-  266: 'gold_ingot',
-  267: 'iron_sword',
-  272: 'stone_sword',
-  276: 'diamond_sword',
-  277: 'diamond_shovel',
-  278: 'diamond_pickaxe',
-  279: 'diamond_axe',
-  284: 'gold_shovel',
-  285: 'gold_pickaxe',
-  286: 'gold_axe',
-  297: 'bread',
-  298: 'leather_helmet',
-  299: 'leather_chestplate',
-  300: 'leather_leggings',
-  301: 'leather_boots',
-  306: 'iron_helmet',
-  307: 'iron_chestplate',
-  308: 'iron_leggings',
-  309: 'iron_boots',
-  310: 'diamond_helmet',
-  311: 'diamond_chestplate',
-  312: 'diamond_leggings',
-  313: 'diamond_boots',
-  314: 'golden_helmet',
-  315: 'golden_chestplate',
-  316: 'golden_leggings',
-  317: 'golden_boots',
-  '322-0': 'golden_apple',
-  '322-1': 'golden_god_apple',
-  364: 'cooked_beef',
-};
 
 /** Responsible for constructing the store page component * */
 const Store = ({ selectedPlayer }) => {
@@ -68,14 +30,14 @@ const Store = ({ selectedPlayer }) => {
   const [cartItems, setCartItems] = useState([]);
   const [player, setPlayer] = useState(selectedPlayer);
   const [showCart, setShowCart] = useState('no');
-  const [checkoutStatus, setCheckoutStatus] = useState({
-    inProgress: false,
-    message: null,
-  });
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const storeDiv = useRef();
   const itemAddRef = useRef();
   const forceUpdate = useForceUpdate();
+
+  const donationID = searchParams.get("donationId");
+  const checkoutID = searchParams.get("checkoutId");
 
   useEffect(() => {
     storeDiv.current.style.height = `${window.screen.height * 0.8}px`;
@@ -94,7 +56,21 @@ const Store = ({ selectedPlayer }) => {
     if (lsGet) {
       setCartItems(JSON.parse(lsGet));
     }
-    setLoading(false);
+
+    if(donationID && checkoutID){
+      const reqJSON = {
+        donationID: donationID,
+        checkoutID: checkoutID,
+      }
+      fetch(`${BACKENDURL}/verify-donation`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(reqJSON)
+      })
+      .then(() => setSearchParams())
+    }
   }, []);
 
   useEffect(() => {
@@ -106,7 +82,7 @@ const Store = ({ selectedPlayer }) => {
   useEffect(() => {
     localStorage.setItem('cartItems', JSON.stringify(cartItems));
   }, [cartItems]);
-
+  
   const removeItemFromCart = (item) => {
     const index = cartItems.indexOf(item);
     if (index < cartItems.length) {
@@ -178,30 +154,17 @@ const Store = ({ selectedPlayer }) => {
   const proceedToCheckout = () => {
     if (cartItems.length === 0 || calculateTotal() < 2) return;
 
-    setCheckoutStatus({
-      inProgress: true,
-      message: 'Redirecting to Payment...',
-    });
+    const reqJSON = {
+      cart: cartItems,
+      username: player,
+    }
 
-    fetch(`${BACKENDURL}/checkout`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        cart: cartItems,
-        username: player,
-      }),
-    }).then((res) => res.text())
-      .then((redirectURL) => {
-        window.open(redirectURL, '_blank');
-        setCheckoutStatus({
-          inProgress: true,
-          message: 'Waiting for Payment...',
-        });
-      }).catch((err) => {
-        console.log(err);
-      });
+    postReq(`${BACKENDURL}/verify-checkout`, JSON.stringify(reqJSON))
+    .then(res => res.text())
+    .then(JG_URL => {
+      setCartItems([]);
+      window.location.replace(JG_URL);
+    });
   };
 
   const toggleCartMenu = () => {
@@ -214,7 +177,6 @@ const Store = ({ selectedPlayer }) => {
       <img className="cart-add-item" ref={itemAddRef} src="" alt="item added to cart" data-show="no" />
       {!loading && (
       <Cart
-        checkoutStatus={checkoutStatus}
         player={player}
         setPlayer={setPlayer}
         cartItems={cartItems}
