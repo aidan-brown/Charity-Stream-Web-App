@@ -11,12 +11,12 @@ import {
   mdiSwordCross,
   mdiWizardHat,
 } from '@mdi/js';
+import {postReq} from '../../../Utils';
 import StoreContent from './StoreContent/StoreContent';
 import Cart from './Cart/Cart';
 import './Store.css';
 import { AWSURL, BACKENDURL } from '../../App/constants';
 import { useSearchParams } from 'react-router-dom';
-import { json } from 'express';
 
 function useForceUpdate() {
   const [value, setValue] = useState(0); // integer state
@@ -56,6 +56,24 @@ const Store = ({ selectedPlayer }) => {
     if (lsGet) {
       setCartItems(JSON.parse(lsGet));
     }
+
+    console.log(donationID);
+    console.log(checkoutID);
+
+    if(donationID && checkoutID){
+      const reqJSON = {
+        donationID: donationID,
+        checkoutID: checkoutID,
+      }
+      fetch(`${BACKENDURL}/verify-donation`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(reqJSON)
+      })
+      .then(() => setSearchParams())
+    }
   }, []);
 
   useEffect(() => {
@@ -67,23 +85,7 @@ const Store = ({ selectedPlayer }) => {
   useEffect(() => {
     localStorage.setItem('cartItems', JSON.stringify(cartItems));
   }, [cartItems]);
-  useEffect(() => {
-    if(donationID && checkoutID){
-      const reqJSON = {
-        donationID: donationID,
-        checkoutID: checkoutID,
-      }
-      fetch(`${BACKENDURL}/verify-donation`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: json.stringify(reqJSON)
-      })
-      .then(() => setSearchParams())
-    }
-  }, [donationID, checkoutID]);
-
+  
   const removeItemFromCart = (item) => {
     const index = cartItems.indexOf(item);
     if (index < cartItems.length) {
@@ -160,19 +162,12 @@ const Store = ({ selectedPlayer }) => {
       username: player,
     }
 
-    fetch(`${BACKENDURL}/verify-checkout`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(reqJSON)
-    })
+    postReq(`${BACKENDURL}/verify-checkout`, JSON.stringify(reqJSON))
     .then(res => res.text())
     .then(JG_URL => {
+      setCartItems([]);
       window.location.replace(JG_URL);
-    })
-
-    setCartItems([]);
+    });
   };
 
   const toggleCartMenu = () => {
