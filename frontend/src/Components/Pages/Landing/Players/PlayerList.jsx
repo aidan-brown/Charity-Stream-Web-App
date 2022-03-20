@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import './PlayerList.css';
 import { BACKENDURL } from '../../../App/constants';
-import {getReq} from '../../../../Utils'
+import { getReq } from '../../../../Utils';
 
 import cshLogo from '../../../../images/csh.svg';
 import blackbaudLogo from '../../../../images/blackbaud.svg';
