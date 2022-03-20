@@ -11,12 +11,12 @@ import {
   mdiSwordCross,
   mdiWizardHat,
 } from '@mdi/js';
-import {postReq} from '../../../Utils';
+import { useSearchParams } from 'react-router-dom';
+import { postReq } from '../../../Utils';
 import StoreContent from './StoreContent/StoreContent';
 import Cart from './Cart/Cart';
 import './Store.css';
 import { BACKENDURL } from '../../App/constants';
-import { useSearchParams } from 'react-router-dom';
 
 function useForceUpdate() {
   const [value, setValue] = useState(0); // integer state
@@ -25,7 +25,6 @@ function useForceUpdate() {
 
 /** Responsible for constructing the store page component * */
 const Store = ({ selectedPlayer }) => {
-  const [loading, setLoading] = useState(true);
   const [filterTag, setFilterTag] = useState('all');
   const [cartItems, setCartItems] = useState([]);
   const [player, setPlayer] = useState(selectedPlayer);
@@ -36,8 +35,8 @@ const Store = ({ selectedPlayer }) => {
   const itemAddRef = useRef();
   const forceUpdate = useForceUpdate();
 
-  const donationID = searchParams.get("donationId");
-  const checkoutID = searchParams.get("checkoutId");
+  const donationID = searchParams.get('donationId');
+  const checkoutID = searchParams.get('checkoutId');
 
   useEffect(() => {
     storeDiv.current.style.height = `${window.screen.height * 0.8}px`;
@@ -57,19 +56,19 @@ const Store = ({ selectedPlayer }) => {
       setCartItems(JSON.parse(lsGet));
     }
 
-    if(donationID && checkoutID){
+    if (donationID && checkoutID) {
       const reqJSON = {
-        donationID: donationID,
-        checkoutID: checkoutID,
-      }
+        donationID,
+        checkoutID,
+      };
       fetch(`${BACKENDURL}/verify-donation`, {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
         },
-        body: JSON.stringify(reqJSON)
+        body: JSON.stringify(reqJSON),
       })
-      .then(() => setSearchParams())
+        .then(() => setSearchParams());
     }
   }, []);
 
@@ -82,7 +81,7 @@ const Store = ({ selectedPlayer }) => {
   useEffect(() => {
     localStorage.setItem('cartItems', JSON.stringify(cartItems));
   }, [cartItems]);
-  
+
   const removeItemFromCart = (item) => {
     const index = cartItems.indexOf(item);
     if (index < cartItems.length) {
@@ -157,14 +156,14 @@ const Store = ({ selectedPlayer }) => {
     const reqJSON = {
       cart: cartItems,
       username: player,
-    }
+    };
 
     postReq(`${BACKENDURL}/verify-checkout`, JSON.stringify(reqJSON))
-    .then(res => res.text())
-    .then(JG_URL => {
-      setCartItems([]);
-      window.location.replace(JG_URL);
-    });
+      .then((res) => res.text())
+      .then((JG_URL) => {
+        setCartItems([]);
+        window.location.replace(JG_URL);
+      });
   };
 
   const toggleCartMenu = () => {
@@ -175,7 +174,6 @@ const Store = ({ selectedPlayer }) => {
     <div className="Store">
       <button type="button" className="bg-csh-tertiary toggle-cart" onClick={toggleCartMenu} data-showcart={showCart}><span className="material-icons">{showCart === 'yes' ? 'arrow_back' : 'shopping_cart'}</span></button>
       <img className="cart-add-item" ref={itemAddRef} src="" alt="item added to cart" data-show="no" />
-      {!loading && (
       <Cart
         player={player}
         setPlayer={setPlayer}
@@ -188,7 +186,6 @@ const Store = ({ selectedPlayer }) => {
         showCart={showCart}
         calculateTotal={calculateTotal}
       />
-      )}
       <div className="store-window" ref={storeDiv}>
         <nav className="store-nav bg-csh-secondary-gradient">
           <span tabIndex={0} role="button" onKeyDown={() => setFilterTag('all')} id="store-all" className="store-link" onClick={() => setFilterTag('all')}>

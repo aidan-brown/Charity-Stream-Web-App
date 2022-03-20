@@ -1,7 +1,7 @@
-import {postReq, getReq, putReq} from './fetchRequests';
+import { postReq, getReq, putReq } from './fetchRequests';
 
 export {
-    postReq,
-    getReq,
-    putReq,
+  postReq,
+  getReq,
+  putReq,
 };

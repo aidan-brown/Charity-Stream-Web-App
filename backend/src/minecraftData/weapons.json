@@ -4,7 +4,7 @@
     "displayName": "Wooden Sword",
     "type": "weapon",
     "description": "This is better off being used as fuel in a furnace. You should give this one to your least favorite player!",
-    "price": 0.10,
+    "price": 0.20,
     "damage": 4,
     "durability": 59
   },
@@ -13,7 +13,7 @@
     "displayName": "Stone Sword",
     "type": "weapon",
     "description": "The basic usable weapon for combat. Help your favorite player triumph in battle!",
-    "price": 0.30,
+    "price": 0.50,
     "damage": 5,
     "durability": 131
   },
@@ -22,7 +22,7 @@
     "displayName": "Iron Sword",
     "type": "weapon",
     "description": "An upgraded sword for combat. Help your favorite player triumph in battle!",
-    "price": 0.50,
+    "price": 1.00,
     "damage": 6,
     "durability": 250
   },
@@ -31,7 +31,7 @@
     "displayName": "Diamond Sword",
     "type": "weapon",
     "description": "One of the best swords for combat. Help your favorite player triumph in battle with style!",
-    "price": 2.00,
+    "price": 4.00,
     "damage": 7,
     "durability": 1561
   },
@@ -40,7 +40,7 @@
     "displayName": "Netherite Sword",
     "type": "weapon",
     "description": "This is the best of the best, they'll do lots of damage with this one. Help your favorite player triumph in battle with style!",
-    "price": 3.00,
+    "price": 5.00,
     "damage": 8,
     "durability": 2031
   },
@@ -49,7 +49,7 @@
     "id": "bow",
     "type": "weapon",
     "description": "Minecraft's signature ranged weapon. Can take out foes at a distance! (comes with 20 arrows)",
-    "price": 1.50,
+    "price": 2.50,
     "damage": 4,
     "durability": 384
   },
@@ -58,7 +58,7 @@
     "displayName": "Crossbow",
     "type": "weapon",
     "description": "Minecraft's *NEW* signature ranged weapon. Can take out foes at a distance! (comes with 20 arrows)",
-    "price": 2.00,
+    "price": 4.00,
     "damage": 9,
     "maxDurability": 465
   }

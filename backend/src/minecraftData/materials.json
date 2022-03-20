@@ -4,20 +4,27 @@
     "displayName": "Iron Ingot",
     "type": "material",
     "description": "An ingot full of potential. Can be used to craft iron armor, weapons, and tools.",
-    "price": 0.25
+    "price": 0.50
   },
   {
     "id": "gold_ingot",
     "displayName": "Gold Ingot",
     "type": "material",
     "description": "An ingot full of potential. Can be used to craft gold armor, weapons, and tools.",
-    "price": 0.20
+    "price": 0.40
   },
   {
     "id": "diamond",
     "displayName": "Diamond",
     "type": "material",
     "description": "A shiny gem. Can be used to craft powerful diamond armor, weapons, and tools.",
-    "price": 1.00   
+    "price": 2.00   
+  },
+  {
+    "id": "netherite_ingot",
+    "displayName": "Netherite Ingot",
+    "type": "material",
+    "description": "The only metal stronger than diamonds. Can be used to craft powerful netherite armor, weapons, and tools.",
+    "price": 2.50
   }
 ]

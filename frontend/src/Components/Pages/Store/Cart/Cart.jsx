@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { MenuItem, Select } from '@mui/material';
+import { MenuItem, Select, Button } from '@mui/material';
 import { BACKENDURL } from '../../../App/constants';
-import {getReq} from '../../../../Utils'
+import { getReq } from '../../../../Utils';
 import CartEffect from './CartEffect';
 import CartItem from './CartItem';
 import './Cart.css';
@@ -87,8 +87,8 @@ const Cart = ({
       <Button className="cart-checkout bg-csh-secondary-gradient" onClick={proceedToCheckout} disabled={(checkoutDisabled || calculateTotal() < 2)}>
         {(() => {
           if (checkoutDisabled) return 'Waiting For Game To Start';
-          else if (calculateTotal() < 2) return 'Minimum of $2.00';
-          else return 'Proceed To Checkout';
+          if (calculateTotal() < 2) return 'Minimum of $2.00';
+          return 'Proceed To Checkout';
         })()}
       </Button>
     </div>
