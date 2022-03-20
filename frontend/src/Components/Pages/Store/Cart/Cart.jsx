@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { MenuItem, Select } from '@mui/material';
-import { LoadingButton } from '@mui/lab';
 import { BACKENDURL } from '../../../App/constants';
+import {getReq} from '../../../../Utils'
 import CartEffect from './CartEffect';
 import CartItem from './CartItem';
 import './Cart.css';
 
 const Cart = ({
-  checkoutStatus,
   player,
   setPlayer,
   cartItems,
@@ -24,7 +23,7 @@ const Cart = ({
   const [checkoutDisabled, setCheckoutDisabled] = useState(false);
 
   const fetchCheckoutStatus = () => {
-    fetch(`${BACKENDURL}/checkout/status`)
+    getReq(`${BACKENDURL}/checkout/status`)
       .then((res) => res.json())
       .then((res) => {
         setCheckoutDisabled(res);
@@ -33,7 +32,7 @@ const Cart = ({
   };
 
   useEffect(() => {
-    fetch(`${BACKENDURL}/players`)
+    getReq(`${BACKENDURL}/players`)
       .then((res) => res.json())
       .then((res) => {
         setPlayerList(res);
@@ -85,27 +84,18 @@ const Cart = ({
         </p>
       </span>
       <hr />
-      <LoadingButton
-        loading={checkoutStatus.inProgress}
-        className="cart-checkout bg-csh-secondary-gradient"
-        onClick={proceedToCheckout}
-        disabled={checkoutDisabled}
-      >
+      <Button className="cart-checkout bg-csh-secondary-gradient" onClick={proceedToCheckout} disabled={(checkoutDisabled || calculateTotal() < 2)}>
         {(() => {
           if (checkoutDisabled) return 'Waiting For Game To Start';
-          if (checkoutStatus.inProgress) return checkoutStatus.message;
-          return 'Proceed To Checkout';
+          else if (calculateTotal() < 2) return 'Minimum of $2.00';
+          else return 'Proceed To Checkout';
         })()}
-      </LoadingButton>
+      </Button>
     </div>
   );
 };
 
 Cart.propTypes = {
-  checkoutStatus: PropTypes.shape({
-    inProgress: PropTypes.bool.isRequired,
-    message: PropTypes.string,
-  }).isRequired,
   player: PropTypes.string.isRequired,
   setPlayer: PropTypes.func.isRequired,
   cartItems: PropTypes.oneOf([
