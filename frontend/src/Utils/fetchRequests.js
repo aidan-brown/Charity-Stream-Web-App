@@ -1,30 +1,24 @@
-const postReq = (url, body={}) => {
-    return fetch(url,{
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: body
-    });
-}
+const postReq = (url, body = {}) => fetch(url, {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+  },
+  body,
+});
 
-const putReq = (url, body={}) => {
-    return fetch(url,{
-        method: 'PUT',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: body
-    });
-}
+const putReq = (url, body = {}) => fetch(url, {
+  method: 'PUT',
+  headers: {
+    'Content-Type': 'application/json',
+  },
+  body,
+});
 
-const getReq = (url) => {
-    return fetch(url,{
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json'
-        }
-    });
-}
+const getReq = (url) => fetch(url, {
+  method: 'GET',
+  headers: {
+    'Content-Type': 'application/json',
+  },
+});
 
-export {postReq, getReq, putReq};
+export { postReq, getReq, putReq };

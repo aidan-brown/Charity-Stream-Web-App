@@ -45,17 +45,15 @@ const Landing = ({ setSelectedPlayer }) => {
           CSH&apos;s annual Minecraft Charity Stream is a large-scale competition
           between players in a series of minigames, with all donations
           and money earned during the stream going to charity.
-          <br />
-          {' '}
+        </p>
+        <p>
           The competition comes with a twist: viewer donations can provide
           items, cause mob spawns, or apply potion effects to drastically
           change the course of the game!
-          <br />
-          {' '}
+        </p>
+        <p>
           Check out the stream above or on our
-          {' '}
-          <a href="https://www.twitch.tv/cshba">Twitch</a>
-          {' '}
+          <a href="https://www.twitch.tv/cshba"> Twitch </a>
           and if you&apos;d like to donate, head to our store above to influence the tournament.
         </p>
       </div>

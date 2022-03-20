@@ -10,7 +10,7 @@ import {
   HalfHeart,
   HalfHunger,
 } from './Images';
-import {BACKENDURL} from '../App/constants';
+import { BACKENDURL } from '../App/constants';
 import { getReq } from '../../Utils';
 import './PlayerData.css';
 
