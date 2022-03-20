@@ -4,35 +4,35 @@
     "displayName": "Bat",
     "type": "mob",
     "description": "'Chirp Chirp' -some bat somewhere probably.",
-    "price": 0.10
+    "price": 0.20
   },
   {
     "id": "bee",
     "displayName": "Bee",
     "type": "mob",
     "description": "Give someone a BEEutiful surprise.",
-    "price": 0.20
+    "price": 0.40
   },
   {
     "id": "blaze",
     "displayName": "Blaze",
     "type": "mob",
     "description": "Fireball, do do do doo doo do *whoop whoop*.",
-    "price": 0.50
+    "price": 1.00
   },
   {
     "id": "cave_spider",
     "displayName": "Cave Spider",
     "type": "mob",
     "description": "Cave spiders, really? You hate a player that much?",
-    "price": 0.25
+    "price": 1.00
   },
   {
     "id": "chicken",
     "displayName": "Chicken",
     "type": "mob",
     "description": "Like cooked chicken but they have to put in some elbow grease.",
-    "price": 0.10
+    "price": 0.20
   },
   {
     "id": "cod",
@@ -46,84 +46,84 @@
     "displayName": "Cow",
     "type": "mob",
     "description": "'Moo' -Jerald the Cow",
-    "price": 0.20
+    "price": 0.40
   },
   {
     "id": "creeper",
     "displayName": "Creeper",
     "type": "mob",
     "description": "Tssssssss *BOOM*",
-    "price": 0.50
+    "price": 3.00
   },
   {
     "id": "donkey",
     "displayName": "Donkey",
     "type": "mob",
     "description": "Shrek's pet, idk I didn't watch the movie",
-    "price": 0.10
+    "price": 0.20
   },
   {
     "id": "enderman",
     "displayName": "Enderman",
     "type": "mob",
     "description": "He picks things up and puts them down.",
-    "price": 0.50
+    "price": 2.00
   },
   {
     "id": "endermite",
     "displayName": "Endermite",
     "type": "mob",
     "description": "A telleporting mini bug.",
-    "price": 0.50
+    "price": 1.00
   },
   {
     "id": "evocation_illager",
     "displayName": "Evoker",
     "type": "mob",
     "description": "He Evoke. He protec.",
-    "price": 0.75
+    "price": 1.50
   },
   {
     "id": "ghast",
     "displayName": "Ghast",
     "type": "mob",
     "description": "[:O]=",
-    "price": 1.00
+    "price": 3.00
   },
   {
     "id": "husk",
     "displayName": "Husk",
     "type": "mob",
     "description": "Like corn meets a zombie",
-    "price": 0.50
+    "price": 1.00
   },
   {
     "id": "lightning_bolt",
     "displayName": "Lightning Bolt",
     "type": "mob",
     "description": "Basically just kill someone.",
-    "price": 10.00
+    "price": 8.00
   },
   {
     "id": "llama",
     "displayName": "Llama",
     "type": "mob",
     "description": "It'll probably just spit on people.",
-    "price": 0.75
+    "price": 1.00
   },
   {
     "id": "pig",
     "displayName": "Pig",
     "type": "mob",
     "description": "This is some bougie pork.",
-    "price": 0.25
+    "price": 0.50
   },
   {
     "id": "polar_bear",
     "displayName": "Polar Bear",
     "type": "mob",
     "description": "They changed the dogs in Minecraft!",
-    "price": 1.00
+    "price": 1.50
   },
   {
     "id": "skeleton",
@@ -137,7 +137,7 @@
     "displayName": "Spider",
     "type": "mob",
     "description": "♫ Spiderman, Spiderman, does whatever a spider can... ♫",
-    "price": 2.00
+    "price": 1.50
   },
   {
     "id": "witch",
@@ -165,6 +165,6 @@
     "displayName": "Zombie",
     "type": "mob",
     "description": "...Brains...",
-    "price": 2.00
+    "price": 1.00
   }
 ]
