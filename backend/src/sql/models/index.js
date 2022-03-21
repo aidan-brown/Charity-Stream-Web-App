@@ -4,7 +4,7 @@ const Checkout = require('./checkout');
 const Command = require('./command');
 
 const createTables = async () => {
-  const force = true;
+  const force = process.env.NODE_ENV !== 'production';
 
   await Player.sync({ force });
   await DisabledElement.sync({ force });

@@ -9,20 +9,16 @@ const Command = sequelize.define('Command', {
     autoIncrement: true,
     primaryKey: true,
   },
-  count: {
-    type: DataTypes.INTEGER,
-    allowNull: false,
+  cronId: {
+    type: DataTypes.STRING,
+    allowNull: true,
   },
   commandText: {
     type: DataTypes.TEXT,
     allowNull: false,
   },
-  hasRun: {
-    type: DataTypes.BOOLEAN,
-    defaultValue: false,
-  },
   status: {
-    type: DataTypes.ENUM('WAITING', 'READY'),
+    type: DataTypes.ENUM('WAITING', 'READY', 'RUNNING', 'FINISHED'),
     defaultValue: 'WAITING',
   },
 });

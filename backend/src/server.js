@@ -51,5 +51,6 @@ app.listen(port, async () => {
   // Schedule cron job to process rcon commands every 5 seconds
   cron.schedule(`*/${process.env.CRON_TIME || 2} * * * * *`, rcon);
 
+  // eslint-disable-next-line no-console
   console.log(`Listening on port ${port}`);
 });

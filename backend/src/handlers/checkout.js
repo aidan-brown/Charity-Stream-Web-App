@@ -51,23 +51,37 @@ module.exports = {
             let cmd;
             if (type === 'effect') {
               cost *= (time / 30) * (power + 1);
-              cmd = `effect give ${username} ${id} ${time} ${power + 1}`;
+              commands.push({
+                commandText: `effect give ${username} ${id} ${time} ${power + 1}`,
+              });
             } else if (type === 'mob') {
-              cmd = `execute at ${username} run summon ${id} ~ ~ ~`;
+              const totalGroups = Math.ceil(amount / 10);
+              const leftOver = amount % 10;
+
+              [...Array(totalGroups)].forEach((_, i) => {
+                let num = 10;
+                if (i === totalGroups - 1 && leftOver !== 0) num = leftOver;
+
+                commands.push({
+                  commandText: `execute at ${
+                    username
+                  } run summon minecraft:area_effect_cloud ~ ~ ~ {Passengers:[${
+                    [...Array(num)].map(() => `{id:${id}}`).join(',')
+                  }]}`,
+                });
+              });
             } else {
               cmd = `give ${username} ${id}`;
               if (id === 'arrow') {
                 const totalArrows = amount * 10;
                 cmd += ` ${totalArrows}`;
-              } else {
-                cmd += ` ${amount}`;
-              }
+              } else cmd += ` ${amount}`;
+
+              commands.push({
+                commandText: cmd,
+              });
             }
 
-            commands.push({
-              count: type === 'mob' ? amount : 1,
-              commandText: cmd,
-            });
             subTotal += cost * amount;
 
             return previousItem;
@@ -92,8 +106,7 @@ module.exports = {
           res.status(200).send(redirectUrl);
         }
       }
-    } catch (err) {
-      console.log(err);
+    } catch (_) {
       res.status(500).send('Failed to create checkout');
     }
   },
@@ -136,8 +149,7 @@ module.exports = {
           res.status(400).send('Commands have already been scheduled');
         }
       }
-    } catch (error) {
-      console.log(error);
+    } catch (_) {
       res.status(500).send('Something on our end went wrong');
     }
   },
