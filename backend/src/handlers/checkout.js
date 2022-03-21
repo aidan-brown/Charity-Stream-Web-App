@@ -1,11 +1,9 @@
 const axios = require('axios');
-const Rcon = require('modern-rcon');
 const {
   Checkout, Player, DisabledElement, Command,
 } = require('../sql/models');
 const { all } = require('../minecraftData');
 
-const rcon = new Rcon(process.env.MCSERVER, 25569, process.env.MCSERVERPWRD, 5000);
 const types = ['armor', 'tool', 'weapon', 'food', 'material', 'mob', 'effect'];
 
 const verifyPlayer = async (username) => {
@@ -67,7 +65,7 @@ module.exports = {
             }
 
             commands.push({
-              count: amount,
+              count: type === 'mob' ? amount : 1,
               commandText: cmd,
             });
             subTotal += cost * amount;
@@ -80,21 +78,22 @@ module.exports = {
         if (!cartStatus) {
           res.status(400).send('There is something wrong with your cart');
         } else {
-          await Command.bulkCreate(commands);
-
-          const { id } = await Checkout.create({
+          const checkout = await Checkout.create({
             subTotal: subTotal.toFixed(2),
             status: 'PENDING',
-            command: commands.join('<&@&>'),
+            Commands: commands,
+          }, {
+            include: [Command],
           });
 
-          const exitUrl = `${process.NODE_ENV !== 'production' ? 'http%3A%2F%2Flocalhost%3A3000' : 'https%3A%2Fminecraftstream.csh.rit.edu'}%2Fstore%3FcheckoutId=${id}`;
+          const exitUrl = `${process.NODE_ENV !== 'production' ? 'http%3A%2F%2Flocalhost%3A3000' : 'https%3A%2Fminecraftstream.csh.rit.edu'}%2Fstore%3FcheckoutId=${checkout.id}`;
           const redirectUrl = `http://link.justgiving.com/v1/fundraisingpage/donate/pageId/15252893?amount=${subTotal.toFixed(2)}&currency=USD&reference=mcstream&exitUrl=${exitUrl}%26donationId%3DJUSTGIVING-DONATION-ID`;
 
           res.status(200).send(redirectUrl);
         }
       }
-    } catch (_) {
+    } catch (err) {
+      console.log(err);
       res.status(500).send('Failed to create checkout');
     }
   },
@@ -114,23 +113,22 @@ module.exports = {
           },
         });
 
-        const { subTotal, command, status } = checkout;
+        const { subTotal, status } = checkout;
         const { donorLocalAmount } = data;
 
         if (status === 'PENDING') {
           if (subTotal <= Number(donorLocalAmount).toFixed(2)) {
             checkout.donationID = donationID;
             checkout.status = 'ACCEPTED';
+
+            await Command.update({ status: 'READY' }, {
+              where: {
+                CheckoutId: checkout.id,
+              },
+            });
             await checkout.save();
 
-            await rcon.connect();
-            const commands = command.split('<&@&>');
-            for (let i = 0; i < commands.length; i++) {
-              await rcon.send(commands[i]);
-            }
-            await rcon.disconnect();
-
-            res.status(200).send('Running commands, success!');
+            res.status(200).send('Commands marked as READY!');
           } else {
             res.status(400).send('Donation amounts did not line up, not running commands');
           }
@@ -139,6 +137,7 @@ module.exports = {
         }
       }
     } catch (error) {
+      console.log(error);
       res.status(500).send('Something on our end went wrong');
     }
   },

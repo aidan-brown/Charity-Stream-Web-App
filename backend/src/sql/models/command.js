@@ -21,7 +21,7 @@ const Command = sequelize.define('Command', {
     type: DataTypes.BOOLEAN,
     defaultValue: false,
   },
-  shouldRun: {
+  status: {
     type: DataTypes.ENUM('WAITING', 'READY'),
     defaultValue: 'WAITING',
   },

@@ -16,6 +16,7 @@ const { getImages } = require('./images');
 const { basicAuth } = require('./handlers/authentication');
 const { testConnection } = require('./sql');
 const { createTables } = require('./sql/models');
+const rcon = require('./utils/rcon');
 
 const app = express();
 const port = 8080;
@@ -48,9 +49,7 @@ app.listen(port, async () => {
   createTables();
 
   // Schedule cron job to process rcon commands every 5 seconds
-  cron.schedule('*/5 * * * * *', () => {
-    console.log('running a task every 5 seconds');
-  });
+  cron.schedule(`*/${process.env.CRON_TIME || 2} * * * * *`, rcon);
 
   console.log(`Listening on port ${port}`);
 });
