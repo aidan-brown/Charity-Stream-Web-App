@@ -32,15 +32,14 @@ module.exports = async (scheduled) => {
       password: process.env.MCSERVERPWRD,
     });
 
+    // Mark commands as running
+    await Command.update({ status: 'RUNNING' }, { where: { cronId } });
+
     // Now we want to loop through all the commands
     // and run them as many times as
     /* eslint-disable no-await-in-loop */
     for (let i = 0; i < commands.length; i += 1) {
       const { commandText, id } = commands[i];
-
-      // Make sure this command will not be run again (this
-      // iteration of the cron will handle it)
-      await Command.update({ status: 'RUNNING' }, { where: { id } });
 
       // Run the command against the server
       await rcon.send(commandText);
@@ -58,6 +57,7 @@ module.exports = async (scheduled) => {
       await Command.update({ cronId: null, status: 'READY' }, {
         where: {
           cronId,
+          status: 'RUNNING',
         },
       });
     } catch (err) {
