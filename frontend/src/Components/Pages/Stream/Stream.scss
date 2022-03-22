@@ -8,7 +8,7 @@
 
 /* The div tag that holds the stream window and the player list */
 .stream-player {
-    width: 1200px;
+    width: 85%;
     height: 680px;
     position: relative;
     display: flex;
@@ -167,34 +167,35 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: center;
+    justify-content: space-evenly;
     margin: 3rem 1rem;
 
     /* An item in the stream-row */
     .stream-row-item {
         overflow: hidden;
         margin: 0 1rem;
-        max-width: 650px;
-        min-height: 350px;
+        width: 45vw;
+        aspect-ratio: 2/1;
         box-shadow: .45rem .45rem .25rem rgba(0, 0, 0, 0.25);
         border-radius: .5rem;
     }
 
     #dynmap-frame {
         border: none;
-        width: 100%;
-        height: 100%;
     }
 
     #flavor-text {
-        padding: 2rem;
+        padding: 2vw;
         color: white;
         text-align: left;
         font-weight: 300;
+        font-size: 1.1vw;
 
         h2 {
             text-decoration: underline;
             text-decoration-thickness: 1px;
+            font-size: 2vw;
+            font-weight: 300;
         }
 
         a {
@@ -237,50 +238,50 @@
                 width: 100%;
             }
         }
-    }
 
-    .stream-list {
-        border-radius: 0;
-    }
+        .stream-list {
+            border-radius: 0;
+        }
 
-    .stream-list.show {
-        transition: all 500ms;
-        height: 20rem;
-        width: 100%;
-        padding: 0 .5rem 0 1rem;
-    }
+        .stream-list.show {
+            transition: all 500ms;
+            height: 20rem;
+            width: 100%;
+            padding: 0 .5rem 0 1rem;
+        }
 
-    .stream-list.hide {
-        transition: all 500ms;
-        height: 0;
-        width: 100%;
-        padding: 0;
-    }
+        .stream-list.hide {
+            transition: all 500ms;
+            height: 0;
+            width: 100%;
+            padding: 0;
+        }
 
-    .stream-button {
-        height: 3rem;
-        width: 3rem;
-        position: absolute;
-        top: auto;
-        bottom: 0;
-        left: 0;
-        padding: 0;
-        border-radius: 0;
-        background: rgb(199, 24, 71);
-        opacity: 1;
-        transition: all 500ms;
-    }
+        .stream-button {
+            height: 3rem;
+            width: 3rem;
+            position: absolute;
+            top: auto;
+            bottom: 0;
+            left: 0;
+            padding: 0;
+            border-radius: 0;
+            background: rgb(199, 24, 71);
+            opacity: 1;
+            transition: all 500ms;
+        }
 
-    #chat-button {
-        top: auto;
-        left: 3rem;
-    }
+        #chat-button {
+            top: auto;
+            left: 3rem;
+        }
 
-    #player-button {
-        top: auto;
-        left: 6rem;
-        border-radius: 0;
-        border-top-right-radius: .5rem;
+        #player-button {
+            top: auto;
+            left: 6rem;
+            border-radius: 0;
+            border-top-right-radius: .5rem;
+        }
     }
 
     /* The div tag of a row on the stream page */
@@ -291,17 +292,47 @@
         justify-content: flex-start;
         margin: 1rem 0;
         height: fit-content;
-    }
 
-    /* An item in the stream-row */
-    .stream-row-item {
-        max-width: 100%;
-        box-shadow: .25rem .45rem .25rem rgba(0, 0, 0, 0.25);
-        border-radius: 0;
-        margin: 0;
-    }
+        /* An item in the stream-row */
+        .stream-row-item {
+            width: 100%;
+            box-shadow: .25rem .45rem .25rem rgba(0, 0, 0, 0.25);
+            border-radius: 0;
+            margin: 0;
+        }
 
-    #dynmap-frame {
-        max-width: 100%;
+        #flavor-text {
+            padding: 2rem;
+            color: white;
+            text-align: left;
+            font-weight: 300;
+            font-size: 2.5vw;
+
+            h2 {
+                text-decoration: underline;
+                text-decoration-thickness: 1px;
+                font-size: 3vw;
+                font-weight: 300;
+            }
+
+            a {
+                &:link {
+                    color: lightgrey;
+                }
+
+                &:visited {
+                    color: lightgrey;
+                }
+
+                &:active {
+                    color: lightgrey;
+                }
+
+                &:hover {
+                    color: whitesmoke;
+                    text-decoration: underline;
+                }
+            }
+        }
     }
 }

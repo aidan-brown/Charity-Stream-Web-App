@@ -5,7 +5,7 @@ import { BACKENDURL } from '../../../App/constants';
 import { getReq } from '../../../../Utils';
 import CartEffect from './CartEffect';
 import CartItem from './CartItem';
-import './Cart.css';
+import './Cart.scss';
 
 const Cart = ({
   player,
