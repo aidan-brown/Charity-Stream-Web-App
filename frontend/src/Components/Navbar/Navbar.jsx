@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { CSHLogo, Toggler } from '../../images/svg';
-import './Navbar.css';
+import './Navbar.scss';
 import '../Bootstrap-Colors/palette.css';
 
 /** Class for constructing the main navbar of the page * */

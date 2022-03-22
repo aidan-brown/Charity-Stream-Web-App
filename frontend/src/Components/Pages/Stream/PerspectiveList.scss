@@ -1,0 +1,62 @@
+.PerspectiveList {
+    button {
+        position: relative;
+        border: none;
+        border-radius: .5rem;
+        overflow: hidden;
+        cursor: pointer;
+        margin: 1rem;
+        padding: 0;
+
+        &:hover {
+            .perspective-title {
+                opacity: 1;
+            }
+
+            .perspective-overlay {
+                opacity: 1;
+            }
+        }
+
+        &:active {
+            .perspective-title {
+                opacity: 0.6;
+            }
+
+            .perspective-overlay {
+                opacity: 0.6;
+            }
+        }
+    }
+
+    .perspective-title {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        font-size: 2rem;
+        color: rgb(255, 255, 255);
+        mix-blend-mode: multiply;
+        background-color: rgba(0, 0, 0, 0.8);
+        text-align: center;
+        opacity: 0;
+        transition: all 500ms;
+    }
+
+    .perspective-overlay {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(255, 255, 255, 0.5);
+        opacity: 0;
+        transition: all 500ms;
+    }
+
+    img {
+        width: 100%;
+        height: 100%;
+    }
+}

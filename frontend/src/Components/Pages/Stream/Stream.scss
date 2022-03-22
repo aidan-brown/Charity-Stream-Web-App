@@ -1,0 +1,307 @@
+/* The div tag that holds the entire stream page */
+.Stream {
+    overflow-y: auto;
+    overflow-x: auto;
+    background-color: rgb(255, 255, 255);
+    width: 100%;
+}
+
+/* The div tag that holds the stream window and the player list */
+.stream-player {
+    width: 1200px;
+    height: 680px;
+    position: relative;
+    display: flex;
+    overflow: hidden;
+    flex-direction: row;
+    margin: 1rem auto 0 auto;
+    border-radius: .5rem;
+    box-shadow: .45rem .45rem .25rem rgba(0, 0, 0, 0.25);
+
+    span {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+    }
+
+    /* The StreamWindow element in the stream player div */
+    .StreamWindow {
+        height: 100%;
+        width: 100%;
+    }
+
+    /* The StreamList elements in the stream player div */
+    .StreamList {
+        width: 100%;
+        height: 100%;
+        font-size: .75rem;
+        list-style: none;
+        padding-left: 0;
+        background-color: white;
+        border-radius: .5rem;
+        overflow-x: hidden;
+        overflow-y: scroll;
+
+        /* The scrollbar for the list */
+        &::-webkit-scrollbar {
+            background: none;
+            width: 0.5rem;
+        }
+
+        /* The scrollbar thumb for the list */
+        &::-webkit-scrollbar-thumb {
+            transition: background 500ms;
+            background: rgba(225, 28, 82, 0.5);
+            border-radius: 1rem;
+
+            /* When hovering over the scrollbar thumb for the list */
+            &:hover {
+                transition: background 500ms;
+                background: rgba(228, 28, 82, 0.75);
+            }
+        }
+
+        /* The scrollbar track for the list */
+        &::-webkit-scrollbar-track {
+            background: rgba(50, 50, 50, 0.25);
+            border-radius: 1rem;
+            margin: .5rem 0;
+        }
+    }
+
+    /* The div that holds the stream lists */
+    .stream-list {
+        background: rgb(232, 232, 232);
+        background: linear-gradient(120deg, rgba(232, 232, 232, 1) 0%, rgba(218, 218, 218, 1) 100%);
+        z-index: 1;
+    }
+
+    /* The stream list when in the active state */
+    .stream-list.show {
+        transition: all 500ms;
+        height: 100%;
+        width: 35rem;
+        padding: 5px;
+    }
+
+    /* The player list when in the inactive state */
+    .stream-list.hide {
+        transition: all 500ms;
+        height: 100%;
+        width: 0rem;
+        padding: 0;
+        overflow-y: hidden;
+    }
+
+    #chat-list {
+        iframe {
+            border: none;
+            border-radius: .5rem;
+        }
+    }
+
+    /* The button tag that toggles a list */
+    .stream-button {
+        height: 3rem;
+        width: 3rem;
+        position: absolute;
+        top: 0;
+        right: 0;
+        padding: 0;
+        border-radius: 0;
+        background: rgb(199, 24, 71);
+        opacity: 0;
+        transition: all 500ms;
+    }
+
+    #chat-button {
+        top: 3rem;
+    }
+
+    #player-button {
+        top: 6rem;
+        border-bottom-left-radius: .5rem;
+    }
+
+    .stream-button.hide {
+        .stream-button-icon {
+            height: 2rem;
+            opacity: 0.5;
+            transition: all 250ms;
+
+            &:hover {
+                height: 2.2rem;
+                opacity: 1;
+            }
+        }
+    }
+
+    .stream-button.show {
+        .stream-button-icon {
+            height: 2.1rem;
+            opacity: 1;
+            transition: all 250ms;
+
+            &:hover {
+                height: 2.2rem;
+            }
+        }
+    }
+
+    /* The svg tag that holds the svg of the button */
+    .stream-button-icon path {
+        fill: white !important;
+    }
+
+    &:hover {
+        .stream-button {
+            opacity: 1;
+        }
+    }
+}
+
+/* The div tag of a row on the stream page */
+.stream-row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin: 3rem 1rem;
+
+    /* An item in the stream-row */
+    .stream-row-item {
+        overflow: hidden;
+        margin: 0 1rem;
+        max-width: 650px;
+        min-height: 350px;
+        box-shadow: .45rem .45rem .25rem rgba(0, 0, 0, 0.25);
+        border-radius: .5rem;
+    }
+
+    #dynmap-frame {
+        border: none;
+        width: 100%;
+        height: 100%;
+    }
+
+    #flavor-text {
+        padding: 2rem;
+        color: white;
+        text-align: left;
+        font-weight: 300;
+
+        h2 {
+            text-decoration: underline;
+            text-decoration-thickness: 1px;
+        }
+
+        a {
+            &:link {
+                color: lightgrey;
+            }
+
+            &:visited {
+                color: lightgrey;
+            }
+
+            &:active {
+                color: lightgrey;
+            }
+
+            &:hover {
+                color: whitesmoke;
+                text-decoration: underline;
+            }
+        }
+    }
+}
+
+/* Breakpoint when the window reaches medium width (1200px) */
+@media only screen and (max-width: 1200px) {
+    .stream-player {
+        flex-direction: column;
+        height: fit-content;
+        margin: 0;
+        width: 100%;
+        height: fit-content !important;
+        border-radius: 0;
+
+        .StreamWindow {
+            height: 75vh;
+        }
+
+        .PlayerList {
+            .list-element {
+                width: 100%;
+            }
+        }
+    }
+
+    .stream-list {
+        border-radius: 0;
+    }
+
+    .stream-list.show {
+        transition: all 500ms;
+        height: 20rem;
+        width: 100%;
+        padding: 0 .5rem 0 1rem;
+    }
+
+    .stream-list.hide {
+        transition: all 500ms;
+        height: 0;
+        width: 100%;
+        padding: 0;
+    }
+
+    .stream-button {
+        height: 3rem;
+        width: 3rem;
+        position: absolute;
+        top: auto;
+        bottom: 0;
+        left: 0;
+        padding: 0;
+        border-radius: 0;
+        background: rgb(199, 24, 71);
+        opacity: 1;
+        transition: all 500ms;
+    }
+
+    #chat-button {
+        top: auto;
+        left: 3rem;
+    }
+
+    #player-button {
+        top: auto;
+        left: 6rem;
+        border-radius: 0;
+        border-top-right-radius: .5rem;
+    }
+
+    /* The div tag of a row on the stream page */
+    .stream-row {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        margin: 1rem 0;
+        height: fit-content;
+    }
+
+    /* An item in the stream-row */
+    .stream-row-item {
+        max-width: 100%;
+        box-shadow: .25rem .45rem .25rem rgba(0, 0, 0, 0.25);
+        border-radius: 0;
+        margin: 0;
+    }
+
+    #dynmap-frame {
+        max-width: 100%;
+    }
+}
