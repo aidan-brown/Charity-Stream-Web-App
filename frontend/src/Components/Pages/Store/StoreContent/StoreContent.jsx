@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { BACKENDURL } from '../../../App/constants';
-import {getReq} from '../../../../Utils'
+import { getReq } from '../../../../Utils';
 import StoreItem from './StoreItem';
 import StoreMob from './StoreMob';
 import StoreEffect from './StoreEffect';
-import './StoreContent.css';
+import './StoreContent.scss';
 
 const StoreContent = ({ filterTag, addItemToCart }) => {
   const [items, setItems] = useState([]);

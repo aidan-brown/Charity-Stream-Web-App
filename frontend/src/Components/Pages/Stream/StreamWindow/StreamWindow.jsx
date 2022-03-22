@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import './StreamWindow.css';
+import './StreamWindow.scss';
 
 /** Class for constructing the stream window component * */
 const StreamWindow = ({

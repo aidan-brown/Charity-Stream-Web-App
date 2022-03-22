@@ -1,9 +1,8 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import Logo from '../../images/csh.svg';
-import ToggleIcon from '../../images/toggler.svg';
-import './Navbar.css';
-import '../Bootstrap-Colors/palette.css';
+import { CSHLogo, Toggler } from '../../images/svg';
+import './Navbar.scss';
+import '../Bootstrap-Colors/palette.scss';
 
 /** Class for constructing the main navbar of the page * */
 const Navbar = () => {
@@ -42,25 +41,23 @@ const Navbar = () => {
     <nav className="Navbar">
       <div className="navbar navbar-expand-md bg-csh-primary-gradient">
         <a className="navbar-brand order-md-first" href="https://www.csh.rit.edu/" target="_blank" rel="noopener noreferrer">
-          <img id="csh-logo" src={Logo} alt="CSH logo" />
+          {/* <img id="csh-logo" src={Logo} alt="CSH logo" /> */}
+          <CSHLogo id="csh-logo" />
         </a>
         <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
-          <img src={ToggleIcon} height="100%" alt="open nav menu" />
+          <Toggler id="toggler" />
         </button>
 
         <div className="collapse navbar-collapse" id="collapsibleNavbar">
-          <ul className="navbar-nav justify-content-center">
+          <ul className="navbar-nav">
             <li className="nav-item">
               <Link id="stream" className="nav-link" onClick={setLinkActive} to="/"><span>Stream</span></Link>
             </li>
             <li className="nav-item">
               <Link id="store" className="nav-link" onClick={setLinkActive} to="/store"><span>Donation Shop</span></Link>
             </li>
-            {/* <li className="nav-item">
-              <Link id="data" className="nav-link" onClick={setLinkActive} to="/data"><span>Online Players</span></Link>
-            </li> */}
             <li className="nav-item">
-              <a id="learn-more" className="nav-link" href="https://www.justgiving.com/fundraising/csh-minecraft-3" target="_blank" rel="noopener noreferrer"><span>Learn More</span></a>
+              <a id="learn-more" className="nav-link" href="https://www.justgiving.com/fundraising/charity-minecraft" target="_blank" rel="noopener noreferrer"><span>Learn More</span></a>
             </li>
           </ul>
         </div>

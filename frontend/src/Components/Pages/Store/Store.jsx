@@ -15,7 +15,7 @@ import { useSearchParams } from 'react-router-dom';
 import { postReq } from '../../../Utils';
 import StoreContent from './StoreContent/StoreContent';
 import Cart from './Cart/Cart';
-import './Store.css';
+import './Store.scss';
 import { BACKENDURL } from '../../App/constants';
 
 function useForceUpdate() {
