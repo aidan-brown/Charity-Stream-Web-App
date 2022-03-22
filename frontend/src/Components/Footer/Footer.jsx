@@ -4,6 +4,12 @@ import './Footer.css';
 /** Class for constructing the footer component * */
 const Footer = () => (
   <footer className="Footer bg-csh-primary-gradient">
+    <div className="footer-disclaimer bg-csh-secondary-gradient">
+      <i>
+        Disclaimer: This website and stream is in no way
+        affliated with Minecraft and/or Microsoft
+      </i>
+    </div>
     <div className="footer-row">
       <img src="https://assets.csh.rit.edu/pubsite/rit_csh.png" alt="RIT and Computer Science House" />
     </div>
@@ -16,10 +22,7 @@ const Footer = () => (
       </div>
       <div className="bottom">
         &copy;
-        {' '}
-        {(new Date()).getFullYear()}
-        {' '}
-        Computer Science House
+        {` ${(new Date()).getFullYear()} Computer Science House`}
       </div>
       <div className="bottom">
         <a href="https://github.com/aidan-brown/Charity-Stream-Web-App">Website on Github</a>
