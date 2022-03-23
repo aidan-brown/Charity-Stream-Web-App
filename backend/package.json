@@ -21,9 +21,9 @@
         "express": "^4.17.1",
         "http": "^0.0.1-security",
         "https": "^1.0.0",
-        "modern-rcon": "^1.0.3",
         "mysql2": "^2.2.5",
         "node-cron": "^3.0.0",
+        "rcon-client": "^4.2.3",
         "sequelize": "^6.17.0",
         "stripe": "^8.195.0"
     },

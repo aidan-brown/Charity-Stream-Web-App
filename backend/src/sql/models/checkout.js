@@ -1,13 +1,10 @@
 const { DataTypes } = require('sequelize');
 const { getConnection } = require('..');
+const Command = require('./command');
 
 const sequelize = getConnection();
 
 const Checkout = sequelize.define('Checkout', {
-  command: {
-    type: DataTypes.TEXT,
-    allowNull: false,
-  },
   donationID: {
     type: DataTypes.INTEGER,
     allowNull: true,
@@ -21,5 +18,7 @@ const Checkout = sequelize.define('Checkout', {
     allowNull: false,
   },
 });
+
+Checkout.hasMany(Command);
 
 module.exports = Checkout;

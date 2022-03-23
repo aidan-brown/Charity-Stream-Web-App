@@ -1,18 +1,21 @@
 const Player = require('./player');
 const DisabledElement = require('./disabledElement');
 const Checkout = require('./checkout');
+const Command = require('./command');
 
-const createTables = () => {
-  const force = false; // process.env.environment !== 'production';
+const createTables = async () => {
+  const force = process.env.NODE_ENV !== 'production';
 
-  Player.sync({ force });
-  DisabledElement.sync({ force });
-  Checkout.sync({ force });
+  await Player.sync({ force });
+  await DisabledElement.sync({ force });
+  await Checkout.sync({ force });
+  await Command.sync({ force });
 };
 
 module.exports = {
   Player,
   DisabledElement,
   Checkout,
+  Command,
   createTables,
 };

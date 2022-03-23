@@ -1,9 +1,9 @@
 const axios = require('axios');
-const Rcon = require('modern-rcon');
-const { Checkout, Player, DisabledElement } = require('../sql/models');
+const {
+  Checkout, Player, DisabledElement, Command,
+} = require('../sql/models');
 const { all } = require('../minecraftData');
 
-const rcon = new Rcon(process.env.MCSERVER, 25569, process.env.MCSERVERPWRD, 5000);
 const types = ['armor', 'tool', 'weapon', 'food', 'material', 'mob', 'effect'];
 
 const verifyPlayer = async (username) => {
@@ -51,24 +51,37 @@ module.exports = {
             let cmd;
             if (type === 'effect') {
               cost *= (time / 30) * (power + 1);
-              cmd = `effect give ${username} ${id} ${time} ${power + 1}`;
-              commands.push(cmd);
+              commands.push({
+                commandText: `effect give ${username} ${id} ${time} ${power + 1}`,
+              });
             } else if (type === 'mob') {
-              for (let j = 0; j < amount; j += 1) {
-                cmd = `execute at ${username} run summon ${id} ~ ~ ~`;
-                commands.push(cmd);
-              }
+              const totalGroups = Math.ceil(amount / 10);
+              const leftOver = amount % 10;
+
+              [...Array(totalGroups)].forEach((_, i) => {
+                let num = 10;
+                if (i === totalGroups - 1 && leftOver !== 0) num = leftOver;
+
+                commands.push({
+                  commandText: `execute at ${
+                    username
+                  } run summon minecraft:area_effect_cloud ~ ~ ~ {Passengers:[${
+                    [...Array(num)].map(() => `{id:${id}}`).join(',')
+                  }]}`,
+                });
+              });
             } else {
               cmd = `give ${username} ${id}`;
               if (id === 'arrow') {
                 const totalArrows = amount * 10;
                 cmd += ` ${totalArrows}`;
-              } else {
-                cmd += ` ${amount}`;
-              }
+              } else cmd += ` ${amount}`;
 
-              commands.push(cmd);
+              commands.push({
+                commandText: cmd,
+              });
             }
+
             subTotal += cost * amount;
 
             return previousItem;
@@ -79,13 +92,15 @@ module.exports = {
         if (!cartStatus) {
           res.status(400).send('There is something wrong with your cart');
         } else {
-          const { id } = await Checkout.create({
+          const checkout = await Checkout.create({
             subTotal: subTotal.toFixed(2),
             status: 'PENDING',
-            command: commands.join('<&@&>'),
+            Commands: commands,
+          }, {
+            include: [Command],
           });
 
-          const exitUrl = `${process.NODE_ENV !== 'production' ? 'http%3A%2F%2Flocalhost%3A3000' : 'https%3A%2Fminecraftstream.csh.rit.edu'}%2Fstore%3FcheckoutId=${id}`;
+          const exitUrl = `${process.NODE_ENV !== 'production' ? 'http%3A%2F%2Flocalhost%3A3000' : 'https%3A%2Fminecraftstream.csh.rit.edu'}%2Fstore%3FcheckoutId=${checkout.id}`;
           const redirectUrl = `http://link.justgiving.com/v1/fundraisingpage/donate/pageId/15252893?amount=${subTotal.toFixed(2)}&currency=USD&reference=mcstream&exitUrl=${exitUrl}%26donationId%3DJUSTGIVING-DONATION-ID`;
 
           res.status(200).send(redirectUrl);
@@ -111,23 +126,22 @@ module.exports = {
           },
         });
 
-        const { subTotal, command, status } = checkout;
+        const { subTotal, status } = checkout;
         const { donorLocalAmount } = data;
 
         if (status === 'PENDING') {
           if (subTotal <= Number(donorLocalAmount).toFixed(2)) {
             checkout.donationID = donationID;
             checkout.status = 'ACCEPTED';
+
+            await Command.update({ status: 'READY' }, {
+              where: {
+                CheckoutId: checkout.id,
+              },
+            });
             await checkout.save();
 
-            await rcon.connect();
-            const commands = command.split('<&@&>');
-            for (let i = 0; i < commands.length; i++) {
-              await rcon.send(commands[i]);
-            }
-            await rcon.disconnect();
-
-            res.status(200).send('Running commands, success!');
+            res.status(200).send('Commands marked as READY!');
           } else {
             res.status(400).send('Donation amounts did not line up, not running commands');
           }
@@ -135,7 +149,7 @@ module.exports = {
           res.status(400).send('Commands have already been scheduled');
         }
       }
-    } catch (error) {
+    } catch (_) {
       res.status(500).send('Something on our end went wrong');
     }
   },

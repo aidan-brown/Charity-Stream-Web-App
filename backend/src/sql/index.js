@@ -19,6 +19,7 @@ const getConnection = () => {
         idle: 10000,
       },
       typeValidation: true,
+      logging: process.env.NODE_ENV !== 'production',
     },
   );
 
