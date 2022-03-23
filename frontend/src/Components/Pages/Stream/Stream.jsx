@@ -11,7 +11,7 @@ import { BACKENDURL } from '../../App/constants';
 import { getReq } from '../../../Utils';
 import {
   CSHLogo, BlackbaudLogo, HOGSLogo, EhouseLogo, SSELogo, ArthouseLogo, RITLogo, ShoppingCart,
-} from '../../../images/svg';
+} from '../../../assets/svg';
 
 /** Class for constructing the stream page * */
 const Stream = ({ setSelectedPlayer }) => {
@@ -103,9 +103,17 @@ const Stream = ({ setSelectedPlayer }) => {
 const PerspectiveList = ({ setChannel }) => {
   const channels = [
     'cshba',
+    'MysticatLive',
+    'samanthiiana',
+    'Dantayy5050',
     'dawnshadowx3',
-    'nihachu',
-    'lilypichu',
+    'bohchoi',
+    'skeleton_weeb',
+    'laqqy',
+    'cahriid',
+    'lumiinara',
+    'clipsothealien',
+    'roxkstar74',
   ];
 
   return (

@@ -121,7 +121,7 @@ const AdminPanel = () => {
                       <div className="element" key={id}>
                         <img
                           className="image"
-                          src={`${BACKENDURL}/images/${
+                          src={`${BACKENDURL}/assets/${
                             type === 'mob' || type === 'effect'
                               ? `${type}s` : 'items'}/${id}.png`}
                           alt={`${id} disable`}
