@@ -1,16 +1,19 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { CSHLogo, Toggler } from '../../images/svg';
+import PropTypes from 'prop-types';
+import { CSHLogo, Toggler } from '../../assets/svg';
 import './Navbar.scss';
 import '../Bootstrap-Colors/palette.scss';
 
 /** Class for constructing the main navbar of the page * */
-const Navbar = () => {
+const Navbar = ({ remainingTime }) => {
   useEffect(() => {
     let activeLink;
     switch (window.location.pathname) {
       case '/':
-        activeLink = document.querySelector('#stream');
+        if (remainingTime <= 0) {
+          activeLink = document.querySelector('#stream');
+        }
         break;
 
       default:
@@ -28,6 +31,11 @@ const Navbar = () => {
     */
   const setLinkActive = (event) => {
     document.querySelector('.Navbar .active').className = 'nav-link';
+    if (event.target.className.includes('navbar-brand')) {
+      if (remainingTime > 0) return;
+
+      document.querySelector('#stream').className = 'nav-link active';
+    }
     /* eslint-disable no-param-reassign */
     if (event.target.className === 'nav-link' || event.target.className === 'nav-link active') {
       event.target.className = 'nav-link active';
@@ -40,10 +48,9 @@ const Navbar = () => {
   return (
     <nav className="Navbar">
       <div className="navbar navbar-expand-md bg-csh-primary-gradient">
-        <a className="navbar-brand order-md-first" href="https://www.csh.rit.edu/" target="_blank" rel="noopener noreferrer">
-          {/* <img id="csh-logo" src={Logo} alt="CSH logo" /> */}
+        <Link className="navbar-brand order-md-first" onClick={setLinkActive} to="/" rel="noopener noreferrer">
           <CSHLogo id="csh-logo" />
-        </a>
+        </Link>
         <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
           <Toggler id="toggler" />
         </button>
@@ -51,19 +58,23 @@ const Navbar = () => {
         <div className="collapse navbar-collapse" id="collapsibleNavbar">
           <ul className="navbar-nav">
             <li className="nav-item">
-              <Link id="stream" className="nav-link" onClick={setLinkActive} to="/"><span>Stream</span></Link>
+              <Link id="stream" className="nav-link" onClick={setLinkActive} to="/stream"><span>Stream</span></Link>
             </li>
             <li className="nav-item">
               <Link id="store" className="nav-link" onClick={setLinkActive} to="/store"><span>Donation Shop</span></Link>
             </li>
             <li className="nav-item">
-              <a id="learn-more" className="nav-link" href="https://www.justgiving.com/fundraising/charity-minecraft" target="_blank" rel="noopener noreferrer"><span>Learn More</span></a>
+              <a id="learn-more" className="nav-link" href="https://www.justgiving.com/fundraising/csh-charity" target="_blank" rel="noopener noreferrer"><span>Learn More</span></a>
             </li>
           </ul>
         </div>
       </div>
     </nav>
   );
+};
+
+Navbar.propTypes = {
+  remainingTime: PropTypes.number.isRequired,
 };
 
 export default Navbar;

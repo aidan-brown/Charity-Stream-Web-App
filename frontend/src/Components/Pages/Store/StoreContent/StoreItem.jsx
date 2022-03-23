@@ -72,8 +72,8 @@ const StoreItem = ({ item, addItemToCart }) => {
   return (
     <span tabIndex={0} role="button" className="store-item bg-csh-tertiary" onClick={addItemToCart} onKeyDown={addItemToCart} data-disabled={item.disabled}>
       <div className="store-item-header bg-csh-primary-gradient">
-        <img className="store-item-image" src={`${BACKENDURL}/images/items/${item.id}-full.jpg`} alt={item.displayName} />
-        <img className="store-item-icon" src={`${BACKENDURL}/images/items/${item.id}.png`} alt={item.displayName} />
+        <img className="store-item-image" src={`${BACKENDURL}/assets/items/${item.id}-full.jpg`} alt={item.displayName} />
+        <img className="store-item-icon" src={`${BACKENDURL}/assets/items/${item.id}.png`} alt={item.displayName} />
         <p className="store-item-displayName">{item.displayName}</p>
         <p className="store-item-price">
           $

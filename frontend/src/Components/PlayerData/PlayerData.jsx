@@ -1,15 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import {
-  EmptyArmor,
-  EmptyHeart,
-  EmptyHunger,
-  FullArmor,
-  FullHeart,
-  FullHunger,
-  HalfArmor,
-  HalfHeart,
-  HalfHunger,
-} from './Images';
 import { BACKENDURL } from '../App/constants';
 import { getReq } from '../../Utils';
 import './PlayerData.css';
