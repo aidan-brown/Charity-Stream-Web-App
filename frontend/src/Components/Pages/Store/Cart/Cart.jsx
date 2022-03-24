@@ -63,10 +63,10 @@ const Cart = ({
       </div>
       <div className="cart-content">
         {cartItems.map((item) => {
-          if (!('power' in item)) return <CartItem key={item.name} item={item} changeCartAmount={changeCartAmount} removeFromCart={removeFromCart} />;
+          if (!('power' in item)) return <CartItem key={item.displayName} item={item} changeCartAmount={changeCartAmount} removeFromCart={removeFromCart} />;
           return (
             <CartEffect
-              key={item.name}
+              key={item.displayName}
               effect={item}
               changeEffectPower={changeEffectPower}
               changeEffectTime={changeEffectTime}
@@ -97,30 +97,15 @@ const Cart = ({
 
 Cart.propTypes = {
   player: PropTypes.string.isRequired,
+  showCart: PropTypes.string.isRequired,
+  // eslint-disable-next-line react/forbid-prop-types
+  cartItems: PropTypes.array.isRequired,
   setPlayer: PropTypes.func.isRequired,
-  cartItems: PropTypes.oneOf([
-    {
-      icon: PropTypes.string.isRequired,
-      img: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired,
-      time: PropTypes.number.isRequired,
-      power: PropTypes.number.isRequired,
-      price: PropTypes.number.isRequired,
-    },
-    {
-      icon: PropTypes.string.isRequired,
-      img: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired,
-      amount: PropTypes.number.isRequired,
-      price: PropTypes.number.isRequired,
-    },
-  ]).isRequired,
   changeCartAmount: PropTypes.func.isRequired,
   changeEffectPower: PropTypes.func.isRequired,
   changeEffectTime: PropTypes.func.isRequired,
   removeFromCart: PropTypes.func.isRequired,
   proceedToCheckout: PropTypes.func.isRequired,
-  showCart: PropTypes.func.isRequired,
   calculateTotal: PropTypes.func.isRequired,
 };
 
