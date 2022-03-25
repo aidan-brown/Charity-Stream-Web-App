@@ -62,15 +62,15 @@ const Cart = ({
         </Select>
       </div>
       <div className="cart-content">
-        {cartItems.map((item) => {
-          if (!('power' in item)) return <CartItem key={item.displayName} item={item} changeCartAmount={changeCartAmount} removeFromCart={removeFromCart} />;
+        {cartItems.map((item, index) => {
+          if (!('power' in item)) return <CartItem key={item.displayName} item={item} changeCartAmount={changeCartAmount(index)} removeFromCart={removeFromCart(index)} />;
           return (
             <CartEffect
               key={item.displayName}
               effect={item}
-              changeEffectPower={changeEffectPower}
-              changeEffectTime={changeEffectTime}
-              removeFromCart={removeFromCart}
+              changeEffectPower={changeEffectPower(index)}
+              changeEffectTime={changeEffectTime(index)}
+              removeFromCart={removeFromCart(index)}
             />
           );
         })}

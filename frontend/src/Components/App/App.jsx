@@ -7,7 +7,7 @@ import {
   Stream, Store, AdminPanel, Landing,
 } from '../Pages';
 import Cart from '../Pages/Store/Cart/Cart';
-import { msToTime, postReq, useForceUpdate } from '../../Utils';
+import { msToTime, postReq } from '../../Utils';
 import { BACKENDURL } from './constants';
 // import PlayerData from '../PlayerData';
 
@@ -19,7 +19,6 @@ const App = () => {
   const [showCart, setShowCart] = useState('no');
 
   const itemAddRef = useRef();
-  const forceUpdate = useForceUpdate();
 
   useEffect(() => {
     let lsGet = localStorage.getItem('player');
@@ -45,44 +44,28 @@ const App = () => {
     localStorage.setItem('cartItems', JSON.stringify(cartItems));
   }, [cartItems]);
 
-  const removeItemFromCart = (item) => {
-    const index = cartItems.indexOf(item);
-    if (index < cartItems.length) {
-      const tempArr = [...cartItems];
-      tempArr.splice(index, 1);
-      setCartItems(tempArr);
+  const removeItemFromCart = (index) => () => {
+    setCartItems([...cartItems.slice(0, index), ...cartItems.slice(index + 1)]);
+  };
+
+  const changeCartAmount = (i) => (change = 0) => {
+    if (cartItems[i].amount + change <= 0) {
+      removeItemFromCart(i);
+    } else {
+      setCartItems(cartItems.map((itm, j) => (
+        i === j
+          ? { ...itm, amount: itm.amount + change }
+          : itm
+      )));
     }
   };
 
-  const changeCartAmount = (item, change = 0) => {
-    const i = cartItems.find((e) => e.displayName === item.displayName);
-    if (i) {
-      i.amount += change;
-      if (i.amount <= 0) {
-        removeItemFromCart(i);
-      } else {
-        forceUpdate();
-        localStorage.setItem('cartItems', JSON.stringify(cartItems));
-      }
-    }
+  const changeEffectPower = (i) => (power = 0) => {
+    setCartItems(cartItems.map((itm, j) => (i === j ? { ...itm, power } : itm)));
   };
 
-  const changeEffectPower = (item, value = 0) => {
-    const i = cartItems.find((e) => e.displayName === item.displayName);
-    if (i) {
-      i.power = value;
-      forceUpdate();
-      localStorage.setItem('cartItems', JSON.stringify(cartItems));
-    }
-  };
-
-  const changeEffectTime = (item, value = 30) => {
-    const i = cartItems.find((e) => e.displayName === item.displayName);
-    if (i) {
-      i.time = value;
-      forceUpdate();
-      localStorage.setItem('cartItems', JSON.stringify(cartItems));
-    }
+  const changeEffectTime = (i) => (time = 30) => {
+    setCartItems(cartItems.map((itm, j) => (i === j ? { ...itm, time } : itm)));
   };
 
   const calculateTotal = () => {
@@ -96,14 +79,15 @@ const App = () => {
 
   const addItemToCart = (item) => {
     if (!item.disabled) {
-      if (!cartItems.find((e) => e.displayName === item.displayName)) {
+      const i = cartItems.findIndex((e) => e.displayName === item.displayName);
+      if (i < 0) {
         setCartItems([...cartItems, item]);
       } else if (!('power' in item)) {
-        changeCartAmount(item, 1);
+        changeCartAmount(i)(1);
       } else {
         const { time } = cartItems.find((e) => e.displayName === item.displayName);
-        if (time < 300) {
-          changeEffectTime(item, time + 30);
+        if (time < 120) {
+          changeEffectTime(i)(time + 15);
         }
       }
 

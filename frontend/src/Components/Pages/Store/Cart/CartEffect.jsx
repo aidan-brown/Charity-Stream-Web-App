@@ -38,14 +38,14 @@ const CartEffect = ({
       <img className="cart-item-image" src={effect.img} alt={effect.displayName} />
     </div>
     <div className="cart-effect-stats bg-csh-tertiary">
-      <Select className="effect-select" value={effect.power} onChange={(e) => changeEffectPower(effect, e.target.value)}>
+      <Select className="effect-select" value={effect.power} onChange={(e) => changeEffectPower(e.target.value)}>
         {Object.keys(POWER_LEVELS).map((lvl) => (
           <MenuItem value={POWER_LEVELS[lvl]} key={effect.displayName}>
             {lvl}
           </MenuItem>
         ))}
       </Select>
-      <Select className="effect-select" value={effect.time} onChange={(e) => changeEffectTime(effect, e.target.value)}>
+      <Select className="effect-select" value={effect.time} onChange={(e) => changeEffectTime(e.target.value)}>
         {Object.keys(TIME_LEVELS).map((lvl) => (
           <MenuItem value={TIME_LEVELS[lvl]} key={effect.displayName}>
             {lvl}
@@ -53,7 +53,7 @@ const CartEffect = ({
         ))}
       </Select>
     </div>
-    <div tabIndex={0} role="button" className="cart-item-remove" onClick={() => removeFromCart(effect)} onKeyPress={() => removeFromCart(effect)}>
+    <div tabIndex={0} role="button" className="cart-item-remove" onClick={() => removeFromCart()} onKeyPress={() => removeFromCart()}>
       <span className="material-icons md-18">close</span>
     </div>
   </span>

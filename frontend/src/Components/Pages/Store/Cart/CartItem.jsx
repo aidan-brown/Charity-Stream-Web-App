@@ -15,13 +15,13 @@ const CartItem = ({ item, changeCartAmount, removeFromCart }) => (
       <img className="cart-item-image" src={item.img} alt={item.displayName} />
     </div>
     <div className="cart-item-counter bg-csh-tertiary">
-      <span tabIndex={0} role="button" className="material-icons cart-item-count-control" onClick={() => changeCartAmount(item, -1)} onKeyPress={() => changeCartAmount(item, -1)}>remove</span>
+      <span tabIndex={0} role="button" className="material-icons cart-item-count-control" onClick={() => changeCartAmount(-1)} onKeyPress={() => changeCartAmount(-1)}>remove</span>
       <span className="vr" />
       <span>{item.amount}</span>
       <span className="vr" />
-      <span tabIndex={0} role="button" className="material-icons cart-item-count-control" onClick={() => changeCartAmount(item, 1)} onKeyPress={() => changeCartAmount(item, 1)}>add</span>
+      <span tabIndex={0} role="button" className="material-icons cart-item-count-control" onClick={() => changeCartAmount(1)} onKeyPress={() => changeCartAmount(1)}>add</span>
     </div>
-    <div tabIndex={0} role="button" className="cart-item-remove" onClick={() => removeFromCart(item)} onKeyPress={() => removeFromCart(item)}>
+    <div tabIndex={0} role="button" className="cart-item-remove" onClick={() => removeFromCart()} onKeyPress={() => removeFromCart()}>
       <span className="material-icons md-18">close</span>
     </div>
   </span>
