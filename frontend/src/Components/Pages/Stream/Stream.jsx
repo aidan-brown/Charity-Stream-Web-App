@@ -14,11 +14,42 @@ import { BACKENDURL } from '../../App/constants';
 import { getReq } from '../../../Utils';
 import { AssociationLogos } from '../../../assets/svg';
 
+const channels = [
+  'cshba',
+  'MysticatLive',
+  'samanthiiana',
+  'Dantayy5050',
+  'dawnshadowx3',
+  'bohchoi',
+  'skeleton_weeb',
+  'laqqy',
+  'cahriid',
+  'lumiinara',
+  'clipsothealien',
+  'roxkstar74',
+];
+
 /** Class for constructing the stream page * */
 const Stream = ({ setSelectedPlayer, addItemToCart }) => {
   const streamDiv = useRef();
   const [channel, setChannel] = useState('cshba');
   const [streamWidth, setStreamWidth] = useState('100%');
+  const [playerList, setPlayerList] = useState([]);
+
+  useEffect(() => {
+    getReq(`${BACKENDURL}/players`)
+      .then((res) => res.json())
+      .then((res) => {
+        setPlayerList(res);
+      })
+      .catch(() => {});
+  }, []);
+
+  const playerOnClick = (player) => {
+    setSelectedPlayer(player.username);
+    document.querySelector('.Navbar .active').className = 'nav-link';
+    document.querySelector('#store').className = 'nav-link active';
+  };
 
   /*
     Handles the toggling of the player list, changing the
@@ -48,6 +79,33 @@ const Stream = ({ setSelectedPlayer, addItemToCart }) => {
     }
   };
 
+  const PerspectiveList = () => (
+    <ul className="PerspectiveList StreamList">
+      {channels.map((channelName) => (
+        <button type="button" className="perspective-button" onClick={() => setChannel(channelName)} key={channelName}>
+          <span className="perspective-overlay" />
+          <span className="perspective-title">{channelName.toUpperCase()}</span>
+          <img src={`https://static-cdn.jtvnw.net/previews-ttv/live_user_${channelName}-440x248.jpg`} alt={channelName} />
+        </button>
+      ))}
+    </ul>
+  );
+
+  const PlayerList = () => (
+    <ul className="PlayerList StreamList">
+      {playerList.sort((a, b) => a.association.localeCompare(b.association)).map((player) => {
+        const Logo = AssociationLogos[player.association.toUpperCase()];
+        return (
+          <Link key={player.username} className={`list-element ${player.association.toLowerCase()}`} onClick={() => playerOnClick(player)} to="/Store">
+            <p>{`${player.name} [${player.username}]`}</p>
+            <Logo className="team-logo" />
+            <Icon path={mdiCart} className="shop-logo" />
+          </Link>
+        );
+      })}
+    </ul>
+  );
+
   return (
     <div className="Stream">
       <div className="stream-player bg-csh-secondary closed" ref={streamDiv}>
@@ -68,7 +126,7 @@ const Stream = ({ setSelectedPlayer, addItemToCart }) => {
         </span>
         <div id="perspective-list" className="stream-list bg-csh-secondary-gradient hide">
           <h4>Perspectives</h4>
-          <PerspectiveList setChannel={setChannel} />
+          {PerspectiveList()}
         </div>
         <div id="chat-list" className="stream-list bg-csh-secondary-gradient hide">
           <h4>Stream Chat</h4>
@@ -81,7 +139,7 @@ const Stream = ({ setSelectedPlayer, addItemToCart }) => {
         </div>
         <div id="player-list" className="stream-list bg-csh-secondary-gradient hide">
           <h4>Players</h4>
-          <PlayerList setSelectedPlayer={setSelectedPlayer} />
+          {PlayerList()}
         </div>
         <div id="shop-list" className="stream-list bg-csh-secondary-gradient hide">
           <h4>Quick Buy</h4>
@@ -116,90 +174,9 @@ const Stream = ({ setSelectedPlayer, addItemToCart }) => {
   );
 };
 
-const PerspectiveList = ({ setChannel }) => {
-  const channels = [
-    'cshba',
-    'MysticatLive',
-    'samanthiiana',
-    'Dantayy5050',
-    'dawnshadowx3',
-    'bohchoi',
-    'skeleton_weeb',
-    'laqqy',
-    'cahriid',
-    'lumiinara',
-    'clipsothealien',
-    'roxkstar74',
-  ];
-
-  return (
-    <ul className="PerspectiveList StreamList">
-      {channels.map((channelName) => (
-        <button type="button" className="perspective-button" onClick={() => setChannel(channelName)} key={channelName}>
-          <span className="perspective-overlay" />
-          <span className="perspective-title">{channelName.toUpperCase()}</span>
-          <img src={`https://static-cdn.jtvnw.net/previews-ttv/live_user_${channelName}-440x248.jpg`} alt={channelName} />
-        </button>
-      ))}
-    </ul>
-  );
-};
-
-const PlayerList = ({ setSelectedPlayer }) => {
-  const [playerList, setPlayerList] = useState([]);
-
-  useEffect(() => {
-    getReq(`${BACKENDURL}/players`)
-      .then((res) => res.json())
-      .then((res) => {
-        setPlayerList(res);
-      })
-      .catch(() => {});
-  }, []);
-
-  const playerOnClick = (player) => {
-    setSelectedPlayer(player.username);
-    document.querySelector('.Navbar .active').className = 'nav-link';
-    document.querySelector('#store').className = 'nav-link active';
-  };
-
-  return (
-    <ul className="PlayerList StreamList">
-      {playerList.sort((a, b) => {
-        if (a.association > b.association) {
-          return 1;
-        } if (a.association < b.association) {
-          return -1;
-        }
-        if (a.name > b.name) {
-          return 1;
-        }
-        return -1;
-      }).map((player) => {
-        const Logo = AssociationLogos[player.association.toUpperCase()];
-        return (
-          <Link key={player.username} className={`list-element ${player.association.toLowerCase()}`} onClick={() => playerOnClick(player)} to="/Store">
-            <p>{`${player.name} [${player.username}]`}</p>
-            <Logo className="team-logo" />
-            <Icon path={mdiCart} className="shop-logo" />
-          </Link>
-        );
-      })}
-    </ul>
-  );
-};
-
 Stream.propTypes = {
   setSelectedPlayer: PropTypes.func.isRequired,
   addItemToCart: PropTypes.func.isRequired,
-};
-
-PlayerList.propTypes = {
-  setSelectedPlayer: PropTypes.func.isRequired,
-};
-
-PerspectiveList.propTypes = {
-  setChannel: PropTypes.func.isRequired,
 };
 
 export default Stream;
