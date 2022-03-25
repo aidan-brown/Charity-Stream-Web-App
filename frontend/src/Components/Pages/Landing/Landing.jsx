@@ -10,7 +10,11 @@ const Landing = ({ countdown }) => {
     <div className="Landing">
       <span className="landing-box">
         <h2 className="landing-presents">Computer Science House Presents:</h2>
-        <h1 className="landing-title">{`The ${streamYear} Annual Charity Stream`}</h1>
+        <h1 className="landing-title">
+          {`The ${streamYear} Annual`}
+          <br />
+          Charity Stream
+        </h1>
         <p className="landing-countdown">{countdown}</p>
       </span>
       <span className="landing-overlay" />

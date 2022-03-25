@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { CSHLogo, Toggler } from '../../assets/svg';
+import { AssociationLogos, Toggler } from '../../assets/svg';
 import './Navbar.scss';
 import '../Bootstrap-Colors/palette.scss';
 
@@ -49,7 +49,7 @@ const Navbar = ({ remainingTime }) => {
     <nav className="Navbar">
       <div className="navbar navbar-expand-md bg-csh-primary-gradient">
         <Link className="navbar-brand order-md-first" onClick={setLinkActive} to="/" rel="noopener noreferrer">
-          <CSHLogo id="csh-logo" />
+          <AssociationLogos.CSH id="csh-logo" />
         </Link>
         <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
           <Toggler id="toggler" />
