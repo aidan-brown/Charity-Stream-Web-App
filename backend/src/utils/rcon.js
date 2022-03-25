@@ -6,51 +6,52 @@ module.exports = async (scheduled) => {
 
   try {
     // If any commands need to be run, set the cron timeStamp
-    // on the command
-    const updates = await Command.update({ cronId }, {
+    // on the command (max 20)
+    const [updates] = await Command.update({ cronId }, {
       where: {
         status: 'READY',
         cronId: null,
       },
+      limit: 20,
     });
 
-    // If no commands were updated, nothing will be running
-    if (updates.length === 0) return;
+    // If we found rows to update
+    if (updates !== 0) {
+      // Get all these updated commands
+      const commands = await Command.findAll({
+        where: {
+          status: 'READY',
+          cronId,
+        },
+      });
 
-    // Get all these updated commands
-    const commands = await Command.findAll({
-      where: {
-        status: 'READY',
-        cronId,
-      },
-    });
+      // Connect to the server for this instance
+      const rcon = await Rcon.connect({
+        host: process.env.MCSERVER,
+        port: 25569,
+        password: process.env.MCSERVERPWRD,
+      });
 
-    // Connect to the server for this instance
-    const rcon = await Rcon.connect({
-      host: process.env.MCSERVER,
-      port: 25569,
-      password: process.env.MCSERVERPWRD,
-    });
+      // Mark commands as running
+      await Command.update({ status: 'RUNNING' }, { where: { cronId } });
 
-    // Mark commands as running
-    await Command.update({ status: 'RUNNING' }, { where: { cronId } });
+      // Now we want to loop through all the commands
+      // and run them as many times as
+      /* eslint-disable no-await-in-loop */
+      for (let i = 0; i < commands.length; i += 1) {
+        const { commandText, id } = commands[i];
 
-    // Now we want to loop through all the commands
-    // and run them as many times as
-    /* eslint-disable no-await-in-loop */
-    for (let i = 0; i < commands.length; i += 1) {
-      const { commandText, id } = commands[i];
+        // Run the command against the server
+        await rcon.send(commandText);
 
-      // Run the command against the server
-      await rcon.send(commandText);
+        // Set this command as finished, as it has now run
+        await Command.update({ status: 'FINISHED' }, { where: { id } });
+      }
+      /* eslint-enable no-await-in-loop */
 
-      // Set this command as finished, as it has now run
-      await Command.update({ status: 'FINISHED' }, { where: { id } });
+      // Close the command
+      await rcon.end();
     }
-    /* eslint-enable no-await-in-loop */
-
-    // Close the command
-    await rcon.end();
   } catch (_) {
     // We want to make sure the failed commands will be run, so we reschedule them
     try {
