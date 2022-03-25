@@ -4,23 +4,27 @@
     height: calc(100vh - 56.6px);
     background-size: cover;
     overflow: hidden;
+    cursor: default;
 
     .landing-box {
         position: absolute;
         top: 50%;
         left: 50%;
         transform: translate(-50%,-50%);
+        width: 75%;
         z-index: 1;
         color: white;
+        font-size: 1vmax;
 
         .landing-presents {
             font-weight: 100;
+            font-size: 1.5vmax;
         }
 
         .landing-title {
             font-family: 'Bebas Neue', 'Poppins', 'Roboto', sans-serif;
             font-weight: 400;
-            font-size: 8rem;
+            font-size: 6vmax;
         }
     }
 
@@ -36,8 +40,22 @@
     }
 
     .landing-backdrop-video {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%,-50%);
         width: 100%;
         margin: 0;
         padding: 0;
+        z-index: -1;
+    }
+}
+
+@media screen and (max-width: 1600px) {
+    .Landing {
+        .landing-backdrop-video {
+            width: auto;
+            height: 100%;
+        }
     }
 }

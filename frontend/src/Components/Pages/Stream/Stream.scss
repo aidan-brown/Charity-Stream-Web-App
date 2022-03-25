@@ -8,8 +8,8 @@
 
 /* The div tag that holds the stream window and the player list */
 .stream-player {
+    aspect-ratio: 16/9;
     width: 85%;
-    height: 680px;
     position: relative;
     display: flex;
     overflow: hidden;
@@ -18,7 +18,7 @@
     border-radius: .5rem;
     box-shadow: .45rem .45rem .25rem rgba(0, 0, 0, 0.25);
 
-    span {
+    .stream-screen {
         position: relative;
         width: 100%;
         height: 100%;
@@ -30,15 +30,17 @@
     .StreamWindow {
         height: 100%;
         width: 100%;
+        transition: all 500ms;
     }
 
     /* The StreamList elements in the stream player div */
     .StreamList {
         width: 100%;
-        height: 100%;
+        height: calc(100% - 3rem);
         font-size: .75rem;
         list-style: none;
-        padding-left: 0;
+        padding: 1rem 0 0 0;
+        margin: 0;
         background-color: white;
         border-radius: .5rem;
         overflow-x: hidden;
@@ -73,25 +75,34 @@
 
     /* The div that holds the stream lists */
     .stream-list {
-        background: rgb(232, 232, 232);
-        background: linear-gradient(120deg, rgba(232, 232, 232, 1) 0%, rgba(218, 218, 218, 1) 100%);
-        z-index: 1;
+        position: absolute;
+        right: 0;
+        z-index: 0;
+        height: 100%;
+        width: 35rem;
+        padding: 5px 5px 5px calc(5px + 3rem);
+        transition: all 500ms;
+
+        h4 {
+            font-weight: 600;
+            font-size: 2rem;
+            color: white;
+            height: 3rem;
+
+            text-align: center;
+            padding: 0;
+            margin: auto;
+        }
     }
 
     /* The stream list when in the active state */
     .stream-list.show {
-        transition: all 500ms;
-        height: 100%;
-        width: 35rem;
-        padding: 5px;
+        right: 0;
     }
 
     /* The player list when in the inactive state */
     .stream-list.hide {
-        transition: all 500ms;
-        height: 100%;
-        width: 0rem;
-        padding: 0;
+        right: -35rem;
         overflow-y: hidden;
     }
 
@@ -99,6 +110,7 @@
         iframe {
             border: none;
             border-radius: .5rem;
+            height: calc(100% - 3rem);
         }
     }
 
@@ -111,9 +123,9 @@
         right: 0;
         padding: 0;
         border-radius: 0;
-        background: rgb(199, 24, 71);
         opacity: 0;
         transition: all 500ms;
+        z-index: 2;
     }
 
     #chat-button {
@@ -122,6 +134,10 @@
 
     #player-button {
         top: 6rem;
+    }
+
+    #shop-button {
+        top: 9rem;
         border-bottom-left-radius: .5rem;
     }
 
@@ -150,6 +166,11 @@
         }
     }
 
+    .stream-button.open {
+        opacity: 1;
+        right: 32rem;
+    }
+
     /* The svg tag that holds the svg of the button */
     .stream-button-icon path {
         fill: white !important;
@@ -174,7 +195,7 @@
     .stream-row-item {
         overflow: hidden;
         margin: 0 1rem;
-        width: 45vw;
+        width: 45vmax;
         aspect-ratio: 2/1;
         box-shadow: .45rem .45rem .25rem rgba(0, 0, 0, 0.25);
         border-radius: .5rem;
@@ -185,16 +206,16 @@
     }
 
     #flavor-text {
-        padding: 2vw;
+        padding: 2vmax;
         color: white;
         text-align: left;
         font-weight: 300;
-        font-size: 1.1vw;
+        font-size: 1.1vmax;
 
         h2 {
             text-decoration: underline;
             text-decoration-thickness: 1px;
-            font-size: 2vw;
+            font-size: 2vmax;
             font-weight: 300;
         }
 
@@ -223,14 +244,22 @@
 @media only screen and (max-width: 1200px) {
     .stream-player {
         flex-direction: column;
-        height: fit-content;
+        height: 100vw;
+        aspect-ratio: auto;
         margin: 0;
         width: 100%;
-        height: fit-content !important;
+        transition: all 500ms;
         border-radius: 0;
 
+        .stream-screen {
+            z-index: 1;
+            height: fit-content;
+        }
+
         .StreamWindow {
-            height: 75vh;
+            aspect-ratio: 1/1;
+            height: 100vw !important;
+            width: 100% !important;
         }
 
         .PlayerList {
@@ -241,20 +270,28 @@
 
         .stream-list {
             border-radius: 0;
+            right: 0 !important;
+            bottom: 0;
+            width: 100%;
+            height: calc(92vh - 100vw - 56.59px);
+            padding: 0 5px 5px 5px;
+            z-index: 0;
+
+            h4 {
+                width: calc(100% - 12rem);
+                margin: 0;
+                margin-left: auto;
+            }
         }
 
-        .stream-list.show {
-            transition: all 500ms;
-            height: 20rem;
-            width: 100%;
-            padding: 0 .5rem 0 1rem;
+        .stream-list.open {
+            bottom: calc(-92vh + 100vw + 56.59px);
+            opacity: 1;
         }
 
         .stream-list.hide {
-            transition: all 500ms;
-            height: 0;
-            width: 100%;
-            padding: 0;
+            opacity: 0;
+            bottom: calc((-92vh + 100vw + 56.59px) * 2);
         }
 
         .stream-button {
@@ -266,7 +303,6 @@
             left: 0;
             padding: 0;
             border-radius: 0;
-            background: rgb(199, 24, 71);
             opacity: 1;
             transition: all 500ms;
         }
@@ -279,9 +315,23 @@
         #player-button {
             top: auto;
             left: 6rem;
+        }
+
+        #shop-button {
+            top: auto;
+            left: 9rem;
             border-radius: 0;
             border-top-right-radius: .5rem;
         }
+
+        .stream-button.open {
+            bottom: -3rem;
+        }
+    }
+
+    .stream-player.open {
+        transition: all 500ms;
+        height: calc(92vh - 56.59px);
     }
 
     /* The div tag of a row on the stream page */
@@ -302,11 +352,13 @@
         }
 
         #flavor-text {
+            height: fit-content;
             padding: 2rem;
             color: white;
             text-align: left;
             font-weight: 300;
             font-size: 2.5vw;
+            padding: .5rem;
 
             h2 {
                 text-decoration: underline;

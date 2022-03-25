@@ -6,8 +6,8 @@ import './StreamWindow.scss';
 const StreamWindow = ({
   title, url, width, height,
 }) => (
-  <div className="StreamWindow">
-    <iframe className="embed-responsive-item" src={url} title={title} width={width} height={height} frameBorder="0" allowFullScreen />
+  <div className="StreamWindow" style={{ width, height }}>
+    <iframe className="embed-responsive-item" src={url} title={title} width="100%" height="100%" frameBorder="0" allowFullScreen />
   </div>
 );
 

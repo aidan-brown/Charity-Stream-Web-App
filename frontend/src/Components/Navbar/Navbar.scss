@@ -20,6 +20,7 @@
 /* The div tag that is responsible for holding the entirity of the navbar */
 .navbar {
 	padding: 0.1rem 4rem 0.1rem 4rem;
+	height: 100%;
 }
 
 /* The ul tag that is responsible for holding all the links for the navbar */
@@ -94,4 +95,8 @@
 
 
 /* Breakpoint when the window reaches medium width (768px) */
-@media only screen and (max-width: 768px) {}
+@media only screen and (max-width: 768px) {
+	.Navbar {
+		height: auto;
+	}
+}
