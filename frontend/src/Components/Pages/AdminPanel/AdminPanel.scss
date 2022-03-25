@@ -1,50 +1,31 @@
 .admin-panel {
-  position: relative;
-  height: 100%;
+  background-color: rgb(176, 25, 126);
+  background-image: linear-gradient(rgb(67, 10, 48), rgb(176, 25, 126));
+  min-height: calc(100vh - 56.59px);
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
 
   .login {
-    height: 50vh;
-    // display: flex;
-    justify-content: center;
+    position: relative;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: white;
 
-    .login-inputs {
+    .inputs {
       display: flex;
+      flex-direction: column;
       justify-content: center;
-  
-      .login-input {
-        display: flex;
-        padding: 5px;
+      align-items: center;
+      padding: 5px;
+      width: 100%;
+
+      .signin {
+        background-color: #b0197e;
+        width: 100%;
+        padding: 10px;
       }
-    }
-  }
-
-  .element {
-    display: flex;
-    // flex-wrap: wrap;
-    justify-content: space-between;
-    width: 100%;
-
-    .image {
-      width: 40px;
-      height: 40px;
-    }
-  }
-
-  .button-group {
-    position: fixed;
-    display: flex;
-    justify-content: space-between;
-
-    bottom: 20px;
-    right: 20px;
-
-    @media screen and (max-width: 480px) {
-      bottom: 0;
-      right: 0;
-    }
-
-    .disabled-button-left {
-      margin-right: 10px;
     }
   }
 }
