@@ -43,7 +43,7 @@ const StoreContent = ({ filterTag, addItemToCart, className }) => {
   }, []);
 
   return (
-    <div className={`StoreContent ${className}`}>
+    <div className={`StoreContent${className ? ` ${className}` : ''}`}>
       {items.filter((item) => !item.disabled && (filterTag === 'all' || item.type === filterTag)).map((item) => (
         <StoreItem
           item={item}

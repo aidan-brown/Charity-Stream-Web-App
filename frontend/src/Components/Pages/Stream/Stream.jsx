@@ -35,12 +35,14 @@ const Stream = ({ setSelectedPlayer, addItemToCart }) => {
       streamLists.forEach((list) => { list.className = list.className.replace('show', 'hide'); });
       // eslint-disable-next-line no-param-reassign
       streamButtons.forEach((button) => { button.className = button.className.replace('show', 'hide').replace('closed', 'open'); });
+      streamDiv.current.className = streamDiv.current.className.replace('closed', 'open');
       streamList.className = streamList.className.replace('hide', 'show');
       streamButton.className = streamButton.className.replace('hide', 'show');
     } else {
       setStreamWidth('100%');
       // eslint-disable-next-line no-param-reassign
       streamButtons.forEach((button) => { button.className = button.className.replace('open', 'closed'); });
+      streamDiv.current.className = streamDiv.current.className.replace('open', 'closed');
       streamList.className = streamList.className.replace('show', 'hide');
       streamButton.className = streamButton.className.replace('show', 'hide');
     }
@@ -48,7 +50,7 @@ const Stream = ({ setSelectedPlayer, addItemToCart }) => {
 
   return (
     <div className="Stream">
-      <div className="stream-player bg-csh-secondary" ref={streamDiv}>
+      <div className="stream-player bg-csh-secondary closed" ref={streamDiv}>
         <span className="stream-screen">
           <StreamWindow title="Charity Stream" width={streamWidth} height="100%" url={`https://player.twitch.tv/?channel=${channel}&muted=true&parent=${window.location.hostname}`} />
           <button type="button" id="perspective-button" className="stream-button bg-csh-secondary btn hide closed" onClick={toggleStreamList('perspective')}>
@@ -83,7 +85,9 @@ const Stream = ({ setSelectedPlayer, addItemToCart }) => {
         </div>
         <div id="shop-list" className="stream-list bg-csh-secondary-gradient hide">
           <h4>Quick Buy</h4>
-          <StoreContent className="StreamList" filterTag="all" addItemToCart={addItemToCart} />
+          <div className="StreamList">
+            <StoreContent filterTag="all" addItemToCart={addItemToCart} />
+          </div>
         </div>
       </div>
 
