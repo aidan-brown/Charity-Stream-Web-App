@@ -5,8 +5,7 @@ const cron = require('node-cron');
 const {
   createPlayer,
   disableElements,
-  dataCallback,
-  getData,
+  dynmapGetPlayerIcon,
   getMinecraftData,
   getPlayers,
   verifyCart,
@@ -17,6 +16,7 @@ const { basicAuth } = require('./handlers/authentication');
 const { testConnection } = require('./sql');
 const { createTables } = require('./sql/models');
 const rcon = require('./utils/rcon');
+const { dynmapGetData } = require('./handlers/dynmap');
 
 const app = express();
 const port = 8080;
@@ -27,11 +27,12 @@ app.use(express.json());
 // Routes that do not require auth
 app.get('/minecraft/:type', getMinecraftData);
 app.get('/players', getPlayers);
-app.get('/data', getData);
 app.get('/images/:type/:image', getImages);
 app.get('/checkout/status', (_, res) => res.status(200).send(false));
 app.post('/verify-checkout', verifyCart);
 app.post('/verify-donation', verifyDonation);
+app.get('/dynmap/icons/:playerName', dynmapGetPlayerIcon);
+app.get('/dynmap/data', dynmapGetData);
 
 // This tells node to use auth for the routes below here
 app.use(basicAuth);
@@ -39,7 +40,6 @@ app.use(basicAuth);
 // Everything below this point should require auth
 app.put('/disable', disableElements);
 app.post('/players', createPlayer);
-app.post('/data-callback', dataCallback);
 app.get('/', (_, res) => res.send('Success').status(200));
 
 // eslint-disable-next-line no-console
