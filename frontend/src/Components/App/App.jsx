@@ -4,7 +4,7 @@ import { Route, Routes, BrowserRouter } from 'react-router-dom';
 import Navbar from '../Navbar/Navbar';
 import Footer from '../Footer/Footer';
 import {
-  Stream, Store, AdminPanel, Landing,
+  Stream, Store, AdminPanel, Landing, DonationConfirmation,
 } from '../Pages';
 import Cart from '../Pages/Store/Cart/Cart';
 import { msToTime, postReq } from '../../Utils';
@@ -17,8 +17,10 @@ const App = () => {
   const [cartItems, setCartItems] = useState([]);
   const [player, setPlayer] = useState('');
   const [showCart, setShowCart] = useState('no');
+  const [popup, setPopup] = useState({ closed: true });
 
   const itemAddRef = useRef();
+  const popupBlur = useRef();
 
   useEffect(() => {
     let lsGet = localStorage.getItem('player');
@@ -43,6 +45,21 @@ const App = () => {
   useEffect(() => {
     localStorage.setItem('cartItems', JSON.stringify(cartItems));
   }, [cartItems]);
+
+  const focusPopup = () => {
+    popup.focus();
+  };
+
+  useEffect(() => {
+    if (popup.closed) {
+      setPopup({ closed: true });
+      popupBlur.current.className = popupBlur.current.className.replace('on', 'off');
+      popupBlur.current.removeEventListener('click', focusPopup);
+    } else {
+      popupBlur.current.className = popupBlur.current.className.replace('off', 'on');
+      popupBlur.current.addEventListener('click', focusPopup);
+    }
+  }, [popup.closed]);
 
   const removeItemFromCart = (index) => () => {
     setCartItems([...cartItems.slice(0, index), ...cartItems.slice(index + 1)]);
@@ -109,7 +126,13 @@ const App = () => {
       .then((res) => res.text())
       .then((JG_URL) => {
         setCartItems([]);
-        window.location.replace(JG_URL);
+        setPopup(window.open(JG_URL, 'targetWindow',
+          `popup,
+          width=483,
+          height=680,
+          left=${(window.screen.width / 2) - 241.5},
+          top=${(window.screen.height / 2) - 340},
+        `));
       });
   };
 
@@ -117,34 +140,73 @@ const App = () => {
     setShowCart(showCart === 'yes' ? 'no' : 'yes');
   };
 
+  const CartComponents = () => (
+    <span>
+      <button type="button" className="bg-csh-tertiary toggle-cart " onClick={toggleCartMenu} data-showcart={showCart}><span className="material-icons">{showCart === 'yes' ? 'arrow_back' : 'shopping_cart'}</span></button>
+      <img className="cart-add-item" ref={itemAddRef} src="" alt="item added to cart" data-show="no" />
+      <Cart
+        player={player}
+        setPlayer={setPlayer}
+        cartItems={cartItems}
+        changeCartAmount={changeCartAmount}
+        changeEffectPower={changeEffectPower}
+        changeEffectTime={changeEffectTime}
+        removeFromCart={removeItemFromCart}
+        proceedToCheckout={proceedToCheckout}
+        showCart={showCart}
+        calculateTotal={calculateTotal}
+      />
+    </span>
+  );
+
   return (
     <BrowserRouter>
       <div className="App">
         <Navbar remainingTime={remainingTime} />
         <main className="Content">
-          <button type="button" className="bg-csh-tertiary toggle-cart" onClick={toggleCartMenu} data-showcart={showCart}><span className="material-icons">{showCart === 'yes' ? 'arrow_back' : 'shopping_cart'}</span></button>
-          <img className="cart-add-item" ref={itemAddRef} src="" alt="item added to cart" data-show="no" />
-          <Cart
-            player={player}
-            setPlayer={setPlayer}
-            cartItems={cartItems}
-            changeCartAmount={changeCartAmount}
-            changeEffectPower={changeEffectPower}
-            changeEffectTime={changeEffectTime}
-            removeFromCart={removeItemFromCart}
-            proceedToCheckout={proceedToCheckout}
-            showCart={showCart}
-            calculateTotal={calculateTotal}
-          />
           <Routes>
-            <Route path="/store" element={<Store addItemToCart={addItemToCart} />} />
+            <Route
+              exact
+              path="/stream"
+              element={(
+                <span>
+                  {CartComponents()}
+                  <Stream setSelectedPlayer={setPlayer} addItemToCart={addItemToCart} />
+                </span>
+            )}
+            />
+            <Route
+              path="/store"
+              element={(
+                <span>
+                  {CartComponents()}
+                  <Store addItemToCart={addItemToCart} />
+                </span>
+            )}
+            />
+            <Route path="/donation-confirmation/:donationID/:checkoutID" element={<DonationConfirmation />} />
             <Route path="/admin-panel" element={<AdminPanel />} />
-            <Route exact path="/stream" element={<Stream setSelectedPlayer={setPlayer} addItemToCart={addItemToCart} />} />
-            <Route exact path="/" element={remainingTime > 0 ? <Landing countdown={msToTime(remainingTime)} /> : <Stream setSelectedPlayer={setPlayer} />} />
+            <Route
+              exact
+              path="/"
+              element={remainingTime > 0 ? <Landing countdown={msToTime(remainingTime)} /> : (
+                <span>
+                  {CartComponents()}
+                  <Stream setSelectedPlayer={setPlayer} addItemToCart={addItemToCart} />
+                </span>
+              )}
+            />
           </Routes>
         </main>
         <Footer />
       </div>
+      <span className="popup-blur off" ref={popupBlur}>
+        <p className="popup-message bg-csh-secondary">
+          Please continue in the new window
+          <br />
+          Click here if it hasn't popped up
+        </p>
+      </span>
     </BrowserRouter>
   );
 };

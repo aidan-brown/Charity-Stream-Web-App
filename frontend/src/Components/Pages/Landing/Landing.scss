@@ -51,7 +51,7 @@
     }
 }
 
-@media screen and (max-width: 1600px) {
+@media (orientation: portrait) {
     .Landing {
         .landing-backdrop-video {
             width: auto;
