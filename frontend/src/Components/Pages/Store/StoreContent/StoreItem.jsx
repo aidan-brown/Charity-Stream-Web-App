@@ -2,7 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { BACKENDURL } from '../../../App/constants';
 
-const StoreItem = ({ item, addItemToCart }) => {
+const StoreItem = ({
+  item, addItemToCart, isStore, className,
+}) => {
   const additionalDescriptors = [];
   switch (item.type) {
     case 'tool':
@@ -70,7 +72,7 @@ const StoreItem = ({ item, addItemToCart }) => {
   }
 
   return (
-    <span tabIndex={0} role="button" className="store-item bg-csh-tertiary" onClick={addItemToCart} onKeyDown={addItemToCart} data-disabled={item.disabled}>
+    <span tabIndex={0} role="button" className={`store-item bg-csh-tertiary ${className || ''}`} onClick={addItemToCart} onKeyDown={addItemToCart} data-disabled={item.disabled}>
       <div className="store-item-header bg-csh-primary-gradient">
         <img className="store-item-image" src={`${BACKENDURL}/images/items/${item.id}-full.jpg`} alt={item.displayName} />
         <img className="store-item-icon" src={`${BACKENDURL}/images/items/${item.id}.png`} alt={item.displayName} />
@@ -89,7 +91,7 @@ const StoreItem = ({ item, addItemToCart }) => {
           {additionalDescriptors}
         </dl>
       </div>
-      <span className="add-cart material-icons md-36">add_shopping_cart</span>
+      {isStore && <span className="add-cart material-icons md-36">add_shopping_cart</span>}
     </span>
   );
 };
@@ -110,6 +112,13 @@ StoreItem.propTypes = {
     disabled: PropTypes.bool.isRequired,
   }).isRequired,
   addItemToCart: PropTypes.func.isRequired,
+  isStore: PropTypes.bool,
+  className: PropTypes.string,
+};
+
+StoreItem.defaultProps = {
+  isStore: true,
+  className: '',
 };
 
 export default StoreItem;

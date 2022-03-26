@@ -3,11 +3,13 @@ const express = require('express');
 const cors = require('cors');
 const cron = require('node-cron');
 const {
-  createPlayer,
+  createPlayers,
+  deletePlayer,
   disableElements,
   dynmapGetPlayerIcon,
   getMinecraftData,
   getPlayers,
+  runRconCommands,
   verifyCart,
   verifyDonation,
 } = require('./handlers');
@@ -37,10 +39,12 @@ app.get('/dynmap/data', dynmapGetData);
 // This tells node to use auth for the routes below here
 app.use(basicAuth);
 
-// Everything below this point should require auth
+// Everything below this point requires auth
 app.put('/disable', disableElements);
-app.post('/players', createPlayer);
-app.get('/', (_, res) => res.send('Success').status(200));
+app.post('/players', createPlayers);
+app.delete('/players/:username', deletePlayer);
+app.post('/run-commands', runRconCommands);
+app.get('/', (_, res) => res.status(200).send('Success'));
 
 // eslint-disable-next-line no-console
 app.listen(port, async () => {

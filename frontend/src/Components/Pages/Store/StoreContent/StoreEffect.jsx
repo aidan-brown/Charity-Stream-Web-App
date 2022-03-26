@@ -2,8 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { BACKENDURL } from '../../../App/constants';
 
-const StoreEffect = ({ effect, addItemToCart }) => (
-  <span tabIndex={0} role="button" className="store-item bg-csh-tertiary" onClick={addItemToCart} onKeyDown={addItemToCart} data-disabled={effect.disabled}>
+const StoreEffect = ({
+  effect, addItemToCart, isStore, className,
+}) => (
+  <span tabIndex={0} role="button" className={`store-item bg-csh-tertiary ${className || ''}`} onClick={addItemToCart} onKeyDown={addItemToCart} data-disabled={effect.disabled}>
     <div className="store-item-header bg-csh-primary-gradient">
       <img className="store-item-image" src={`${BACKENDURL}/images/effects/${effect.id}-full.jpg`} alt={effect.displayName} />
       <img className="store-item-icon" src={`${BACKENDURL}/images/effects/${effect.id}.png`} alt={effect.displayName} />
@@ -22,8 +24,7 @@ const StoreEffect = ({ effect, addItemToCart }) => (
         </span>
       </dl>
     </div>
-
-    <span className="add-cart material-icons md-36">add_shopping_cart</span>
+    {isStore && <span className="add-cart material-icons md-36">add_shopping_cart</span>}
   </span>
 );
 
@@ -36,6 +37,13 @@ StoreEffect.propTypes = {
     disabled: PropTypes.bool.isRequired,
   }).isRequired,
   addItemToCart: PropTypes.func.isRequired,
+  isStore: PropTypes.bool,
+  className: PropTypes.string,
+};
+
+StoreEffect.defaultProps = {
+  isStore: true,
+  className: '',
 };
 
 export default StoreEffect;

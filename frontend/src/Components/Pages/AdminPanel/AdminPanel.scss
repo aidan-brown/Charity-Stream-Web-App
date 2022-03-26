@@ -1,50 +1,198 @@
 .admin-panel {
-  position: relative;
-  height: 100%;
+  background-color: white;
 
-  .login {
-    height: 50vh;
-    // display: flex;
+  .MuiTabPanel-root {
+    padding: 0px;
+  }
+
+  .login-wrapper {
+    background-color: #b0197e;
+    background-image: linear-gradient(rgb(176, 25, 126), #cd1b4c);
     justify-content: center;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
 
-    .login-inputs {
-      display: flex;
-      justify-content: center;
+    .login {
+      position: relative;
+      padding: 10px;
+      border-radius: 5px;
+      background-color: white;
+      width: 30%;
   
-      .login-input {
+      .inputs {
         display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
         padding: 5px;
+        width: 100%;
+  
+        .signin {
+          background-color: #b0197e;
+          width: 100%;
+          padding: 10px;
+          margin-top: 30px;
+  
+          ::after {
+            color: red;
+          }
+        }
       }
     }
   }
+  
 
-  .element {
+  .disabled-items {
+    position: relative;
+    padding: 10px;
+
+    .StoreContent {
+      border-radius: 7.55px;
+      height: 80vh;
+      overflow-y: scroll;
+      background-color: #dadada;
+      padding: 10px;
+      max-width: 90%;
+    }
+
+    .search-bar {
+      width: 90%;
+      margin: auto;
+    }
+
+    .selected {
+      border: 10px solid rgb(255, 0, 170);
+    }
+
     display: flex;
-    // flex-wrap: wrap;
-    justify-content: space-between;
+    flex-wrap: wrap;
+    flex-direction: column;
     width: 100%;
+    text-align: left;
 
-    .image {
-      width: 40px;
-      height: 40px;
+    padding: 5px;
+
+    h1.title {
+      font-size: 50px;
+      color: white;
+    }
+
+    .toggle-button {
+      border-radius: 7.55px;
+      background-color: #cd1b4c;
+      position: fixed;
+      bottom: 100px;
+      right: 100px;
+      font-size: 30px;
     }
   }
 
-  .button-group {
-    position: fixed;
+  .players {
     display: flex;
-    justify-content: space-between;
+    width: 100%;
+    justify-content: center;
+    padding: 10px;
 
-    bottom: 20px;
-    right: 20px;
+    .create-player {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      border-radius: 7.55px;
+      height: 80vh;
+      max-width: 50%;
+      width: 100%;
+      padding: 10px;
+      background-color: #dadada;
+  
+      .create-player-form {
+        display: flex;
+        align-items: center;
+        border-radius: 7.55px;
+        width: 100%;
+        padding: 10px;
+        background-color: white;
+      }
 
-    @media screen and (max-width: 480px) {
-      bottom: 0;
-      right: 0;
+      .create-single-button {
+        background-color: #cd1b4c;
+        border-radius: 7.55px;
+      }
+
+      .create-bulk {
+        border-radius: 7.55px;
+        width: 100%;
+        padding: 10px;
+        background-color: white;
+        margin-top: 8px;
+
+        .create-bulk-field {
+          width: 100%;
+        }
+
+        .create-bulk-button {
+          margin-top: 8px;
+          background-color: #cd1b4c;
+          border-radius: 7.55px;
+        }
+      }
+  
     }
 
-    .disabled-button-left {
-      margin-right: 10px;
+    .player-display {
+      flex-wrap: wrap;
+      height: 80vh;
+      max-width: 50%;
+      width: 100%;
+      margin-left: 8px;
+      margin-right: 8px;
+      background-color: #dadada;
+      border-radius: 7.55px;
+      padding: 10px;
+
+      .player-background {
+        background-color: white;
+        border-radius: 7.55px;
+        padding: 10px;
+      }
+
+      .players {
+        overflow-y: scroll;
+        display: flex;
+        flex-wrap: wrap;
+        height: 70vh;
+        width: 100%;
+        flex-wrap: wrap;
+        align-content: flex-start;
+        background-color: white;
+        border-radius: 7.55px;
+
+        .player {
+          position: relative;
+          color: white;
+          background-color: #cd1b4c;
+          border-radius: 7.55px;
+          width: 100%;
+          height: 2.5rem;
+          margin-top: 4px;
+          margin-bottom: 4px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+
+          .delete-button {
+            position: absolute;
+            right: 10px;
+            color: white;
+          }
+
+          p {
+            margin-top: 1rem;
+            margin-bottom: 1rem;
+          }
+        }
+      }
     }
   }
 }

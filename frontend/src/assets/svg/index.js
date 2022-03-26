@@ -12,7 +12,7 @@ import GithubLogo from './github.svg';
 import Toggler from './toggler.svg';
 
 export const AssociationLogos = {
-  RIT, CSH, ARTHOUSE, BLACKBAUD, EHOUSE, HOGS, SSE,
+  RIT, CSH, ARTHOUSE, BLACKBAUD, EHOUSE, HOGS, SSE, STREAMER: RIT, OTHER: RIT,
 };
 export {
   GithubLogo, Toggler,
