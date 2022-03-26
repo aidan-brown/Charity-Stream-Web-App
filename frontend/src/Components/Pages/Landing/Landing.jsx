@@ -11,7 +11,7 @@ const Landing = ({ setStreamStarted }) => {
 
   setTimeout(() => {
     setRemainingTime(streamDate - Date.now());
-    if (remainingTime <= 0) { setStreamStarted(true); }
+    if (remainingTime <= 0) setStreamStarted(true);
   }, 1000);
 
   return (
