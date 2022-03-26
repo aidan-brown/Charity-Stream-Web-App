@@ -11,6 +11,7 @@
     "id": "wooden_shovel",
     "name": "Shovel bomb",
     "description": "Fill someone's inventory with wooden shovels. Why?",
+    "type": "misc",
     "price": 5.00,
     "count": 36
   }

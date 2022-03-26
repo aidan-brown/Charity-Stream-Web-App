@@ -17,6 +17,9 @@ const Player = sequelize.define('Player', {
     type: DataTypes.ENUM('csh', 'blackbaud', 'hogs', 'ehouse', 'sse', 'arthouse', 'rit', 'streamer', 'other'),
     allowNull: false,
   },
+  twitchChannel: {
+    type: DataTypes.STRING,
+  },
 });
 
 module.exports = Player;

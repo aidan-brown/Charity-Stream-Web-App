@@ -10,18 +10,27 @@ module.exports = {
       res.send('There was an error getting the players').status(500);
     }
   },
-  createPlayer: async (req, res) => {
+  createPlayers: async (req, res) => {
+    const players = req.body;
+
     try {
-      const existing = await Player.findAll({ where: { username: req.body.username } });
+      const errors = [];
+      const newPlayers = await Promise.all(players.map(async (player) => {
+        const existing = await Player.findAll({ where: { username: player.username } });
 
-      if (existing.length === 0) {
-        const newPlayer = await Player.create(req.body);
+        if (existing.length === 0) return Player.create(player);
 
-        res.send(newPlayer).status(200);
-      } else {
-        res.send('A player with that username already exists').status(400);
-      }
+        errors.push(`A Player with the username ${player.username} already exists`);
+        return null;
+      }));
+
+      res.status(errors.length === 0 ? 200 : 400).send({
+        ...(errors.length > 0 && { errors }),
+        newPlayers: newPlayers.filter((p) => !!p),
+      });
     } catch (err) {
+      console.log(err);
+
       if (err.name === 'SequelizeValidationError') {
         const [{ message }] = err.errors;
 
