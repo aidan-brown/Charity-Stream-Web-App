@@ -141,7 +141,6 @@
     }
 
     .player-display {
-      display: flex;
       flex-wrap: wrap;
       height: 80vh;
       max-width: 50%;
@@ -163,6 +162,7 @@
         display: flex;
         flex-wrap: wrap;
         height: 70vh;
+        width: 100%;
         flex-wrap: wrap;
         align-content: flex-start;
         background-color: white;

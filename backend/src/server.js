@@ -4,6 +4,7 @@ const cors = require('cors');
 const cron = require('node-cron');
 const {
   createPlayers,
+  deletePlayer,
   disableElements,
   dynmapGetPlayerIcon,
   getMinecraftData,
@@ -41,6 +42,7 @@ app.use(basicAuth);
 // Everything below this point requires auth
 app.put('/disable', disableElements);
 app.post('/players', createPlayers);
+app.delete('/players/:username', deletePlayer);
 app.post('/run-commands', runRconCommands);
 app.get('/', (_, res) => res.status(200).send('Success'));
 

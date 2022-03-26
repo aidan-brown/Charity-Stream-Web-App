@@ -29,8 +29,6 @@ module.exports = {
         newPlayers: newPlayers.filter((p) => !!p),
       });
     } catch (err) {
-      console.log(err);
-
       if (err.name === 'SequelizeValidationError') {
         const [{ message }] = err.errors;
 
@@ -38,6 +36,22 @@ module.exports = {
       } else {
         res.send('An unexpected error occurred with the MySQL server').status(500);
       }
+    }
+  },
+  deletePlayer: async (req, res) => {
+    const { username } = req.params;
+
+    try {
+      const toDelete = await Player.findByPk(username);
+
+      if (toDelete) {
+        await toDelete.destroy();
+        res.status(200).send('Player Deleted');
+      } else {
+        res.status(404).send('Player not found');
+      }
+    } catch (err) {
+      res.status(500).send('An error occurred');
     }
   },
 };

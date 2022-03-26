@@ -156,6 +156,23 @@ const AdminPanel = () => {
       });
   };
 
+  const deletePlayer = (usn) => {
+    fetch(`${BACKENDURL}/players/${usn}`, {
+      method: 'DELETE',
+      headers: {
+        Authorization: authHeader,
+        'Content-Type': 'application/json',
+      },
+    })
+      .then(() => {
+        setPlayers(players.filter((p) => p.username !== usn));
+      }).catch(() => {
+        setError({
+          message: 'Could not delete player',
+        });
+      });
+  };
+
   const generatePlayers = () => {
     try {
       const lines = text.split('\n');
@@ -193,7 +210,7 @@ const AdminPanel = () => {
 
       createPlayers(newPlayers);
     } catch (err) {
-      console.log(err);
+      // No errors here
     }
   };
 
@@ -419,7 +436,14 @@ const AdminPanel = () => {
                     .map(({ username: un, name }) => (
                       <div key={un} className="player">
                         <p>{`${name} [${un}]`}</p>
-                        <IconButton className="delete-button" aria-label="delete" size="large">
+                        <IconButton
+                          className="delete-button"
+                          aria-label="delete"
+                          size="large"
+                          onClick={() => {
+                            deletePlayer(un);
+                          }}
+                        >
                           <DeleteIcon />
                         </IconButton>
                       </div>
