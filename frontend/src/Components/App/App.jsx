@@ -204,7 +204,7 @@ const App = () => {
         <p className="popup-message bg-csh-secondary">
           Please continue in the new window
           <br />
-          Click here if it hasn't popped up
+          Click here if it hasn&apos;t popped up
         </p>
       </span>
     </BrowserRouter>
