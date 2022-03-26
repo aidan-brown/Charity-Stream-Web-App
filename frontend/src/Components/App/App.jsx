@@ -184,7 +184,7 @@ const App = () => {
             <Route
               exact
               path="/"
-              element={!streamStarted ? <Landing setStreamStarted={setStreamStarted}} /> : (
+              element={!streamStarted ? <Landing setStreamStarted={setStreamStarted} /> : (
                 <span>
                   {CartComponents()}
                   <Stream setSelectedPlayer={setPlayer} addItemToCart={addItemToCart} />
