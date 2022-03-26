@@ -7,13 +7,12 @@ import {
   Stream, Store, AdminPanel, Landing, DonationConfirmation,
 } from '../Pages';
 import Cart from '../Pages/Store/Cart/Cart';
-import { msToTime, postReq } from '../../Utils';
+import { postReq } from '../../Utils';
 import { BACKENDURL } from './constants';
 // import PlayerData from '../PlayerData';
 
 const App = () => {
-  const streamDate = new Date('April 8, 2022 19:00:00');
-  const [remainingTime, setRemainingTime] = useState(streamDate - Date.now());
+  const [streamStarted, setStreamStarted] = useState(false);
   const [cartItems, setCartItems] = useState([]);
   const [player, setPlayer] = useState('');
   const [showCart, setShowCart] = useState('no');
@@ -34,10 +33,6 @@ const App = () => {
       setCartItems(JSON.parse(lsGet));
     }
   }, []);
-
-  setTimeout(() => {
-    setRemainingTime(streamDate - Date.now());
-  }, 1000);
 
   useEffect(() => {
     localStorage.setItem('player', player);
@@ -162,7 +157,7 @@ const App = () => {
   return (
     <BrowserRouter>
       <div className="App">
-        <Navbar remainingTime={remainingTime} />
+        <Navbar streamStarted={streamStarted} />
         <main className="Content">
           <Routes>
             <Route
@@ -189,7 +184,7 @@ const App = () => {
             <Route
               exact
               path="/"
-              element={remainingTime > 0 ? <Landing countdown={msToTime(remainingTime)} /> : (
+              element={!streamStarted ? <Landing setStreamStarted={setStreamStarted}} /> : (
                 <span>
                   {CartComponents()}
                   <Stream setSelectedPlayer={setPlayer} addItemToCart={addItemToCart} />

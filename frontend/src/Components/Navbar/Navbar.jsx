@@ -6,12 +6,12 @@ import './Navbar.scss';
 import '../Bootstrap-Colors/palette.scss';
 
 /** Class for constructing the main navbar of the page * */
-const Navbar = ({ remainingTime }) => {
+const Navbar = ({ streamStarted }) => {
   useEffect(() => {
     let activeLink;
     switch (window.location.pathname) {
       case '/':
-        if (remainingTime <= 0) {
+        if (streamStarted) {
           activeLink = document.querySelector('#stream');
         }
         break;
@@ -35,9 +35,7 @@ const Navbar = ({ remainingTime }) => {
     */
   const setLinkActive = (event) => {
     document.querySelector('.Navbar .active').className = 'nav-link';
-    if (event.target.className.includes('navbar-brand')) {
-      if (remainingTime > 0) return;
-
+    if (event.target.className.includes('navbar-brand') && streamStarted) {
       document.querySelector('#stream').className = 'nav-link active';
     }
     /* eslint-disable no-param-reassign */
@@ -78,7 +76,7 @@ const Navbar = ({ remainingTime }) => {
 };
 
 Navbar.propTypes = {
-  remainingTime: PropTypes.number.isRequired,
+  streamStarted: PropTypes.bool.isRequired,
 };
 
 export default Navbar;
