@@ -7,13 +7,12 @@ import {
   Stream, Store, AdminPanel, Landing,
 } from '../Pages';
 import Cart from '../Pages/Store/Cart/Cart';
-import { msToTime, postReq } from '../../Utils';
+import { postReq } from '../../Utils';
 import { BACKENDURL } from './constants';
 // import PlayerData from '../PlayerData';
 
 const App = () => {
-  const streamDate = new Date('April 8, 2022 19:00:00');
-  const [remainingTime, setRemainingTime] = useState(streamDate - Date.now());
+  const [streamStarted, setStreamStarted] = useState(false);
   const [cartItems, setCartItems] = useState([]);
   const [player, setPlayer] = useState('');
   const [showCart, setShowCart] = useState('no');
@@ -32,10 +31,6 @@ const App = () => {
       setCartItems(JSON.parse(lsGet));
     }
   }, []);
-
-  setTimeout(() => {
-    setRemainingTime(streamDate - Date.now());
-  }, 1000);
 
   useEffect(() => {
     localStorage.setItem('player', player);
@@ -120,7 +115,7 @@ const App = () => {
   return (
     <BrowserRouter>
       <div className="App">
-        <Navbar remainingTime={remainingTime} />
+        <Navbar streamStarted={streamStarted} />
         <main className="Content">
           <button type="button" className="bg-csh-tertiary toggle-cart" onClick={toggleCartMenu} data-showcart={showCart}><span className="material-icons">{showCart === 'yes' ? 'arrow_back' : 'shopping_cart'}</span></button>
           <img className="cart-add-item" ref={itemAddRef} src="" alt="item added to cart" data-show="no" />
@@ -140,7 +135,7 @@ const App = () => {
             <Route path="/store" element={<Store addItemToCart={addItemToCart} />} />
             <Route path="/admin-panel" element={<AdminPanel />} />
             <Route exact path="/stream" element={<Stream setSelectedPlayer={setPlayer} addItemToCart={addItemToCart} />} />
-            <Route exact path="/" element={remainingTime > 0 ? <Landing countdown={msToTime(remainingTime)} /> : <Stream setSelectedPlayer={setPlayer} />} />
+            <Route exact path="/" element={!streamStarted ? <Landing setStreamStarted={setStreamStarted} /> : <Stream setSelectedPlayer={setPlayer} />} />
           </Routes>
         </main>
         <Footer />
