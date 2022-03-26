@@ -17,7 +17,11 @@ const Navbar = ({ streamStarted }) => {
         break;
 
       default:
-        activeLink = document.querySelector(`#${window.location.pathname.substring(1, window.location.pathname.length).toLowerCase()}`);
+        if (window.location.pathname.split('/').length <= 2) {
+          activeLink = document
+            .querySelector(`#${window.location.pathname
+              .substring(1, window.location.pathname.length).toLowerCase()}`);
+        }
         break;
     }
 

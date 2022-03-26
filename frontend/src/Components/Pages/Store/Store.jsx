@@ -11,40 +11,19 @@ import {
   mdiSwordCross,
   mdiWizardHat,
 } from '@mdi/js';
-import { useSearchParams } from 'react-router-dom';
 import StoreContent from './StoreContent/StoreContent';
 import './Store.scss';
-import { BACKENDURL } from '../../App/constants';
 
 /** Responsible for constructing the store page component * */
 const Store = ({ addItemToCart }) => {
   const [filterTag, setFilterTag] = useState('all');
-  const [searchParams, setSearchParams] = useSearchParams();
 
   const storeDiv = useRef();
-
-  const donationID = searchParams.get('donationId');
-  const checkoutID = searchParams.get('checkoutId');
 
   useEffect(() => {
     const lsGet = localStorage.getItem('filterTag');
     if (lsGet) {
       setFilterTag(lsGet);
-    }
-
-    if (donationID && checkoutID) {
-      const reqJSON = {
-        donationID,
-        checkoutID,
-      };
-      fetch(`${BACKENDURL}/verify-donation`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(reqJSON),
-      })
-        .then(() => setSearchParams());
     }
   }, []);
 
