@@ -183,17 +183,22 @@
     }
 }
 
+.stream-row-title {
+    font-size: 2vmax;
+    font-weight: 600;
+    margin: 2rem 3rem 0 3rem;
+    text-align: right;
+}
+
 /* The div tag of a row on the stream page */
 .stream-row {
     display: flex;
     flex-direction: row;
-    align-items: center;
     justify-content: space-evenly;
-    margin: 3rem 1rem;
+    margin: 1rem;
 
     /* An item in the stream-row */
     .stream-row-item {
-        overflow: hidden;
         margin: 0 1rem;
         width: 45vmax;
         aspect-ratio: 2/1;
@@ -201,23 +206,17 @@
         border-radius: .5rem;
     }
 
-    #dynmap-frame {
+    .stream-row-iframe {
         border: none;
+        aspect-ratio: auto;
     }
 
-    #flavor-text {
+    .stream-row-text-box {
         padding: 2vmax;
         color: white;
         text-align: left;
-        font-weight: 300;
+        font-weight: 400;
         font-size: 1.1vmax;
-
-        h2 {
-            text-decoration: underline;
-            text-decoration-thickness: 1px;
-            font-size: 2vmax;
-            font-weight: 300;
-        }
 
         a {
             &:link {
@@ -238,6 +237,11 @@
             }
         }
     }
+}
+
+.row-reverse {
+    flex-direction: row-reverse;
+    text-align: left;
 }
 
 /* Breakpoint when the window reaches medium width (1200px) */
@@ -334,14 +338,18 @@
         height: calc(92vh - 56.59px);
     }
 
+    .stream-row-title {
+        font-size: 2rem;
+        text-align: left;
+    }
+
     /* The div tag of a row on the stream page */
     .stream-row {
         display: flex;
-        flex-direction: column;
-        align-items: center;
+        flex-direction: column-reverse;
         justify-content: flex-start;
         margin: 1rem 0;
-        height: fit-content;
+        height: auto;
 
         /* An item in the stream-row */
         .stream-row-item {
@@ -351,37 +359,34 @@
             margin: 0;
         }
 
-        #flavor-text {
-            height: fit-content;
-            padding: 2rem;
-            color: white;
-            text-align: left;
-            font-weight: 300;
-            font-size: 2.5vw;
-            padding: .5rem;
+        .stream-row-iframe {
+            aspect-ratio: 1/1;
+        }
 
-            h2 {
-                text-decoration: underline;
-                text-decoration-thickness: 1px;
-                font-size: 3vw;
-                font-weight: 300;
-            }
+        .stream-row-text-box {
+            height: fit-content;
+            color: black;
+            background: transparent;
+            box-shadow: none;
+            text-align: left;
+            font-size: 1.25rem;
+            padding: 0 2rem;
 
             a {
                 &:link {
-                    color: lightgrey;
+                    color: darkgrey;
                 }
 
                 &:visited {
-                    color: lightgrey;
+                    color: darkgray;
                 }
 
                 &:active {
-                    color: lightgrey;
+                    color: darkgray;
                 }
 
                 &:hover {
-                    color: whitesmoke;
+                    color: gray;
                     text-decoration: underline;
                 }
             }
