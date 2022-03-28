@@ -1,0 +1,115 @@
+  
+  .player-manage {
+    display: flex;
+    width: 90%;
+    margin: auto;
+    justify-content: center;
+    padding: 10px;
+    min-height: 80vh;
+    font-family: 'Poppins';
+
+    .create-player {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      border-radius: 7.55px;
+      min-height: 87vh;
+      max-width: 50%;
+      width: 100%;
+      padding: 10px;
+      background-color: #dadada;
+      margin: 8px 4px 8px 8px;
+
+      .create-player-form {
+        display: flex;
+        align-items: center;
+        border-radius: 7.55px;
+        width: 100%;
+        padding: 10px;
+        background-color: white;
+      }
+
+      .create-single-button {
+        border-radius: 7.55px;
+      }
+
+      .create-bulk {
+        border-radius: 7.55px;
+        width: 100%;
+        padding: 10px;
+        background-color: white;
+        margin-top: 8px;
+
+        b {
+          background-color: #dadada;
+          border-radius: 7.55px;
+          padding: 2px;
+        }
+
+        .create-bulk-field {
+          width: 100%;
+        }
+
+        .create-bulk-button {
+          margin-top: 8px;
+          border-radius: 7.55px;
+        }
+      }
+  
+    }
+
+    .player-display {
+      flex-wrap: wrap;
+      max-width: 50%;
+      width: 100%;
+      background-color: #dadada;
+      border-radius: 7.55px;
+      padding: 10px;
+      margin: 8px 8px 8px 4px;
+      min-height: 87vh;
+      
+      .player-background {
+        background-color: white;
+        border-radius: 7.55px;
+        padding: 10px;
+        min-height: 85vh;        
+      }
+
+      .players {
+        overflow-y: scroll;
+        display: flex;
+        flex-wrap: wrap;
+        min-height: 70vh;
+        width: 100%;
+        flex-wrap: wrap;
+        align-content: flex-start;
+        background-color: white;
+        border-radius: 7.55px;
+
+        .player {
+          position: relative;
+          color: white;
+          background-color: #9c27b0;
+          border-radius: 7.55px;
+          width: 100%;
+          min-height: 2.5rem;
+          margin-top: 4px;
+          margin-bottom: 4px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+
+          .delete-button {
+            position: absolute;
+            right: 10px;
+            color: white;
+          }
+
+          p {
+            margin-top: 1rem;
+            margin-bottom: 1rem;
+          }
+        }
+      }
+    }
+  }

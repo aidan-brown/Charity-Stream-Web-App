@@ -46,13 +46,12 @@ app.delete('/players/:username', deletePlayer);
 app.post('/run-commands', runRconCommands);
 app.get('/', (_, res) => res.status(200).send('Success'));
 
-// eslint-disable-next-line no-console
 app.listen(port, async () => {
   // Test SQL connection, we can't run if this fails
   await testConnection();
   createTables();
 
-  // Schedule cron job to process rcon commands every 5 seconds
+  // Schedule cron job to process rcon commands every 2 seconds
   cron.schedule(`*/${process.env.CRON_TIME || 2} * * * * *`, rcon);
 
   // eslint-disable-next-line no-console

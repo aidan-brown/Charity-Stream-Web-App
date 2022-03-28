@@ -1,9 +1,11 @@
 import { postReq, getReq, putReq } from './fetchRequests';
 import msToTime from './timeConvert';
+import getUrl from './getUrl';
 
 export {
-  postReq,
+  getUrl,
   getReq,
+  postReq,
   putReq,
   msToTime,
 };
