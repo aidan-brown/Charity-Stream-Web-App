@@ -19,7 +19,7 @@ const { getImages } = require('./images');
 const { basicAuth } = require('./handlers/authentication');
 const { testConnection } = require('./sql');
 const { createTables } = require('./sql/models');
-const rcon = require('./utils/rcon');
+const { rcon } = require('./utils');
 const { dynmapGetData } = require('./handlers/dynmap');
 
 const app = express();

@@ -3,6 +3,7 @@ const {
   Checkout, Player, DisabledElement, Command,
 } = require('../sql/models');
 const { all } = require('../minecraftData');
+const { getUrl } = require('../utils');
 
 const types = ['armor', 'tool', 'weapon', 'food', 'material', 'mob', 'effect'];
 
@@ -100,8 +101,8 @@ module.exports = {
             include: [Command],
           });
 
-          const exitUrl = `${process.NODE_ENV !== 'production' ? 'http%3A%2F%2Flocalhost%3A3000' : 'https%3A%2Fminecraftstream.csh.rit.edu'}%2Fstore%3FcheckoutId=${checkout.id}`;
-          const redirectUrl = `http://link.justgiving.com/v1/fundraisingpage/donate/pageId/15252893?amount=${subTotal.toFixed(2)}&currency=USD&reference=mcstream&exitUrl=${exitUrl}%26donationId%3DJUSTGIVING-DONATION-ID`;
+          const exitUrl = encodeURIComponent(`${getUrl()}/JUSTGIVING-DONATION-ID/${checkout.id}`);
+          const redirectUrl = `http://link.justgiving.com/v1/fundraisingpage/donate/pageId/15252893?amount=${subTotal.toFixed(2)}&currency=USD&reference=mcstream&exitUrl=${exitUrl}`;
 
           res.status(200).send(redirectUrl);
         }
