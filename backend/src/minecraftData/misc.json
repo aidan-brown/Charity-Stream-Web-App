@@ -1,18 +1,17 @@
 [
   {
-    "id": "arrow",
-    "displayName": "10x Arrows",
+    "id": "totem_of_undying",
+    "name": "Totem of Undying",
+    "description": "An extra life in a small easy to use package. Cheat Death!",
     "type": "misc",
-    "description": "The basic ammo for the bow. Comes with 10 arrows!",
-    "price": 1.20,
-    "count": 10
+    "price": 5.00
   },
   {
     "id": "wooden_shovel",
     "name": "Shovel bomb",
-    "description": "Fill someone's inventory with wooden shovels. Why?",
+    "description": "Fill someone's inventory with wooden shovels. Why? Why not!",
     "type": "misc",
     "price": 5.00,
-    "count": 36
+    "count": 2304
   }
 ]

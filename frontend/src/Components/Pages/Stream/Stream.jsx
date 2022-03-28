@@ -134,11 +134,10 @@ const Stream = ({ setSelectedPlayer, addItemToCart }) => {
           </div>
         </div>
       </div>
-
+      <h2 className="stream-row-title">About the Stream</h2>
       <div className="stream-row">
-        <iframe id="dynmap-frame" className="stream-row-item" title="Dynmap" src="http://dionysus.csh.rit.edu:8123/" />
-        <article id="flavor-text" className="stream-row-item bg-csh-secondary-gradient">
-          <h2>About the Stream</h2>
+        <iframe className="stream-row-item stream-row-iframe" title="Dynmap" src="https://dionysus.csh.rit.edu" />
+        <article className="stream-row-item stream-row-text-box bg-csh-secondary-gradient">
           <p>
             CSH&apos;s annual Minecraft Charity Stream is a large-scale competition
             between players in a series of minigames, with all donations
@@ -153,6 +152,31 @@ const Stream = ({ setSelectedPlayer, addItemToCart }) => {
             Check out the stream above or on our
             <a href="https://www.twitch.tv/cshba"> Twitch </a>
             and if you&apos;d like to donate, head to our store above to influence the tournament.
+          </p>
+        </article>
+      </div>
+      <h2 className="stream-row-title row-reverse">About the Hub World</h2>
+      <div className="stream-row row-reverse">
+        <iframe
+          className="stream-row-item stream-row-iframe"
+          src="https://www.youtube.com/embed/PU6Bopb1CVE"
+          title="CSH Hub World"
+          frameBorder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowFullScreen
+        />
+        <article className="stream-row-item stream-row-text-box bg-csh-secondary-gradient">
+          <p>
+            Over the past couple of months, members and friends of CSH gathered together
+            to create a hub world for our stream! They have put in countless hours creating
+            fantastical builds that help entertain our players in between games.
+          </p>
+          <p>
+            From the large silhouette of a grand volcano in the North to the quaint cottagecore
+            village in the South, our builders put in a lot of work making everything pretty.
+          </p>
+          <p>
+            Not in the server? You can still see some of the amazing builds by watching this video!
           </p>
         </article>
       </div>

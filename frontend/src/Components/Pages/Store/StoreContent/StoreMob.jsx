@@ -7,7 +7,7 @@ const StoreMob = ({
 }) => (
   <span tabIndex={0} role="button" className={`store-item bg-csh-tertiary ${className || ''}`} onClick={addItemToCart} onKeyDown={addItemToCart} data-disabled={mob.disabled}>
     <div className="store-item-header bg-csh-primary-gradient">
-      <img className="store-item-image" src={`${getUrl()}/images/mobs/${mob.id}-full.jpg`} alt={mob.displayName} />
+      <img className="store-item-image" src={`${getUrl()}/images/mobs/${mob.id}-full.png`} alt={mob.displayName} />
       <img className="store-item-icon" src={`${getUrl()}/images/mobs/${mob.id}.png`} alt={mob.displayName} />
       <p className="store-item-displayName">{mob.displayName}</p>
       <p className="store-item-price">

@@ -47,7 +47,7 @@ const StoreContent = ({ filterTag, addItemToCart, className }) => {
         <StoreItem
           item={item}
           addItemToCart={() => addItemToCart({
-            ...item, amount: 1, icon: `${getUrl()}/images/items/${item.id}.png`, img: `${getUrl()}/images/items/${item.id}-full.jpg`,
+            ...item, amount: 1, icon: `${getUrl()}/images/items/${item.id}.png`, img: `${getUrl()}/images/items/${item.id}-full.png`,
           })}
           key={item.id}
         />
@@ -56,7 +56,7 @@ const StoreContent = ({ filterTag, addItemToCart, className }) => {
         <StoreMob
           mob={mob}
           addItemToCart={() => addItemToCart({
-            ...mob, amount: 1, icon: `${getUrl()}/images/mobs/${mob.id}.png`, img: `${getUrl()}/images/mobs/${mob.id}-full.jpg`, type: 'mob',
+            ...mob, amount: 1, icon: `${getUrl()}/images/mobs/${mob.id}.png`, img: `${getUrl()}/images/mobs/${mob.id}-full.png`, type: 'mob',
           })}
           key={mob.id}
         />
@@ -65,7 +65,7 @@ const StoreContent = ({ filterTag, addItemToCart, className }) => {
         <StoreEffect
           effect={effect}
           addItemToCart={() => addItemToCart({
-            ...effect, time: 30, power: 0, icon: `${getUrl()}/images/effects/${effect.id}.png`, img: `${getUrl()}/images/effects/${effect.id}-full.jpg`, type: 'effect',
+            ...effect, time: 30, power: 0, icon: `${getUrl()}/images/effects/${effect.id}.png`, img: `${getUrl()}/images/effects/${effect.id}-full.png`, type: 'effect',
           })}
           key={effect.id}
         />
@@ -74,7 +74,7 @@ const StoreContent = ({ filterTag, addItemToCart, className }) => {
         <StoreItem
           item={item}
           addItemToCart={() => addItemToCart({
-            ...item, amount: 1, icon: `${getUrl()}/images/items/${item.id}.png`, img: `${getUrl()}/images/items/${item.id}-full.jpg`,
+            ...item, amount: 1, icon: `${getUrl()}/images/items/${item.id}.png`, img: `${getUrl()}/images/items/${item.id}-full.png`,
           })}
           key={item.id}
         />
@@ -83,7 +83,7 @@ const StoreContent = ({ filterTag, addItemToCart, className }) => {
         <StoreMob
           mob={mob}
           addItemToCart={() => addItemToCart({
-            ...mob, amount: 1, icon: `${getUrl()}/images/mobs/${mob.id}.png`, img: `${getUrl()}/images/mobs/${mob.id}-full.jpg`, type: 'mob',
+            ...mob, amount: 1, icon: `${getUrl()}/images/mobs/${mob.id}.png`, img: `${getUrl()}/images/mobs/${mob.id}-full.png`, type: 'mob',
           })}
           key={mob.id}
         />
@@ -92,7 +92,7 @@ const StoreContent = ({ filterTag, addItemToCart, className }) => {
         <StoreEffect
           effect={effect}
           addItemToCart={() => addItemToCart({
-            ...effect, time: 30, power: 0, icon: `${getUrl()}/images/effects/${effect.id}.png`, img: `${getUrl()}/images/effects/${effect.id}-full.jpg`, type: 'effect',
+            ...effect, time: 30, power: 0, icon: `${getUrl()}/images/effects/${effect.id}.png`, img: `${getUrl()}/images/effects/${effect.id}-full.png`, type: 'effect',
           })}
           key={effect.id}
         />

@@ -18,7 +18,15 @@
     "displayName": "Diamond",
     "type": "material",
     "description": "A shiny gem. Can be used to craft powerful diamond armor, weapons, and tools.",
-    "price": 2.00   
+    "price": 2.00
+  },
+  {
+    "id": "lapis_lazuli",
+    "displayName": "x10 Lapis Lazuli",
+    "type": "material",
+    "description": "Shiny gems. Can be used to enchant armor, weapons, and tools. (mirror not included)",
+    "price": 0.80,
+    "count": 10
   },
   {
     "id": "netherite_ingot",
