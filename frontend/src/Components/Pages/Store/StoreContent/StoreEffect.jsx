@@ -7,7 +7,7 @@ const StoreEffect = ({
 }) => (
   <span tabIndex={0} role="button" className={`store-item bg-csh-tertiary ${className || ''}`} onClick={addItemToCart} onKeyDown={addItemToCart} data-disabled={effect.disabled}>
     <div className="store-item-header bg-csh-primary-gradient">
-      <img className="store-item-image" src={`${getUrl()}/images/effects/${effect.id}-full.jpg`} alt={effect.displayName} />
+      <img className="store-item-image" src={`${getUrl()}/images/effects/${effect.id}-full.png`} alt={effect.displayName} />
       <img className="store-item-icon" src={`${getUrl()}/images/effects/${effect.id}.png`} alt={effect.displayName} />
       <p className="store-item-displayName">{effect.displayName}</p>
       <p className="store-item-price">
