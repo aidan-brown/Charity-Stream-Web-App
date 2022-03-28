@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { BACKENDURL } from '../../../App/constants';
+import { getUrl } from '../../../../Utils';
 
 const StoreItem = ({
   item, addItemToCart, isStore, className,
@@ -74,8 +74,8 @@ const StoreItem = ({
   return (
     <span tabIndex={0} role="button" className={`store-item bg-csh-tertiary ${className || ''}`} onClick={addItemToCart} onKeyDown={addItemToCart} data-disabled={item.disabled}>
       <div className="store-item-header bg-csh-primary-gradient">
-        <img className="store-item-image" src={`${BACKENDURL}/images/items/${item.id}-full.jpg`} alt={item.displayName} />
-        <img className="store-item-icon" src={`${BACKENDURL}/images/items/${item.id}.png`} alt={item.displayName} />
+        <img className="store-item-image" src={`${getUrl()}/images/items/${item.id}-full.jpg`} alt={item.displayName} />
+        <img className="store-item-icon" src={`${getUrl()}/images/items/${item.id}.png`} alt={item.displayName} />
         <p className="store-item-displayName">{item.displayName}</p>
         <p className="store-item-price">
           $

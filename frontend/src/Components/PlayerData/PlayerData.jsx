@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { BACKENDURL } from '../App/constants';
-import { getReq } from '../../Utils';
+import { getReq, getUrl } from '../../Utils';
+
 import './PlayerData.css';
 
 const PlayerData = () => {
@@ -9,7 +9,7 @@ const PlayerData = () => {
 
   useEffect(() => {
     const getPlayers = () => {
-      getReq(`${BACKENDURL}/data`)
+      getReq(`${getUrl()}/data`)
         .then((res) => res.json())
         .then((res) => {
           setLoading(false);

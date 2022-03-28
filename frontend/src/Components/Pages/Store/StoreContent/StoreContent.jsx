@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { BACKENDURL } from '../../../App/constants';
-import { getReq } from '../../../../Utils';
+import { getUrl, getReq } from '../../../../Utils';
 import StoreItem from './StoreItem';
 import StoreMob from './StoreMob';
 import StoreEffect from './StoreEffect';
@@ -13,19 +12,19 @@ const StoreContent = ({ filterTag, addItemToCart, className }) => {
   const [mobs, setMobs] = useState([]);
 
   const fetchShopItems = () => {
-    getReq(`${BACKENDURL}/minecraft/items`)
+    getReq(`${getUrl()}/minecraft/items`)
       .then((res) => res.json())
       .then((res) => {
         setItems(res);
       })
       .catch(() => {});
-    getReq(`${BACKENDURL}/minecraft/mobs`)
+    getReq(`${getUrl()}/minecraft/mobs`)
       .then((res) => res.json())
       .then((res) => {
         setMobs(res);
       })
       .catch(() => {});
-    getReq(`${BACKENDURL}/minecraft/effects`)
+    getReq(`${getUrl()}/minecraft/effects`)
       .then((res) => res.json())
       .then((res) => {
         setEffects(res);
@@ -48,7 +47,7 @@ const StoreContent = ({ filterTag, addItemToCart, className }) => {
         <StoreItem
           item={item}
           addItemToCart={() => addItemToCart({
-            ...item, amount: 1, icon: `${BACKENDURL}/images/items/${item.id}.png`, img: `${BACKENDURL}/images/items/${item.id}-full.jpg`,
+            ...item, amount: 1, icon: `${getUrl()}/images/items/${item.id}.png`, img: `${getUrl()}/images/items/${item.id}-full.jpg`,
           })}
           key={item.id}
         />
@@ -57,7 +56,7 @@ const StoreContent = ({ filterTag, addItemToCart, className }) => {
         <StoreMob
           mob={mob}
           addItemToCart={() => addItemToCart({
-            ...mob, amount: 1, icon: `${BACKENDURL}/images/mobs/${mob.id}.png`, img: `${BACKENDURL}/images/mobs/${mob.id}-full.jpg`, type: 'mob',
+            ...mob, amount: 1, icon: `${getUrl()}/images/mobs/${mob.id}.png`, img: `${getUrl()}/images/mobs/${mob.id}-full.jpg`, type: 'mob',
           })}
           key={mob.id}
         />
@@ -66,7 +65,7 @@ const StoreContent = ({ filterTag, addItemToCart, className }) => {
         <StoreEffect
           effect={effect}
           addItemToCart={() => addItemToCart({
-            ...effect, time: 30, power: 0, icon: `${BACKENDURL}/images/effects/${effect.id}.png`, img: `${BACKENDURL}/images/effects/${effect.id}-full.jpg`, type: 'effect',
+            ...effect, time: 30, power: 0, icon: `${getUrl()}/images/effects/${effect.id}.png`, img: `${getUrl()}/images/effects/${effect.id}-full.jpg`, type: 'effect',
           })}
           key={effect.id}
         />
@@ -75,7 +74,7 @@ const StoreContent = ({ filterTag, addItemToCart, className }) => {
         <StoreItem
           item={item}
           addItemToCart={() => addItemToCart({
-            ...item, amount: 1, icon: `${BACKENDURL}/images/items/${item.id}.png`, img: `${BACKENDURL}/images/items/${item.id}-full.jpg`,
+            ...item, amount: 1, icon: `${getUrl()}/images/items/${item.id}.png`, img: `${getUrl()}/images/items/${item.id}-full.jpg`,
           })}
           key={item.id}
         />
@@ -84,7 +83,7 @@ const StoreContent = ({ filterTag, addItemToCart, className }) => {
         <StoreMob
           mob={mob}
           addItemToCart={() => addItemToCart({
-            ...mob, amount: 1, icon: `${BACKENDURL}/images/mobs/${mob.id}.png`, img: `${BACKENDURL}/images/mobs/${mob.id}-full.jpg`, type: 'mob',
+            ...mob, amount: 1, icon: `${getUrl()}/images/mobs/${mob.id}.png`, img: `${getUrl()}/images/mobs/${mob.id}-full.jpg`, type: 'mob',
           })}
           key={mob.id}
         />
@@ -93,7 +92,7 @@ const StoreContent = ({ filterTag, addItemToCart, className }) => {
         <StoreEffect
           effect={effect}
           addItemToCart={() => addItemToCart({
-            ...effect, time: 30, power: 0, icon: `${BACKENDURL}/images/effects/${effect.id}.png`, img: `${BACKENDURL}/images/effects/${effect.id}-full.jpg`, type: 'effect',
+            ...effect, time: 30, power: 0, icon: `${getUrl()}/images/effects/${effect.id}.png`, img: `${getUrl()}/images/effects/${effect.id}-full.jpg`, type: 'effect',
           })}
           key={effect.id}
         />

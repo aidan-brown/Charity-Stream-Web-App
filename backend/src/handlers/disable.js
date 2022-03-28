@@ -1,27 +1,44 @@
-const safeJsonParse = require('../utils/safeJsonParse');
 const { DisabledElement } = require('../sql/models');
 
 module.exports = {
   getCheckoutStatus: async (_, res) => {
     try {
-      const [{ disabled }] = await DisabledElement.findAll({ where: { id: 'checkout' } });
+      const { disabled } = await DisabledElement.findByPk('checkout-disable') || {};
 
       res.status(200).send(!!disabled);
-    } catch (error) {
-      const { code = 500, message = error.message } = safeJsonParse(error.message);
-      res.status(code).send(message);
+    } catch (__) {
+      res.status(500).send('Something went wrong when trying to get checkout');
     }
   },
-  disableCheckout: async (_, res) => {
+  disableCheckout: async (req, res) => {
+    const { status } = req.body;
+
+    if (status !== true && status !== false) {
+      res.status(400).send('Value must be true or false');
+    }
+
     try {
-      const [checkout] = await DisabledElement.findAll({ where: { id: 'checkout' } });
+      const checkout = await DisabledElement.findByPk('checkout-disable');
 
-      await checkout.update({ disabled: !checkout.disabled });
+      if (checkout) {
+        await DisabledElement.update({
+          disabled: status,
+        },
+        {
+          where: {
+            id: 'checkout-disable',
+          },
+        });
+      } else {
+        await DisabledElement.create({
+          id: 'checkout-disable',
+          disabled: status,
+        });
+      }
 
-      res.status(200).send(`Successfully ${!checkout.disabled ? 'disabled' : 'enabled'} checkout`);
-    } catch (error) {
-      const { code = 500, message = error.message } = safeJsonParse(error.message);
-      res.status(code).send(message);
+      res.status(200).send('Successfully toggled checkout');
+    } catch (_) {
+      res.status(500).send('Something went wrong when toggling checkout');
     }
   },
   disableElements: async (req, res) => {
