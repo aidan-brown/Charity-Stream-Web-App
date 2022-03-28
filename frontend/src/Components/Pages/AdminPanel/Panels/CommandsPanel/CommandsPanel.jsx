@@ -81,7 +81,7 @@ const CommandsPanel = ({ authHeader, setAlert }) => {
   const runCommand = (index) => {
     const commandsToRun = injectVariables(index, JSON.stringify(commands[index].commands));
 
-    fetch(`${getUrl()}`, {
+    fetch(`${getUrl()}/run-commands`, {
       method: 'POST',
       headers: {
         Authorization: authHeader,
