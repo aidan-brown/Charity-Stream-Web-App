@@ -10,24 +10,10 @@ import './PlayerList.scss';
 import './PerspectiveList.scss';
 import StreamWindow from './StreamWindow/StreamWindow';
 import StoreContent from '../Store/StoreContent/StoreContent';
-import { BACKENDURL } from '../../App/constants';
-import { getReq } from '../../../Utils';
+import { getUrl, getReq } from '../../../Utils';
 import { AssociationLogos } from '../../../assets/svg';
 
-const channels = [
-  'cshba',
-  'MysticatLive',
-  'samanthiiana',
-  'Dantayy5050',
-  'dawnshadowx3',
-  'bohchoi',
-  'skeleton_weeb',
-  'laqqy',
-  'cahriid',
-  'lumiinara',
-  'clipsothealien',
-  'roxkstar74',
-];
+import { TEMP_CHANNELS } from '../../../constants';
 
 /** Class for constructing the stream page * */
 const Stream = ({ setSelectedPlayer, addItemToCart }) => {
@@ -37,7 +23,7 @@ const Stream = ({ setSelectedPlayer, addItemToCart }) => {
   const [playerList, setPlayerList] = useState([]);
 
   useEffect(() => {
-    getReq(`${BACKENDURL}/players`)
+    getReq(`${getUrl()}/players`)
       .then((res) => res.json())
       .then((res) => {
         setPlayerList(res);
@@ -81,7 +67,7 @@ const Stream = ({ setSelectedPlayer, addItemToCart }) => {
 
   const PerspectiveList = () => (
     <ul className="PerspectiveList StreamList">
-      {channels.map((channelName) => (
+      {TEMP_CHANNELS.map((channelName) => (
         <button type="button" className="perspective-button" onClick={() => setChannel(channelName)} key={channelName}>
           <span className="perspective-overlay" />
           <span className="perspective-title">{channelName.toUpperCase()}</span>

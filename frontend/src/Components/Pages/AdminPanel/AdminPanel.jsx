@@ -1,20 +1,29 @@
 import {
-  Button, Checkbox, Input, Grid, Box,
+  Alert,
+  Box,
+  Button,
+  Tab,
+  TextField,
 } from '@mui/material';
+import { TabContext, TabList } from '@mui/lab';
 import React, { useEffect, useState } from 'react';
-import { BACKENDURL } from '../../App/constants';
+import { NavLink, useNavigate, useSearchParams } from 'react-router-dom';
+import { getUrl } from '../../../Utils';
+import { CommandsPanel, ItemDisablePanel, PlayerManagePanel } from './Panels';
 import './AdminPanel.scss';
 
-const TYPES = ['armor', 'food', 'material', 'misc', 'tool', 'weapon'];
-
 const AdminPanel = () => {
-  const [elements, setElements] = useState([]);
-  const [toDisable, setToDisable] = useState([]);
-  const [authHeader, setAuthHeader] = useState();
+  const [searchParams] = useSearchParams();
+
+  const [loggedIn, setLoggedIn] = useState(false);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [loggedIn, setLoggedIn] = useState(false);
-  const [error, setError] = useState();
+  const [authHeader, setAuthHeader] = useState();
+  const [alert, setAlert] = useState();
+  const [tab, setTab] = useState(searchParams.get('tab') || 'quick-commands');
+  const navigate = useNavigate();
+
+  useEffect(() => navigate(`/admin-panel?tab=${tab}`), [tab]);
 
   useEffect(() => {
     const header = localStorage.getItem('mcs-authHeader');
@@ -22,165 +31,105 @@ const AdminPanel = () => {
       setAuthHeader(header);
       setLoggedIn(true);
     }
-
-    const getElements = () => {
-      fetch(`${BACKENDURL}/minecraft/all`)
-        .then((res) => res.json())
-        .then((res) => {
-          setElements(res);
-        }).catch(() => {
-          setError({
-            message: 'Could not get items from backend',
-          });
-        });
-    };
-
-    getElements();
   }, []);
 
   const login = () => {
     const Authorization = `Basic ${window.btoa(`${username}:${password}`)}`;
-    fetch(`${BACKENDURL}`, {
+    fetch(`${getUrl()}`, {
       headers: {
         Authorization,
       },
     })
-      .then(() => {
-        setLoggedIn(true);
-        setAuthHeader(Authorization);
-        localStorage.setItem('mcs-authHeader', Authorization);
+      .then(({ status }) => {
+        if (status === 200) {
+          setLoggedIn(true);
+          setAuthHeader(Authorization);
+          localStorage.setItem('mcs-authHeader', Authorization);
+        } else {
+          setAlert({
+            message: 'Incorrect Username or Password',
+            severity: 'error',
+          });
+        }
       });
-  };
-
-  const disableItems = () => {
-    fetch(`${BACKENDURL}/disable`, {
-      method: 'PUT',
-      headers: {
-        Authorization: authHeader,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(toDisable),
-    }).then(() => {
-      setToDisable([]);
-    }).catch(() => {
-      setError({
-        message: 'Could not disabled those items',
-      });
-    });
   };
 
   return (
-    <Box sx={{ flexGrow: 1 }} className="admin-panel">
+    <Box className="admin-panel" sx={{ width: '100%', typography: 'body1' }}>
       {!loggedIn && (
-        <div className="login">
-          <h1>Login</h1>
-          <div className="login-inputs">
-            <Input
-              className="login-input"
-              required
-              placeholder="Username"
-              type="username"
-              onChange={(e) => {
-                setUsername(e.target.value);
-              }}
-            />
-            <Input
-              className="login-input"
-              required
-              placeholder="Password"
-              type="password"
-              autoComplete="password"
-              onChange={(e) => {
-                setPassword(e.target.value);
-              }}
-            />
+        <div className="login-wrapper">
+          <div className="login">
+            {alert && (
+            <Alert
+              onClose={() => setAlert()}
+              variant="filled"
+              severity={alert.severity}
+            >
+              {alert.message}
+            </Alert>
+            )}
+            <div className="inputs">
+              <h1>Login</h1>
+              <NavLink to={{ pathname: '/' }}>Not Corey?</NavLink>
+              <TextField
+                label="Username"
+                variant="filled"
+                sx={{ m: 1, width: '100%' }}
+                type="username"
+                required
+                value={username}
+                onChange={(e) => {
+                  setUsername(e.target.value);
+                  if (alert) setAlert();
+                }}
+              />
+              <TextField
+                label="Password"
+                variant="filled"
+                sx={{ m: 1, width: '100%' }}
+                type="password"
+                required
+                value={password}
+                onChange={(e) => {
+                  setPassword(e.target.value);
+                  if (alert) setAlert();
+                }}
+              />
+              <Button className="signin" type="submit" variant="contained" onClick={login}>
+                SIGN IN
+              </Button>
+            </div>
           </div>
-          <Button
-            color="primary"
-            variant="contained"
-            disabled={username.length === 0 || password.length === 0}
-            onClick={login}
-          >
-            Login
-          </Button>
         </div>
       )}
       {loggedIn && (
-        <>
-          <div>
-            {TYPES.map((t) => (
-              <div key={t}>
-                <h1>{`${t[0].toUpperCase()}${t.slice(1, t.length)}`}</h1>
-                {elements.filter((el) => el.type === t).map((element) => {
-                  const {
-                    id, displayName, disabled, type,
-                  } = element;
-
-                  return (
-                    <div key={`${id}-${type}`}>
-                      <div className="element" key={id}>
-                        <img
-                          className="image"
-                          src={`${BACKENDURL}/images/${
-                            type === 'mob' || type === 'effect'
-                              ? `${type}s` : 'items'}/${id}.png`}
-                          alt={`${id} disable`}
-                        />
-                        <p>{displayName}</p>
-                        <Checkbox
-                          checked={disabled}
-                          onClick={(e) => {
-                            setElements(elements.map((el) => {
-                              const { checked } = e.target;
-
-                              if (el.id === id) {
-                                if (toDisable.includes(id)) {
-                                  setToDisable([...toDisable.filter((item) => item.id !== id)]);
-                                } else {
-                                  setToDisable([...toDisable, {
-                                    id,
-                                    disabled: checked,
-                                  }]);
-                                }
-
-                                return {
-                                  ...el,
-                                  disabled: checked,
-                                };
-                              }
-                              return el;
-                            }));
-                          }}
-                        />
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-            ))}
-          </div>
-          <div className="button-group">
-            <Button
-              className="disabled-button-left"
-              color="primary"
-              variant="contained"
-              disabled={toDisable.length === 0}
-              onClick={() => {
-                setToDisable([]);
-              }}
+        <TabContext value={tab}>
+          <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+            <TabList
+              textColor="secondary"
+              indicatorColor="secondary"
+              onChange={(_, newValue) => setTab(newValue)}
+              aria-label="Admin Panel Tabs"
             >
-              Clear Current Selection
-            </Button>
-            <Button
-              color="primary"
-              variant="contained"
-              disabled={toDisable.length === 0}
-              onClick={disableItems}
+              <Tab label="Quick Commands" value="quick-commands" />
+              <Tab label="Disable Items" value="disabling-items" />
+              <Tab label="Players" value="players" />
+            </TabList>
+          </Box>
+          {alert && (
+            <Alert
+              className="admin-alert"
+              onClose={() => setAlert()}
+              variant="filled"
+              severity={alert.severity}
             >
-              Disable Current Selection
-            </Button>
-          </div>
-        </>
+              {alert.message}
+            </Alert>
+          )}
+          <CommandsPanel authHeader={authHeader} setAlert={setAlert} />
+          <ItemDisablePanel authHeader={authHeader} setAlert={setAlert} />
+          <PlayerManagePanel authHeader={authHeader} setAlert={setAlert} />
+        </TabContext>
       )}
     </Box>
   );

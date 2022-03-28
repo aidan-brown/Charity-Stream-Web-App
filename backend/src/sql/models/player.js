@@ -14,8 +14,11 @@ const Player = sequelize.define('Player', {
     allowNull: false,
   },
   association: {
-    type: DataTypes.ENUM('csh', 'blackbaud', 'hogs', 'ehouse', 'sse', 'arthouse', 'rit', 'streamer', 'other'),
+    type: DataTypes.ENUM('csh', 'blackbaud', 'hogs', 'ehouse', 'sse', 'arthouse', 'ihouse', 'pepband', 'rit', 'streamer', 'other'),
     allowNull: false,
+  },
+  twitchChannel: {
+    type: DataTypes.STRING,
   },
 });
 

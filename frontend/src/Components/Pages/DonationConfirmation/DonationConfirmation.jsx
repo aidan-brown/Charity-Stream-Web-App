@@ -3,8 +3,8 @@
 import { Button } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { BACKENDURL } from '../../App/constants';
-import { postReq } from '../../../Utils';
+import { getUrl, postReq } from '../../../Utils';
+
 import './DonationConfirmation.scss';
 
 const DonationConfirmation = () => {
@@ -22,7 +22,7 @@ const DonationConfirmation = () => {
         donationID,
         checkoutID,
       };
-      postReq(`${BACKENDURL}/verify-donation`, JSON.stringify(reqJSON))
+      postReq(`${getUrl()}/verify-donation`, JSON.stringify(reqJSON))
         .then((res) => setResponse({ ...response, status: res.status }));
     }
   }, []);

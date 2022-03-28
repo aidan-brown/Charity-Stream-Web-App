@@ -3,12 +3,14 @@
     "id": "totem_of_undying",
     "name": "Totem of Undying",
     "description": "An extra life in a small easy to use package. Cheat Death!",
+    "type": "misc",
     "price": 5.00
   },
   {
     "id": "wooden_shovel",
     "name": "Shovel bomb",
     "description": "Fill someone's inventory with wooden shovels. Why? Why not!",
+    "type": "misc",
     "price": 5.00,
     "count": 2304
   }

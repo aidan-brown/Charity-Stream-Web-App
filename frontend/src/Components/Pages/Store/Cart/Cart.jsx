@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { MenuItem, Select, Button } from '@mui/material';
-import { BACKENDURL } from '../../../App/constants';
-import { getReq } from '../../../../Utils';
+import { getUrl, getReq } from '../../../../Utils';
 import CartEffect from './CartEffect';
 import CartItem from './CartItem';
 import './Cart.scss';
@@ -23,16 +22,16 @@ const Cart = ({
   const [checkoutDisabled, setCheckoutDisabled] = useState(false);
 
   const fetchCheckoutStatus = () => {
-    getReq(`${BACKENDURL}/checkout/status`)
-      .then((res) => res.json())
+    getReq(`${getUrl()}/checkout/status`)
+      .then((res) => res.text())
       .then((res) => {
-        setCheckoutDisabled(res);
+        setCheckoutDisabled(Boolean(res));
       })
       .catch(() => {});
   };
 
   useEffect(() => {
-    getReq(`${BACKENDURL}/players`)
+    getReq(`${getUrl()}/players`)
       .then((res) => res.json())
       .then((res) => {
         setPlayerList(res);

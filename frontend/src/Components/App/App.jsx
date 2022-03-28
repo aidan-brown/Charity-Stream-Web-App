@@ -7,9 +7,7 @@ import {
   Stream, Store, AdminPanel, Landing, DonationConfirmation,
 } from '../Pages';
 import Cart from '../Pages/Store/Cart/Cart';
-import { postReq } from '../../Utils';
-import { BACKENDURL } from './constants';
-// import PlayerData from '../PlayerData';
+import { getUrl, postReq } from '../../Utils';
 
 const App = () => {
   const [streamStarted, setStreamStarted] = useState(false);
@@ -17,8 +15,11 @@ const App = () => {
   const [player, setPlayer] = useState('');
   const [showCart, setShowCart] = useState('no');
   const [popup, setPopup] = useState({ closed: true });
+  const [popupClosed, setPopupClosed] = useState();
+  const [popupWaitInt, setPopupWaitInt] = useState();
 
   const itemAddRef = useRef();
+  const popupRef = useRef(popup);
   const popupBlur = useRef();
 
   useEffect(() => {
@@ -46,15 +47,23 @@ const App = () => {
   };
 
   useEffect(() => {
-    if (popup.closed) {
-      setPopup({ closed: true });
+    if (popupClosed) {
       popupBlur.current.className = popupBlur.current.className.replace('on', 'off');
       popupBlur.current.removeEventListener('click', focusPopup);
-    } else {
+      clearInterval(popupWaitInt);
+      setPopupClosed();
+    } else if (popupClosed !== undefined) {
       popupBlur.current.className = popupBlur.current.className.replace('off', 'on');
       popupBlur.current.addEventListener('click', focusPopup);
+      if (!popupWaitInt) {
+        setPopupWaitInt(setInterval(() => {
+          if (popupRef.current.closed) {
+            setPopupClosed(true);
+          }
+        }, 1000));
+      }
     }
-  }, [popup.closed]);
+  }, [popupClosed]);
 
   const removeItemFromCart = (index) => () => {
     setCartItems([...cartItems.slice(0, index), ...cartItems.slice(index + 1)]);
@@ -117,17 +126,20 @@ const App = () => {
       username: player,
     };
 
-    postReq(`${BACKENDURL}/verify-checkout`, JSON.stringify(reqJSON))
+    postReq(`${getUrl()}/verify-checkout`, JSON.stringify(reqJSON))
       .then((res) => res.text())
       .then((JG_URL) => {
         setCartItems([]);
-        setPopup(window.open(JG_URL, 'targetWindow',
+        setPopupClosed(false);
+        const newPopup = window.open(JG_URL, 'targetWindow',
           `popup,
           width=483,
           height=680,
           left=${(window.screen.width / 2) - 241.5},
           top=${(window.screen.height / 2) - 340},
-        `));
+        `);
+        popupRef.current = newPopup;
+        setPopup(newPopup);
       });
   };
 

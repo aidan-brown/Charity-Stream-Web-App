@@ -1,11 +1,13 @@
 const { getCheckoutStatus, disableCheckout, disableElements } = require('./disable');
 const getMinecraftData = require('./minecraftData');
-const { getPlayers, createPlayer } = require('./players');
+const { getPlayers, createPlayers, deletePlayer } = require('./players');
 const { verifyCart, verifyDonation } = require('./checkout');
 const { dynmapGetPlayerIcon, dynmapGetData } = require('./dynmap');
+const { runRconCommands } = require('./rcon');
 
 module.exports = {
-  createPlayer,
+  createPlayers,
+  deletePlayer,
   disableCheckout,
   disableElements,
   dynmapGetData,
@@ -13,6 +15,7 @@ module.exports = {
   getCheckoutStatus,
   getMinecraftData,
   getPlayers,
+  runRconCommands,
   verifyCart,
   verifyDonation,
 };
