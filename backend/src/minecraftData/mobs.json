@@ -1,5 +1,12 @@
 [
   {
+    "id": "axolotl",
+    "displayName": "Axolotl",
+    "type": "mob",
+    "description": "You're my friend now! We're having soft tacos later!",
+    "price": 0.20
+  },
+  {
     "id": "bat",
     "displayName": "Bat",
     "type": "mob",
@@ -49,6 +56,13 @@
     "price": 0.40
   },
   {
+    "id": "goat",
+    "displayName": "Goat",
+    "type": "mob",
+    "description": "baaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "price": 0.40
+  },
+  {
     "id": "creeper",
     "displayName": "Creeper",
     "type": "mob",
@@ -77,11 +91,46 @@
     "price": 1.00
   },
   {
-    "id": "evocation_illager",
+    "id": "pillager",
+    "displayName": "Pillager",
+    "type": "mob",
+    "description": "For all your pillaging needs.",
+    "price": 1.50
+  },
+  {
+    "id": "evoker",
     "displayName": "Evoker",
     "type": "mob",
     "description": "He Evoke. He protec.",
-    "price": 1.50
+    "price": 2.50
+  },
+  {
+    "id": "vindicator",
+    "displayName": "Vindicator",
+    "type": "mob",
+    "description": "#1 provider of vindication. (results may vary)",
+    "price": 3.00
+  },
+  {
+    "id": "piglin",
+    "displayName": "Piglin",
+    "type": "mob",
+    "description": "Greedy pig people that like a display of wealth. (won't attack those clad in gold armor)",
+    "price": 1.25
+  },
+  {
+    "id": "piglin_brute",
+    "displayName": "Piglin Brute",
+    "type": "mob",
+    "description": "Calling them brutish might be an understatement.",
+    "price": 9.00
+  },
+  {
+    "id": "hoglin",
+    "displayName": "Hoglin",
+    "type": "mob",
+    "description": "Beeg beefy boi.",
+    "price": 3.00
   },
   {
     "id": "ghast",
@@ -152,6 +201,14 @@
     "type": "mob",
     "description": "Literally just a chaos thing with three heads.",
     "price": 50.00
+  },
+  {
+    "id": "ender_dragon",
+    "displayName": "Ender Dragon",
+    "type": "mob",
+    "description": "Like Skyrim but with blocks.",
+    "price": 100.00,
+    "nbt": "{DragonPhase:0}"
   },
   {
     "id": "wither_skeleton",

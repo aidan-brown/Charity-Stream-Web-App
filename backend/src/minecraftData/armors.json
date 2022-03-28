@@ -214,5 +214,13 @@
     "price": 6.00,
     "protection": 3,
     "durability": 481
+  },
+  {
+    "displayName": "Shield",
+    "id": "shield",
+    "type": "armor",
+    "description": "Helps keep those pesky projectiles from harming its wielder. Keep your favorite player alive!",
+    "price": 4.00,
+    "durability": 336
   }
 ]

@@ -70,41 +70,5 @@
     "price": 3.00,
     "speed": 5,
     "durability": 2031
-  },
-  {
-    "id": "iron_axe",
-    "displayName": "Iron Axe",
-    "type": "tool",
-    "description": "A basic but durable axe. Chops wood!",
-    "price": 2.00,
-    "speed": 1,
-    "durability": 250
-  },
-  {
-    "id": "gold_axe",
-    "displayName": "Gold Axe",
-    "type": "tool",
-    "description": "A fast but flimsy axe. Chops wood!",
-    "price": 1.00,
-    "speed": 1.5,
-    "durability": 32
-  },
-  {
-    "id": "diamond_axe",
-    "displayName": "Diamond Axe",
-    "type": "tool",
-    "description": "A very fast and durable axe. Chops wood!",
-    "price": 5.00,
-    "speed": 4,
-    "durability": 1561
-  },
-  {
-    "id": "netherite_axe",
-    "displayName": "Netherite Axe",
-    "type": "tool",
-    "description": "A very very fast and durable axe. Chops wood!",
-    "price": 7.00,
-    "speed": 5,
-    "durability": 2031
   }
 ]
