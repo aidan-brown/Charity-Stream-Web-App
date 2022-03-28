@@ -5,6 +5,7 @@ import {
   TextField,
 } from '@mui/material';
 import { TabPanel } from '@mui/lab';
+import { Clear, Check } from '@mui/icons-material';
 import StoreEffect from '../../../Store/StoreContent/StoreEffect';
 import StoreMob from '../../../Store/StoreContent/StoreMob';
 import StoreItem from '../../../Store/StoreContent/StoreItem';
@@ -15,6 +16,24 @@ const ItemDisablePanel = ({ authHeader, setAlert }) => {
   const [toDisable, setToDisable] = useState([]);
   const [filter, setFilter] = useState('');
   const [items, setItems] = useState([]);
+  const [checkoutStatus, setCheckoutStatus] = useState(false);
+
+  useEffect(() => {
+    const getCheckoutStatus = () => {
+      getReq(`${getUrl()}/checkout/status`)
+        .then((res) => res.text())
+        .then((res) => {
+          setCheckoutStatus(Boolean(res));
+        }).catch(() => {
+          setAlert({
+            message: 'Could not get checkout status',
+            severity: 'error',
+          });
+        });
+    };
+
+    getCheckoutStatus();
+  }, []);
 
   useEffect(() => {
     const getElements = () => {
@@ -56,9 +75,34 @@ const ItemDisablePanel = ({ authHeader, setAlert }) => {
       }
     }).catch(() => {
       setAlert({
-        message: 'Could not disabled those items',
-        severity: 'alert',
+        message: 'Failed to toggle those items on/off',
+        severity: 'error',
       });
+    });
+  };
+
+  const disableCheckout = (status) => {
+    fetch(`${getUrl()}/disable/checkout`, {
+      method: 'PUT',
+      headers: {
+        Authorization: authHeader,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ status }),
+    }).then((res) => {
+      if (res.status !== 200) {
+        setAlert({
+          message: 'Failed to Disable Checkout',
+          severity: 'error',
+        });
+        setCheckoutStatus(!status);
+      }
+    }).catch(() => {
+      setAlert({
+        message: 'Failed to Disable Checkout',
+        severity: 'error',
+      });
+      setCheckoutStatus(!status);
     });
   };
 
@@ -68,10 +112,13 @@ const ItemDisablePanel = ({ authHeader, setAlert }) => {
         if (toDisable.find((i) => i.id === item.id)) {
           setToDisable(toDisable.filter((i) => i.id !== item.id));
         } else {
-          setToDisable([...toDisable, {
-            id: item.id,
-            disabled: !item.disabled,
-          }]);
+          setToDisable([
+            ...toDisable,
+            {
+              id: item.id,
+              disabled: !item.disabled,
+            },
+          ]);
         }
         return {
           ...el,
@@ -94,6 +141,30 @@ const ItemDisablePanel = ({ authHeader, setAlert }) => {
               setFilter(e.target.value);
             }}
           />
+          <Button
+            className="toggle-button"
+            disabled={toDisable.length === 0}
+            variant="contained"
+            color="secondary"
+            onClick={disableItems}
+          >
+            Toggle Selected
+          </Button>
+          <div className="checkout-toggle">
+            <Button
+              className="toggle-button"
+              variant="contained"
+              color={checkoutStatus ? 'inherit' : 'secondary'}
+              endIcon={checkoutStatus ? <Clear /> : <Check />}
+              onClick={() => {
+                setCheckoutStatus(!checkoutStatus);
+                disableCheckout(!checkoutStatus);
+              }}
+            >
+              Checkout
+              {checkoutStatus ? ' Disabled' : ' Enabled'}
+            </Button>
+          </div>
         </div>
         <div className="StoreContent">
           {items
@@ -131,14 +202,6 @@ const ItemDisablePanel = ({ authHeader, setAlert }) => {
               />
             ))}
         </div>
-        <Button
-          className="toggle-button"
-          disabled={toDisable.length === 0}
-          variant="contained"
-          onClick={disableItems}
-        >
-          Toggle Selected
-        </Button>
       </div>
     </TabPanel>
   );

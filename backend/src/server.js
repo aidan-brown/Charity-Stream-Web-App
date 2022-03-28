@@ -7,11 +7,13 @@ const {
   deletePlayer,
   disableElements,
   dynmapGetPlayerIcon,
+  getCheckoutStatus,
   getMinecraftData,
   getPlayers,
   runRconCommands,
   verifyCart,
   verifyDonation,
+  disableCheckout,
 } = require('./handlers');
 const { getImages } = require('./images');
 const { basicAuth } = require('./handlers/authentication');
@@ -30,7 +32,7 @@ app.use(express.json());
 app.get('/minecraft/:type', getMinecraftData);
 app.get('/players', getPlayers);
 app.get('/images/:type/:image', getImages);
-app.get('/checkout/status', (_, res) => res.status(200).send(false));
+app.get('/checkout/status', getCheckoutStatus);
 app.post('/verify-checkout', verifyCart);
 app.post('/verify-donation', verifyDonation);
 app.get('/dynmap/icons/:playerName', dynmapGetPlayerIcon);
@@ -41,6 +43,7 @@ app.use(basicAuth);
 
 // Everything below this point requires auth
 app.put('/disable', disableElements);
+app.put('/disable/checkout', disableCheckout);
 app.post('/players', createPlayers);
 app.delete('/players/:username', deletePlayer);
 app.post('/run-commands', runRconCommands);

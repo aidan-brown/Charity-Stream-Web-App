@@ -22,10 +22,10 @@ const Cart = ({
   const [checkoutDisabled, setCheckoutDisabled] = useState(false);
 
   const fetchCheckoutStatus = () => {
-    getReq(`${getUrl}/checkout/status`)
-      .then((res) => res.json())
+    getReq(`${getUrl()}/checkout/status`)
+      .then((res) => res.text())
       .then((res) => {
-        setCheckoutDisabled(res);
+        setCheckoutDisabled(Boolean(res));
       })
       .catch(() => {});
   };

@@ -5,7 +5,7 @@
 
   .StoreContent {
     border-radius: 7.55px;
-    min-height: 79vh;
+    height: 79vh;
     overflow-y: scroll;
     background-color: #dadada;
     padding: 10px;
@@ -13,8 +13,24 @@
   }
 
   .search-bar {
+    display: flex;
+    justify-content: space-between;
     width: 90%;
     margin: auto;
+
+    .checkout-toggle {
+      font-size: 30px;
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      
+    }
+
+    .toggle-button {
+      border-radius: 7.55px;
+      font-size: 30px;
+    }
   }
 
   .selected {
@@ -32,14 +48,5 @@
   h1.title {
     font-size: 50px;
     color: white;
-  }
-
-  .toggle-button {
-    border-radius: 7.55px;
-    background-color: #cd1b4c;
-    position: fixed;
-    bottom: 100px;
-    right: 100px;
-    font-size: 30px;
   }
 }
