@@ -7,21 +7,20 @@ import {
 } from '@mui/material';
 import { TabContext, TabList } from '@mui/lab';
 import React, { useEffect, useState } from 'react';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate, useSearchParams } from 'react-router-dom';
 import { getUrl } from '../../../Utils';
 import { CommandsPanel, ItemDisablePanel, PlayerManagePanel } from './Panels';
 import './AdminPanel.scss';
 
 const AdminPanel = () => {
+  const [searchParams] = useSearchParams();
+
   const [loggedIn, setLoggedIn] = useState(false);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [authHeader, setAuthHeader] = useState();
-  const [alert, setAlert] = useState({
-    severity: 'success',
-    message: 'so Head?',
-  });
-  const [tab, setTab] = useState('quick-commands');
+  const [alert, setAlert] = useState();
+  const [tab, setTab] = useState(searchParams.get('tab') || 'quick-commands');
   const navigate = useNavigate();
 
   useEffect(() => navigate(`/admin-panel?tab=${tab}`), [tab]);
