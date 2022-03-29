@@ -17,7 +17,11 @@ const CartItem = ({ item, changeCartAmount, removeFromCart }) => (
     <div className="cart-item-counter bg-csh-tertiary">
       <span tabIndex={0} role="button" className="material-icons cart-item-count-control" onClick={() => changeCartAmount(-1)} onKeyPress={() => changeCartAmount(-1)}>remove</span>
       <span className="vr" />
-      <span>{item.amount}</span>
+      <input
+        type="number"
+        value={item.amount}
+        onChange={(e) => changeCartAmount(e.target.value - item.amount)}
+      />
       <span className="vr" />
       <span tabIndex={0} role="button" className="material-icons cart-item-count-control" onClick={() => changeCartAmount(1)} onKeyPress={() => changeCartAmount(1)}>add</span>
     </div>

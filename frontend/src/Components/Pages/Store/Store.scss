@@ -98,6 +98,7 @@ $color_1: white;
 @media only screen and (max-width: 1000px) {
 	.store-window {
 		width: 100%;
+		height: calc(93.5vh - 56.59px);
 		margin: 0;
 		padding: 0;
 		grid-template-columns: 20% 80%;

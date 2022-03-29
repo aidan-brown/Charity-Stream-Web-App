@@ -1,5 +1,3 @@
-$color_1: black;
-
 .StoreContent {
 	display: grid;
 	grid-template-columns: repeat(auto-fill, 360px);
@@ -91,33 +89,37 @@ $color_1: black;
 }
 
 .store-item-description {
-	color: $color_1;
+	color: black;
 	height: 55%;
 	width: 90%;
 	margin: auto;
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
-	align-items: center;
+	align-items: flex-start;
 }
 
 .store-item-stats {
 	height: 100%;
+	width: 100%;
 	display: flex;
 	flex-direction: column;
 	flex-wrap: wrap;
 	flex-basis: 100%;
 	justify-content: center;
-	align-items: center;
+	align-items: flex-start;
 	margin: auto;
+	text-align: left;
 
 	dt {
 		font-size: smaller;
+		font-weight: 600;
 		margin-top: 5px;
 	}
 
 	dd {
 		font-size: x-small;
+		font-weight: 400;
 		margin: 0;
 	}
 }
@@ -142,7 +144,6 @@ $color_1: black;
 	position: absolute;
 	bottom: 5px;
 	right: 5px;
-	width: 50px;
 	height: 50px;
 	z-index: 1;
 }

@@ -43,9 +43,10 @@
   },
   {
     "id": "cod",
-    "displayName": "Cod",
+    "displayName": "A Lot of Cod",
     "type": "mob",
     "description": "GET CODDED (will spawn a lot of cod)",
+    "count": 100,
     "price": 10.00
   },
   {
