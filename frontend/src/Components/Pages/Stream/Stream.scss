@@ -9,7 +9,7 @@
 /* The div tag that holds the stream window and the player list */
 .stream-player {
     aspect-ratio: 16/9;
-    width: 85%;
+    height: calc(95vh - 56.59px);
     position: relative;
     display: flex;
     overflow: hidden;

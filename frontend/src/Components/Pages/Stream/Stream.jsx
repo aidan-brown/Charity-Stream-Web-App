@@ -11,7 +11,7 @@ import './PerspectiveList.scss';
 import StreamWindow from './StreamWindow/StreamWindow';
 import StoreContent from '../Store/StoreContent/StoreContent';
 import { getUrl, getReq } from '../../../Utils';
-import { AssociationLogos } from '../../../assets/svg';
+import AssociationLogos from '../../../assets';
 
 import { TEMP_CHANNELS } from '../../../constants';
 
@@ -80,9 +80,14 @@ const Stream = ({ setSelectedPlayer, addItemToCart }) => {
   const PlayerList = () => (
     <ul className="PlayerList StreamList">
       {playerList.sort((a, b) => a.association.localeCompare(b.association)).map((player) => {
-        const Logo = AssociationLogos[player.association.toUpperCase()];
+        const playerAssociation = player.association === 'streamer' && player.twitchChannel.toUpperCase() in AssociationLogos
+          ? player.twitchChannel
+          : player.association;
+        const Logo = playerAssociation.toUpperCase() in AssociationLogos
+          ? AssociationLogos[playerAssociation.toUpperCase()]
+          : AssociationLogos.RIT;
         return (
-          <Link key={player.username} className={`list-element ${player.association.toLowerCase()}`} onClick={() => playerOnClick(player)} to="/Store">
+          <Link key={player.username} className={`list-element ${playerAssociation}`} onClick={() => playerOnClick(player)} to="/Store">
             <p>{`${player.name} [${player.username}]`}</p>
             <Logo className="team-logo" />
             <Icon path={mdiCart} className="shop-logo" />
