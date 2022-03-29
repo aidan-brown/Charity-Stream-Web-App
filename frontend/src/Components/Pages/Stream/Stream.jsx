@@ -24,8 +24,6 @@ import StoreContent from '../Store/StoreContent/StoreContent';
 import { getUrl, getReq } from '../../../Utils';
 import AssociationLogos from '../../../assets';
 
-import { TEMP_CHANNELS } from '../../../constants';
-
 /** Class for constructing the stream page * */
 const Stream = ({ setSelectedPlayer, addItemToCart }) => {
   const streamDiv = useRef();
@@ -81,20 +79,24 @@ const Stream = ({ setSelectedPlayer, addItemToCart }) => {
 
   const handleQuickBuyFilters = (filter) => () => {
     setFilterTag(filter);
-    const button = document.querySelector(`.quick-store-nav #store-${filter}`);
+    const btn = document.querySelector(`.quick-store-nav #store-${filter}`);
+    // eslint-disable-next-line no-param-reassign
     document.querySelectorAll('.quick-store-nav .stream-button').forEach((button) => { button.className = button.className.replace('show', 'hide'); });
-    button.className = button.className.replace('hide', 'show');
+    btn.className = btn.className.replace('hide', 'show');
   };
 
   const PerspectiveList = () => (
     <ul className="PerspectiveList StreamList">
-      {TEMP_CHANNELS.map((channelName) => (
-        <button type="button" className="perspective-button" onClick={() => setChannel(channelName)} key={channelName}>
-          <span className="perspective-overlay" />
-          <span className="perspective-title">{channelName.toUpperCase()}</span>
-          <img src={`https://static-cdn.jtvnw.net/previews-ttv/live_user_${channelName}-440x248.jpg`} alt={channelName} />
-        </button>
-      ))}
+      {playerList.filter((a) => a.association === 'streamer').map((player) => {
+        const channelName = player.channel;
+        return (
+          <button type="button" className="perspective-button" onClick={() => setChannel(channelName)} key={channelName}>
+            <span className="perspective-overlay" />
+            <span className="perspective-title">{channelName.toUpperCase()}</span>
+            <img src={`https://static-cdn.jtvnw.net/previews-ttv/live_user_${channelName}-440x248.jpg`} alt={channelName} />
+          </button>
+        );
+      })}
     </ul>
   );
 
