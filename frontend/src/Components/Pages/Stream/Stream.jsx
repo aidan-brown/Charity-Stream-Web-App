@@ -57,7 +57,7 @@ const Stream = ({ setSelectedPlayer, addItemToCart }) => {
     const streamList = document.querySelector(`#${streamListId}-list`);
     const streamButton = document.querySelector(`#${streamListId}-button`);
     const streamLists = document.querySelectorAll('.stream-list');
-    const streamButtons = document.querySelectorAll('.stream-button');
+    const streamButtons = document.querySelectorAll('.stream-buttons .stream-button');
     const streamButtonsSpan = document.querySelector('.stream-buttons');
     if (streamList.className.includes('hide')) {
       setStreamWidth('calc(100% - 35rem)');
@@ -77,6 +77,13 @@ const Stream = ({ setSelectedPlayer, addItemToCart }) => {
       streamList.className = streamList.className.replace('show', 'hide');
       streamButton.className = streamButton.className.replace('show', 'hide');
     }
+  };
+
+  const handleQuickBuyFilters = (filter) => () => {
+    setFilterTag(filter);
+    const button = document.querySelector(`.quick-store-nav #store-${filter}`);
+    document.querySelectorAll('.quick-store-nav .stream-button').forEach((button) => { button.className = button.className.replace('show', 'hide'); });
+    button.className = button.className.replace('hide', 'show');
   };
 
   const PerspectiveList = () => (
@@ -152,32 +159,32 @@ const Stream = ({ setSelectedPlayer, addItemToCart }) => {
           <h4>Quick Buy</h4>
           <div className="StreamList">
             <StoreContent filterTag={filterTag} addItemToCart={addItemToCart} />
-            <nav className="quick-store-nav">
-              <button type="button" id="store-all" className="stream-button bg-csh-secondary btn" onKeyDown={() => setFilterTag('all')} onClick={() => setFilterTag('all')}>
+            <nav className="quick-store-nav bg-csh-secondary">
+              <button type="button" id="store-all" className="stream-button bg-csh-secondary btn hide" onKeyDown={handleQuickBuyFilters('all')} onClick={handleQuickBuyFilters('all')}>
                 <Icon path={mdiScriptText} className="stream-button-icon" />
               </button>
-              <button type="button" id="store-all" className="stream-button bg-csh-secondary btn" onKeyDown={() => setFilterTag('tool')} onClick={() => setFilterTag('tool')}>
+              <button type="button" id="store-tool" className="stream-button bg-csh-secondary btn hide" onKeyDown={handleQuickBuyFilters('tool')} onClick={handleQuickBuyFilters('tool')}>
                 <Icon path={mdiPickaxe} className="stream-button-icon" />
               </button>
-              <button type="button" id="store-all" className="stream-button bg-csh-secondary btn" onKeyDown={() => setFilterTag('weapon')} onClick={() => setFilterTag('weapon')}>
+              <button type="button" id="store-weapon" className="stream-button bg-csh-secondary btn hide" onKeyDown={handleQuickBuyFilters('weapon')} onClick={handleQuickBuyFilters('weapon')}>
                 <Icon path={mdiSwordCross} className="stream-button-icon" />
               </button>
-              <button type="button" id="store-all" className="stream-button bg-csh-secondary btn" onKeyDown={() => setFilterTag('armor')} onClick={() => setFilterTag('armor')}>
+              <button type="button" id="store-armor" className="stream-button bg-csh-secondary btn hide" onKeyDown={handleQuickBuyFilters('armor')} onClick={handleQuickBuyFilters('armor')}>
                 <Icon path={mdiShield} className="stream-button-icon" />
               </button>
-              <button type="button" id="store-all" className="stream-button bg-csh-secondary btn" onKeyDown={() => setFilterTag('food')} onClick={() => setFilterTag('food')}>
+              <button type="button" id="store-food" className="stream-button bg-csh-secondary btn hide" onKeyDown={handleQuickBuyFilters('food')} onClick={handleQuickBuyFilters('food')}>
                 <Icon path={mdiFoodDrumstick} className="stream-button-icon" />
               </button>
-              <button type="button" id="store-all" className="stream-button bg-csh-secondary btn" onKeyDown={() => setFilterTag('material')} onClick={() => setFilterTag('material')}>
+              <button type="button" id="store-material" className="stream-button bg-csh-secondary btn hide" onKeyDown={handleQuickBuyFilters('material')} onClick={handleQuickBuyFilters('material')}>
                 <Icon path={mdiSack} className="stream-button-icon" />
               </button>
-              <button type="button" id="store-all" className="stream-button bg-csh-secondary btn" onKeyDown={() => setFilterTag('effects')} onClick={() => setFilterTag('effects')}>
+              <button type="button" id="store-effects" className="stream-button bg-csh-secondary btn hide" onKeyDown={handleQuickBuyFilters('effects')} onClick={handleQuickBuyFilters('effects')}>
                 <Icon path={mdiWizardHat} className="stream-button-icon" />
               </button>
-              <button type="button" id="store-all" className="stream-button bg-csh-secondary btn" onKeyDown={() => setFilterTag('mobs')} onClick={() => setFilterTag('mobs')}>
+              <button type="button" id="store-mobs" className="stream-button bg-csh-secondary btn hide" onKeyDown={handleQuickBuyFilters('mobs')} onClick={handleQuickBuyFilters('mobs')}>
                 <Icon path={mdiSkull} className="stream-button-icon" />
               </button>
-              <button type="button" id="store-all" className="stream-button bg-csh-secondary btn" onKeyDown={() => setFilterTag('misc')} onClick={() => setFilterTag('misc')}>
+              <button type="button" id="store-misc" className="stream-button bg-csh-secondary btn hide" onKeyDown={handleQuickBuyFilters('misc')} onClick={handleQuickBuyFilters('misc')}>
                 <Icon path={mdiFlask} className="stream-button-icon" />
               </button>
             </nav>
