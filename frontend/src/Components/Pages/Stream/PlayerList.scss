@@ -1,8 +1,8 @@
 /* The div tag that holds each player's information */
 .list-element {
     color: white;
-    background: rgb(50,144,255);
-    background: linear-gradient(-90deg, rgba(50,144,255,1) 0%, rgba(0,212,255,1) 100%);
+    background: rgb(50, 144, 255);
+    background: linear-gradient(-90deg, rgba(50, 144, 255, 1) 0%, rgba(0, 212, 255, 1) 100%);
     position: relative;
     display: flex;
     flex-direction: row-reverse;
@@ -136,15 +136,15 @@
 
 /* Streamer Colors */
 .streamer {
-    background: rgb(100,65,164);
-    background: linear-gradient(90deg, rgba(100,65,164,1) 0%, rgba(57,37,95,1) 100%);
+    background: rgb(100, 65, 164);
+    background: linear-gradient(90deg, rgba(100, 65, 164, 1) 0%, rgba(57, 37, 95, 1) 100%);
     color: white;
 }
 
 /* Cahriid */
 .cahriid {
-    background: rgb(212,128,143);
-    background: linear-gradient(90deg, rgba(212,128,143,1) 31%, rgba(171,69,118,1) 100%);
+    background: rgb(212, 128, 143);
+    background: linear-gradient(90deg, rgba(212, 128, 143, 1) 31%, rgba(171, 69, 118, 1) 100%);
     color: white;
 
     .team-logo {
@@ -152,9 +152,9 @@
     }
 }
 
-.clipsothealien {
-    background: rgb(190,253,253);
-    background: linear-gradient(90deg, rgba(190,253,253,1) 31%, rgba(36,17,48,1) 100%);
+.clipso {
+    background: rgb(190, 253, 253);
+    background: linear-gradient(90deg, rgba(190, 253, 253, 1) 31%, rgba(36, 17, 48, 1) 100%);
     color: white;
 
     .team-logo {
@@ -162,9 +162,9 @@
     }
 }
 
-.laqqy {
-    background: rgb(84,126,180);
-    background: linear-gradient(-90deg, rgba(84,126,180,1) 31%, rgba(131,124,187,1) 100%);
+.laqqqy {
+    background: rgb(84, 126, 180);
+    background: linear-gradient(-90deg, rgba(84, 126, 180, 1) 31%, rgba(131, 124, 187, 1) 100%);
     color: white;
 
     .team-logo {
@@ -172,9 +172,9 @@
     }
 }
 
-.mysticat{
-    background: rgb(29,209,229);
-    background: linear-gradient(90deg, rgba(29,209,229,1) 0%, rgba(135,217,76,1) 50%, rgba(244,180,24,1) 100%);
+.mysticatlive {
+    background: rgb(29, 209, 229);
+    background: linear-gradient(90deg, rgba(29, 209, 229, 1) 0%, rgba(135, 217, 76, 1) 50%, rgba(244, 180, 24, 1) 100%);
 
     .team-logo {
         opacity: 1;
@@ -182,7 +182,8 @@
 }
 
 /* RIT/Default */
-.rit, .pepband {
+.rit,
+.pepband {
     background: rgb(247, 105, 2);
     background: linear-gradient(90deg, rgba(247, 105, 2, 1) 0%, rgba(172, 163, 154, 1) 100%);
     color: white;
@@ -194,7 +195,7 @@
 }
 
 .pepband {
-    .team-logo{
+    .team-logo {
         top: -.25rem;
         height: 2.25rem;
     }
