@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { AssociationLogos, Toggler } from '../../assets/svg';
+import AssociationLogos from '../../assets';
+import { Toggler } from '../../assets/svg';
 import './Navbar.scss';
 import '../Bootstrap-Colors/palette.scss';
 

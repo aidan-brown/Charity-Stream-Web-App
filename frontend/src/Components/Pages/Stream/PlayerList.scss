@@ -1,6 +1,8 @@
 /* The div tag that holds each player's information */
 .list-element {
     color: white;
+    background: rgb(50,144,255);
+    background: linear-gradient(-90deg, rgba(50,144,255,1) 0%, rgba(0,212,255,1) 100%);
     position: relative;
     display: flex;
     flex-direction: row-reverse;
@@ -12,7 +14,6 @@
     margin: .5rem auto;
     height: 2rem;
     width: 95%;
-    border: 2 solid rgba(0, 0, 0, 0);
     border-radius: 2rem;
     box-shadow: .15rem .15rem .25rem rgba(0, 0, 0, 0.35);
     transition: all 150ms;
@@ -25,7 +26,7 @@
     .team-logo {
         position: absolute;
         height: 2.75rem;
-        opacity: 0.25;
+        opacity: 0.5;
         transform-origin: center;
         transform: rotate(-10deg);
     }
@@ -90,9 +91,8 @@
     color: white;
 
     .team-logo {
-        opacity: 0.5;
         height: 7.5rem;
-        left: 0rem;
+        left: 0;
     }
 }
 
@@ -104,7 +104,6 @@
 
     .team-logo {
         height: 4rem;
-        opacity: 0.5;
         left: .5rem;
         transform: rotate(-25deg);
     }
@@ -115,10 +114,6 @@
     background: rgb(50, 86, 183);
     background: linear-gradient(-90deg, rgba(50, 86, 183, 1) 0%, rgba(64, 178, 196, 1) 100%);
     color: white;
-
-    .team-logo {
-        opacity: 0.5;
-    }
 }
 
 /* SSE */
@@ -126,10 +121,6 @@
     background: rgb(30, 90, 141);
     background: linear-gradient(-90deg, rgba(30, 90, 141, 1) 0%, rgba(36, 106, 167, 1) 100%);
     color: white;
-
-    .team-logo {
-        opacity: 0.5;
-    }
 }
 
 /* Art House */
@@ -139,20 +130,72 @@
     color: white;
 
     .team-logo {
-        opacity: 0.5;
         height: 3rem;
     }
 }
 
+/* Streamer Colors */
+.streamer {
+    background: rgb(100,65,164);
+    background: linear-gradient(90deg, rgba(100,65,164,1) 0%, rgba(57,37,95,1) 100%);
+    color: white;
+}
+
+/* Cahriid */
+.cahriid {
+    background: rgb(212,128,143);
+    background: linear-gradient(90deg, rgba(212,128,143,1) 31%, rgba(171,69,118,1) 100%);
+    color: white;
+
+    .team-logo {
+        opacity: 1;
+    }
+}
+
+.clipsothealien {
+    background: rgb(190,253,253);
+    background: linear-gradient(90deg, rgba(190,253,253,1) 31%, rgba(36,17,48,1) 100%);
+    color: white;
+
+    .team-logo {
+        opacity: 1;
+    }
+}
+
+.laqqy {
+    background: rgb(84,126,180);
+    background: linear-gradient(-90deg, rgba(84,126,180,1) 31%, rgba(131,124,187,1) 100%);
+    color: white;
+
+    .team-logo {
+        opacity: 1;
+    }
+}
+
+.mysticat{
+    background: rgb(29,209,229);
+    background: linear-gradient(90deg, rgba(29,209,229,1) 0%, rgba(135,217,76,1) 50%, rgba(244,180,24,1) 100%);
+
+    .team-logo {
+        opacity: 1;
+    }
+}
+
 /* RIT/Default */
-.rit {
+.rit, .pepband {
     background: rgb(247, 105, 2);
     background: linear-gradient(90deg, rgba(247, 105, 2, 1) 0%, rgba(172, 163, 154, 1) 100%);
     color: white;
 
     .team-logo {
-        opacity: 0.5;
         height: 4rem;
         left: .25rem;
+    }
+}
+
+.pepband {
+    .team-logo{
+        top: -.25rem;
+        height: 2.25rem;
     }
 }
