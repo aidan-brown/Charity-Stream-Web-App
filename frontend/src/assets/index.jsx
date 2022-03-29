@@ -17,7 +17,7 @@ export default {
   STREAMER: TWITCH,
   PEPBAND: () => <img src={pepband} alt="Pep Band logo" className="team-logo" />,
   CAHRIID: () => <img src={cahriid} alt="Cahriid logo" className="team-logo" />,
-  CLIPSOTHEALIEN: () => <img src={clipsothealien} alt="Clipsothealien logo" className="team-logo" />,
-  LAQQY: () => <img src={laqqy} alt="Laqqy logo" className="team-logo" />,
-  MYSTICAT: () => <img src={mysticat} alt="Mysticat logo" className="team-logo" />,
+  CLIPSO: () => <img src={clipsothealien} alt="Clipsothealien logo" className="team-logo" />,
+  LAQQQY: () => <img src={laqqy} alt="Laqqy logo" className="team-logo" />,
+  MYSTICATLIVE: () => <img src={mysticat} alt="Mysticat logo" className="team-logo" />,
 };

@@ -16,20 +16,11 @@ export const ASSOCIATIONS = [
   'other',
 ];
 
-export const TEMP_CHANNELS = [
-  'cshba',
-  'MysticatLive',
-  'samanthiiana',
-  'Dantayy5050',
-  'dawnshadowx3',
-  'bohchoi',
-  'skeleton_weeb',
-  'laqqy',
-  'cahriid',
-  'lumiinara',
-  'clipsothealien',
-  'roxkstar74',
-];
+export const CHANNEL_IDS = {
+  mysticatlive: 'UC9mvRrl9o7rG65ABsGVvDBw',
+  cahriid: 'UCd94dREyLDt7i13L36uAlfQ',
+  lofigirl: 'UCSJ4gkVC6NrvII8umztf0Ow',
+};
 
 export const POWER_LEVELS = {
   I: 0,

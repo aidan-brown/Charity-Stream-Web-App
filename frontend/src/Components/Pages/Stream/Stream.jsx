@@ -13,12 +13,15 @@ import StoreContent from '../Store/StoreContent/StoreContent';
 import { getUrl, getReq } from '../../../Utils';
 import AssociationLogos from '../../../assets';
 
-import { TEMP_CHANNELS } from '../../../constants';
+import { CHANNEL_IDS } from '../../../constants';
 
 /** Class for constructing the stream page * */
 const Stream = ({ setSelectedPlayer, addItemToCart }) => {
   const streamDiv = useRef();
   const [channel, setChannel] = useState('cshba');
+  const [channelType, setChannelType] = useState('TWITCH');
+  const [videoIds, setVideoIds] = useState({});
+  const [thumbnailURLs, setThumbnailURLs] = useState('');
   const [streamWidth, setStreamWidth] = useState('100%');
   const [playerList, setPlayerList] = useState([]);
 
@@ -26,10 +29,28 @@ const Stream = ({ setSelectedPlayer, addItemToCart }) => {
     getReq(`${getUrl()}/players`)
       .then((res) => res.json())
       .then((res) => {
-        setPlayerList(res);
+        setPlayerList([...res, {
+          name: 'test', username: 'test', association: 'streamer', channelType: 'YOUTUBE', channel: 'lofigirl',
+        }]);
       })
       .catch(() => {});
   }, []);
+  useEffect(() => {
+    playerList.forEach((player) => {
+      if (player.association === 'streamer' && player.channelType === 'YOUTUBE') {
+        getReq(`https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=${CHANNEL_IDS[player.channel]}&type=video&eventType=live&key=${process.env.YOUTUBE_API_KEY}`)
+          .then((res) => res.json())
+          .then((res) => {
+            setVideoIds({ ...videoIds, [player.channel]: res.items[0].id.videoId });
+            setThumbnailURLs({
+              ...thumbnailURLs,
+              [player.channel]: res.items[0].snippet.thumbnails.medium.url,
+            });
+          })
+          .catch(() => {});
+      }
+    });
+  }, [playerList]);
 
   const playerOnClick = (player) => {
     setSelectedPlayer(player.username);
@@ -67,21 +88,38 @@ const Stream = ({ setSelectedPlayer, addItemToCart }) => {
 
   const PerspectiveList = () => (
     <ul className="PerspectiveList StreamList">
-      {TEMP_CHANNELS.map((channelName) => (
-        <button type="button" className="perspective-button" onClick={() => setChannel(channelName)} key={channelName}>
-          <span className="perspective-overlay" />
-          <span className="perspective-title">{channelName.toUpperCase()}</span>
-          <img src={`https://static-cdn.jtvnw.net/previews-ttv/live_user_${channelName}-440x248.jpg`} alt={channelName} />
-        </button>
-      ))}
+      {[{ association: 'streamer', channel: 'cshba' }, ...playerList.sort((a, b) => a.association.localeCompare(b.association))].map((player) => {
+        if (player.association !== 'streamer') return null;
+        const channelName = player.channel;
+        return (
+          <button
+            type="button"
+            className="perspective-button"
+            onClick={() => {
+              setChannel(channelName);
+              setChannelType(player.channelType);
+            }}
+            key={channelName}
+          >
+            <span className="perspective-overlay" />
+            <span className="perspective-title">{channelName.toUpperCase()}</span>
+            <img
+              src={player.channelType !== 'YOUTUBE' || !thumbnailURLs[channelName]
+                ? `https://static-cdn.jtvnw.net/previews-ttv/live_user_${channelName}-440x248.jpg`
+                : thumbnailURLs[channelName]}
+              alt={channelName}
+            />
+          </button>
+        );
+      })}
     </ul>
   );
 
   const PlayerList = () => (
     <ul className="PlayerList StreamList">
-      {playerList.sort((a, b) => a.association.localeCompare(b.association)).map((player) => {
-        const playerAssociation = player.association === 'streamer' && player.twitchChannel.toUpperCase() in AssociationLogos
-          ? player.twitchChannel
+      {playerList.sort((a, b) => b.association.localeCompare(a.association)).map((player) => {
+        const playerAssociation = player.association === 'streamer' && player.channel.toUpperCase() in AssociationLogos
+          ? player.channel
           : player.association;
         const Logo = playerAssociation.toUpperCase() in AssociationLogos
           ? AssociationLogos[playerAssociation.toUpperCase()]
@@ -101,7 +139,14 @@ const Stream = ({ setSelectedPlayer, addItemToCart }) => {
     <div className="Stream">
       <div className="stream-player bg-csh-secondary closed" ref={streamDiv}>
         <span className="stream-screen">
-          <StreamWindow title="Charity Stream" width={streamWidth} height="100%" url={`https://player.twitch.tv/?channel=${channel}&muted=true&parent=${window.location.hostname}`} />
+          <StreamWindow
+            title="Charity Stream"
+            width={streamWidth}
+            height="100%"
+            url={channelType === 'TWITCH'
+              ? `https://player.twitch.tv/?channel=${channel}&muted=true&parent=${window.location.hostname}`
+              : `https://www.youtube.com/embed/live_stream?channel=${CHANNEL_IDS[channel]}&autoplay=1`}
+          />
           <button type="button" id="perspective-button" className="stream-button bg-csh-secondary btn hide closed" onClick={toggleStreamList('perspective')}>
             <Icon path={mdiEye} className="stream-button-icon" />
           </button>
@@ -122,7 +167,9 @@ const Stream = ({ setSelectedPlayer, addItemToCart }) => {
         <div id="chat-list" className="stream-list bg-csh-secondary-gradient hide">
           <h4>Stream Chat</h4>
           <iframe
-            src={`https://www.twitch.tv/embed/${channel}/chat?parent=${window.location.hostname}`}
+            src={channelType === 'TWITCH'
+              ? `https://www.twitch.tv/embed/${channel}/chat?parent=${window.location.hostname}`
+              : `https://www.youtube.com/live_chat?v=${videoIds[channel]}&embed_domain=${window.location.hostname}`}
             height="100%"
             width="100%"
             title="Stream Chat"
