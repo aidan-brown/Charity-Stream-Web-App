@@ -2,8 +2,19 @@ import React, { useEffect, useRef, useState } from 'react';
 import Icon from '@mdi/react';
 import {
   mdiForum, mdiEye, mdiAccountMultiple, mdiCart,
+
+  mdiFlask,
+  mdiFoodDrumstick,
+  mdiPickaxe,
+  mdiSack,
+  mdiScriptText,
+  mdiShield,
+  mdiSkull,
+  mdiSwordCross,
+  mdiWizardHat,
 } from '@mdi/js';
 import { Link } from 'react-router-dom';
+
 import PropTypes from 'prop-types';
 import './Stream.scss';
 import './PlayerList.scss';
@@ -21,6 +32,7 @@ const Stream = ({ setSelectedPlayer, addItemToCart }) => {
   const [channel, setChannel] = useState('cshba');
   const [streamWidth, setStreamWidth] = useState('100%');
   const [playerList, setPlayerList] = useState([]);
+  const [filterTag, setFilterTag] = useState('all');
 
   useEffect(() => {
     getReq(`${getUrl()}/players`)
@@ -46,19 +58,21 @@ const Stream = ({ setSelectedPlayer, addItemToCart }) => {
     const streamButton = document.querySelector(`#${streamListId}-button`);
     const streamLists = document.querySelectorAll('.stream-list');
     const streamButtons = document.querySelectorAll('.stream-button');
+    const streamButtonsSpan = document.querySelector('.stream-buttons');
     if (streamList.className.includes('hide')) {
       setStreamWidth('calc(100% - 35rem)');
       // eslint-disable-next-line no-param-reassign
       streamLists.forEach((list) => { list.className = list.className.replace('show', 'hide'); });
       // eslint-disable-next-line no-param-reassign
-      streamButtons.forEach((button) => { button.className = button.className.replace('show', 'hide').replace('closed', 'open'); });
+      streamButtons.forEach((button) => { button.className = button.className.replace('show', 'hide'); });
+      streamButtonsSpan.className = streamButtonsSpan.className.replace('closed', 'open');
       streamDiv.current.className = streamDiv.current.className.replace('closed', 'open');
       streamList.className = streamList.className.replace('hide', 'show');
       streamButton.className = streamButton.className.replace('hide', 'show');
     } else {
       setStreamWidth('100%');
       // eslint-disable-next-line no-param-reassign
-      streamButtons.forEach((button) => { button.className = button.className.replace('open', 'closed'); });
+      streamButtonsSpan.className = streamButtonsSpan.className.replace('open', 'closed');
       streamDiv.current.className = streamDiv.current.className.replace('open', 'closed');
       streamList.className = streamList.className.replace('show', 'hide');
       streamButton.className = streamButton.className.replace('show', 'hide');
@@ -102,18 +116,20 @@ const Stream = ({ setSelectedPlayer, addItemToCart }) => {
       <div className="stream-player bg-csh-secondary closed" ref={streamDiv}>
         <span className="stream-screen">
           <StreamWindow title="Charity Stream" width={streamWidth} height="100%" url={`https://player.twitch.tv/?channel=${channel}&muted=true&parent=${window.location.hostname}`} />
-          <button type="button" id="perspective-button" className="stream-button bg-csh-secondary btn hide closed" onClick={toggleStreamList('perspective')}>
-            <Icon path={mdiEye} className="stream-button-icon" />
-          </button>
-          <button type="button" id="chat-button" className="stream-button bg-csh-secondary btn hide closed" onClick={toggleStreamList('chat')}>
-            <Icon path={mdiForum} className="stream-button-icon" />
-          </button>
-          <button type="button" id="player-button" className="stream-button bg-csh-secondary btn hide closed" onClick={toggleStreamList('player')}>
-            <Icon path={mdiAccountMultiple} className="stream-button-icon" />
-          </button>
-          <button type="button" id="shop-button" className="stream-button bg-csh-secondary btn hide closed" onClick={toggleStreamList('shop')}>
-            <Icon path={mdiCart} className="stream-button-icon" />
-          </button>
+          <span className="stream-buttons closed">
+            <button type="button" id="perspective-button" className="stream-button bg-csh-secondary btn hide" onClick={toggleStreamList('perspective')}>
+              <Icon path={mdiEye} className="stream-button-icon" />
+            </button>
+            <button type="button" id="chat-button" className="stream-button bg-csh-secondary btn hide" onClick={toggleStreamList('chat')}>
+              <Icon path={mdiForum} className="stream-button-icon" />
+            </button>
+            <button type="button" id="player-button" className="stream-button bg-csh-secondary btn hide" onClick={toggleStreamList('player')}>
+              <Icon path={mdiAccountMultiple} className="stream-button-icon" />
+            </button>
+            <button type="button" id="shop-button" className="stream-button bg-csh-secondary btn hide" onClick={toggleStreamList('shop')}>
+              <Icon path={mdiCart} className="stream-button-icon" />
+            </button>
+          </span>
         </span>
         <div id="perspective-list" className="stream-list bg-csh-secondary-gradient hide">
           <h4>Perspectives</h4>
@@ -135,7 +151,36 @@ const Stream = ({ setSelectedPlayer, addItemToCart }) => {
         <div id="shop-list" className="stream-list bg-csh-secondary-gradient hide">
           <h4>Quick Buy</h4>
           <div className="StreamList">
-            <StoreContent filterTag="all" addItemToCart={addItemToCart} />
+            <StoreContent filterTag={filterTag} addItemToCart={addItemToCart} />
+            <nav className="quick-store-nav">
+              <button type="button" id="store-all" className="stream-button bg-csh-secondary btn" onKeyDown={() => setFilterTag('all')} onClick={() => setFilterTag('all')}>
+                <Icon path={mdiScriptText} className="stream-button-icon" />
+              </button>
+              <button type="button" id="store-all" className="stream-button bg-csh-secondary btn" onKeyDown={() => setFilterTag('tool')} onClick={() => setFilterTag('tool')}>
+                <Icon path={mdiPickaxe} className="stream-button-icon" />
+              </button>
+              <button type="button" id="store-all" className="stream-button bg-csh-secondary btn" onKeyDown={() => setFilterTag('weapon')} onClick={() => setFilterTag('weapon')}>
+                <Icon path={mdiSwordCross} className="stream-button-icon" />
+              </button>
+              <button type="button" id="store-all" className="stream-button bg-csh-secondary btn" onKeyDown={() => setFilterTag('armor')} onClick={() => setFilterTag('armor')}>
+                <Icon path={mdiShield} className="stream-button-icon" />
+              </button>
+              <button type="button" id="store-all" className="stream-button bg-csh-secondary btn" onKeyDown={() => setFilterTag('food')} onClick={() => setFilterTag('food')}>
+                <Icon path={mdiFoodDrumstick} className="stream-button-icon" />
+              </button>
+              <button type="button" id="store-all" className="stream-button bg-csh-secondary btn" onKeyDown={() => setFilterTag('material')} onClick={() => setFilterTag('material')}>
+                <Icon path={mdiSack} className="stream-button-icon" />
+              </button>
+              <button type="button" id="store-all" className="stream-button bg-csh-secondary btn" onKeyDown={() => setFilterTag('effects')} onClick={() => setFilterTag('effects')}>
+                <Icon path={mdiWizardHat} className="stream-button-icon" />
+              </button>
+              <button type="button" id="store-all" className="stream-button bg-csh-secondary btn" onKeyDown={() => setFilterTag('mobs')} onClick={() => setFilterTag('mobs')}>
+                <Icon path={mdiSkull} className="stream-button-icon" />
+              </button>
+              <button type="button" id="store-all" className="stream-button bg-csh-secondary btn" onKeyDown={() => setFilterTag('misc')} onClick={() => setFilterTag('misc')}>
+                <Icon path={mdiFlask} className="stream-button-icon" />
+              </button>
+            </nav>
           </div>
         </div>
       </div>

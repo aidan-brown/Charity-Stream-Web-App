@@ -9,7 +9,7 @@
 /* The div tag that holds the stream window and the player list */
 .stream-player {
     aspect-ratio: 16/9;
-    height: calc(95vh - 56.59px);
+    width: 85%;
     position: relative;
     display: flex;
     overflow: hidden;
@@ -114,61 +114,67 @@
         }
     }
 
-    /* The button tag that toggles a list */
-    .stream-button {
-        height: 3rem;
-        width: 3rem;
+    .stream-buttons {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+        height: fit-content;
+        width: fit-content;
         position: absolute;
         top: 0;
         right: 0;
-        padding: 0;
-        border-radius: 0;
-        opacity: 0;
         transition: all 500ms;
-        z-index: 2;
-    }
 
-    #chat-button {
-        top: 3rem;
-    }
+        /* The button tag that toggles a list */
+        .stream-button {
+            height: 3rem;
+            width: 3rem;
+            padding: 0;
+            border-radius: 0;
+            opacity: 0;
+            z-index: 2;
+            transition: all 500ms;
+        }
 
-    #player-button {
-        top: 6rem;
-    }
+        .stream-button:last-child {
+            border-bottom-left-radius: .5rem;
+        }
 
-    #shop-button {
-        top: 9rem;
-        border-bottom-left-radius: .5rem;
-    }
+        .stream-button.hide {
+            .stream-button-icon {
+                height: 2rem;
+                opacity: 0.5;
+                transition: all 250ms;
+    
+                &:hover {
+                    height: 2.2rem;
+                    opacity: 1;
+                }
+            }
+        }
 
-    .stream-button.hide {
-        .stream-button-icon {
-            height: 2rem;
-            opacity: 0.5;
-            transition: all 250ms;
-
-            &:hover {
-                height: 2.2rem;
+        .stream-button.show {
+            .stream-button-icon {
+                height: 2.1rem;
                 opacity: 1;
+                transition: all 250ms;
+    
+                &:hover {
+                    height: 2.2rem;
+                }
             }
         }
+
     }
 
-    .stream-button.show {
-        .stream-button-icon {
-            height: 2.1rem;
-            opacity: 1;
-            transition: all 250ms;
-
-            &:hover {
-                height: 2.2rem;
-            }
-        }
-    }
-
-    .stream-button.open {
-        opacity: 1;
+    .stream-buttons.open {
         right: 32rem;
+
+        .stream-button {
+            opacity: 1;
+            border-radius: 0;
+        }
     }
 
     /* The svg tag that holds the svg of the button */
@@ -179,6 +185,24 @@
     &:hover {
         .stream-button {
             opacity: 1;
+        }
+    }
+
+    .quick-store-nav {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+        height: fit-content;
+        width: fit-content;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        transition: all 500ms;
+
+        .stream-button {
+            width: 3rem;
+            height: 3rem;
         }
     }
 }
@@ -278,6 +302,7 @@
             bottom: 0;
             width: 100%;
             height: calc(92vh - 100vw - 56.59px);
+            min-height: 600px;
             padding: 0 5px 5px 5px;
             z-index: 0;
 
@@ -288,54 +313,44 @@
             }
         }
 
-        .stream-list.open {
-            bottom: calc(-92vh + 100vw + 56.59px);
+        .stream-list.show {
             opacity: 1;
         }
 
         .stream-list.hide {
             opacity: 0;
-            bottom: calc((-92vh + 100vw + 56.59px) * 2);
+            bottom: min(calc((-92vh + 100vw + 56.59px) * 2), -600px);
         }
 
-        .stream-button {
-            height: 3rem;
-            width: 3rem;
-            position: absolute;
+        .stream-buttons {
+            flex-direction: row;
             top: auto;
+            right: auto;
             bottom: 0;
             left: 0;
-            padding: 0;
-            border-radius: 0;
-            opacity: 1;
-            transition: all 500ms;
+
+            .stream-button {
+                opacity: 1;
+            }
+            
+            .stream-button:last-child {
+                border-top-right-radius: .5rem;
+                border-bottom-left-radius: 0;
+            }
         }
 
-        #chat-button {
-            top: auto;
-            left: 3rem;
-        }
-
-        #player-button {
-            top: auto;
-            left: 6rem;
-        }
-
-        #shop-button {
-            top: auto;
-            left: 9rem;
-            border-radius: 0;
-            border-top-right-radius: .5rem;
-        }
-
-        .stream-button.open {
+        .stream-buttons.open {
             bottom: -3rem;
+
+            .stream-button {
+                border-radius: 0;
+            }
         }
     }
 
     .stream-player.open {
-        transition: all 500ms;
         height: calc(92vh - 56.59px);
+        min-height: calc(100vw + 600px);
     }
 
     .stream-row-title {
