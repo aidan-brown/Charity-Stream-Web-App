@@ -2,25 +2,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { MenuItem, Select } from '@mui/material';
-
-const POWER_LEVELS = {
-  I: 0,
-  II: 1,
-  III: 2,
-  IV: 3,
-  V: 4,
-};
-
-const TIME_LEVELS = {
-  '0:15': 15,
-  '0:30': 30,
-  '0:45': 45,
-  '1:00': 60,
-  '1:15': 75,
-  '1:30': 90,
-  '1:45': 105,
-  '2:00': 120,
-};
+import { POWER_LEVELS, TIME_LEVELS } from '../../../../constants';
 
 const CartEffect = ({
   effect, changeEffectPower, changeEffectTime, removeFromCart,

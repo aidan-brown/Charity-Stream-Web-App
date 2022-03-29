@@ -30,3 +30,22 @@ export const TEMP_CHANNELS = [
   'clipsothealien',
   'roxkstar74',
 ];
+
+export const POWER_LEVELS = {
+  I: 0,
+  II: 1,
+  III: 2,
+  IV: 3,
+  V: 4,
+};
+
+export const TIME_LEVELS = {
+  '0:15': 15,
+  '0:30': 30,
+  '0:45': 45,
+  '1:00': 60,
+  '1:15': 75,
+  '1:30': 90,
+  '1:45': 105,
+  '2:00': 120,
+};

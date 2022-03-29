@@ -45,15 +45,14 @@ const App = () => {
     localStorage.setItem('cartItems', JSON.stringify(cartItems));
   }, [cartItems]);
 
-  const focusPopup = () => {
-    popup.focus();
-  };
+  const focusPopup = () => popupRef.current.focus();
 
   useEffect(() => {
     if (popupClosed) {
       popupBlur.current.className = popupBlur.current.className.replace('on', 'off');
       popupBlur.current.removeEventListener('click', focusPopup);
       clearInterval(popupWaitInt);
+      setPopupWaitInt();
       setPopupClosed();
     } else if (popupClosed !== undefined) {
       popupBlur.current.className = popupBlur.current.className.replace('off', 'on');
