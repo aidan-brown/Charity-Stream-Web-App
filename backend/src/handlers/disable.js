@@ -3,10 +3,15 @@ const { DisabledElement } = require('../sql/models');
 module.exports = {
   getCheckoutStatus: async (_, res) => {
     try {
-      const { disabled } = await DisabledElement.findByPk('checkout-disable') || {};
+      const { disabled } = await DisabledElement.findOne({
+        where: {
+          id: 'checkout-disable',
+          type: 'checkout',
+        },
+      }) || {};
 
       res.status(200).send(!!disabled);
-    } catch (__) {
+    } catch (err) {
       res.status(500).send('Something went wrong when trying to get checkout');
     }
   },
@@ -18,7 +23,12 @@ module.exports = {
     }
 
     try {
-      const checkout = await DisabledElement.findByPk('checkout-disable');
+      const checkout = await DisabledElement.findOne({
+        where: {
+          id: 'checkout-disable',
+          type: 'checkout',
+        },
+      });
 
       if (checkout) {
         await DisabledElement.update({
@@ -27,12 +37,14 @@ module.exports = {
         {
           where: {
             id: 'checkout-disable',
+            type: 'checkout',
           },
         });
       } else {
         await DisabledElement.create({
           id: 'checkout-disable',
           disabled: status,
+          type: 'checkout',
         });
       }
 
@@ -45,18 +57,18 @@ module.exports = {
     const { body: elements } = req;
 
     try {
-      await elements.forEach(async ({ id, disabled }) => {
-        const foundItem = await DisabledElement.findOne({ where: { id } });
+      await elements.forEach(async ({ id, disabled, type }) => {
+        const foundItem = await DisabledElement.findOne({ where: { id, type } });
 
-        if (!foundItem) await DisabledElement.create({ id, disabled });
+        if (!foundItem) await DisabledElement.create({ id, disabled, type });
         else {
-          await DisabledElement.destroy({ where: { id } });
+          await DisabledElement.destroy({ where: { id, type } });
         }
       });
 
       res.send('Success').status(200);
-    } catch (err) {
-      res.send('Failed to update elements').status(500);
+    } catch (_) {
+      res.status(500).send('Failed to update elements');
     }
   },
 };

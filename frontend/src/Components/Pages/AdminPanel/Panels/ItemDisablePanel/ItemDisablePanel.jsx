@@ -23,7 +23,7 @@ const ItemDisablePanel = ({ authHeader, setAlert }) => {
       getReq(`${getUrl()}/checkout/status`)
         .then((res) => res.text())
         .then((res) => {
-          setCheckoutStatus(Boolean(res));
+          setCheckoutStatus(res === 'true');
         }).catch(() => {
           setAlert({
             message: 'Could not get checkout status',
@@ -108,21 +108,23 @@ const ItemDisablePanel = ({ authHeader, setAlert }) => {
 
   const toggleDisabled = (item) => {
     setItems(items.map((el) => {
-      if (el.id === item.id) {
-        if (toDisable.find((i) => i.id === item.id)) {
-          setToDisable(toDisable.filter((i) => i.id !== item.id));
+      if (el.id === item.id && el.type === item.type) {
+        if (toDisable.find((i) => (i.id === item.id && i.type === item.type))) {
+          setToDisable(toDisable.filter((i) => !(i.id === item.id && item.type === i.type)));
         } else {
           setToDisable([
             ...toDisable,
             {
               id: item.id,
               disabled: !item.disabled,
+              type: item.type,
             },
           ]);
         }
         return {
           ...el,
           disabled: !item.disabled,
+          type: item.type,
         };
       }
       return el;

@@ -17,12 +17,15 @@ const App = () => {
   const [popup, setPopup] = useState({ closed: true });
   const [popupClosed, setPopupClosed] = useState();
   const [popupWaitInt, setPopupWaitInt] = useState();
+  const [isAdmin, setIsAdmin] = useState(false);
 
   const itemAddRef = useRef();
   const popupRef = useRef(popup);
   const popupBlur = useRef();
 
   useEffect(() => {
+    if (localStorage.getItem('mcs-authHeader')) setIsAdmin(true);
+
     let lsGet = localStorage.getItem('player');
     if (!player && lsGet) {
       setPlayer(lsGet);
@@ -42,15 +45,14 @@ const App = () => {
     localStorage.setItem('cartItems', JSON.stringify(cartItems));
   }, [cartItems]);
 
-  const focusPopup = () => {
-    popup.focus();
-  };
+  const focusPopup = () => popupRef.current.focus();
 
   useEffect(() => {
     if (popupClosed) {
       popupBlur.current.className = popupBlur.current.className.replace('on', 'off');
       popupBlur.current.removeEventListener('click', focusPopup);
       clearInterval(popupWaitInt);
+      setPopupWaitInt();
       setPopupClosed();
     } else if (popupClosed !== undefined) {
       popupBlur.current.className = popupBlur.current.className.replace('off', 'on');
@@ -169,7 +171,7 @@ const App = () => {
   return (
     <BrowserRouter>
       <div className="App">
-        <Navbar streamStarted={streamStarted} />
+        <Navbar isAdmin={isAdmin} streamStarted={streamStarted} />
         <main className="Content">
           <Routes>
             <Route
@@ -192,7 +194,7 @@ const App = () => {
             )}
             />
             <Route path="/donation-confirmation/:donationID/:checkoutID" element={<DonationConfirmation />} />
-            <Route path="/admin-panel" element={<AdminPanel />} />
+            <Route path="/admin-panel" element={<AdminPanel setIsAdmin={setIsAdmin} />} />
             <Route
               exact
               path="/"

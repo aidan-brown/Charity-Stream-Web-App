@@ -9,7 +9,7 @@
     "durability": 250
   },
   {
-    "id": "gold_pickaxe",
+    "id": "golden_pickaxe",
     "displayName": "Gold Pickaxe",
     "type": "tool",
     "description": "A fast but flimsy pickaxe. Breaks rocks!",
@@ -45,7 +45,7 @@
     "durability": 250
   },
   {
-    "id": "gold_shovel",
+    "id": "golden_shovel",
     "displayName": "Gold Shovel",
     "type": "tool",
     "description": "A fast but flimsy shovel. Breaks dirt/gravel/sand!",

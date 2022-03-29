@@ -25,7 +25,7 @@ const Cart = ({
     getReq(`${getUrl()}/checkout/status`)
       .then((res) => res.text())
       .then((res) => {
-        setCheckoutDisabled(Boolean(res));
+        setCheckoutDisabled(res === 'true');
       })
       .catch(() => {});
   };

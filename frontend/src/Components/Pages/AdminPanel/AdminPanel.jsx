@@ -1,3 +1,5 @@
+import React, { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
 import {
   Alert,
   Box,
@@ -6,15 +8,15 @@ import {
   TextField,
 } from '@mui/material';
 import { TabContext, TabList } from '@mui/lab';
-import React, { useEffect, useState } from 'react';
 import { NavLink, useNavigate, useSearchParams } from 'react-router-dom';
 import { getUrl } from '../../../Utils';
 import { CommandsPanel, ItemDisablePanel, PlayerManagePanel } from './Panels';
 import './AdminPanel.scss';
 
-const AdminPanel = () => {
+const AdminPanel = ({ setIsAdmin }) => {
   const [searchParams] = useSearchParams();
 
+  const [loading, setLoading] = useState(true);
   const [loggedIn, setLoggedIn] = useState(false);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -23,36 +25,43 @@ const AdminPanel = () => {
   const [tab, setTab] = useState(searchParams.get('tab') || 'quick-commands');
   const navigate = useNavigate();
 
+  const login = () => {
+    const header = localStorage.getItem('mcs-authHeader');
+    if (header || (username && password)) {
+      if (header) setAuthHeader(header);
+      const Authorization = `Basic ${window.btoa(`${username}:${password}`)}`;
+
+      fetch(`${getUrl()}`, {
+        headers: {
+          Authorization: header || Authorization,
+        },
+      })
+        .then(({ status }) => {
+          if (status === 200) {
+            setIsAdmin(true);
+            if (!header) {
+              setAuthHeader(Authorization);
+              localStorage.setItem('mcs-authHeader', Authorization);
+            }
+            setLoggedIn(true);
+          } else {
+            setAuthHeader();
+            localStorage.removeItem('mcs-authHeader');
+            setAlert({
+              message: 'Incorrect Username or Password',
+              severity: 'error',
+            });
+          }
+
+          setLoading(false);
+        });
+    } else setLoading(false);
+  };
+
+  useEffect(() => login(), []);
   useEffect(() => navigate(`/admin-panel?tab=${tab}`), [tab]);
 
-  useEffect(() => {
-    const header = localStorage.getItem('mcs-authHeader');
-    if (header) {
-      setAuthHeader(header);
-      setLoggedIn(true);
-    }
-  }, []);
-
-  const login = () => {
-    const Authorization = `Basic ${window.btoa(`${username}:${password}`)}`;
-    fetch(`${getUrl()}`, {
-      headers: {
-        Authorization,
-      },
-    })
-      .then(({ status }) => {
-        if (status === 200) {
-          setLoggedIn(true);
-          setAuthHeader(Authorization);
-          localStorage.setItem('mcs-authHeader', Authorization);
-        } else {
-          setAlert({
-            message: 'Incorrect Username or Password',
-            severity: 'error',
-          });
-        }
-      });
-  };
+  if (loading) return <div className="admin-panel" />;
 
   return (
     <Box className="admin-panel" sx={{ width: '100%', typography: 'body1' }}>
@@ -133,6 +142,10 @@ const AdminPanel = () => {
       )}
     </Box>
   );
+};
+
+AdminPanel.propTypes = {
+  setIsAdmin: PropTypes.func.isRequired,
 };
 
 export default AdminPanel;

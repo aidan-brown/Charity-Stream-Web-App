@@ -7,7 +7,7 @@ import './Navbar.scss';
 import '../Bootstrap-Colors/palette.scss';
 
 /** Class for constructing the main navbar of the page * */
-const Navbar = ({ streamStarted }) => {
+const Navbar = ({ streamStarted, isAdmin }) => {
   useEffect(() => {
     let activeLink;
     switch (window.location.pathname) {
@@ -69,6 +69,11 @@ const Navbar = ({ streamStarted }) => {
             <li className="nav-item">
               <a id="learn-more" className="nav-link" href="https://www.justgiving.com/fundraising/csh-charity" target="_blank" rel="noopener noreferrer"><span>Learn More</span></a>
             </li>
+            {isAdmin && (
+              <li className="nav-item">
+                <Link id="admin-panel" className="nav-link" onClick={setLinkActive} to="/admin-panel"><span>Admin Panel</span></Link>
+              </li>
+            )}
           </ul>
         </div>
       </div>
@@ -78,6 +83,7 @@ const Navbar = ({ streamStarted }) => {
 
 Navbar.propTypes = {
   streamStarted: PropTypes.bool.isRequired,
+  isAdmin: PropTypes.bool.isRequired,
 };
 
 export default Navbar;

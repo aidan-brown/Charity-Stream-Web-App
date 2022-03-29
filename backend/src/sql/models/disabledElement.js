@@ -9,6 +9,11 @@ const DisabledElement = sequelize.define('DisabledElement', {
     allowNull: false,
     primaryKey: true,
   },
+  type: {
+    type: DataTypes.STRING,
+    allowNull: false,
+    primaryKey: true,
+  },
   disabled: {
     type: DataTypes.BOOLEAN,
     allowNull: false,
