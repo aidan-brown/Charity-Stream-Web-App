@@ -8,6 +8,10 @@ const createTables = async () => {
 
   await Player.sync({ force });
   await DisabledElement.sync({ force });
+
+  // Have to remove the command table first, then make
+  // the checkout table before the command table (fk ref)
+  if (force) await Command.drop();
   await Checkout.sync({ force });
   await Command.sync({ force });
 };

@@ -13,6 +13,11 @@ module.exports = {
   createPlayers: async (req, res) => {
     const players = req.body;
 
+    if (!Array.isArray(players)) {
+      res.status(400).send('Must provide array in body');
+      return;
+    }
+
     try {
       const errors = [];
       const newPlayers = await Promise.all(players.map(async (player) => {

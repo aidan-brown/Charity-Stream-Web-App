@@ -4,8 +4,7 @@ const {
 } = require('../sql/models');
 const { all } = require('../minecraftData');
 const { getUrl } = require('../utils');
-
-const types = ['armor', 'tool', 'weapon', 'food', 'material', 'mob', 'effect'];
+const { TYPES } = require('../constants');
 
 const verifyPlayer = async (username) => {
   const [player] = await Player.findAll({ where: { username } });
@@ -14,18 +13,16 @@ const verifyPlayer = async (username) => {
 
 const verifyPurchase = async (product) => {
   const {
-    id, type, price, power, time,
+    id, type, power, time,
   } = product;
 
-  if (types.includes(type)) {
+  if (TYPES.includes(type)) {
     const item = all.find((i) => i.id === id && i.type === type);
     if (item) {
-      const [disabled] = await DisabledElement.findAll({ where: { id } });
+      const [disabled] = await DisabledElement.findAll({ where: { id, type } });
 
       if (!disabled) {
-        const { price: p } = item;
-
-        return price === p && (type === 'effect' ? power < 10 && time <= 300 : true);
+        return type === 'effect' ? power < 10 && time <= 300 : true;
       }
     }
   }
@@ -44,36 +41,45 @@ module.exports = {
         let subTotal = 0;
         const cartStatus = await [true, ...cart].reduce(async (previousItem, item) => {
           const {
-            id, price, time, power, type, amount = 1,
+            id: rawId, price, time, power, type, amount = 1,
           } = item;
+          const { nbt } = all.find((i) => i.id === rawId && i.type === type) || {};
+          const [id] = rawId.split('-');
 
           if (await verifyPurchase(item)) {
             let cost = price;
-            let cmd;
             if (type === 'effect') {
               cost *= (time / 30) * (power + 1);
               commands.push({
-                commandText: `effect give ${username} ${id} ${time} ${power + 1}`,
+                commandText: `effect give ${username} ${id}${nbt || ''} ${time} ${power + 1}`,
               });
             } else if (type === 'mob') {
-              const totalGroups = Math.ceil(amount / 10);
-              const leftOver = amount % 10;
-
-              [...Array(totalGroups)].forEach((_, i) => {
-                let num = 10;
-                if (i === totalGroups - 1 && leftOver !== 0) num = leftOver;
-
-                commands.push({
-                  commandText: `execute at ${
-                    username
-                  } run summon minecraft:area_effect_cloud ~ ~ ~ {Passengers:[${
-                    [...Array(num)].map(() => `{id:${id}}`).join(',')
-                  }]}`,
+              if (nbt) {
+                [...Array(amount)].forEach(() => {
+                  commands.push({
+                    commandText: `execute at ${username} run summon ${id} ~ ~ ~ ${nbt || ''}`,
+                  });
                 });
-              });
+              } else {
+                const totalGroups = Math.ceil(amount / 10);
+                const leftOver = amount % 10;
+
+                [...Array(totalGroups)].forEach((_, i) => {
+                  let num = 10;
+                  if (i === totalGroups - 1 && leftOver !== 0) num = leftOver;
+
+                  commands.push({
+                    commandText: `execute at ${
+                      username
+                    } run summon minecraft:area_effect_cloud ~ ~ ~ {Passengers:[${
+                      [...Array(num)].map(() => `{id:${id}}`).join(',')
+                    }]}`,
+                  });
+                });
+              }
             } else {
-              cmd = `give ${username} ${id}`;
-              if (id === 'arrow') {
+              let cmd = `give ${username} ${id}${nbt || ''}`;
+              if (id === 'arrow' || id === 'tipped_arrow' || id === 'spectral_arrow') {
                 const totalArrows = amount * 10;
                 cmd += ` ${totalArrows}`;
               } else cmd += ` ${amount}`;
@@ -81,6 +87,12 @@ module.exports = {
               commands.push({
                 commandText: cmd,
               });
+
+              if (id === 'bow' || id === 'crossbow') {
+                commands.push({
+                  commandText: `give ${username} arrow 20`,
+                });
+              }
             }
 
             subTotal += cost * amount;
