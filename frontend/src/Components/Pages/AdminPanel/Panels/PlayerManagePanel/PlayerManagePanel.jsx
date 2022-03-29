@@ -18,7 +18,7 @@ import './PlayerManagePanel.scss';
 const PlayerManagePanel = ({ authHeader, setAlert }) => {
   const [player, setPlayer] = useState({});
   const [players, setPlayers] = useState([]);
-  const [text, setText] = useState();
+  const [text, setText] = useState('');
 
   useEffect(() => {
     const getPlayers = () => {
@@ -54,19 +54,23 @@ const PlayerManagePanel = ({ authHeader, setAlert }) => {
       },
       body: JSON.stringify(newPlayers),
     })
+      .then((res) => res.json())
       .then((res) => {
-        if (res.status !== 200) {
+        const { errors, newPlayers: nps } = res;
+
+        if (nps) {
+          setPlayers([...players, ...nps]);
+        }
+
+        if (errors) {
           setAlert({
-            message: 'Could not create players',
+            message: `Errors: ${JSON.stringify(errors)}`,
             severity: 'error',
           });
         } else {
-          res.json().then((r) => {
-            setAlert({
-              message: 'Successfully Created player(s)',
-              severity: 'success',
-            });
-            setPlayers([...players, ...r.newPlayers]);
+          setAlert({
+            message: 'Successfully Created player(s)',
+            severity: 'success',
           });
         }
       }).catch(() => {
@@ -93,7 +97,7 @@ const PlayerManagePanel = ({ authHeader, setAlert }) => {
           });
         } else {
           setAlert({
-            message: 'Successfully Deleted player',
+            message: `Successfully Deleted ${usn}`,
             severity: 'success',
           });
           setPlayers(players.filter((p) => p.username !== usn));
@@ -111,8 +115,8 @@ const PlayerManagePanel = ({ authHeader, setAlert }) => {
       const lines = text.split('\n');
       const newPlayers = [];
 
-      lines.forEach((line) => {
-        const data = line.split('\t');
+      lines.forEach((line, lineNum) => {
+        const data = line.split(/  +|\t/g);
         const newP = {
           name: '',
           username: '',
@@ -132,19 +136,24 @@ const PlayerManagePanel = ({ authHeader, setAlert }) => {
               newP[currentProp] = val.toLowerCase();
             } else {
               setAlert({
-                message: 'Player association is not right',
+                message: `There is an error on line ${lineNum + 1}`,
                 severity: 'error',
               });
             }
           });
 
           newPlayers.push(newP);
+        } else {
+          setAlert({
+            message: `There is an error on line ${lineNum + 1}`,
+            severity: 'error',
+          });
         }
       });
 
-      createPlayers(newPlayers);
+      return newPlayers;
     } catch (err) {
-      // No errors here
+      return [];
     }
   };
 
@@ -158,7 +167,7 @@ const PlayerManagePanel = ({ authHeader, setAlert }) => {
             label="Name"
             variant="filled"
             sx={{ m: 1, width: '100%' }}
-            value={player.name}
+            value={player.name || ''}
             onChange={(e) => {
               setPlayer({ ...player, name: e.target.value });
             }}
@@ -168,7 +177,7 @@ const PlayerManagePanel = ({ authHeader, setAlert }) => {
             label="Username"
             variant="filled"
             sx={{ m: 1, width: '100%' }}
-            value={player.username}
+            value={player.username || ''}
             onChange={(e) => {
               setPlayer({ ...player, username: e.target.value });
             }}
@@ -178,7 +187,7 @@ const PlayerManagePanel = ({ authHeader, setAlert }) => {
             <Select
               required
               labelId="select-label"
-              value={player.association}
+              value={player.association || ''}
               label="Association"
               onChange={(e) => {
                 setPlayer({ ...player, association: e.target.value });
@@ -195,7 +204,7 @@ const PlayerManagePanel = ({ authHeader, setAlert }) => {
             label="Twitch Channel"
             variant="filled"
             sx={{ m: 1, width: '100%' }}
-            value={player.twitchChannel}
+            value={player.twitchChannel || ''}
             onChange={(e) => {
               setPlayer({ ...player, twitchChannel: e.target.value });
               setAlert();
@@ -203,6 +212,7 @@ const PlayerManagePanel = ({ authHeader, setAlert }) => {
           />
           <Button
             fullWidth
+            disabled={!player.name || !player.association || !player.username}
             className="create-single-button"
             type="submit"
             variant="contained"
@@ -243,11 +253,18 @@ const PlayerManagePanel = ({ authHeader, setAlert }) => {
           />
           <Button
             fullWidth
+            disabled={text.length === 0}
             className="create-bulk-button"
             type="submit"
             variant="contained"
             color="secondary"
-            onClick={generatePlayers}
+            onClick={() => {
+              const newPlayers = generatePlayers();
+              if (newPlayers.length > 0) {
+                createPlayers(newPlayers);
+                setText('');
+              }
+            }}
           >
             Create Players
           </Button>

@@ -76,10 +76,10 @@
       }
 
       .players {
-        overflow-y: scroll;
+        overflow-y: auto;
         display: flex;
         flex-wrap: wrap;
-        min-height: 70vh;
+        max-height: 76vh;
         width: 100%;
         flex-wrap: wrap;
         align-content: flex-start;

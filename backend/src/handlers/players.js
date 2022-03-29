@@ -18,28 +18,34 @@ module.exports = {
       return;
     }
 
+    const errors = [];
+    const newPlayers = [];
     try {
-      const errors = [];
-      const newPlayers = await Promise.all(players.map(async (player) => {
+      await Promise.all(players.map(async (player) => {
         const existing = await Player.findAll({ where: { username: player.username } });
 
-        if (existing.length === 0) return Player.create(player);
-
-        errors.push(`A Player with the username ${player.username} already exists`);
-        return null;
+        if (existing.length === 0) {
+          newPlayers.push(await Player.create(player));
+        } else {
+          errors.push(`A Player with the username ${player.username} already exists`);
+        }
       }));
 
       res.status(errors.length === 0 ? 200 : 400).send({
         ...(errors.length > 0 && { errors }),
-        newPlayers: newPlayers.filter((p) => !!p),
+        newPlayers,
       });
     } catch (err) {
       if (err.name === 'SequelizeValidationError') {
         const [{ message }] = err.errors;
 
-        res.send(message).status(400);
+        res.send({ newPlayers, errors: [...errors, message] }).status(400);
       } else {
-        res.send('An unexpected error occurred with the MySQL server').status(500);
+        res.send({
+          errors: [
+            ...errors,
+            'An unexpected error occurred with the MySQL server'],
+        }).status(500);
       }
     }
   },
