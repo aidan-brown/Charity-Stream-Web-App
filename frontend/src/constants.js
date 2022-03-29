@@ -16,6 +16,11 @@ export const ASSOCIATIONS = [
   'other',
 ];
 
+export const CHANNEL_TYPES = [
+  'TWITCH',
+  'YOUTUBE',
+];
+
 export const TEMP_CHANNELS = [
   'cshba',
   'MysticatLive',
