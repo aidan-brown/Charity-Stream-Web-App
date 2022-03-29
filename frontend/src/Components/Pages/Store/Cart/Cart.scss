@@ -148,6 +148,24 @@ $color_3: lightgray;
 		width: 2px;
 		margin: auto 0;
 	}
+
+	input {
+		border: none;
+		background: transparent;
+		text-align: center;
+	}
+
+	/* Chrome, Safari, Edge, Opera */
+	input::-webkit-outer-spin-button,
+	input::-webkit-inner-spin-button {
+	-webkit-appearance: none;
+	margin: 0;
+	}
+
+	/* Firefox */
+	input[type=number] {
+	-moz-appearance: textfield;
+	}
 }
 
 .cart-effect-stats {

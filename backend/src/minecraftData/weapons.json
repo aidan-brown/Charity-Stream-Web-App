@@ -111,7 +111,8 @@
     "id": "spectral_arrow",
     "displayName": "10x Spectral Arrows",
     "type": "weapon",
-    "description": "Like the normal arrows but *spectral*. (hit enemies are shown through walls) Comes with 10 arrows!",
+    "description": "Like the normal arrows but *spectral*. Comes with 10 arrows!",
+    "effect": "Enemies hit with these arrows will glow through walls.",
     "price": 2.00,
     "count": 10
   },
@@ -120,6 +121,7 @@
     "displayName": "10x Arrows of Slowness",
     "type": "weapon",
     "description": "Arrows tipped with a potion of slowness. Comes with 10 arrows!",
+    "effect": "Enemies hit with these arrows will be slowed for a brief time.",
     "price": 2.50,
     "count": 10,
     "nbt": "{Potion:\"slowness\"}"
@@ -129,6 +131,7 @@
     "displayName": "10x Arrows of Harming",
     "type": "weapon",
     "description": "Arrows tipped with a harmful potion. Comes with 10 arrows!",
+    "effect": "Enemies hit with these arrows will take more damage.",
     "price": 2.50,
     "count": 10,
     "nbt": "{Potion:\"harming\"}"
@@ -138,6 +141,7 @@
     "displayName": "10x Arrows of Poison",
     "type": "weapon",
     "description": "Arrows tipped with poison. Comes with 10 arrows!",
+    "effect": "Enemies hit with these arrows will be poisoned for a brief time.",
     "price": 2.50,
     "count": 10,
     "nbt": "{Potion:\"poison\"}"
@@ -147,6 +151,7 @@
     "displayName": "10x Arrows of Weakness",
     "type": "weapon",
     "description": "Arrows tipped with a weakness potion. Comes with 10 arrows!",
+    "effect": "Enemies hit with these arrows will weakened for a brief time.",
     "price": 2.50,
     "count": 10,
     "nbt": "{Potion:\"weakness\"}"
