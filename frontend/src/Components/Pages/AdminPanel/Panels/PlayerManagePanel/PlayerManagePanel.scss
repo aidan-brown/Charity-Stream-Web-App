@@ -27,6 +27,16 @@
         width: 100%;
         padding: 10px;
         background-color: white;
+
+        .channel {
+          display: flex;
+          width: 100%;
+          align-items: center;
+
+          .channel-name {
+            margin: 8px 8px 8px 0px;
+          }
+        }
       }
 
       .create-single-button {

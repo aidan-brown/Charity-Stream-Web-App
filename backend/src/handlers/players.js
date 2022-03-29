@@ -36,6 +36,7 @@ module.exports = {
         newPlayers,
       });
     } catch (err) {
+      console.log(err);
       if (err.name === 'SequelizeValidationError') {
         const [{ message }] = err.errors;
 

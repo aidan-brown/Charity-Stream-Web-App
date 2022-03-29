@@ -11,7 +11,7 @@ import {
 } from '@mui/material';
 import { TabPanel } from '@mui/lab';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { ASSOCIATIONS } from '../../../../../constants';
+import { ASSOCIATIONS, CHANNEL_TYPES } from '../../../../../constants';
 import { getUrl, getReq } from '../../../../../Utils';
 import './PlayerManagePanel.scss';
 
@@ -118,27 +118,21 @@ const PlayerManagePanel = ({ authHeader, setAlert }) => {
       lines.forEach((line, lineNum) => {
         const data = line.split(/  +|\t/g);
         const newP = {
-          name: '',
-          username: '',
-          association: '',
-          twitchChannel: '',
+          name: null,
+          username: null,
+          association: null,
+          channel: null,
+          channelType: null,
         };
 
         if (data.length >= 3) {
           data.forEach((val, i) => {
             const currentProp = Object.keys(newP)[i];
 
-            if (currentProp === 'association' && ASSOCIATIONS.includes(val)) {
-              newP[currentProp] = val;
-            } else if (currentProp !== 'association') {
-              newP[currentProp] = val;
-            } else if (currentProp !== 'twitchChannel') {
-              newP[currentProp] = val.toLowerCase();
-            } else {
-              setAlert({
-                message: `There is an error on line ${lineNum + 1}`,
-                severity: 'error',
-              });
+            if (currentProp === 'channel') {
+              newP[currentProp] = val.trim().toLowerCase();
+            } else if (val) {
+              newP[currentProp] = val.trim();
             }
           });
 
@@ -183,7 +177,7 @@ const PlayerManagePanel = ({ authHeader, setAlert }) => {
             }}
           />
           <FormControl fullWidth>
-            <InputLabel id="select-label">Association</InputLabel>
+            <InputLabel required id="select-label">Association</InputLabel>
             <Select
               required
               labelId="select-label"
@@ -200,16 +194,38 @@ const PlayerManagePanel = ({ authHeader, setAlert }) => {
               ))}
             </Select>
           </FormControl>
-          <TextField
-            label="Twitch Channel"
-            variant="filled"
-            sx={{ m: 1, width: '100%' }}
-            value={player.twitchChannel || ''}
-            onChange={(e) => {
-              setPlayer({ ...player, twitchChannel: e.target.value });
-              setAlert();
-            }}
-          />
+          <div className="channel">
+            <TextField
+              className="channel-name"
+              fullWidth
+              label="Channel"
+              variant="filled"
+              sx={{ m: 1, width: '100%' }}
+              value={player.channel || ''}
+              onChange={(e) => {
+                setPlayer({ ...player, channel: e.target.value });
+                setAlert();
+              }}
+            />
+            <FormControl fullWidth>
+              <InputLabel id="select-label">Channel Type</InputLabel>
+              <Select
+                required
+                labelId="select-label"
+                value={player.channelType || ''}
+                label="Channel Type"
+                onChange={(e) => {
+                  setPlayer({ ...player, channelType: e.target.value });
+                }}
+              >
+                {CHANNEL_TYPES.map((a) => (
+                  <MenuItem key={a} value={a}>
+                    {a}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+          </div>
           <Button
             fullWidth
             disabled={!player.name || !player.association || !player.username}
@@ -235,7 +251,9 @@ const PlayerManagePanel = ({ authHeader, setAlert }) => {
             {'<tab>'}
             <b>associations</b>
             {'<tab>'}
-            <b>twitchChannel</b>
+            <b>channel</b>
+            {'<tab>'}
+            <b>channelType</b>
             {'<newline>'}
           </p>
           <TextField
