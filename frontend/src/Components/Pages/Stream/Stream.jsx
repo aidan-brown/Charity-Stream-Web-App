@@ -80,8 +80,8 @@ const Stream = ({ setSelectedPlayer, addItemToCart }) => {
   const PlayerList = () => (
     <ul className="PlayerList StreamList">
       {playerList.sort((a, b) => a.association.localeCompare(b.association)).map((player) => {
-        const playerAssociation = player.association === 'streamer' && player.twitchChannel.toUpperCase() in AssociationLogos
-          ? player.twitchChannel
+        const playerAssociation = player.association === 'streamer' && player.channel.toUpperCase() in AssociationLogos
+          ? player.channel
           : player.association;
         const Logo = playerAssociation.toUpperCase() in AssociationLogos
           ? AssociationLogos[playerAssociation.toUpperCase()]
