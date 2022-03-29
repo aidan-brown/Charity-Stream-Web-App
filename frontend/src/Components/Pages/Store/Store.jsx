@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import Icon from '@mdi/react';
 import {
+  mdiFlask,
   mdiFoodDrumstick,
   mdiPickaxe,
   mdiSack,
@@ -66,6 +67,10 @@ const Store = ({ addItemToCart }) => {
           <span tabIndex={0} role="button" onKeyDown={() => setFilterTag('mobs')} id="a-mobs" className="store-link" onClick={() => setFilterTag('mobs')}>
             <Icon path={mdiSkull} />
             Mobs
+          </span>
+          <span tabIndex={0} role="button" onKeyDown={() => setFilterTag('misc')} id="a-misc" className="store-link" onClick={() => setFilterTag('misc')}>
+            <Icon path={mdiFlask} />
+            Misc
           </span>
         </nav>
         <div className="store-content">
