@@ -45,6 +45,8 @@ const AdminPanel = ({ setIsAdmin }) => {
             }
             setLoggedIn(true);
           } else {
+            setAuthHeader();
+            localStorage.removeItem('mcs-authHeader');
             setAlert({
               message: 'Incorrect Username or Password',
               severity: 'error',
