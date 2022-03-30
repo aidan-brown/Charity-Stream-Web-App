@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Icon from '@mdi/react';
 import { mdiCartPlus } from '@mdi/js';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { getUrl } from '../../../../Utils';
 import { itemSymbols } from '../../../../assets/images';
 
@@ -26,8 +27,8 @@ const StoreItem = ({
   return (
     <span tabIndex={0} role="button" className={`store-item bg-csh-tertiary ${className || ''}`} onClick={addItemToCart} onKeyDown={addItemToCart} data-disabled={item.disabled}>
       <div className="store-item-header bg-csh-primary-gradient">
-        <img className="store-item-image" src={`${getUrl()}/images/items/${item.id}-full.webp`} alt={item.displayName} />
-        <img className="store-item-icon" src={`${getUrl()}/images/items/${item.id}.webp`} alt={item.displayName} />
+        <LazyLoadImage className="store-item-image" src={`${getUrl()}/images/items/${item.id}-full.webp`} alt={item.displayName} effect="blur" />
+        <LazyLoadImage className="store-item-icon" src={`${getUrl()}/images/items/${item.id}.webp`} alt={item.displayName} effect="blur" />
         <p className="store-item-displayName">{item.displayName}</p>
         <p className="store-item-price">
           $

@@ -50,14 +50,7 @@ const Cart = ({
     <div className="Cart bg-csh-tertiary" data-showcart={showCart}>
       <div className="cart-playerselect">
         <Select className="cart-playerselect-select" value={player} onChange={(e) => setPlayer(e.target.value)} autoWidth>
-          {playerList.sort((a, b) => {
-            if (a.name > b.name) {
-              return 1;
-            } if (a.name < b.name) {
-              return -1;
-            }
-            return 0;
-          }).map((p) => <MenuItem value={p.username} key={p.username}>{`${p.name} [${p.username}]`}</MenuItem>)}
+          {playerList.sort((a, b) => a.name.localeCompare(b.name)).map((p) => <MenuItem value={p.username} key={p.username}>{`${p.name} [${p.username}]`}</MenuItem>)}
         </Select>
       </div>
       <div className="cart-content">

@@ -195,8 +195,8 @@ const Stream = ({ setSelectedPlayer, addItemToCart }) => {
           </div>
         </div>
       </div>
-      <h2 className="stream-row-title">About the Stream</h2>
-      <div className="stream-row">
+      <h2 className="stream-row-title row-reverse">About the Stream</h2>
+      <div className="stream-row row-reverse">
         <iframe className="stream-row-item stream-row-iframe" title="Dynmap" src="https://dionysus.csh.rit.edu" />
         <article className="stream-row-item stream-row-text-box bg-csh-secondary-gradient">
           <p>
@@ -216,8 +216,8 @@ const Stream = ({ setSelectedPlayer, addItemToCart }) => {
           </p>
         </article>
       </div>
-      <h2 className="stream-row-title row-reverse">About the Hub World</h2>
-      <div className="stream-row row-reverse">
+      <h2 className="stream-row-title">About the Hub World</h2>
+      <div className="stream-row">
         <iframe
           className="stream-row-item stream-row-iframe"
           src="https://www.youtube.com/embed/PU6Bopb1CVE"
