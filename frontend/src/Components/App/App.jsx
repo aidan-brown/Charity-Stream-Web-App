@@ -180,7 +180,7 @@ const App = () => {
               path="/stream"
               element={(
                 <span>
-                  {/* {CartComponents()} */}
+                  {CartComponents()}
                   <Stream setSelectedPlayer={setPlayer} addItemToCart={addItemToCart} />
                 </span>
             )}
@@ -189,7 +189,7 @@ const App = () => {
               path="/store"
               element={(
                 <span>
-                  {/* {CartComponents()} */}
+                  {CartComponents()}
                   <Store addItemToCart={addItemToCart} />
                 </span>
             )}
