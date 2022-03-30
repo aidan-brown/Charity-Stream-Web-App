@@ -1,20 +1,22 @@
-import cahriid from './cahriid.jpeg';
-import clipsothealien from './clipsothealien.png';
-import laqqy from './laqqy.png';
-import mysticat from './mysticat.png';
-import dawnshadowx3 from './dawnshadowx3.png';
-import bohchoi from './bohchoi.png';
-import pepband from './pepband.png';
+import bohchoi from './bohchoi.webp';
+import cahriid from './cahriid.webp';
+import clipsothealien from './clipsothealien.webp';
+import dantayy5050 from './dantayy5050.webp';
+import dawnshadowx3 from './dawnshadowx3.webp';
+import laqqy from './laqqy.webp';
+import lumiinara from './lumiinara.webp';
+import mysticat from './mysticat.webp';
+import pepband from './pepband.webp';
 
-import armor from './armor.png';
-import armorHalf from './half-armor.png';
-import health from './health.png';
-import healthHalf from './half-health.png';
-import hunger from './hunger.png';
-import hungerHalf from './half-hunger.png';
+import armor from './armor.webp';
+import armorHalf from './half-armor.webp';
+import health from './health.webp';
+import healthHalf from './half-health.webp';
+import hunger from './hunger.webp';
+import hungerHalf from './half-hunger.webp';
 
 export {
-  cahriid, clipsothealien, laqqy, mysticat, pepband, dawnshadowx3, bohchoi,
+  bohchoi, cahriid, clipsothealien, dantayy5050, dawnshadowx3, laqqy, lumiinara, mysticat, pepband,
 };
 
 export const itemSymbols = {
