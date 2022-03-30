@@ -2,7 +2,7 @@ import { mdiGoogleController } from '@mdi/js';
 import Icon from '@mdi/react';
 import React from 'react';
 import {
-  cahriid, clipsothealien, dawnshadowx3, laqqy, mysticat, pepband,
+  bohchoi, cahriid, clipsothealien, dawnshadowx3, laqqy, mysticat, pepband,
 } from './images';
 import {
   RIT, CSH, ARTHOUSE, BLACKBAUD, EHOUSE, HOGS, SSE, IHOUSE, TWITCH,
@@ -24,5 +24,6 @@ export default {
   LAQQQY: () => <img src={laqqy} alt="Laqqy logo" className="team-logo" />,
   MYSTICATLIVE: () => <img src={mysticat} alt="Mysticat logo" className="team-logo" />,
   DAWNSHADOWX3: () => <img src={dawnshadowx3} alt="Dawnshadowx3 logo" className="team-logo" />,
+  BOHCHOI: () => <img src={bohchoi} alt="BohChoi logo" className="team-logo" />,
   OTHER: () => <Icon path={mdiGoogleController} className="team-logo" />,
 };
