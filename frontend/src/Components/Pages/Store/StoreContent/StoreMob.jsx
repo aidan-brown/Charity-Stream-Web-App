@@ -1,5 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { mdiCartPlus } from '@mdi/js';
+import Icon from '@mdi/react';
 import { getUrl } from '../../../../Utils';
 
 const StoreMob = ({
@@ -23,7 +25,7 @@ const StoreMob = ({
         </span>
       </dl>
     </div>
-    {isStore && <span className="add-cart material-icons md-36">add_shopping_cart</span>}
+    {isStore && <Icon path={mdiCartPlus} className="add-cart" />}
   </span>
 );
 
