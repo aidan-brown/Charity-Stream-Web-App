@@ -8,6 +8,7 @@ import {
 } from '../Pages';
 import Cart from '../Pages/Store/Cart/Cart';
 import { getUrl, postReq } from '../../Utils';
+import CookieDisclaimer from '../CookieDisclaimer';
 
 const App = () => {
   const [streamStarted, setStreamStarted] = useState(false);
@@ -216,6 +217,7 @@ const App = () => {
           Click here if it hasn&apos;t popped up
         </p>
       </span>
+      <CookieDisclaimer />
     </BrowserRouter>
   );
 };

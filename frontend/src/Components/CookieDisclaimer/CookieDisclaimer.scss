@@ -1,0 +1,43 @@
+.cookies-disclaimer {
+  position: fixed;
+  bottom: 0;
+  z-index: 1040;
+  background-color: #000000d6;
+  width: 100%;
+  padding: 1rem;
+  gap: 10px;
+  transition: all .2s ease-in-out;
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  align-items: center;
+
+  @media screen and (max-width: 900px) {
+    flex-wrap: wrap;
+  }
+
+  .cookies-text {
+    font-family: 'Poppins';
+    color: white;
+    margin: 0;
+    margin-right: 10px;
+
+    .cookie-link {
+      padding: 0px;
+    }
+
+    @media screen and (max-width: 900px) {
+      width: 100%;
+    }
+  }
+
+  .acknowledge-button {
+    min-width: fit-content;
+    font-family: 'Poppins';
+    margin-left: 10px;
+
+    @media screen and (max-width: 900px) {
+      width: 100%;
+    }
+  }
+}

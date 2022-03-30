@@ -103,8 +103,12 @@ const StoreContent = ({ filterTag, addItemToCart, className }) => {
 
 StoreContent.propTypes = {
   filterTag: PropTypes.string.isRequired,
-  className: PropTypes.string.isRequired,
+  className: PropTypes.string,
   addItemToCart: PropTypes.func.isRequired,
+};
+
+StoreContent.defaultProps = {
+  className: null,
 };
 
 export default StoreContent;

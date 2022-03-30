@@ -57,7 +57,6 @@ const Navbar = ({ streamStarted, isAdmin }) => {
         <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
           <Toggler id="toggler" />
         </button>
-
         <div className="collapse navbar-collapse" id="collapsibleNavbar">
           <ul className="navbar-nav">
             <li className="nav-item">
