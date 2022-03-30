@@ -14,7 +14,7 @@ const StoreItem = ({
     for (let i = 0; i < Math.floor(count / 2); i += 1) {
       symbols.push(<img key={i + type} src={itemSymbols[type]} alt={type} />);
     }
-    count -= Math.floor(count / 2);
+    count = count % 2;
     if (count > 0) symbols.push(<img key={`half-${type}`} src={itemSymbols[`${type}Half`]} alt={type} />);
     return (
       <>
