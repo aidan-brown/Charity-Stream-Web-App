@@ -368,3 +368,30 @@ $color_3: lightgray;
 .css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input.MuiSelect-select {
 	text-overflow: clip !important;
 }
+
+@media only screen and (max-width: 1000px) {
+	.Cart {
+		top: 150px;
+		width: 100%;
+	}
+
+	.Cart[data-showcart='no'] {
+		right: -100%;
+	}
+
+	.toggle-cart{
+		top: 150px
+	}
+
+	.toggle-cart[data-showcart='yes'] {
+		right: calc(100% - 50px);
+	}
+
+	.cart-add-item[data-show='no'] {
+		top: 150px;
+	}
+
+	.cart-add-item[data-show='yes'] {
+		top: 205px;
+	}
+}
