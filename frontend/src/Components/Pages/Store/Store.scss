@@ -5,10 +5,10 @@
 }
 
 .store-window {
-	aspect-ratio: 16/9;
 	width: 85%;
-	margin: 0 auto 2rem auto;
-	padding: 1rem 0;
+	height: 47vw;
+	min-height: 800px;
+	margin: 2rem auto;
 	display: grid;
 	grid-template-rows: 100%;
 	grid-template-columns: 10rem 92.5%;
