@@ -14,7 +14,7 @@ const StoreItem = ({
     for (let i = 0; i < Math.floor(count / 2); i += 1) {
       symbols.push(<img key={i + type} src={itemSymbols[type]} alt={type} />);
     }
-    count = count % 2;
+    count %= 2;
     if (count > 0) symbols.push(<img key={`half-${type}`} src={itemSymbols[`${type}Half`]} alt={type} />);
     return (
       <>
@@ -26,8 +26,8 @@ const StoreItem = ({
   return (
     <span tabIndex={0} role="button" className={`store-item bg-csh-tertiary ${className || ''}`} onClick={addItemToCart} onKeyDown={addItemToCart} data-disabled={item.disabled}>
       <div className="store-item-header bg-csh-primary-gradient">
-        <img className="store-item-image" src={`${getUrl()}/images/items/${item.id}-full.png`} alt={item.displayName} />
-        <img className="store-item-icon" src={`${getUrl()}/images/items/${item.id}.png`} alt={item.displayName} />
+        <img className="store-item-image" src={`${getUrl()}/images/items/${item.id}-full.webp`} alt={item.displayName} />
+        <img className="store-item-icon" src={`${getUrl()}/images/items/${item.id}.webp`} alt={item.displayName} />
         <p className="store-item-displayName">{item.displayName}</p>
         <p className="store-item-price">
           $
