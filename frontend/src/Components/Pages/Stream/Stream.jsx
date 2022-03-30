@@ -1,9 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Icon from '@mdi/react';
 import {
-  mdiForum, 
-  mdiEye, 
-  mdiAccountMultiple, 
+  mdiForum,
+  mdiEye,
+  mdiAccountMultiple,
   mdiCart,
   mdiFlask,
   mdiFoodDrumstick,
@@ -89,7 +89,7 @@ const Stream = ({ setSelectedPlayer, addItemToCart }) => {
 
   const PerspectiveList = () => (
     <ul className="PerspectiveList StreamList">
-      {playerList.filter((a) => a.association === 'streamer').map((player) => {
+      {[{ association: 'streamer', channel: 'cshba' }, ...playerList].filter((a) => a.association === 'streamer').map((player) => {
         const channelName = player.channel;
         return (
           <button type="button" className="perspective-button" onClick={() => setChannel(channelName)} key={channelName}>
