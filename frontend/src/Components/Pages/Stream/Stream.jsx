@@ -1,8 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Icon from '@mdi/react';
 import {
-  mdiForum, mdiEye, mdiAccountMultiple, mdiCart,
-
+  mdiForum, 
+  mdiEye, 
+  mdiAccountMultiple, 
+  mdiCart,
   mdiFlask,
   mdiFoodDrumstick,
   mdiPickaxe,
