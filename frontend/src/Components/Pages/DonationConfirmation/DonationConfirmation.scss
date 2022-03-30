@@ -1,0 +1,27 @@
+.DonationConfirmation {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 10;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+
+    span {
+        margin: auto;
+
+        .donation-code {
+            color: #B0197E;
+            font-weight: 900;
+        }
+
+        .close-window {
+            background-color: #E11C52 !important;
+            color: white !important;
+        }
+    }
+}

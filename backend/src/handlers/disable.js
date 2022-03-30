@@ -1,42 +1,74 @@
-const { Select, Update } = require('../sql/sqlFunctions');
-const safeJsonParse = require('../utils/safeJsonParse');
+const { DisabledElement } = require('../sql/models');
 
 module.exports = {
   getCheckoutStatus: async (_, res) => {
     try {
-      const [{ disabled }] = await Select(null, 'checkout');
+      const { disabled } = await DisabledElement.findOne({
+        where: {
+          id: 'checkout-disable',
+          type: 'checkout',
+        },
+      }) || {};
 
       res.status(200).send(!!disabled);
-    } catch (error) {
-      const { code = 500, message = error.message } = safeJsonParse(error.message);
-      res.status(code).send(message);
+    } catch (err) {
+      res.status(500).send('Something went wrong when trying to get checkout');
     }
   },
-  disableCheckout: async (_, res) => {
-    try {
-      const [{ disabled }] = await Select(null, 'checkout');
+  disableCheckout: async (req, res) => {
+    const { status } = req.body;
 
-      await Update('checkout', { disabled: disabled === 0 ? 1 : 0 }, 'id = \'1\'');
-      res.status(200).send(`Successfully ${disabled === 0 ? 'disabled' : 'enabled'} checkout`);
-    } catch (error) {
-      const { code = 500, message = error.message } = safeJsonParse(error.message);
-      res.status(code).send(message);
+    if (status !== true && status !== false) {
+      res.status(400).send('Value must be true or false');
     }
-  },
-  disableElement: async (req, res) => {
-    const { type, id } = req.params;
-    try {
-      const [element] = await Select(null, type, `id = '${id}'`);
 
-      if (element) {
-        await Update(type, { disabled: element.disabled === 0 ? 1 : 0 }, `id = '${id}'`);
-        res.status(200).send(`Successfully ${element.disabled === 0 ? 'disabled' : 'enabled'} '${id}'`);
+    try {
+      const checkout = await DisabledElement.findOne({
+        where: {
+          id: 'checkout-disable',
+          type: 'checkout',
+        },
+      });
+
+      if (checkout) {
+        await DisabledElement.update({
+          disabled: status,
+        },
+        {
+          where: {
+            id: 'checkout-disable',
+            type: 'checkout',
+          },
+        });
       } else {
-        res.status(400).send('That item does not exist');
+        await DisabledElement.create({
+          id: 'checkout-disable',
+          disabled: status,
+          type: 'checkout',
+        });
       }
-    } catch (error) {
-      const { code = 500, message = error.message } = safeJsonParse(error.message);
-      res.status(code).send(message);
+
+      res.status(200).send('Successfully toggled checkout');
+    } catch (_) {
+      res.status(500).send('Something went wrong when toggling checkout');
+    }
+  },
+  disableElements: async (req, res) => {
+    const { body: elements } = req;
+
+    try {
+      await elements.forEach(async ({ id, disabled, type }) => {
+        const foundItem = await DisabledElement.findOne({ where: { id, type } });
+
+        if (!foundItem) await DisabledElement.create({ id, disabled, type });
+        else {
+          await DisabledElement.destroy({ where: { id, type } });
+        }
+      });
+
+      res.send('Success').status(200);
+    } catch (_) {
+      res.status(500).send('Failed to update elements');
     }
   },
 };

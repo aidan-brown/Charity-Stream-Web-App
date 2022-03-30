@@ -1,0 +1,202 @@
+/* The div tag that holds each player's information */
+.list-element {
+    color: white;
+    background: rgb(50, 144, 255);
+    background: linear-gradient(-90deg, rgba(50, 144, 255, 1) 0%, rgba(0, 212, 255, 1) 100%);
+    position: relative;
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+    align-items: center;
+    overflow: hidden;
+    cursor: pointer;
+    padding-left: 1rem;
+    margin: .5rem auto;
+    height: 2rem;
+    width: 95%;
+    border-radius: 2rem;
+    box-shadow: .15rem .15rem .25rem rgba(0, 0, 0, 0.35);
+    transition: all 150ms;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+
+    /* The img tag that holds the players team logo */
+    .team-logo {
+        position: absolute;
+        height: 2.75rem;
+        opacity: 0.5;
+        transform-origin: center;
+        transform: rotate(-10deg);
+    }
+
+    /* The p tag that holds the player's name and username */
+    p {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+        margin: 0;
+    }
+
+    /* The img tag that holds the shop logo for each player element */
+    .shop-logo {
+        transition: all 150ms;
+        position: absolute;
+        right: .5rem;
+        height: 2rem;
+        opacity: 0.2;
+    }
+
+    /* When the player element is hovered over */
+    &:hover {
+        transition: all 150ms;
+        transform: scaleY(1.05);
+        box-shadow: .25rem .25rem .25rem rgba(0, 0, 0, 0.35);
+        color: white;
+
+        /* When the shop logo is hovered over */
+        .shop-logo {
+            transition: all 150ms;
+            opacity: 0.75;
+        }
+    }
+
+    /* When the list element is clicked */
+    &:active {
+        transition: all 150ms;
+        transform: scaleY(1);
+        box-shadow: .15rem .15rem .25rem rgba(0, 0, 0, 0.35);
+    }
+}
+
+/* ==Team Styles== */
+/* CSH */
+.csh {
+    background: rgba(176, 25, 126, 1);
+    background: linear-gradient(-90deg, rgba(225, 28, 82, 1) 50%, rgba(176, 25, 126, 1) 100%);
+    color: white;
+
+    .team-logo {
+        height: 2.75rem;
+    }
+}
+
+/* Blackbaud */
+.blackbaud {
+    background: rgba(114, 191, 68, 1);
+    background: linear-gradient(-90deg, rgba(0, 180, 241, 1) 0%, rgba(114, 191, 68, 1) 100%);
+    color: white;
+
+    .team-logo {
+        height: 7.5rem;
+        left: 0;
+    }
+}
+
+/* HOGS */
+.hogs {
+    background: rgb(226, 3, 3);
+    background: linear-gradient(90deg, rgba(226, 3, 3, 1) 0%, rgba(17, 20, 23, 1) 50%);
+    color: white;
+
+    .team-logo {
+        height: 4rem;
+        left: .5rem;
+        transform: rotate(-25deg);
+    }
+}
+
+/* EHouse */
+.ehouse {
+    background: rgb(50, 86, 183);
+    background: linear-gradient(-90deg, rgba(50, 86, 183, 1) 0%, rgba(64, 178, 196, 1) 100%);
+    color: white;
+}
+
+/* SSE */
+.sse {
+    background: rgb(30, 90, 141);
+    background: linear-gradient(-90deg, rgba(30, 90, 141, 1) 0%, rgba(36, 106, 167, 1) 100%);
+    color: white;
+}
+
+/* Art House */
+.arthouse {
+    background: rgb(6, 182, 177);
+    background: linear-gradient(90deg, rgba(6, 182, 177, 1) 0%, rgba(248, 165, 253, 1) 100%);
+    color: white;
+
+    .team-logo {
+        height: 3rem;
+    }
+}
+
+/* Streamer Colors */
+.streamer {
+    background: rgb(100, 65, 164);
+    background: linear-gradient(90deg, rgba(100, 65, 164, 1) 0%, rgba(57, 37, 95, 1) 100%);
+    color: white;
+}
+
+/* Cahriid */
+.cahriid {
+    background: rgb(212, 128, 143);
+    background: linear-gradient(90deg, rgba(212, 128, 143, 1) 31%, rgba(171, 69, 118, 1) 100%);
+    color: white;
+
+    .team-logo {
+        opacity: 1;
+    }
+}
+
+.clipso {
+    background: rgb(190, 253, 253);
+    background: linear-gradient(90deg, rgba(190, 253, 253, 1) 31%, rgba(36, 17, 48, 1) 100%);
+    color: white;
+
+    .team-logo {
+        opacity: 1;
+    }
+}
+
+.laqqqy {
+    background: rgb(84, 126, 180);
+    background: linear-gradient(-90deg, rgba(84, 126, 180, 1) 31%, rgba(131, 124, 187, 1) 100%);
+    color: white;
+
+    .team-logo {
+        opacity: 1;
+    }
+}
+
+.mysticatlive {
+    background: rgb(29, 209, 229);
+    background: linear-gradient(90deg, rgba(29, 209, 229, 1) 0%, rgba(135, 217, 76, 1) 50%, rgba(244, 180, 24, 1) 100%);
+
+    .team-logo {
+        opacity: 1;
+    }
+}
+
+/* RIT/Default */
+.rit,
+.pepband {
+    background: rgb(247, 105, 2);
+    background: linear-gradient(90deg, rgba(247, 105, 2, 1) 0%, rgba(172, 163, 154, 1) 100%);
+    color: white;
+
+    .team-logo {
+        height: 4rem;
+        left: .25rem;
+    }
+}
+
+.pepband {
+    .team-logo {
+        top: -.25rem;
+        height: 2.25rem;
+    }
+}

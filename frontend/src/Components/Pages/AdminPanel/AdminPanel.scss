@@ -1,0 +1,53 @@
+.admin-panel {
+  background-color: white;
+  min-height: calc(100vh - 56.56px);
+
+  .admin-alert {
+    margin: 8px auto;
+    width: 90%;
+    padding: 10px;
+    border-radius: 7.55px;
+  }
+
+  .MuiTabPanel-root {
+    padding: 0px;
+  }
+
+  .login-wrapper {
+    background-color: #b0197e;
+    background-image: linear-gradient(rgb(176, 25, 126), #cd1b4c);
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+
+    .login {
+      position: relative;
+      padding: 10px;
+      border-radius: 5px;
+      background-color: white;
+      width: 30%;
+  
+      .inputs {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 5px;
+        width: 100%;
+  
+        .signin {
+          background-color: #b0197e;
+          width: 100%;
+          padding: 10px;
+          margin-top: 30px;
+  
+          ::after {
+            color: red;
+          }
+        }
+      }
+    }
+  }
+}

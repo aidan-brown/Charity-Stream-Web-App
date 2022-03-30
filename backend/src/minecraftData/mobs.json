@@ -1,145 +1,227 @@
 [
   {
+    "id": "axolotl",
+    "displayName": "Axolotl",
+    "type": "mob",
+    "description": "You're my friend now! We're having soft tacos later!",
+    "price": 0.20
+  },
+  {
     "id": "bat",
-    "name": "Bat",
+    "displayName": "Bat",
+    "type": "mob",
     "description": "'Chirp Chirp' -some bat somewhere probably.",
     "price": 0.20
   },
   {
     "id": "bee",
-    "name": "Bee",
+    "displayName": "Bee",
+    "type": "mob",
     "description": "Give someone a BEEutiful surprise.",
     "price": 0.40
   },
   {
     "id": "blaze",
-    "name": "Blaze",
+    "displayName": "Blaze",
+    "type": "mob",
     "description": "Fireball, do do do doo doo do *whoop whoop*.",
     "price": 1.00
   },
   {
     "id": "cave_spider",
-    "name": "Cave Spider",
+    "displayName": "Cave Spider",
+    "type": "mob",
     "description": "Cave spiders, really? You hate a player that much?",
     "price": 1.00
   },
   {
     "id": "chicken",
-    "name": "Chicken",
+    "displayName": "Chicken",
+    "type": "mob",
     "description": "Like cooked chicken but they have to put in some elbow grease.",
     "price": 0.20
   },
   {
     "id": "cod",
-    "name": "Cod",
+    "displayName": "A Lot of Cod",
+    "type": "mob",
     "description": "GET CODDED (will spawn a lot of cod)",
+    "count": 100,
     "price": 10.00
   },
   {
     "id": "cow",
-    "name": "Cow",
+    "displayName": "Cow",
+    "type": "mob",
     "description": "'Moo' -Jerald the Cow",
     "price": 0.40
   },
   {
+    "id": "goat",
+    "displayName": "Goat",
+    "type": "mob",
+    "description": "baaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "price": 0.40
+  },
+  {
     "id": "creeper",
-    "name": "Creeper",
+    "displayName": "Creeper",
+    "type": "mob",
     "description": "Tssssssss *BOOM*",
     "price": 3.00
   },
   {
     "id": "donkey",
-    "name": "Donkey",
+    "displayName": "Donkey",
+    "type": "mob",
     "description": "Shrek's pet, idk I didn't watch the movie",
     "price": 0.20
   },
   {
     "id": "enderman",
-    "name": "Enderman",
+    "displayName": "Enderman",
+    "type": "mob",
     "description": "He picks things up and puts them down.",
     "price": 2.00
   },
   {
     "id": "endermite",
-    "name": "Endermite",
+    "displayName": "Endermite",
+    "type": "mob",
     "description": "A telleporting mini bug.",
     "price": 1.00
   },
   {
-    "id": "evocation_illager",
-    "name": "Evoker",
-    "description": "He Evoke. He protec.",
+    "id": "pillager",
+    "displayName": "Pillager",
+    "type": "mob",
+    "description": "For all your pillaging needs.",
     "price": 1.50
   },
   {
+    "id": "evoker",
+    "displayName": "Evoker",
+    "type": "mob",
+    "description": "He Evoke. He protec.",
+    "price": 2.50
+  },
+  {
+    "id": "vindicator",
+    "displayName": "Vindicator",
+    "type": "mob",
+    "description": "#1 provider of vindication. (results may vary)",
+    "price": 3.00
+  },
+  {
+    "id": "piglin",
+    "displayName": "Piglin",
+    "type": "mob",
+    "description": "Greedy pig people that like a display of wealth. (won't attack those clad in gold armor)",
+    "price": 1.25
+  },
+  {
+    "id": "piglin_brute",
+    "displayName": "Piglin Brute",
+    "type": "mob",
+    "description": "Calling them brutish might be an understatement.",
+    "price": 9.00
+  },
+  {
+    "id": "hoglin",
+    "displayName": "Hoglin",
+    "type": "mob",
+    "description": "Beeg beefy boi.",
+    "price": 3.00
+  },
+  {
     "id": "ghast",
-    "name": "Ghast",
+    "displayName": "Ghast",
+    "type": "mob",
     "description": "[:O]=",
     "price": 3.00
   },
   {
     "id": "husk",
-    "name": "Husk",
+    "displayName": "Husk",
+    "type": "mob",
     "description": "Like corn meets a zombie",
     "price": 1.00
   },
   {
     "id": "lightning_bolt",
-    "name": "Lightning Bolt",
+    "displayName": "Lightning Bolt",
+    "type": "mob",
     "description": "Basically just kill someone.",
     "price": 8.00
   },
   {
     "id": "llama",
-    "name": "Llama",
+    "displayName": "Llama",
+    "type": "mob",
     "description": "It'll probably just spit on people.",
     "price": 1.00
   },
   {
     "id": "pig",
-    "name": "Pig",
+    "displayName": "Pig",
+    "type": "mob",
     "description": "This is some bougie pork.",
     "price": 0.50
   },
   {
     "id": "polar_bear",
-    "name": "Polar Bear",
+    "displayName": "Polar Bear",
+    "type": "mob",
     "description": "They changed the dogs in Minecraft!",
     "price": 1.50
   },
   {
     "id": "skeleton",
-    "name": "Skeleton",
+    "displayName": "Skeleton",
+    "type": "mob",
     "description": "Bone shooty man.",
     "price": 2.00
   },
   {
     "id": "spider",
-    "name": "Spider",
+    "displayName": "Spider",
+    "type": "mob",
     "description": "♫ Spiderman, Spiderman, does whatever a spider can... ♫",
     "price": 1.50
   },
   {
     "id": "witch",
-    "name": "Witch",
+    "displayName": "Witch",
+    "type": "mob",
     "description": "He he he.",
     "price": 3.00
   },
   {
     "id": "wither",
-    "name": "Wither",
+    "displayName": "Wither",
+    "type": "mob",
     "description": "Literally just a chaos thing with three heads.",
     "price": 50.00
   },
   {
+    "id": "ender_dragon",
+    "displayName": "Ender Dragon",
+    "type": "mob",
+    "description": "Like Skyrim but with blocks.",
+    "price": 100.00,
+    "nbt": "{DragonPhase:0}"
+  },
+  {
     "id": "wither_skeleton",
-    "name": "Wither Skeleton",
+    "displayName": "Wither Skeleton",
+    "type": "mob",
     "description": "Wither minions for the Wither TM.",
     "price": 3.00
   },
   {
     "id": "zombie",
-    "name": "Zombie",
+    "displayName": "Zombie",
+    "type": "mob",
     "description": "...Brains...",
     "price": 1.00
   }

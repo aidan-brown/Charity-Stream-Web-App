@@ -1,21 +1,28 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import Logo from '../../images/csh.svg';
-import ToggleIcon from '../../images/toggler.svg';
-import './Navbar.css';
-import '../Bootstrap-Colors/palette.css';
+import PropTypes from 'prop-types';
+import AssociationLogos from '../../assets';
+import { Toggler } from '../../assets/svg';
+import './Navbar.scss';
+import '../Bootstrap-Colors/palette.scss';
 
 /** Class for constructing the main navbar of the page * */
-const Navbar = () => {
+const Navbar = ({ streamStarted, isAdmin }) => {
   useEffect(() => {
     let activeLink;
     switch (window.location.pathname) {
       case '/':
-        activeLink = document.querySelector('#stream');
+        if (streamStarted) {
+          activeLink = document.querySelector('#stream');
+        }
         break;
 
       default:
-        activeLink = document.querySelector(`#${window.location.pathname.substring(1, window.location.pathname.length).toLowerCase()}`);
+        if (window.location.pathname.split('/').length <= 2) {
+          activeLink = document
+            .querySelector(`#${window.location.pathname
+              .substring(1, window.location.pathname.length).toLowerCase()}`);
+        }
         break;
     }
 
@@ -29,6 +36,9 @@ const Navbar = () => {
     */
   const setLinkActive = (event) => {
     document.querySelector('.Navbar .active').className = 'nav-link';
+    if (event.target.className.includes('navbar-brand') && streamStarted) {
+      document.querySelector('#stream').className = 'nav-link active';
+    }
     /* eslint-disable no-param-reassign */
     if (event.target.className === 'nav-link' || event.target.className === 'nav-link active') {
       event.target.className = 'nav-link active';
@@ -41,32 +51,38 @@ const Navbar = () => {
   return (
     <nav className="Navbar">
       <div className="navbar navbar-expand-md bg-csh-primary-gradient">
-        <a className="navbar-brand order-md-first" href="https://www.csh.rit.edu/" target="_blank" rel="noopener noreferrer">
-          <img id="csh-logo" src={Logo} alt="CSH logo" />
-        </a>
+        <Link className="navbar-brand order-md-first" onClick={setLinkActive} to="/" rel="noopener noreferrer">
+          <AssociationLogos.CSH id="csh-logo" />
+        </Link>
         <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
-          <img src={ToggleIcon} height="100%" alt="open nav menu" />
+          <Toggler id="toggler" />
         </button>
-
         <div className="collapse navbar-collapse" id="collapsibleNavbar">
-          <ul className="navbar-nav justify-content-center">
+          <ul className="navbar-nav">
             <li className="nav-item">
-              <Link id="stream" className="nav-link" onClick={setLinkActive} to="/"><span>Stream</span></Link>
+              <Link id="stream" className="nav-link" onClick={setLinkActive} to="/stream"><span>Stream</span></Link>
             </li>
             <li className="nav-item">
               <Link id="store" className="nav-link" onClick={setLinkActive} to="/store"><span>Donation Shop</span></Link>
             </li>
             <li className="nav-item">
-              <Link id="data" className="nav-link" onClick={setLinkActive} to="/data"><span>Online Players</span></Link>
+              <a id="learn-more" className="nav-link" href="https://www.justgiving.com/fundraising/csh-charity" target="_blank" rel="noopener noreferrer"><span>Learn More</span></a>
             </li>
-            <li className="nav-item">
-              <a id="learn-more" className="nav-link" href="https://www.justgiving.com/fundraising/csh-minecraft-3" target="_blank" rel="noopener noreferrer"><span>Learn More</span></a>
-            </li>
+            {isAdmin && (
+              <li className="nav-item">
+                <Link id="admin-panel" className="nav-link" onClick={setLinkActive} to="/admin-panel"><span>Admin Panel</span></Link>
+              </li>
+            )}
           </ul>
         </div>
       </div>
     </nav>
   );
+};
+
+Navbar.propTypes = {
+  streamStarted: PropTypes.bool.isRequired,
+  isAdmin: PropTypes.bool.isRequired,
 };
 
 export default Navbar;

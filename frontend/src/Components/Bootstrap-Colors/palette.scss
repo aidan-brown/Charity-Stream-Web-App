@@ -1,0 +1,41 @@
+$color_1: white;
+$color_2: black;
+$background-color_1: #B0197E;
+$background-color_2: #E11C52;
+$background-color_3: #F8F8FF;
+
+.bg-csh-primary {
+	background-color: $background-color_1;
+}
+.bg-csh-primary-gradient {
+	background: rgb(176,25,126);
+	background: linear-gradient(180deg, rgba(176,25,126,1) 0%, rgba(154,23,111,1) 100%);
+}
+.bg-csh-secondary {
+	background-color: $background-color_2;
+}
+.bg-csh-secondary-gradient {
+	background: rgba(225,28,82,1);
+	background: linear-gradient(180deg, rgba(225,28,82,1) 0%, rgba(205,27,76,1) 100%);
+}
+.bg-csh-tertiary {
+	background-color: $background-color_3;
+}
+.font-csh-dark {
+	color: $color_1;
+}
+.font-csh-light {
+	color: $color_2;
+}
+.material-icons.md-18 {
+	font-size: 18px;
+}
+.material-icons.md-24 {
+	font-size: 24px;
+}
+.material-icons.md-36 {
+	font-size: 36px;
+}
+.material-icons.md-48 {
+	font-size: 48px;
+}

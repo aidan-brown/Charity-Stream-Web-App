@@ -1,0 +1,425 @@
+/* The div tag that holds the entire stream page */
+.Stream {
+    overflow-y: auto;
+    overflow-x: auto;
+    background-color: rgb(255, 255, 255);
+    width: 100%;
+    padding-bottom: 3rem;
+}
+
+/* The div tag that holds the stream window and the player list */
+.stream-player {
+    aspect-ratio: 16/9;
+    width: 85%;
+    position: relative;
+    display: flex;
+    overflow: hidden;
+    flex-direction: row;
+    margin: 1rem auto 0 auto;
+    border-radius: .5rem;
+    box-shadow: .45rem .45rem .25rem rgba(0, 0, 0, 0.25);
+
+    .stream-screen {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+    }
+
+    /* The StreamWindow element in the stream player div */
+    .StreamWindow {
+        height: 100%;
+        width: 100%;
+        transition: all 500ms;
+    }
+
+    /* The StreamList elements in the stream player div */
+    .StreamList {
+        width: 100%;
+        height: calc(100% - 3rem);
+        font-size: .75rem;
+        list-style: none;
+        padding: 1rem 0 0 0;
+        margin: 0;
+        background-color: white;
+        border-radius: .5rem;
+        overflow-x: hidden;
+        overflow-y: scroll;
+
+        /* The scrollbar for the list */
+        &::-webkit-scrollbar {
+            background: none;
+            width: 0.5rem;
+        }
+
+        /* The scrollbar thumb for the list */
+        &::-webkit-scrollbar-thumb {
+            transition: background 500ms;
+            background: rgba(225, 28, 82, 0.5);
+            border-radius: 1rem;
+
+            /* When hovering over the scrollbar thumb for the list */
+            &:hover {
+                transition: background 500ms;
+                background: rgba(228, 28, 82, 0.75);
+            }
+        }
+
+        /* The scrollbar track for the list */
+        &::-webkit-scrollbar-track {
+            background: rgba(50, 50, 50, 0.25);
+            border-radius: 1rem;
+            margin: .5rem 0;
+        }
+    }
+
+    /* The div that holds the stream lists */
+    .stream-list {
+        position: absolute;
+        right: 0;
+        z-index: 0;
+        height: 100%;
+        width: 35rem;
+        padding: 5px 5px 5px calc(5px + 3rem);
+        transition: all 500ms;
+
+        h4 {
+            font-weight: 600;
+            font-size: 2rem;
+            color: white;
+            height: 3rem;
+
+            text-align: center;
+            padding: 0;
+            margin: auto;
+        }
+    }
+
+    /* The stream list when in the active state */
+    .stream-list.show {
+        right: 0;
+    }
+
+    /* The player list when in the inactive state */
+    .stream-list.hide {
+        right: -35rem;
+        overflow-y: hidden;
+    }
+
+    #chat-list {
+        iframe {
+            border: none;
+            border-radius: .5rem;
+            height: calc(100% - 3rem);
+        }
+    }
+
+    .stream-buttons {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+        height: fit-content;
+        width: fit-content;
+        position: absolute;
+        top: 0;
+        right: 0;
+        transition: all 500ms;
+
+        .stream-button:last-child {
+            border-bottom-left-radius: .5rem;
+        }
+
+    }
+
+    /* The button tag that toggles a list */
+    .stream-button {
+        height: 3rem;
+        width: 3rem;
+        padding: 0;
+        border-radius: 0;
+        opacity: 0;
+        z-index: 2;
+        transition: all 500ms;
+    }
+
+    .stream-button.hide {
+        .stream-button-icon {
+            height: 2rem;
+            opacity: 0.5;
+            transition: all 250ms;
+
+            &:hover {
+                height: 2.2rem;
+                opacity: 1;
+            }
+        }
+    }
+
+    .stream-button.show {
+        .stream-button-icon {
+            height: 2.1rem;
+            opacity: 1;
+            transition: all 250ms;
+
+            &:hover {
+                height: 2.2rem;
+            }
+        }
+    }
+
+    .stream-buttons.open {
+        right: 32rem;
+
+        .stream-button {
+            opacity: 1;
+            border-radius: 0;
+        }
+    }
+
+    /* The svg tag that holds the svg of the button */
+    .stream-button-icon path {
+        fill: white !important;
+    }
+
+    &:hover {
+        .stream-button {
+            opacity: 1;
+        }
+    }
+
+    .quick-store-nav {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+        height: fit-content;
+        max-height: 60%;
+        width: fit-content;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        transition: all 500ms;
+
+        .stream-button {
+            opacity: 1;
+        }
+    }
+}
+
+.stream-row-title {
+    font-size: 2vmax;
+    font-weight: 600;
+    margin: 2rem 3rem 0 3rem;
+    text-align: right;
+}
+
+/* The div tag of a row on the stream page */
+.stream-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    margin: 1rem;
+
+    /* An item in the stream-row */
+    .stream-row-item {
+        margin: 0 1rem;
+        width: 45vmax;
+        aspect-ratio: 2/1;
+        box-shadow: .45rem .45rem .25rem rgba(0, 0, 0, 0.25);
+        border-radius: .5rem;
+    }
+
+    .stream-row-iframe {
+        border: none;
+        aspect-ratio: auto;
+    }
+
+    .stream-row-text-box {
+        padding: 2vmax;
+        color: white;
+        text-align: left;
+        font-weight: 400;
+        font-size: 1.1vmax;
+
+        a {
+            &:link {
+                color: lightgrey;
+            }
+
+            &:visited {
+                color: lightgrey;
+            }
+
+            &:active {
+                color: lightgrey;
+            }
+
+            &:hover {
+                color: whitesmoke;
+                text-decoration: underline;
+            }
+        }
+    }
+}
+
+.row-reverse {
+    flex-direction: row-reverse;
+    text-align: left;
+}
+
+/* Breakpoint when the window reaches medium width (1200px) */
+@media only screen and (max-width: 1200px) {
+    .Stream {
+        padding-bottom: auto;
+    }
+
+    .stream-player {
+        flex-direction: column;
+        height: 100vw;
+        aspect-ratio: auto;
+        margin: 0;
+        width: 100%;
+        transition: all 500ms;
+        border-radius: 0;
+
+        .stream-screen {
+            z-index: 1;
+            height: fit-content;
+        }
+
+        .StreamWindow {
+            aspect-ratio: 1/1;
+            height: 100vw !important;
+            width: 100% !important;
+        }
+
+        .PlayerList {
+            .list-element {
+                width: 100%;
+            }
+        }
+
+        .stream-list {
+            border-radius: 0;
+            right: 0 !important;
+            bottom: 0;
+            width: 100%;
+            height: calc(92vh - 100vw - 56.59px);
+            min-height: 600px;
+            padding: 0 5px 5px 5px;
+            z-index: 0;
+
+            h4 {
+                width: calc(100% - 12rem);
+                margin: 0;
+                margin-left: auto;
+            }
+        }
+
+        .stream-list.show {
+            opacity: 1;
+        }
+
+        .stream-list.hide {
+            opacity: 0;
+            bottom: min(calc((-92vh + 100vw + 56.59px) * 2), -600px);
+        }
+
+        .stream-buttons {
+            flex-direction: row;
+            top: auto;
+            right: auto;
+            bottom: 0;
+            left: 0;
+
+            .stream-button {
+                opacity: 1;
+            }
+            
+            .stream-button:last-child {
+                border-top-right-radius: .5rem;
+                border-bottom-left-radius: 0;
+            }
+        }
+
+        .stream-buttons.open {
+            bottom: -3rem;
+
+            .stream-button {
+                border-radius: 0;
+            }
+        }
+
+        .quick-store-nav {
+            flex-direction: row;
+            justify-content: center;
+            bottom: auto;
+            width: 100%;
+            left: auto;
+            right: auto;
+            top: 3rem;
+        }
+    }
+
+    .stream-player.open {
+        height: calc(92vh - 56.59px);
+        min-height: calc(100vw + 600px);
+    }
+
+    .stream-row-title {
+        font-size: 2rem;
+        text-align: left;
+    }
+
+    /* The div tag of a row on the stream page */
+    .stream-row {
+        display: flex;
+        flex-direction: column-reverse;
+        justify-content: flex-start;
+        margin: 1rem 0;
+        height: auto;
+
+        /* An item in the stream-row */
+        .stream-row-item {
+            width: 100%;
+            box-shadow: .25rem .45rem .25rem rgba(0, 0, 0, 0.25);
+            border-radius: 0;
+            margin: 0;
+        }
+
+        .stream-row-iframe {
+            aspect-ratio: 1/1;
+        }
+
+        .stream-row-text-box {
+            height: fit-content;
+            color: black;
+            background: transparent;
+            box-shadow: none;
+            text-align: left;
+            font-size: 1.25rem;
+            padding: 0 2rem;
+
+            a {
+                &:link {
+                    color: darkgrey;
+                }
+
+                &:visited {
+                    color: darkgray;
+                }
+
+                &:active {
+                    color: darkgray;
+                }
+
+                &:hover {
+                    color: gray;
+                    text-decoration: underline;
+                }
+            }
+        }
+    }
+}

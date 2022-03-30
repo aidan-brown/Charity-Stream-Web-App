@@ -1,145 +1,169 @@
 [
   {
     "id": "absorption",
-    "name": "Absorption",
+    "displayName": "Absorption",
+    "type": "effect",
     "description": "Adds yellow Absorption health hearts.",
     "price": 2.00
   },
   {
     "id": "blindness",
-    "name": "Blindness",
+    "displayName": "Blindness",
+    "type": "effect",
     "description": "Creates a thick black fog.",
     "price": 1.00
   },
   {
     "id": "fire_resistance",
-    "name": "Fire Resistance",
+    "displayName": "Fire Resistance",
+    "type": "effect",
     "description": "Immunity to fire, lava, and direct hits from fire balls.",
     "price": 0.50
   },
   {
     "id": "glowing",
-    "name": "Glowing",
+    "displayName": "Glowing",
+    "type": "effect",
     "description": "Shows a bright white outline around the player or mob that can be seen through solid objects.",
     "price": 1.00
   },
   {
     "id": "haste",
-    "name": "Haste",
+    "displayName": "Haste",
+    "type": "effect",
     "description": "Speeds up how fast you break blocks.",
     "price": 0.80
   },
   {
     "id": "health_boost",
-    "name": "Health Boost",
+    "displayName": "Health Boost",
+    "type": "effect",
     "description": "Adds additional hearts to your base health.",
     "price": 2.00
   },
   {
     "id": "hunger",
-    "name": "Hunger",
+    "displayName": "Hunger",
+    "type": "effect",
     "description": "Depletes food meter.",
     "price": 0.50
   },
   {
     "id": "instant_damage",
-    "name": "Instant Damage",
+    "displayName": "Instant Damage",
+    "type": "effect",
     "description": "Damages instantly.",
     "price": 2
   },
   {
     "id": "instant_health",
-    "name": "Instant Health",
+    "displayName": "Instant Health",
+    "type": "effect",
     "description": "Heals instantly.",
     "price": 1.00
   },
   {
     "id": "invisibility",
-    "name": "Invisibility",
+    "displayName": "Invisibility",
+    "type": "effect",
     "description": "Invisible to others.",
     "price": 2.00
   },
   {
     "id": "jump_boost",
-    "name": "Jump Boost",
+    "displayName": "Jump Boost",
+    "type": "effect",
     "description": "Jump higher.",
     "price": 0.50
   },
   {
     "id": "mining_fatigue",
-    "name": "Mining Fatigue",
+    "displayName": "Mining Fatigue",
+    "type": "effect",
     "description": "Slows down how fast you break blocks.",
     "price": 1.00
   },
   {
     "id": "nausea",
-    "name": "Nausea",
+    "displayName": "Nausea",
+    "type": "effect",
     "description": "Wobbles and warps what you see in the game.",
     "price": 2.00
   },
   {
     "id": "night_vision",
-    "name": "Night Vision",
+    "displayName": "Night Vision",
+    "type": "effect",
     "description": "Increases brightness level to 15 (see better in dark).",
     "price": 0.50
   },
   {
     "id": "poison",
-    "name": "Poison",
+    "displayName": "Poison",
+    "type": "effect",
     "description": "Deals damage over time, but can't kill the player.",
     "price": 2.00
   },
   {
     "id": "regeneration",
-    "name": "Regeneration",
+    "displayName": "Regeneration",
+    "type": "effect",
     "description": "Restores half heart every 2.5 seconds.",
     "price": 2.00
   },
   {
     "id": "resistance",
-    "name": "Resistance",
+    "displayName": "Resistance",
+    "type": "effect",
     "description": "Reduces all damage.",
     "price": 3
   },
   {
     "id": "saturation",
-    "name": "Saturation",
+    "displayName": "Saturation",
+    "type": "effect",
     "description": "Replenishes food meter.",
     "price": 1.00
   },
   {
     "id": "slowness",
-    "name": "Slowness",
+    "displayName": "Slowness",
+    "type": "effect",
     "description": "Decreases speed.",
     "price": 1.50
   },
   {
     "id": "speed",
-    "name": "Speed",
+    "displayName": "Speed",
+    "type": "effect",
     "description": "Increases speed.",
     "price": 1.50
   },
   {
     "id": "strength",
-    "name": "Strength",
+    "displayName": "Strength",
+    "type": "effect",
     "description": "Increases attack damage (melee attacks).",
     "price": 3
   },
   {
     "id": "water_breathing",
-    "name": "Water Breathing",
+    "displayName": "Water Breathing",
+    "type": "effect",
     "description": "Breathe underwater without using up oxygen bar.",
     "price": 0.20
   },
   {
     "id": "weakness",
-    "name": "Weakness",
+    "displayName": "Weakness",
+    "type": "effect",
     "description": "Decreases attack damage (melee attacks).",
     "price": 1.50
   },
   {
     "id": "wither",
-    "name": "Wither",
+    "displayName": "Wither",
+    "type": "effect",
     "description": "Does damage every 2 seconds, and can kill the player.",
     "price": 2.00
   }

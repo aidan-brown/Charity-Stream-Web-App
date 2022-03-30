@@ -1,0 +1,52 @@
+.disabled-items {
+  position: relative;
+  padding: 10px;
+  font-family: 'Poppins';
+
+  .StoreContent {
+    border-radius: 7.55px;
+    height: 79vh;
+    overflow-y: scroll;
+    background-color: #dadada;
+    padding: 10px;
+    max-width: 90%;
+  }
+
+  .search-bar {
+    display: flex;
+    justify-content: space-between;
+    width: 90%;
+    margin: auto;
+
+    .checkout-toggle {
+      font-size: 30px;
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      
+    }
+
+    .toggle-button {
+      border-radius: 7.55px;
+      font-size: 30px;
+    }
+  }
+
+  .selected {
+    border: 10px solid rgb(255, 0, 170);
+  }
+
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  width: 100%;
+  text-align: left;
+
+  padding: 5px;
+
+  h1.title {
+    font-size: 50px;
+    color: white;
+  }
+}

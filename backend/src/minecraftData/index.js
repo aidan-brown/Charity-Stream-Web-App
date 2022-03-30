@@ -16,4 +16,22 @@ module.exports = {
   mobs,
   tools,
   weapons,
-}
+  all: [
+    ...armors,
+    ...effects,
+    ...foods,
+    ...materials,
+    ...misc,
+    ...mobs,
+    ...tools,
+    ...weapons,
+  ],
+  items: [
+    armors,
+    foods,
+    materials,
+    misc,
+    tools,
+    weapons,
+  ],
+};

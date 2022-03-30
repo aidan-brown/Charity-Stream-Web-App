@@ -1,9 +1,8 @@
-import './index.css';
-
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { datadogRum } from '@datadog/browser-rum-recorder';
 import App from './Components/App/App';
+import './index.css';
 
 /* eslint-disable no-underscore-dangle */
 datadogRum.init({

@@ -1,0 +1,61 @@
+.Landing {
+    position: relative;
+    width: 100%;
+    height: calc(100vh - 56.6px);
+    background-size: cover;
+    overflow: hidden;
+    cursor: default;
+
+    .landing-box {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%,-50%);
+        width: 75%;
+        z-index: 1;
+        color: white;
+        font-size: 1vmax;
+
+        .landing-presents {
+            font-weight: 100;
+            font-size: 1.5vmax;
+        }
+
+        .landing-title {
+            font-family: 'Bebas Neue', 'Poppins', 'Roboto', sans-serif;
+            font-weight: 400;
+            font-size: 6vmax;
+        }
+    }
+
+    .landing-overlay {
+        position: absolute;
+        left: 0;
+        top: 0;
+        right: 0;
+        bottom: 0;
+
+        background: black;
+        background: rgba(0, 0, 0, 0.5);
+    }
+
+    .landing-backdrop-video {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%,-50%);
+        width: 100%;
+        margin: 0;
+        padding: 0;
+        z-index: -1;
+    }
+}
+
+@media (orientation: portrait) {
+    .Landing {
+        .landing-backdrop-video {
+            width: auto;
+            height: 100%;
+        }
+    }
+}

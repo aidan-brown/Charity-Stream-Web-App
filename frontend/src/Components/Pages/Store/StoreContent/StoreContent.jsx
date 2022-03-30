@@ -1,30 +1,30 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { BACKENDURL } from '../../../App/constants';
+import { getUrl, getReq } from '../../../../Utils';
 import StoreItem from './StoreItem';
 import StoreMob from './StoreMob';
 import StoreEffect from './StoreEffect';
-import './StoreContent.css';
+import './StoreContent.scss';
 
-const StoreContent = ({ filterTag, addItemToCart }) => {
+const StoreContent = ({ filterTag, addItemToCart, className }) => {
   const [items, setItems] = useState([]);
   const [effects, setEffects] = useState([]);
   const [mobs, setMobs] = useState([]);
 
   const fetchShopItems = () => {
-    fetch(`${BACKENDURL}/items`)
+    getReq(`${getUrl()}/minecraft/items`)
       .then((res) => res.json())
       .then((res) => {
         setItems(res);
       })
       .catch(() => {});
-    fetch(`${BACKENDURL}/mobs`)
+    getReq(`${getUrl()}/minecraft/mobs`)
       .then((res) => res.json())
       .then((res) => {
         setMobs(res);
       })
       .catch(() => {});
-    fetch(`${BACKENDURL}/effects`)
+    getReq(`${getUrl()}/minecraft/effects`)
       .then((res) => res.json())
       .then((res) => {
         setEffects(res);
@@ -42,57 +42,57 @@ const StoreContent = ({ filterTag, addItemToCart }) => {
   }, []);
 
   return (
-    <div className="StoreContent">
-      {items.filter((item) => item.disabled === 0 && (filterTag === 'all' || item.type === filterTag)).map((item) => (
+    <div className={`StoreContent${className ? ` ${className}` : ''}`}>
+      {items.filter((item) => !item.disabled && (filterTag === 'all' || item.type === filterTag)).map((item) => (
         <StoreItem
           item={item}
           addItemToCart={() => addItemToCart({
-            ...item, amount: 1, icon: `${BACKENDURL}/images/items/${item.id}.png`, img: `${BACKENDURL}/images/items/${item.id}-full.jpg`,
+            ...item, amount: 1, icon: `${getUrl()}/images/items/${item.id}.png`, img: `${getUrl()}/images/items/${item.id}-full.png`,
           })}
           key={item.id}
         />
       ))}
-      {mobs.filter((mob) => mob.disabled === 0 && (filterTag === 'all' || filterTag === 'mobs')).map((mob) => (
+      {mobs.filter((mob) => !mob.disabled && (filterTag === 'all' || filterTag === 'mobs')).map((mob) => (
         <StoreMob
           mob={mob}
           addItemToCart={() => addItemToCart({
-            ...mob, amount: 1, icon: `${BACKENDURL}/images/mobs/${mob.id}.png`, img: `${BACKENDURL}/images/mobs/${mob.id}-full.jpg`, type: 'mob',
+            ...mob, amount: 1, icon: `${getUrl()}/images/mobs/${mob.id}.png`, img: `${getUrl()}/images/mobs/${mob.id}-full.png`, type: 'mob',
           })}
           key={mob.id}
         />
       ))}
-      {effects.filter((effect) => effect.disabled === 0 && (filterTag === 'all' || filterTag === 'effects')).map((effect) => (
+      {effects.filter((effect) => !effect.disabled && (filterTag === 'all' || filterTag === 'effects')).map((effect) => (
         <StoreEffect
           effect={effect}
           addItemToCart={() => addItemToCart({
-            ...effect, time: 30, power: 0, icon: `${BACKENDURL}/images/effects/${effect.id}.png`, img: `${BACKENDURL}/images/effects/${effect.id}-full.jpg`, type: 'effect',
+            ...effect, time: 30, power: 0, icon: `${getUrl()}/images/effects/${effect.id}.png`, img: `${getUrl()}/images/effects/${effect.id}-full.png`, type: 'effect',
           })}
           key={effect.id}
         />
       ))}
-      {items.filter((item) => item.disabled === 1 && (filterTag === 'all' || item.type === filterTag)).map((item) => (
+      {items.filter((item) => item.disabled && (filterTag === 'all' || item.type === filterTag)).map((item) => (
         <StoreItem
           item={item}
           addItemToCart={() => addItemToCart({
-            ...item, amount: 1, icon: `${BACKENDURL}/images/items/${item.id}.png`, img: `${BACKENDURL}/images/items/${item.id}-full.jpg`,
+            ...item, amount: 1, icon: `${getUrl()}/images/items/${item.id}.png`, img: `${getUrl()}/images/items/${item.id}-full.png`,
           })}
           key={item.id}
         />
       ))}
-      {mobs.filter((mob) => mob.disabled === 1 && (filterTag === 'all' || filterTag === 'mobs')).map((mob) => (
+      {mobs.filter((mob) => mob.disabled && (filterTag === 'all' || filterTag === 'mobs')).map((mob) => (
         <StoreMob
           mob={mob}
           addItemToCart={() => addItemToCart({
-            ...mob, amount: 1, icon: `${BACKENDURL}/images/mobs/${mob.id}.png`, img: `${BACKENDURL}/images/mobs/${mob.id}-full.jpg`, type: 'mob',
+            ...mob, amount: 1, icon: `${getUrl()}/images/mobs/${mob.id}.png`, img: `${getUrl()}/images/mobs/${mob.id}-full.png`, type: 'mob',
           })}
           key={mob.id}
         />
       ))}
-      {effects.filter((effect) => effect.disabled === 1 && (filterTag === 'all' || filterTag === 'effects')).map((effect) => (
+      {effects.filter((effect) => effect.disabled && (filterTag === 'all' || filterTag === 'effects')).map((effect) => (
         <StoreEffect
           effect={effect}
           addItemToCart={() => addItemToCart({
-            ...effect, time: 30, power: 0, icon: `${BACKENDURL}/images/effects/${effect.id}.png`, img: `${BACKENDURL}/images/effects/${effect.id}-full.jpg`, type: 'effect',
+            ...effect, time: 30, power: 0, icon: `${getUrl()}/images/effects/${effect.id}.png`, img: `${getUrl()}/images/effects/${effect.id}-full.png`, type: 'effect',
           })}
           key={effect.id}
         />
@@ -103,7 +103,12 @@ const StoreContent = ({ filterTag, addItemToCart }) => {
 
 StoreContent.propTypes = {
   filterTag: PropTypes.string.isRequired,
+  className: PropTypes.string,
   addItemToCart: PropTypes.func.isRequired,
+};
+
+StoreContent.defaultProps = {
+  className: null,
 };
 
 export default StoreContent;

@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { Button, MenuItem, Select } from '@material-ui/core';
-import { BACKENDURL } from '../../../App/constants';
+import { MenuItem, Select, Button } from '@mui/material';
+import { getUrl, getReq } from '../../../../Utils';
 import CartEffect from './CartEffect';
 import CartItem from './CartItem';
-import './Cart.css';
+import './Cart.scss';
 
 const Cart = ({
   player,
@@ -22,16 +22,16 @@ const Cart = ({
   const [checkoutDisabled, setCheckoutDisabled] = useState(false);
 
   const fetchCheckoutStatus = () => {
-    fetch(`${BACKENDURL}/checkout/status`)
-      .then((res) => res.json())
+    getReq(`${getUrl()}/checkout/status`)
+      .then((res) => res.text())
       .then((res) => {
-        setCheckoutDisabled(res);
+        setCheckoutDisabled(res === 'true');
       })
       .catch(() => {});
   };
 
   useEffect(() => {
-    fetch(`${BACKENDURL}/players`)
+    getReq(`${getUrl()}/players`)
       .then((res) => res.json())
       .then((res) => {
         setPlayerList(res);
@@ -61,15 +61,15 @@ const Cart = ({
         </Select>
       </div>
       <div className="cart-content">
-        {cartItems.map((item) => {
-          if (!('power' in item)) return <CartItem key={item.name} item={item} changeCartAmount={changeCartAmount} removeFromCart={removeFromCart} />;
+        {cartItems.map((item, index) => {
+          if (!('power' in item)) return <CartItem key={item.displayName} item={item} changeCartAmount={changeCartAmount(index)} removeFromCart={removeFromCart(index)} />;
           return (
             <CartEffect
-              key={item.name}
+              key={item.displayName}
               effect={item}
-              changeEffectPower={changeEffectPower}
-              changeEffectTime={changeEffectTime}
-              removeFromCart={removeFromCart}
+              changeEffectPower={changeEffectPower(index)}
+              changeEffectTime={changeEffectTime(index)}
+              removeFromCart={removeFromCart(index)}
             />
           );
         })}
@@ -83,37 +83,28 @@ const Cart = ({
         </p>
       </span>
       <hr />
-      <Button className="cart-checkout bg-csh-secondary-gradient" onClick={proceedToCheckout} disabled={checkoutDisabled}>{checkoutDisabled ? 'Waiting For Game To Start' : 'Proceed To Checkout'}</Button>
+      <Button className="cart-checkout bg-csh-secondary-gradient" onClick={proceedToCheckout} disabled={(checkoutDisabled || calculateTotal() < 2)}>
+        {(() => {
+          if (checkoutDisabled) return 'Waiting For Game To Start';
+          if (calculateTotal() < 2) return 'Minimum of $2.00';
+          return 'Proceed To Checkout';
+        })()}
+      </Button>
     </div>
   );
 };
 
 Cart.propTypes = {
   player: PropTypes.string.isRequired,
+  showCart: PropTypes.string.isRequired,
+  // eslint-disable-next-line react/forbid-prop-types
+  cartItems: PropTypes.array.isRequired,
   setPlayer: PropTypes.func.isRequired,
-  cartItems: PropTypes.oneOf([
-    {
-      icon: PropTypes.string.isRequired,
-      img: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired,
-      time: PropTypes.number.isRequired,
-      power: PropTypes.number.isRequired,
-      price: PropTypes.number.isRequired,
-    },
-    {
-      icon: PropTypes.string.isRequired,
-      img: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired,
-      amount: PropTypes.number.isRequired,
-      price: PropTypes.number.isRequired,
-    },
-  ]).isRequired,
   changeCartAmount: PropTypes.func.isRequired,
   changeEffectPower: PropTypes.func.isRequired,
   changeEffectTime: PropTypes.func.isRequired,
   removeFromCart: PropTypes.func.isRequired,
   proceedToCheckout: PropTypes.func.isRequired,
-  showCart: PropTypes.func.isRequired,
   calculateTotal: PropTypes.func.isRequired,
 };
 

@@ -1,16 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import {
-  EmptyArmor,
-  EmptyHeart,
-  EmptyHunger,
-  FullArmor,
-  FullHeart,
-  FullHunger,
-  HalfArmor,
-  HalfHeart,
-  HalfHunger,
-} from './Images';
-import getUrl from '../../Utils/getUrl';
+import { getReq, getUrl } from '../../Utils';
+
 import './PlayerData.css';
 
 const PlayerData = () => {
@@ -19,12 +9,10 @@ const PlayerData = () => {
 
   useEffect(() => {
     const getPlayers = () => {
-      fetch(`${getUrl()}/data`)
+      getReq(`${getUrl()}/data`)
         .then((res) => res.json())
         .then((res) => {
           setLoading(false);
-          // setPlayers(res);
-          console.log(res);
           setPlayers([{
             armor: 0,
             health: 12.3333,
