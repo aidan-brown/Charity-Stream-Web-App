@@ -1,5 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Icon from '@mdi/react';
+import { mdiCartPlus } from '@mdi/js';
 import { getUrl } from '../../../../Utils';
 
 const StoreEffect = ({
@@ -7,8 +9,8 @@ const StoreEffect = ({
 }) => (
   <span tabIndex={0} role="button" className={`store-item bg-csh-tertiary ${className || ''}`} onClick={addItemToCart} onKeyDown={addItemToCart} data-disabled={effect.disabled}>
     <div className="store-item-header bg-csh-primary-gradient">
-      <img className="store-item-image" src={`${getUrl()}/images/effects/${effect.id}-full.png`} alt={effect.displayName} />
-      <img className="store-item-icon" src={`${getUrl()}/images/effects/${effect.id}.png`} alt={effect.displayName} />
+      <img className="store-item-image" src={`${getUrl()}/images/effects/${effect.id}-full.webp`} alt={effect.displayName} />
+      <img className="store-item-icon" src={`${getUrl()}/images/effects/${effect.id}.webp`} alt={effect.displayName} />
       <p className="store-item-displayName">{effect.displayName}</p>
       <p className="store-item-price">
         $
@@ -24,7 +26,7 @@ const StoreEffect = ({
         </span>
       </dl>
     </div>
-    {isStore && <span className="add-cart material-icons md-36">add_shopping_cart</span>}
+    {isStore && <Icon path={mdiCartPlus} className="add-cart" />}
   </span>
 );
 
