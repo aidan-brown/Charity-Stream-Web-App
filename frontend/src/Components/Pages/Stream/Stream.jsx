@@ -89,7 +89,7 @@ const Stream = ({ setSelectedPlayer, addItemToCart }) => {
 
   const PerspectiveList = () => (
     <ul className="PerspectiveList StreamList">
-      {[{ association: 'streamer', channel: 'cshba' }, ...playerList].filter((a) => a.association === 'streamer').map((player) => {
+      {[{ association: 'streamer', channel: 'cshba' }, ...playerList].filter((a) => a.channel).map((player) => {
         const channelName = player.channel;
         return (
           <button type="button" className="perspective-button" onClick={() => setChannel(channelName)} key={channelName}>
