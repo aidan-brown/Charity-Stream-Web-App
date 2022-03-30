@@ -10,10 +10,10 @@ const StoreItem = ({
     const symbols = [];
     let count = rating;
     for (let i = 0; i < Math.floor(count / 2); i += 1) {
-      symbols.push(<img src={itemSymbols[type]} alt={type} />);
+      symbols.push(<img key={i + type} src={itemSymbols[type]} alt={type} />);
     }
     count -= Math.floor(count / 2);
-    if (count > 0) symbols.push(<img src={itemSymbols[`${type}Half`]} alt={type} />);
+    if (count > 0) symbols.push(<img key={`half-${type}`} src={itemSymbols[`${type}Half`]} alt={type} />);
     return (
       <>
         {symbols}
