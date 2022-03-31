@@ -77,7 +77,6 @@
 .csh {
     background: rgba(176, 25, 126, 1);
     background: linear-gradient(-90deg, rgba(225, 28, 82, 1) 50%, rgba(176, 25, 126, 1) 100%);
-    color: white;
 
     .team-logo {
         height: 2.75rem;
@@ -88,7 +87,6 @@
 .blackbaud {
     background: rgba(114, 191, 68, 1);
     background: linear-gradient(-90deg, rgba(0, 180, 241, 1) 0%, rgba(114, 191, 68, 1) 100%);
-    color: white;
 
     .team-logo {
         height: 7.5rem;
@@ -100,7 +98,6 @@
 .hogs {
     background: rgb(226, 3, 3);
     background: linear-gradient(90deg, rgba(226, 3, 3, 1) 0%, rgba(17, 20, 23, 1) 50%);
-    color: white;
 
     .team-logo {
         height: 4rem;
@@ -113,39 +110,39 @@
 .ehouse {
     background: rgb(50, 86, 183);
     background: linear-gradient(-90deg, rgba(50, 86, 183, 1) 0%, rgba(64, 178, 196, 1) 100%);
-    color: white;
 }
 
 /* SSE */
 .sse {
     background: rgb(30, 90, 141);
     background: linear-gradient(-90deg, rgba(30, 90, 141, 1) 0%, rgba(36, 106, 167, 1) 100%);
-    color: white;
 }
 
 /* Art House */
 .arthouse {
     background: rgb(6, 182, 177);
     background: linear-gradient(90deg, rgba(6, 182, 177, 1) 0%, rgba(248, 165, 253, 1) 100%);
-    color: white;
 
     .team-logo {
         height: 3rem;
     }
 }
 
+/* IHouse */
+.ihouse {
+    background: rgb(75,146,219);
+    background: linear-gradient(90deg, rgba(75,146,219,1) 0%, rgba(87,167,250,1) 50%, rgba(50,111,176,1) 100%);
+}
+
 /* Streamer Colors */
 .streamer {
     background: rgb(100, 65, 164);
     background: linear-gradient(90deg, rgba(100, 65, 164, 1) 0%, rgba(57, 37, 95, 1) 100%);
-    color: white;
 }
 
-/* Cahriid */
 .cahriid {
     background: rgb(212, 128, 143);
     background: linear-gradient(90deg, rgba(212, 128, 143, 1) 31%, rgba(171, 69, 118, 1) 100%);
-    color: white;
 
     .team-logo {
         opacity: 1;
@@ -155,7 +152,6 @@
 .clipso {
     background: rgb(190, 253, 253);
     background: linear-gradient(90deg, rgba(190, 253, 253, 1) 31%, rgba(36, 17, 48, 1) 100%);
-    color: white;
 
     .team-logo {
         opacity: 1;
@@ -163,9 +159,8 @@
 }
 
 .laqqqy {
-    background: rgb(84, 126, 180);
-    background: linear-gradient(-90deg, rgba(84, 126, 180, 1) 31%, rgba(131, 124, 187, 1) 100%);
-    color: white;
+    background: rgb(84,126,180);
+    background: linear-gradient(90deg, rgba(84,126,180,1) 0%, rgba(132,176,232,1) 50%, rgba(153,81,190,1) 100%);
 
     .team-logo {
         opacity: 1;
@@ -181,12 +176,49 @@
     }
 }
 
+.dawnshadowx3 {
+    background: rgb(215,155,172);
+    background: linear-gradient(90deg, rgba(215,155,172,1) 0%, rgba(227,175,241,1) 50%, rgba(156,95,200,1) 100%);
+
+    .team-logo {
+        opacity: 1;
+    }
+}
+
+.bohchoi {
+    background: rgb(10,214,209);
+    background: linear-gradient(90deg, rgba(10,214,209,1) 25%, rgba(0,222,45,1) 100%);
+    
+    .team-logo {
+        opacity: 1;
+        height: 3rem;
+        bottom: -10px;
+    }
+}
+
+.dantayy5050 {
+    background: rgb(248,168,25);
+    background: linear-gradient(90deg, rgba(248,168,25,1) 0%, rgba(11,59,170,1) 100%);
+
+    .team-logo {
+        opacity: 1;
+    }
+}
+
+.lumiinara {
+    background: rgb(211,226,231);
+    background: linear-gradient(90deg, rgba(211,226,231,1) 31%, rgba(219,178,235,1) 100%);
+
+    .team-logo {
+        opacity: 1;
+    }
+}
+
 /* RIT/Default */
 .rit,
 .pepband {
     background: rgb(247, 105, 2);
     background: linear-gradient(90deg, rgba(247, 105, 2, 1) 0%, rgba(172, 163, 154, 1) 100%);
-    color: white;
 
     .team-logo {
         height: 4rem;
