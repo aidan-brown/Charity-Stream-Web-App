@@ -1,4 +1,5 @@
 const { Rcon } = require('rcon-client');
+const { logger } = require('.');
 const { Command } = require('../sql/models');
 
 module.exports = async (scheduled) => {
@@ -52,9 +53,11 @@ module.exports = async (scheduled) => {
       // Close the command
       await rcon.end();
     }
-  } catch (_) {
+  } catch (error) {
     // We want to make sure the failed commands will be run, so we reschedule them
     try {
+      logger.error('RCON_SCHEDULE_FAILED', 'Failed to run RCON commands', { error });
+
       await Command.update({ cronId: null, status: 'READY' }, {
         where: {
           cronId,
@@ -62,9 +65,9 @@ module.exports = async (scheduled) => {
         },
       });
     } catch (err) {
-      // If we get here, we are fucked (not really but the db is down)
-      // eslint-disable-next-line no-console
-      console.log('UH OH STINKY, STINKY POOP (DB AND RCON FAILED UH OH) Error:', err);
+      logger.error('RCON_SCHEDULE_BACKUP_FAILED', 'Failed to reschedule commands to be run', {
+        originalError: error, error: err,
+      });
     }
   }
 };

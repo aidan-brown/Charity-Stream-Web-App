@@ -1,5 +1,5 @@
 const { Rcon } = require('rcon-client');
-const { sleep } = require('../utils');
+const { sleep, logger } = require('../utils');
 
 module.exports = {
   runRconCommands: async (req, res) => {
@@ -18,8 +18,14 @@ module.exports = {
         sleep(1000 * waits, () => rcon.send(command));
       }));
 
+      logger.info('SCHEDULED_COMMANDS', 'Successfully scheduled commands', { commands });
+
       res.status(200).send('Those should run TM');
-    } catch (_) {
+    } catch (error) {
+      logger.error('SCHEDULE_COMMANDS_FAILED', 'Failed to schedule RCON commands to be run', {
+        error, commands,
+      });
+
       res.status(500).send('Those did not run TM');
     }
   },

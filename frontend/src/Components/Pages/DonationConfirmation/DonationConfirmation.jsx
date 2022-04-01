@@ -16,8 +16,6 @@ const DonationConfirmation = () => {
 
   useEffect(() => {
     if (donationID && checkoutID) {
-      console.log(donationID);
-      console.log(checkoutID);
       const reqJSON = {
         donationID,
         checkoutID,

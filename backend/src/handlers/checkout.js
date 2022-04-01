@@ -3,7 +3,7 @@ const {
   Checkout, Player, DisabledElement, Command,
 } = require('../sql/models');
 const { all } = require('../minecraftData');
-const { getUrl } = require('../utils');
+const { getUrl, logger } = require('../utils');
 const { TYPES } = require('../constants');
 
 const verifyPlayer = async (username) => {
@@ -35,6 +35,8 @@ module.exports = {
 
     try {
       if (!await verifyPlayer(username)) {
+        logger.warn('PLAYER_DNE', 'Verify checkout player does not exist', { username });
+
         res.status(400).send('Player does not exist');
       } else {
         const commands = [];
@@ -103,6 +105,8 @@ module.exports = {
         });
 
         if (!cartStatus) {
+          logger.warn('CART_VERIFY_FAILED', 'Cart verification failed', { cart });
+
           res.status(400).send('There is something wrong with your cart');
         } else {
           const checkout = await Checkout.create({
@@ -116,10 +120,16 @@ module.exports = {
           const exitUrl = encodeURIComponent(`${getUrl()}/JUSTGIVING-DONATION-ID/${checkout.id}`);
           const redirectUrl = `http://link.justgiving.com/v1/fundraisingpage/donate/pageId/15252893?amount=${subTotal.toFixed(2)}&currency=USD&reference=mcstream&exitUrl=${exitUrl}`;
 
+          logger.info('CHECKOUT_CREATED', 'Successfully created checkout', {
+            checkoutID: checkout.id,
+          });
+
           res.status(200).send(redirectUrl);
         }
       }
-    } catch (_) {
+    } catch (err) {
+      logger.error('VERIFY_CART', 'Failed to verify cart', { err });
+
       res.status(500).send('Failed to create checkout');
     }
   },
@@ -128,16 +138,30 @@ module.exports = {
 
     try {
       const [checkout] = await Checkout.findAll({ where: { id: checkoutID } });
+      const [donation] = await Checkout.findAll({ where: { donationID } });
+
+      if (donation) {
+        logger.warn('DONATION_ID_TWICE', 'DonationID has already been used', { donationID });
+
+        res.status(400).send('DonationID has already been used');
+        return;
+      }
 
       if (!checkout) {
+        logger.warn('CHECKOUT_NOT_FOUND', 'Checkout session not found', {
+          checkoutID, donationID,
+        });
+
         res.status(404).send('Checkout session not found');
       } else {
         const { JG_APPID, JG_AUTH } = process.env;
-        const { data } = await axios.default.get(`https://api.justgiving.com/${JG_APPID}/v1/donation/${donationID}`, {
-          headers: {
-            Basic: `${JG_AUTH}`,
+        const { data } = await axios.default.get(
+          `https://api.justgiving.com/${JG_APPID}/v1/donation/${donationID}`, {
+            headers: {
+              Basic: `${JG_AUTH}`,
+            },
           },
-        });
+        );
 
         const { subTotal, status } = checkout;
         const { donorLocalAmount } = data;
@@ -154,15 +178,31 @@ module.exports = {
             });
             await checkout.save();
 
+            logger.info('PURCHASE_SUCCESS', 'Successful purchase made', {
+              checkoutID, donationID, subTotal,
+            });
+
             res.status(200).send('Commands marked as READY!');
           } else {
+            logger.warn('DONATION_MISMATCH', 'Purchase successful prices did not line up', {
+              donorLocalAmount, subTotal, checkoutID, donationID,
+            });
+
             res.status(400).send('Donation amounts did not line up, not running commands');
           }
         } else {
+          logger.warn('SCHEDULE_TWICE', 'Tried to schedule commands again', {
+            donationID, checkoutID,
+          });
+
           res.status(400).send('Commands have already been scheduled');
         }
       }
-    } catch (_) {
+    } catch (err) {
+      logger.error('VERIFY_DONATION_FAILED', 'Failed to create checkout', {
+        error: err, donationID, checkoutID,
+      });
+
       res.status(500).send('Something on our end went wrong');
     }
   },
