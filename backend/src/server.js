@@ -14,6 +14,7 @@ const {
   verifyCart,
   verifyDonation,
   disableCheckout,
+  createPriceOverrides,
 } = require('./handlers');
 const { getImages } = require('./images');
 const { basicAuth } = require('./handlers/authentication');
@@ -42,6 +43,7 @@ app.get('/dynmap/data', dynmapGetData);
 app.use(basicAuth);
 
 // Everything below this point requires auth
+app.put('/price-override', createPriceOverrides);
 app.put('/disable', disableElements);
 app.put('/disable/checkout', disableCheckout);
 app.post('/players', createPlayers);
