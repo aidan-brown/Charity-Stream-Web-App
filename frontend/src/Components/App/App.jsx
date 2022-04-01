@@ -31,7 +31,7 @@ const App = () => {
     if (!player && lsGet) {
       setPlayer(lsGet);
     } else if (player === '') {
-      setPlayer('yakman3');
+      setPlayer('SupaPat');
     }
     lsGet = localStorage.getItem('cartItems');
     if (lsGet) {
@@ -152,7 +152,7 @@ const App = () => {
 
   const CartComponents = () => (
     <span>
-      <button type="button" className="bg-csh-tertiary toggle-cart " onClick={toggleCartMenu} data-showcart={showCart}><span className="material-icons">{showCart === 'yes' ? 'arrow_back' : 'shopping_cart'}</span></button>
+      <button type="button" className="bg-csh-tertiary toggle-cart " onClick={toggleCartMenu} data-showcart={showCart}><span className="material-icons">{showCart === 'yes' ? 'arrow_forward' : 'shopping_cart'}</span></button>
       <img className="cart-add-item" ref={itemAddRef} src="" alt="item added to cart" data-show="no" />
       <Cart
         player={player}
