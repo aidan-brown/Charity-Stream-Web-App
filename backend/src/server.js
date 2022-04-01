@@ -10,6 +10,7 @@ const {
   getCheckoutStatus,
   getMinecraftData,
   getPlayers,
+  getPriceOverrides,
   runRconCommands,
   verifyCart,
   verifyDonation,
@@ -34,6 +35,7 @@ app.get('/minecraft/:type', getMinecraftData);
 app.get('/players', getPlayers);
 app.get('/images/:type/:image', getImages);
 app.get('/checkout/status', getCheckoutStatus);
+app.get('/price-overrides', getPriceOverrides);
 app.post('/verify-checkout', verifyCart);
 app.post('/verify-donation', verifyDonation);
 app.get('/dynmap/icons/:playerName', dynmapGetPlayerIcon);
@@ -43,7 +45,7 @@ app.get('/dynmap/data', dynmapGetData);
 app.use(basicAuth);
 
 // Everything below this point requires auth
-app.put('/price-override', createPriceOverrides);
+app.put('/price-overrides', createPriceOverrides);
 app.put('/disable', disableElements);
 app.put('/disable/checkout', disableCheckout);
 app.post('/players', createPlayers);
@@ -54,7 +56,7 @@ app.get('/', (_, res) => res.status(200).send('Success'));
 app.listen(port, async () => {
   // Test SQL connection, we can't run if this fails
   await testConnection();
-  createTables();
+  await createTables();
 
   // Schedule cron job to process rcon commands every 2 seconds
   cron.schedule(`*/${process.env.CRON_TIME || 2} * * * * *`, rcon);
