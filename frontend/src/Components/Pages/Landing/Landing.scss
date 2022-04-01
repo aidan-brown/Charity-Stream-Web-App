@@ -2,6 +2,7 @@
     position: relative;
     width: 100%;
     height: calc(100vh - 56.6px);
+    background: black;
     background-size: cover;
     overflow: hidden;
     cursor: default;
@@ -12,7 +13,7 @@
         left: 50%;
         transform: translate(-50%,-50%);
         width: 75%;
-        z-index: 1;
+        z-index: 2;
         color: white;
         font-size: 1vmax;
 
@@ -34,6 +35,7 @@
         top: 0;
         right: 0;
         bottom: 0;
+        z-index: 1;
 
         background: black;
         background: rgba(0, 0, 0, 0.5);
@@ -47,7 +49,6 @@
         width: 100%;
         margin: 0;
         padding: 0;
-        z-index: -1;
     }
 }
 
