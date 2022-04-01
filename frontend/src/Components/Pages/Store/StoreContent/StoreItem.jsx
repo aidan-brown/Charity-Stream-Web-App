@@ -3,51 +3,34 @@ import PropTypes from 'prop-types';
 import Icon from '@mdi/react';
 import { mdiCartPlus } from '@mdi/js';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
-import { getUrl } from '../../../../Utils';
-import { itemSymbols } from '../../../../assets/images';
+import { getUrl, ItemSymbols } from '../../../../Utils';
 
 const StoreItem = ({
   item, addItemToCart, isStore, className,
-}) => {
-  const ItemSymbols = (type, rating = 1) => {
-    const symbols = [];
-    let count = rating;
-    for (let i = 0; i < Math.floor(count / 2); i += 1) {
-      symbols.push(<img key={i + type} src={itemSymbols[type]} alt={type} />);
-    }
-    count %= 2;
-    if (count > 0) symbols.push(<img key={`half-${type}`} src={itemSymbols[`${type}Half`]} alt={type} />);
-    return (
-      <>
-        {symbols}
-      </>
-    );
-  };
-
-  return (
-    <span tabIndex={0} role="button" className={`store-item bg-csh-tertiary ${className || ''}`} onClick={addItemToCart} onKeyDown={addItemToCart} data-disabled={item.disabled}>
-      <div className="store-item-header bg-csh-primary-gradient">
-        <LazyLoadImage className="store-item-image" src={`${getUrl()}/images/items/${item.id}-full.webp`} alt={item.displayName} effect="blur" />
-        <LazyLoadImage className="store-item-icon" src={`${getUrl()}/images/items/${item.id}.webp`} alt={item.displayName} effect="blur" />
-        <p className="store-item-displayName">{item.displayName}</p>
-        <p className="store-item-price">
-          $
-          {item.price.toFixed(2)}
-        </p>
-      </div>
-      <div className="store-item-description">
-        <dl className="store-item-stats">
-          <span>
-            <dt>Description</dt>
-            <dd>{item.description}</dd>
-          </span>
-          {item.speed && (
+}) => (
+  <span tabIndex={0} role="button" className={`store-item bg-csh-tertiary ${className || ''}`} onClick={addItemToCart} onKeyDown={addItemToCart} data-disabled={item.disabled}>
+    <div className="store-item-header bg-csh-primary-gradient">
+      <LazyLoadImage className="store-item-image" src={`${getUrl()}/images/items/${item.id}-full.webp`} alt={item.displayName} effect="blur" />
+      <LazyLoadImage className="store-item-icon" src={`${getUrl()}/images/items/${item.id}.webp`} alt={item.displayName} effect="blur" />
+      <p className="store-item-displayName">{item.displayName}</p>
+      <p className="store-item-price">
+        $
+        {item.price.toFixed(2)}
+      </p>
+    </div>
+    <div className="store-item-description">
+      <dl className="store-item-stats">
+        <span>
+          <dt>Description</dt>
+          <dd>{item.description}</dd>
+        </span>
+        {item.speed && (
           <span key={0}>
             <dt>Speed Rating</dt>
             <dd>{item.speed}</dd>
           </span>
-          )}
-          {item.damage && (
+        )}
+        {item.damage && (
           <span key={1}>
             <dt>Damage Rating</dt>
             <dd>
@@ -58,8 +41,8 @@ const StoreItem = ({
               )
             </dd>
           </span>
-          )}
-          {item.protection && (
+        )}
+        {item.protection && (
           <span key={2}>
             <dt>Armor Rating</dt>
             <dd>
@@ -70,20 +53,20 @@ const StoreItem = ({
               )
             </dd>
           </span>
-          )}
-          {item.durability && (
+        )}
+        {item.durability && (
           <span key={7}>
             <dt>Durability</dt>
             <dd>{item.durability}</dd>
           </span>
-          )}
-          {item.effects && (
+        )}
+        {item.effects && (
           <span key={3}>
             <dt>Special Effects</dt>
             <dd>{item.effects}</dd>
           </span>
-          )}
-          {item.hungerFill && (
+        )}
+        {item.hungerFill && (
           <span key={4}>
             <dt>Food Rating</dt>
             <dd>
@@ -94,13 +77,12 @@ const StoreItem = ({
               )
             </dd>
           </span>
-          )}
-        </dl>
-      </div>
-      {isStore && <Icon path={mdiCartPlus} className="add-cart" />}
-    </span>
-  );
-};
+        )}
+      </dl>
+    </div>
+    {isStore && <Icon path={mdiCartPlus} className="add-cart" />}
+  </span>
+);
 
 StoreItem.propTypes = {
   item: PropTypes.shape({
