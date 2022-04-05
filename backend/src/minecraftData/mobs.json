@@ -21,20 +21,6 @@
     "price": 0.40
   },
   {
-    "id": "blaze",
-    "displayName": "Blaze",
-    "type": "mob",
-    "description": "Fireball, do do do doo doo do *whoop whoop*.",
-    "price": 1.00
-  },
-  {
-    "id": "cave_spider",
-    "displayName": "Cave Spider",
-    "type": "mob",
-    "description": "Cave spiders, really? You hate a player that much?",
-    "price": 1.00
-  },
-  {
     "id": "chicken",
     "displayName": "Chicken",
     "type": "mob",
@@ -42,12 +28,11 @@
     "price": 0.20
   },
   {
-    "id": "cod",
-    "displayName": "A Lot of Cod",
+    "id": "pig",
+    "displayName": "Pig",
     "type": "mob",
-    "description": "GET CODDED (will spawn a lot of cod)",
-    "count": 100,
-    "price": 10.00
+    "description": "This is some bougie pork.",
+    "price": 0.50
   },
   {
     "id": "cow",
@@ -61,14 +46,7 @@
     "displayName": "Goat",
     "type": "mob",
     "description": "baaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-    "price": 0.40
-  },
-  {
-    "id": "creeper",
-    "displayName": "Creeper",
-    "type": "mob",
-    "description": "Tssssssss *BOOM*",
-    "price": 3.00
+    "price": 0.50
   },
   {
     "id": "donkey",
@@ -78,18 +56,67 @@
     "price": 0.20
   },
   {
-    "id": "enderman",
-    "displayName": "Enderman",
+    "id": "llama",
+    "displayName": "Llama",
     "type": "mob",
-    "description": "He picks things up and puts them down.",
+    "description": "It'll probably just spit on people.",
+    "price": 1.00
+  },
+  {
+    "id": "polar_bear",
+    "displayName": "Polar Bear",
+    "type": "mob",
+    "description": "They changed the dogs in Minecraft!",
+    "price": 1.50
+  },
+  {
+    "id": "zombie",
+    "displayName": "Zombie",
+    "type": "mob",
+    "description": "...Brains...",
+    "price": 1.00
+  },
+  {
+    "id": "husk",
+    "displayName": "Husk",
+    "type": "mob",
+    "description": "Like corn meets a zombie",
+    "price": 1.00
+  },
+  {
+    "id": "cave_spider",
+    "displayName": "Cave Spider",
+    "type": "mob",
+    "description": "Cave spiders, really? You hate a player that much?",
+    "price": 1.00
+  },
+  {
+    "id": "spider",
+    "displayName": "Spider",
+    "type": "mob",
+    "description": "♫ Spiderman, Spiderman, does whatever a spider can... ♫",
+    "price": 1.50
+  },
+  {
+    "id": "skeleton",
+    "displayName": "Skeleton",
+    "type": "mob",
+    "description": "Bone shooty man.",
     "price": 2.00
   },
   {
-    "id": "endermite",
-    "displayName": "Endermite",
+    "id": "creeper",
+    "displayName": "Creeper",
     "type": "mob",
-    "description": "A telleporting mini bug.",
-    "price": 1.00
+    "description": "Tssssssss *BOOM*",
+    "price": 3.00
+  },
+  {
+    "id": "witch",
+    "displayName": "Witch",
+    "type": "mob",
+    "description": "He he he.",
+    "price": 3.00
   },
   {
     "id": "pillager",
@@ -141,10 +168,31 @@
     "price": 3.00
   },
   {
-    "id": "husk",
-    "displayName": "Husk",
+    "id": "blaze",
+    "displayName": "Blaze",
     "type": "mob",
-    "description": "Like corn meets a zombie",
+    "description": "Fireball, do do do doo doo do *whoop whoop*.",
+    "price": 1.00
+  },
+  {
+    "id": "wither_skeleton",
+    "displayName": "Wither Skeleton",
+    "type": "mob",
+    "description": "Wither minions for the Wither TM.",
+    "price": 3.00
+  },
+  {
+    "id": "enderman",
+    "displayName": "Enderman",
+    "type": "mob",
+    "description": "He picks things up and puts them down.",
+    "price": 2.00
+  },
+  {
+    "id": "endermite",
+    "displayName": "Endermite",
+    "type": "mob",
+    "description": "A telleporting mini bug.",
     "price": 1.00
   },
   {
@@ -155,46 +203,12 @@
     "price": 8.00
   },
   {
-    "id": "llama",
-    "displayName": "Llama",
+    "id": "cod",
+    "displayName": "A Lot of Cod",
     "type": "mob",
-    "description": "It'll probably just spit on people.",
-    "price": 1.00
-  },
-  {
-    "id": "pig",
-    "displayName": "Pig",
-    "type": "mob",
-    "description": "This is some bougie pork.",
-    "price": 0.50
-  },
-  {
-    "id": "polar_bear",
-    "displayName": "Polar Bear",
-    "type": "mob",
-    "description": "They changed the dogs in Minecraft!",
-    "price": 1.50
-  },
-  {
-    "id": "skeleton",
-    "displayName": "Skeleton",
-    "type": "mob",
-    "description": "Bone shooty man.",
-    "price": 2.00
-  },
-  {
-    "id": "spider",
-    "displayName": "Spider",
-    "type": "mob",
-    "description": "♫ Spiderman, Spiderman, does whatever a spider can... ♫",
-    "price": 1.50
-  },
-  {
-    "id": "witch",
-    "displayName": "Witch",
-    "type": "mob",
-    "description": "He he he.",
-    "price": 3.00
+    "description": "GET CODDED (will spawn a lot of cod)",
+    "count": 100,
+    "price": 10.00
   },
   {
     "id": "wither",
@@ -210,19 +224,5 @@
     "description": "Like Skyrim but with blocks.",
     "price": 100.00,
     "nbt": "{DragonPhase:0}"
-  },
-  {
-    "id": "wither_skeleton",
-    "displayName": "Wither Skeleton",
-    "type": "mob",
-    "description": "Wither minions for the Wither TM.",
-    "price": 3.00
-  },
-  {
-    "id": "zombie",
-    "displayName": "Zombie",
-    "type": "mob",
-    "description": "...Brains...",
-    "price": 1.00
   }
 ]
