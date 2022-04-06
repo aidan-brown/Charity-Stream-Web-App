@@ -4,6 +4,8 @@ import {
   Button,
   IconButton,
   TextField,
+  Select,
+  MenuItem,
 } from '@mui/material';
 import { TabPanel } from '@mui/lab';
 import { Clear, Check, Delete } from '@mui/icons-material';
@@ -17,6 +19,7 @@ const ItemUpdatePanel = ({ authHeader, setAlert }) => {
   const [toDisable, setToDisable] = useState([]);
   const [toPriceChange, setToPriceChange] = useState([]);
   const [filter, setFilter] = useState('');
+  const [overrideToggle, setOverrideToggle] = useState('mass');
   const [massPriceOverride, setMassPriceOverride] = useState(0);
   const [items, setItems] = useState([]);
   const [checkoutStatus, setCheckoutStatus] = useState(false);
@@ -163,7 +166,7 @@ const ItemUpdatePanel = ({ authHeader, setAlert }) => {
     }));
   };
 
-  const priceOverride = (item, index) => (item.priceOverride || toPriceChange.find(
+  const priceOverride = (item, index) => (item.priceOverride !== null || toPriceChange.find(
     (p) => p.id === item.id && p.type === item.type,
   )
     ? (
@@ -300,7 +303,7 @@ const ItemUpdatePanel = ({ authHeader, setAlert }) => {
             className="search"
             variant="filled"
             placeholder="Search Items...."
-            sx={{ width: '30%' }}
+            sx={{ width: '20%' }}
             onChange={(e) => {
               setFilter(e.target.value);
             }}
@@ -316,16 +319,33 @@ const ItemUpdatePanel = ({ authHeader, setAlert }) => {
                 setMassPriceOverride(e.target.value);
               }}
             />
+            <Select
+              value={overrideToggle}
+              label="Type"
+              onChange={(e) => {
+                setOverrideToggle(e.target.value);
+              }}
+            >
+              <MenuItem value="mass">Mass</MenuItem>
+              <MenuItem value="percent">Percent</MenuItem>
+            </Select>
             <Button
               className="mass-price-button"
               variant="contained"
               color="secondary"
               onClick={() => {
-                setItems(items.map((item) => ({ ...item, priceOverride: massPriceOverride })));
+                setItems(items.map((item) => ({
+                  ...item,
+                  priceOverride: overrideToggle === 'mass'
+                    ? massPriceOverride
+                    : (Number(item.price) * ((100 - massPriceOverride) / 100)).toFixed(2),
+                })));
                 changePrices(items.map((item) => ({
                   id: item.id,
                   type: item.type,
-                  price: massPriceOverride,
+                  price: overrideToggle === 'mass'
+                    ? massPriceOverride
+                    : (Number(item.price) * ((100 - massPriceOverride) / 100)).toFixed(2),
                 })));
               }}
             >

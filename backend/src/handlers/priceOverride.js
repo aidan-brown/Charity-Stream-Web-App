@@ -24,7 +24,7 @@ module.exports = {
 
           if (!priceOverride && price && Number(item.price) !== Number(price)) {
             await PriceOverride.create({ id, price, type });
-          } else if (Number(item.price) === Number(price) || !price) {
+          } else if (Number(item.price) === Number(price) || price === null) {
             await PriceOverride.destroy({ where: { id, type } });
           } else {
             await PriceOverride.update({ price }, { where: { id, type } });
