@@ -121,7 +121,7 @@ const AdminPanel = ({ setIsAdmin }) => {
               aria-label="Admin Panel Tabs"
             >
               <Tab label="Quick Commands" value="quick-commands" />
-              <Tab label="Disable Items" value="disabling-items" />
+              <Tab label="Update Items" value="update-items" />
               <Tab label="Players" value="players" />
             </TabList>
           </Box>

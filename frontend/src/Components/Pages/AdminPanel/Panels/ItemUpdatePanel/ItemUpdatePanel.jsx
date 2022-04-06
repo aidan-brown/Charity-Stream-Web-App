@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import {
   Button,
   IconButton,
+  InputLabel,
+  FormControl,
   TextField,
   Select,
   MenuItem,
@@ -19,6 +21,7 @@ const ItemUpdatePanel = ({ authHeader, setAlert }) => {
   const [toDisable, setToDisable] = useState([]);
   const [toPriceChange, setToPriceChange] = useState([]);
   const [filter, setFilter] = useState('');
+  const [gameMode, setGameMode] = useState('none');
   const [overrideToggle, setOverrideToggle] = useState('mass');
   const [massPriceOverride, setMassPriceOverride] = useState(0);
   const [items, setItems] = useState([]);
@@ -296,7 +299,7 @@ const ItemUpdatePanel = ({ authHeader, setAlert }) => {
     ));
 
   return (
-    <TabPanel value="disabling-items">
+    <TabPanel value="update-items">
       <div className="disabled-items">
         <div className="top-bar">
           <TextField
@@ -308,6 +311,7 @@ const ItemUpdatePanel = ({ authHeader, setAlert }) => {
               setFilter(e.target.value);
             }}
             label="Search Items"
+            value={filter}
           />
           <div className="mass-price-override">
             <TextField
@@ -367,6 +371,83 @@ const ItemUpdatePanel = ({ authHeader, setAlert }) => {
               Clear Price Overrides
             </Button>
           </div>
+          <FormControl>
+            <InputLabel id="gamemode-select-label">Gamemode</InputLabel>
+            <Select
+              labelId="gamemode-select-label"
+              value={gameMode}
+              label="Game Mode"
+              onChange={(e) => {
+                setGameMode(e.target.value);
+                switch (e.target.value) {
+                  case 'none':
+                  case 'sky-wars': {
+                    const newToDisabled = [];
+                    setItems(items.map((item) => {
+                      const { disabled, id, type } = item;
+                      if (disabled && !toDisable.find((d) => d.id === id && d.type === type)) {
+                        newToDisabled.push({ id, disabled: false, type });
+                      }
+                      return { ...item, disabled: false };
+                    }));
+
+                    setFilter('');
+                    setToDisable(newToDisabled);
+                    break;
+                  }
+                  case 'hunger-games': {
+                    const newToDisabled = [];
+                    setItems(items.map((item) => {
+                      let disabled = false;
+                      const { id, type } = item;
+
+                      if (id === 'mining_fatigue') disabled = true;
+                      if (id === 'haste') disabled = true;
+                      if (id.includes('_pickaxe')) disabled = true;
+                      if (id.includes('_shovel') && type === 'tool') disabled = true;
+                      if (disabled) newToDisabled.push({ id, disabled, type });
+
+                      return {
+                        ...item,
+                        disabled,
+                      };
+                    }));
+
+                    setFilter('true');
+                    setToDisable(newToDisabled);
+                    break;
+                  }
+                  case 'bed-wars': {
+                    const newToDisabled = [];
+                    setItems(items.map((item) => {
+                      let disabled = false;
+                      const { id, type } = item;
+
+                      if (type === 'material') disabled = true;
+                      if (type === 'mob' && id !== 'lightning_bolt') disabled = true;
+                      if (disabled) newToDisabled.push({ id, disabled, type });
+
+                      return {
+                        ...item,
+                        disabled,
+                      };
+                    }));
+
+                    setFilter('true');
+                    setToDisable(newToDisabled);
+                    break;
+                  }
+                  default:
+                    break;
+                }
+              }}
+            >
+              <MenuItem value="none">None</MenuItem>
+              <MenuItem value="hunger-games">Hunger Games</MenuItem>
+              <MenuItem value="sky-wars">Sky Wars</MenuItem>
+              <MenuItem value="bed-wars">Bed Wars</MenuItem>
+            </Select>
+          </FormControl>
           <Button
             className="toggle-button"
             disabled={toDisable.length === 0}
@@ -412,6 +493,7 @@ const ItemUpdatePanel = ({ authHeader, setAlert }) => {
             .map((mob, index) => (
               <div key={`${mob.type}-${mob.id}`} className="item">
                 <StoreMob
+                  className={toDisable.find((d) => d.id === mob.id) ? 'selected' : null}
                   isStore={false}
                   mob={mob}
                   addItemToCart={() => toggleDisabled(mob)}
@@ -426,6 +508,7 @@ const ItemUpdatePanel = ({ authHeader, setAlert }) => {
             .map((effect, index) => (
               <div key={`${effect.type}-${effect.id}`} className="item">
                 <StoreEffect
+                  className={toDisable.find((d) => d.id === effect.id) ? 'selected' : null}
                   isStore={false}
                   effect={effect}
                   addItemToCart={() => toggleDisabled(effect)}
