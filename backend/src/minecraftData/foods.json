@@ -20,7 +20,7 @@
     "displayName": "Golden Apple",
     "type": "food",
     "description": "Filled with magic, this powerful apple grants you extra health!",
-    "effects": "Absorption for 2 minutes and regeneration for 5 seconds!",
+    "effects": "Gives a health boost and health regen!",
     "price": 3.00,
     "hungerFill": 4
   },
@@ -29,7 +29,7 @@
     "displayName": "Enchanted Golden Apple",
     "type": "food",
     "description": "The ultimate food, this apple makes the player tough and filled with vitality!",
-    "effects": "Absorption 4 for 2 minutes, Regeneration 2 for 20 seconds, and Fire Resistance and Damage Resistance for 5 minutes!",
+    "effects": "Gives a lot of extra health, health regen and fire resistance!",
     "price": 15.00,
     "hungerFill": 4
   }
