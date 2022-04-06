@@ -23,7 +23,7 @@ module.exports = {
   },
   dynmapGetData: async (_, res) => {
     try {
-      const { data } = await axios.default.get(`${process.env.DYNMAP_URL}/up/world/lobbyWorld/${Date.now()}`);
+      const { data } = await axios.default.get(`${process.env.DYNMAP_URL}/standalone/dynmap_lobbyWorld.json`);
 
       res.status(200).send(data);
     } catch (err) {
