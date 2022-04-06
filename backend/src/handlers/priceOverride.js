@@ -22,12 +22,9 @@ module.exports = {
         if (item) {
           const priceOverride = await PriceOverride.findOne({ where: { id, type } });
 
-          console.log(item.price);
-          console.log(price);
-
-          if (!priceOverride) {
+          if (!priceOverride && price && Number(item.price) !== Number(price)) {
             await PriceOverride.create({ id, price, type });
-          } else if (item.price === price) {
+          } else if (Number(item.price) === Number(price) || !price) {
             await PriceOverride.destroy({ where: { id, type } });
           } else {
             await PriceOverride.update({ price }, { where: { id, type } });

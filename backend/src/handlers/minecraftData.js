@@ -22,11 +22,11 @@ const getMinecraftData = async (req, res) => {
         res.status(200).send(armors.map((c) => ({
           ...c,
           disabled: !!disabledElements.find((e) => e.id === c.id),
-          price: (() => {
+          priceOverride: (() => {
             const override = priceOverrides.find((e) => e.id === c.id);
 
             if (override) return override.price;
-            return c.price;
+            return null;
           })(),
         })));
         break;
@@ -34,11 +34,11 @@ const getMinecraftData = async (req, res) => {
         res.status(200).send(effects.map((c) => ({
           ...c,
           disabled: !!disabledElements.find((e) => e.id === c.id),
-          price: (() => {
+          priceOverride: (() => {
             const override = priceOverrides.find((e) => e.id === c.id);
 
             if (override) return override.price;
-            return c.price;
+            return null;
           })(),
         })));
         break;
@@ -46,11 +46,11 @@ const getMinecraftData = async (req, res) => {
         res.status(200).send(foods.map((c) => ({
           ...c,
           disabled: !!disabledElements.find((e) => e.id === c.id),
-          price: (() => {
+          priceOverride: (() => {
             const override = priceOverrides.find((e) => e.id === c.id);
 
             if (override) return override.price;
-            return c.price;
+            return null;
           })(),
         })));
         break;
@@ -58,11 +58,11 @@ const getMinecraftData = async (req, res) => {
         res.status(200).send(materials.map((c) => ({
           ...c,
           disabled: !!disabledElements.find((e) => e.id === c.id),
-          price: (() => {
+          priceOverride: (() => {
             const override = priceOverrides.find((e) => e.id === c.id);
 
             if (override) return override.price;
-            return c.price;
+            return null;
           })(),
         })));
         break;
@@ -70,11 +70,11 @@ const getMinecraftData = async (req, res) => {
         res.status(200).send(misc.map((c) => ({
           ...c,
           disabled: !!disabledElements.find((e) => e.id === c.id),
-          price: (() => {
+          priceOverride: (() => {
             const override = priceOverrides.find((e) => e.id === c.id);
 
             if (override) return override.price;
-            return c.price;
+            return null;
           })(),
         })));
         break;
@@ -82,11 +82,11 @@ const getMinecraftData = async (req, res) => {
         res.status(200).send(mobs.map((c) => ({
           ...c,
           disabled: !!disabledElements.find((e) => e.id === c.id),
-          price: (() => {
+          priceOverride: (() => {
             const override = priceOverrides.find((e) => e.id === c.id);
 
             if (override) return override.price;
-            return c.price;
+            return null;
           })(),
         })));
         break;
@@ -94,11 +94,11 @@ const getMinecraftData = async (req, res) => {
         res.status(200).send(tools.map((c) => ({
           ...c,
           disabled: !!disabledElements.find((e) => e.id === c.id),
-          price: (() => {
+          priceOverride: (() => {
             const override = priceOverrides.find((e) => e.id === c.id);
 
             if (override) return override.price;
-            return c.price;
+            return null;
           })(),
         })));
         break;
@@ -106,11 +106,11 @@ const getMinecraftData = async (req, res) => {
         res.status(200).send(weapons.map((c) => ({
           ...c,
           disabled: !!disabledElements.find((e) => e.id === c.id),
-          price: (() => {
+          priceOverride: (() => {
             const override = priceOverrides.find((e) => e.id === c.id);
 
             if (override) return override.price;
-            return c.price;
+            return null;
           })(),
         })));
         break;
@@ -119,61 +119,61 @@ const getMinecraftData = async (req, res) => {
           ...armors.map((c) => ({
             ...c,
             disabled: !!disabledElements.find((e) => e.id === c.id),
-            price: (() => {
+            priceOverride: (() => {
               const override = priceOverrides.find((e) => e.id === c.id);
 
               if (override) return override.price;
-              return c.price;
+              return null;
             })(),
           })),
           ...foods.map((c) => ({
             ...c,
             disabled: !!disabledElements.find((e) => e.id === c.id),
-            price: (() => {
+            priceOverride: (() => {
               const override = priceOverrides.find((e) => e.id === c.id);
 
               if (override) return override.price;
-              return c.price;
+              return null;
             })(),
           })),
           ...materials.map((c) => ({
             ...c,
             disabled: !!disabledElements.find((e) => e.id === c.id),
-            price: (() => {
+            priceOverride: (() => {
               const override = priceOverrides.find((e) => e.id === c.id);
 
               if (override) return override.price;
-              return c.price;
+              return null;
             })(),
           })),
           ...misc.map((c) => ({
             ...c,
             disabled: !!disabledElements.find((e) => e.id === c.id),
-            price: (() => {
+            priceOverride: (() => {
               const override = priceOverrides.find((e) => e.id === c.id);
 
               if (override) return override.price;
-              return c.price;
+              return null;
             })(),
           })),
           ...tools.map((c) => ({
             ...c,
             disabled: !!disabledElements.find((e) => e.id === c.id),
-            price: (() => {
+            priceOverride: (() => {
               const override = priceOverrides.find((e) => e.id === c.id);
 
               if (override) return override.price;
-              return c.price;
+              return null;
             })(),
           })),
           ...weapons.map((c) => ({
             ...c,
             disabled: !!disabledElements.find((e) => e.id === c.id),
-            price: (() => {
+            priceOverride: (() => {
               const override = priceOverrides.find((e) => e.id === c.id);
 
               if (override) return override.price;
-              return c.price;
+              return null;
             })(),
           })),
         ];
@@ -186,81 +186,81 @@ const getMinecraftData = async (req, res) => {
           ...armors.map((c) => ({
             ...c,
             disabled: !!disabledElements.find((e) => e.id === c.id),
-            price: (() => {
+            priceOverride: (() => {
               const override = priceOverrides.find((e) => e.id === c.id);
 
               if (override) return override.price;
-              return c.price;
+              return null;
             })(),
           })),
           ...foods.map((c) => ({
             ...c,
             disabled: !!disabledElements.find((e) => e.id === c.id),
-            price: (() => {
+            priceOverride: (() => {
               const override = priceOverrides.find((e) => e.id === c.id);
 
               if (override) return override.price;
-              return c.price;
+              return null;
             })(),
           })),
           ...materials.map((c) => ({
             ...c,
             disabled: !!disabledElements.find((e) => e.id === c.id),
-            price: (() => {
+            priceOverride: (() => {
               const override = priceOverrides.find((e) => e.id === c.id);
 
               if (override) return override.price;
-              return c.price;
+              return null;
             })(),
           })),
           ...misc.map((c) => ({
             ...c,
             disabled: !!disabledElements.find((e) => e.id === c.id),
-            price: (() => {
+            priceOverride: (() => {
               const override = priceOverrides.find((e) => e.id === c.id);
 
               if (override) return override.price;
-              return c.price;
+              return null;
             })(),
           })),
           ...tools.map((c) => ({
             ...c,
             disabled: !!disabledElements.find((e) => e.id === c.id),
-            price: (() => {
+            priceOverride: (() => {
               const override = priceOverrides.find((e) => e.id === c.id);
 
               if (override) return override.price;
-              return c.price;
+              return null;
             })(),
           })),
           ...weapons.map((c) => ({
             ...c,
             disabled: !!disabledElements.find((e) => e.id === c.id),
-            price: (() => {
+            priceOverride: (() => {
               const override = priceOverrides.find((e) => e.id === c.id);
 
               if (override) return override.price;
-              return c.price;
+              return null;
             })(),
           })),
           ...mobs.map((c) => ({
             ...c,
             disabled: !!disabledElements.find((e) => e.id === c.id),
-            price: (() => {
+            priceOverride: (() => {
               const override = priceOverrides.find((e) => e.id === c.id);
 
               if (override) return override.price;
-              return c.price;
+              return null;
             })(),
           })),
           ...effects.map((c) => ({
             ...c,
             disabled: !!disabledElements.find((e) => e.id === c.id),
-            price: (() => {
+            priceOverride: (() => {
               const override = priceOverrides.find((e) => e.id === c.id);
 
               if (override) return override.price;
-              return c.price;
+              return null;
             })(),
           })),
         ];
