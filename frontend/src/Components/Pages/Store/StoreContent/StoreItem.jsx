@@ -35,67 +35,70 @@ const StoreItem = ({
           {item.price.toFixed(2)}
         </p>
       </div>
-      <div className="store-item-description">
-        <dl className="store-item-stats">
-          <span>
-            <dt>Description</dt>
-            <dd>{item.description}</dd>
-          </span>
+      <div className="store-item-text">
+        <span className="store-item-description">
+          <h3>Description</h3>
+          <p>{item.description}</p>
+          {item.effects && (
+          <>
+            <h3>Special Effects</h3>
+            <p>{item.effects}</p>
+          </>
+          )}
+        </span>
+        {(item.durability || item.hungerFill)
+        && (
+        <div className="store-item-stats">
           {item.speed && (
           <span key={0}>
-            <dt>Speed Rating</dt>
-            <dd>{item.speed}</dd>
+            <h3>Speed Rating</h3>
+            <p>{item.speed}</p>
           </span>
           )}
           {item.damage && (
           <span key={1}>
-            <dt>Damage Rating</dt>
-            <dd>
+            <h3>Damage Rating</h3>
+            <p>
               {item.damage}
               {' '}
               (
               {ItemSymbols('health', item.damage)}
               )
-            </dd>
+            </p>
           </span>
           )}
           {item.protection && (
           <span key={2}>
-            <dt>Armor Rating</dt>
-            <dd>
+            <h3>Armor Rating</h3>
+            <p>
               {item.protection}
               {' '}
               (
               {ItemSymbols('armor', item.protection)}
               )
-            </dd>
-          </span>
-          )}
-          {item.durability && (
-          <span key={7}>
-            <dt>Durability</dt>
-            <dd>{item.durability}</dd>
-          </span>
-          )}
-          {item.effects && (
-          <span key={3}>
-            <dt>Special Effects</dt>
-            <dd>{item.effects}</dd>
+            </p>
           </span>
           )}
           {item.hungerFill && (
           <span key={4}>
-            <dt>Food Rating</dt>
-            <dd>
+            <h3>Food Rating</h3>
+            <p>
               {item.hungerFill}
               {' '}
               (
               {ItemSymbols('hunger', item.hungerFill)}
               )
-            </dd>
+            </p>
           </span>
           )}
-        </dl>
+          {item.durability && (
+          <span key={7}>
+            <h3>Durability</h3>
+            <p>{item.durability}</p>
+          </span>
+          )}
+        </div>
+        )}
       </div>
       {isStore && <Icon path={mdiCartPlus} className="add-cart" />}
     </span>
