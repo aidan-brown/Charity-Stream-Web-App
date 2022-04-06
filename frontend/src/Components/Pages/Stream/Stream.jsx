@@ -1,3 +1,4 @@
+/* eslint-disable react/forbid-prop-types */
 import React, { useEffect, useRef, useState } from 'react';
 import Icon from '@mdi/react';
 import {
@@ -29,7 +30,9 @@ import AssociationLogos from '../../../assets';
 import { steveFace } from '../../../assets/images';
 
 /** Class for constructing the stream page * */
-const Stream = ({ setSelectedPlayer, addItemToCart }) => {
+const Stream = ({
+  setSelectedPlayer, addItemToCart, cartItems, setCartItems,
+}) => {
   const streamDiv = useRef();
   const [channel, setChannel] = useState('cshba');
   const [streamWidth, setStreamWidth] = useState('100%');
@@ -242,7 +245,12 @@ const Stream = ({ setSelectedPlayer, addItemToCart }) => {
         <div id="shop-list" className="stream-list bg-csh-secondary-gradient hide">
           <h4>Quick Buy</h4>
           <div className="StreamList">
-            <StoreContent filterTag={filterTag} addItemToCart={addItemToCart} />
+            <StoreContent
+              filterTag={filterTag}
+              addItemToCart={addItemToCart}
+              cartItems={cartItems}
+              setCartItems={setCartItems}
+            />
             <nav className="quick-store-nav bg-csh-secondary">
               <button type="button" id="store-all" className="stream-button bg-csh-secondary btn hide" onKeyDown={handleQuickBuyFilters('all')} onClick={handleQuickBuyFilters('all')}>
                 <Icon path={mdiScriptText} className="stream-button-icon" />
@@ -328,6 +336,8 @@ const Stream = ({ setSelectedPlayer, addItemToCart }) => {
 Stream.propTypes = {
   setSelectedPlayer: PropTypes.func.isRequired,
   addItemToCart: PropTypes.func.isRequired,
+  cartItems: PropTypes.array.isRequired,
+  setCartItems: PropTypes.func.isRequired,
 };
 
 export default Stream;

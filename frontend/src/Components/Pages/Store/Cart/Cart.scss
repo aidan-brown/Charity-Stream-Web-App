@@ -106,6 +106,19 @@ $color_3: lightgray;
 	font-size: small;
 	margin: 0;
 	opacity: 0.75;
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-start;
+	align-items: center;
+
+	p {
+		margin-right: .5rem;
+	}
+
+	.overrided {
+		text-decoration: line-through;
+		color: rgb(54, 25, 25);
+	}
 }
 
 .cart-item-brand {
