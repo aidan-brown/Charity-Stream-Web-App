@@ -18,13 +18,11 @@ const StoreMob = ({
         {mob.price.toFixed(2)}
       </p>
     </div>
-    <div className="store-item-description">
-      <dl className="store-item-stats">
-        <span>
-          <dt>Description</dt>
-          <dd>{mob.description}</dd>
-        </span>
-      </dl>
+    <div className="store-item-text">
+      <span className="store-item-description">
+        <h3>Description</h3>
+        <p>{mob.description}</p>
+      </span>
     </div>
     {isStore && <Icon path={mdiCartPlus} className="add-cart" />}
   </span>
