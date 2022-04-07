@@ -27,6 +27,7 @@ const createTables = async () => {
     Command,
     Log,
     Player,
+    PriceOverride,
   };
 };
 
@@ -36,5 +37,6 @@ module.exports = {
   Command,
   Log,
   Player,
+  PriceOverride,
   createTables,
 };

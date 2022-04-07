@@ -1,14 +1,13 @@
 const { Rcon } = require('rcon-client');
 const { logger } = require('.');
-const { Command } = require('../sql/models');
 
-module.exports = async (scheduled) => {
+module.exports = (CommandTable) => async (scheduled) => {
   const cronId = scheduled.getTime();
 
   try {
     // If any commands need to be run, set the cron timeStamp
     // on the command (max 20)
-    const [updates] = await Command.update({ cronId }, {
+    const [updates] = await CommandTable.update({ cronId }, {
       where: {
         status: 'READY',
         cronId: null,
@@ -19,7 +18,7 @@ module.exports = async (scheduled) => {
     // If we found rows to update
     if (updates !== 0) {
       // Get all these updated commands
-      const commands = await Command.findAll({
+      const commands = await CommandTable.findAll({
         where: {
           status: 'READY',
           cronId,
@@ -34,7 +33,7 @@ module.exports = async (scheduled) => {
       });
 
       // Mark commands as running
-      await Command.update({ status: 'RUNNING' }, { where: { cronId } });
+      await CommandTable.update({ status: 'RUNNING' }, { where: { cronId } });
 
       // Now we want to loop through all the commands
       // and run them as many times as
@@ -46,7 +45,7 @@ module.exports = async (scheduled) => {
         await rcon.send(commandText);
 
         // Set this command as finished, as it has now run
-        await Command.update({ status: 'FINISHED' }, { where: { id } });
+        await CommandTable.update({ status: 'FINISHED' }, { where: { id } });
       }
       /* eslint-enable no-await-in-loop */
 
@@ -54,11 +53,11 @@ module.exports = async (scheduled) => {
       await rcon.end();
     }
   } catch (error) {
+    logger.error('RCON_SCHEDULE_FAILED', 'Failed to run RCON commands', { error });
+
     // We want to make sure the failed commands will be run, so we reschedule them
     try {
-      logger.error('RCON_SCHEDULE_FAILED', 'Failed to run RCON commands', { error });
-
-      await Command.update({ cronId: null, status: 'READY' }, {
+      await CommandTable.update({ cronId: null, status: 'READY' }, {
         where: {
           cronId,
           status: 'RUNNING',

@@ -18,6 +18,7 @@ const verifyPurchase = async (product) => {
 
   if (TYPES.includes(type)) {
     const item = all.find((i) => i.id === id && i.type === type);
+
     if (item) {
       const [disabled] = await DisabledElement.findAll({ where: { id, type } });
 
@@ -26,6 +27,7 @@ const verifyPurchase = async (product) => {
       }
     }
   }
+
   return false;
 };
 
@@ -67,7 +69,7 @@ module.exports = {
           const { nbt } = all.find((i) => i.id === rawId && i.type === type) || {};
           const [id] = rawId.split('-');
 
-          if (await verifyPurchase({ ...item, id })) {
+          if (await verifyPurchase(item)) {
             const truePrice = await verifyPrice(id, type, price, item);
 
             if (!truePrice) return false;
@@ -76,13 +78,13 @@ module.exports = {
             if (type === 'effect') {
               cost *= (time / 30) * (power + 1);
               commands.push({
-                commandText: `effect give ${username} ${id}${nbt || ''} ${time} ${power + 1}`,
+                commandText: `minecraft:effect minecraft:give ${username} ${id}${nbt || ''} ${time} ${power + 1}`,
               });
             } else if (type === 'mob') {
               if (nbt) {
                 [...Array(amount)].forEach(() => {
                   commands.push({
-                    commandText: `execute at ${username} run summon ${id} ~ ~ ~ ${nbt || ''}`,
+                    commandText: `minecraft:execute at ${username} run summon ${id} ~ ~ ~ ${nbt || ''}`,
                   });
                 });
               } else {
@@ -94,7 +96,7 @@ module.exports = {
                   if (i === totalGroups - 1 && leftOver !== 0) num = leftOver;
 
                   commands.push({
-                    commandText: `execute at ${
+                    commandText: `minecraft:execute at ${
                       username
                     } run summon minecraft:area_effect_cloud ~ ~ ~ {Passengers:[${
                       [...Array(num)].map(() => `{id:${id}}`).join(',')
@@ -103,7 +105,7 @@ module.exports = {
                 });
               }
             } else {
-              let cmd = `give ${username} ${id}${nbt || ''}`;
+              let cmd = `minecraft:give ${username} ${id}${nbt || ''}`;
               if (id === 'arrow' || id === 'tipped_arrow' || id === 'spectral_arrow') {
                 const totalArrows = amount * 10;
                 cmd += ` ${totalArrows}`;
@@ -115,7 +117,7 @@ module.exports = {
 
               if (id === 'bow' || id === 'crossbow') {
                 commands.push({
-                  commandText: `give ${username} arrow 20`,
+                  commandText: `minecraft:give ${username} arrow 20`,
                 });
               }
             }
@@ -140,7 +142,7 @@ module.exports = {
             include: [Command],
           });
 
-          const exitUrl = encodeURIComponent(`${getUrl()}/JUSTGIVING-DONATION-ID/${checkout.id}`);
+          const exitUrl = encodeURIComponent(`${getUrl()}/donation-confirmation/JUSTGIVING-DONATION-ID/${checkout.id}`);
           const redirectUrl = `http://link.justgiving.com/v1/fundraisingpage/donate/pageId/15252893?amount=${subTotal.toFixed(2)}&currency=USD&reference=mcstream&exitUrl=${exitUrl}`;
 
           logger.info('CHECKOUT_CREATED', 'Successfully created checkout', {
@@ -166,7 +168,10 @@ module.exports = {
       if (donation) {
         logger.warn('DONATION_ID_TWICE', 'DonationID has already been used', { donationID });
 
-        res.status(400).send('DonationID has already been used');
+        res.status(400).send({
+          code: 'DONATION_ID_TWICE',
+          message: 'Oops, looks like this Donation ID has already been used. (this can be from refreshing this page, you can just close this window and head back to the main site!)',
+        });
         return;
       }
 
@@ -175,7 +180,10 @@ module.exports = {
           checkoutID, donationID,
         });
 
-        res.status(404).send('Checkout session not found');
+        res.status(404).send({
+          code: 'CHECKOUT_NOT_FOUND',
+          message: 'We could not find that checkout, reach out to us on Twitch with the code below and we will try and help!',
+        });
       } else {
         const { JG_APPID, JG_AUTH } = process.env;
         const { data } = await axios.default.get(
@@ -205,20 +213,29 @@ module.exports = {
               checkoutID, donationID, subTotal,
             });
 
-            res.status(200).send('Commands marked as READY!');
+            res.status(200).send({
+              code: 'DONATION_VERIFY_SUCCESS',
+              message: 'Success',
+            });
           } else {
             logger.warn('DONATION_MISMATCH', 'Purchase successful prices did not line up', {
               donorLocalAmount, subTotal, checkoutID, donationID,
             });
 
-            res.status(400).send('Donation amounts did not line up, not running commands');
+            res.status(400).send({
+              code: 'DONATION_MISMATCH',
+              message: 'Looks like the donation amount we got back from Just Giving didn\'t line up with what it should have been. Your donation still counted but we won\'t give the things you checked out with. If you think this is an error, reach out to us on Twitch with the code below and we will try and help!',
+            });
           }
         } else {
-          logger.warn('SCHEDULE_TWICE', 'Tried to schedule commands again', {
+          logger.warn('COMMANDS_SCHEDULED_TWICE', 'Tried to schedule commands again', {
             donationID, checkoutID,
           });
 
-          res.status(400).send('Commands have already been scheduled');
+          res.status(400).send({
+            code: 'COMMANDS_SCHEDULED_TWICE',
+            message: 'Reach out to us on Twitch with the code below and we will try and help!',
+          });
         }
       }
     } catch (err) {
@@ -226,7 +243,10 @@ module.exports = {
         error: err, donationID, checkoutID,
       });
 
-      res.status(500).send('Something on our end went wrong');
+      res.status(500).send({
+        code: 'VERIFY_DONATION_FAILED',
+        message: 'Reach out to us on Twitch with the code below and we will try and help!',
+      });
     }
   },
 };

@@ -6,7 +6,7 @@ const sequelize = getConnection();
 
 const Checkout = sequelize.define('Checkout', {
   donationID: {
-    type: DataTypes.INTEGER,
+    type: DataTypes.STRING,
     allowNull: true,
   },
   status: {
