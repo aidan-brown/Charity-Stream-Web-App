@@ -27,6 +27,7 @@ import StreamWindow from './StreamWindow/StreamWindow';
 import StoreContent from '../Store/StoreContent/StoreContent';
 import { getUrl, getReq, ItemSymbols } from '../../../Utils';
 import AssociationLogos from '../../../assets';
+import BackgroundVideo from '../../../assets/landing-stream-clips.mp4';
 import { steveFace } from '../../../assets/images';
 
 /** Class for constructing the stream page * */
@@ -283,10 +284,14 @@ const Stream = ({
           </div>
         </div>
       </div>
-      <h2 className="stream-row-title row-reverse">About the Stream</h2>
-      <div className="stream-row row-reverse">
+      <h2 className="stream-row-title row-center">Check Out Our Live Map</h2>
+      <div className="stream-row">
         <iframe className="stream-row-item stream-row-iframe" title="Dynmap" src="https://dionysus.csh.rit.edu" />
-        <article className="stream-row-item stream-row-text-box bg-csh-secondary-gradient">
+      </div>
+      <h2 className="stream-row-title row-reverse">About the Stream</h2>
+      <div className="stream-row row-reverse bg-csh-secondary-gradient">
+        <video className="stream-row-item" playsInline autoPlay muted loop preload="none" src={BackgroundVideo} />
+        <article className="stream-row-item stream-row-text-box">
           <p>
             CSH&apos;s annual Minecraft Charity Stream is a large-scale competition
             between players in a series of minigames, with all donations
@@ -305,7 +310,7 @@ const Stream = ({
         </article>
       </div>
       <h2 className="stream-row-title">About the Hub World</h2>
-      <div className="stream-row">
+      <div className="stream-row bg-csh-secondary-gradient">
         <iframe
           className="stream-row-item stream-row-iframe"
           src="https://www.youtube.com/embed/PU6Bopb1CVE"
