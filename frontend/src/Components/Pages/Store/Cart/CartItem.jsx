@@ -1,3 +1,4 @@
+/* eslint-disable react/forbid-prop-types */
 import React from 'react';
 import PropTypes from 'prop-types';
 
@@ -5,10 +6,18 @@ const CartItem = ({ item, changeCartAmount, removeFromCart }) => (
   <span className="cart-item">
     <div className="cart-item-description">
       <p className="cart-item-header">{item.displayName}</p>
-      <p className="cart-item-price">
-        $
-        {(item.amount * item.price).toFixed(2)}
-      </p>
+      <span className="cart-item-price">
+        <p className={`original-price ${item.priceOverride !== null ? 'overrided' : ''}`}>
+          $
+          {(item.amount * item.price).toFixed(2)}
+        </p>
+        {item.priceOverride !== null && (
+        <p>
+          $
+          {(item.amount * Number(item.priceOverride)).toFixed(2)}
+        </p>
+        )}
+      </span>
     </div>
     <div className="cart-item-brand bg-csh-primary-gradient">
       <img className="cart-item-icon" src={item.icon} alt={item.displayName} />
@@ -38,6 +47,7 @@ CartItem.propTypes = {
     displayName: PropTypes.string.isRequired,
     amount: PropTypes.number.isRequired,
     price: PropTypes.number.isRequired,
+    priceOverride: PropTypes.any,
   }).isRequired,
   changeCartAmount: PropTypes.func.isRequired,
   removeFromCart: PropTypes.func.isRequired,

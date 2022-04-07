@@ -1,13 +1,13 @@
 const { Rcon } = require('rcon-client');
-const { Command } = require('../sql/models');
+const { logger } = require('.');
 
-module.exports = async (scheduled) => {
+module.exports = (CommandTable) => async (scheduled) => {
   const cronId = scheduled.getTime();
 
   try {
     // If any commands need to be run, set the cron timeStamp
     // on the command (max 20)
-    const [updates] = await Command.update({ cronId }, {
+    const [updates] = await CommandTable.update({ cronId }, {
       where: {
         status: 'READY',
         cronId: null,
@@ -18,7 +18,7 @@ module.exports = async (scheduled) => {
     // If we found rows to update
     if (updates !== 0) {
       // Get all these updated commands
-      const commands = await Command.findAll({
+      const commands = await CommandTable.findAll({
         where: {
           status: 'READY',
           cronId,
@@ -33,7 +33,7 @@ module.exports = async (scheduled) => {
       });
 
       // Mark commands as running
-      await Command.update({ status: 'RUNNING' }, { where: { cronId } });
+      await CommandTable.update({ status: 'RUNNING' }, { where: { cronId } });
 
       // Now we want to loop through all the commands
       // and run them as many times as
@@ -45,26 +45,28 @@ module.exports = async (scheduled) => {
         await rcon.send(commandText);
 
         // Set this command as finished, as it has now run
-        await Command.update({ status: 'FINISHED' }, { where: { id } });
+        await CommandTable.update({ status: 'FINISHED' }, { where: { id } });
       }
       /* eslint-enable no-await-in-loop */
 
       // Close the command
       await rcon.end();
     }
-  } catch (_) {
+  } catch (error) {
+    logger.error('RCON_SCHEDULE_FAILED', 'Failed to run RCON commands', { error });
+
     // We want to make sure the failed commands will be run, so we reschedule them
     try {
-      await Command.update({ cronId: null, status: 'READY' }, {
+      await CommandTable.update({ cronId: null, status: 'READY' }, {
         where: {
           cronId,
           status: 'RUNNING',
         },
       });
     } catch (err) {
-      // If we get here, we are fucked (not really but the db is down)
-      // eslint-disable-next-line no-console
-      console.log('UH OH STINKY, STINKY POOP (DB AND RCON FAILED UH OH) Error:', err);
+      logger.error('RCON_SCHEDULE_BACKUP_FAILED', 'Failed to reschedule commands to be run', {
+        originalError: error, error: err,
+      });
     }
   }
 };

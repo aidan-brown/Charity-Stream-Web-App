@@ -1,7 +1,9 @@
+/* eslint-disable react/forbid-prop-types */
 import React from 'react';
 import PropTypes from 'prop-types';
 import { mdiCartPlus } from '@mdi/js';
 import Icon from '@mdi/react';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { getUrl } from '../../../../Utils';
 
 const StoreMob = ({
@@ -9,21 +11,27 @@ const StoreMob = ({
 }) => (
   <span tabIndex={0} role="button" className={`store-item bg-csh-tertiary ${className || ''}`} onClick={addItemToCart} onKeyDown={addItemToCart} data-disabled={mob.disabled}>
     <div className="store-item-header bg-csh-primary-gradient">
-      <img className="store-item-image" src={`${getUrl()}/images/mobs/${mob.id}-full.webp`} alt={mob.displayName} />
-      <img className="store-item-icon" src={`${getUrl()}/images/mobs/${mob.id}.webp`} alt={mob.displayName} />
+      <LazyLoadImage className="store-item-image" src={`${getUrl()}/images/mobs/${mob.id}-full.webp`} alt={mob.displayName} effect="blur" />
+      <LazyLoadImage className="store-item-icon" src={`${getUrl()}/images/mobs/${mob.id}.webp`} alt={mob.displayName} effect="blur" />
       <p className="store-item-displayName">{mob.displayName}</p>
-      <p className="store-item-price">
-        $
-        {mob.price.toFixed(2)}
-      </p>
+      <span className="store-item-price">
+        <p className={`original-price ${mob.priceOverride !== null ? 'overrided' : ''}`}>
+          $
+          {mob.price.toFixed(2)}
+        </p>
+        {mob.priceOverride !== null && (
+        <p>
+          $
+          {Number(mob.priceOverride).toFixed(2)}
+        </p>
+        )}
+      </span>
     </div>
-    <div className="store-item-description">
-      <dl className="store-item-stats">
-        <span>
-          <dt>Description</dt>
-          <dd>{mob.description}</dd>
-        </span>
-      </dl>
+    <div className="store-item-text">
+      <span className="store-item-description">
+        <h3>Description</h3>
+        <p>{mob.description}</p>
+      </span>
     </div>
     {isStore && <Icon path={mdiCartPlus} className="add-cart" />}
   </span>
@@ -35,6 +43,7 @@ StoreMob.propTypes = {
     displayName: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
     price: PropTypes.number.isRequired,
+    priceOverride: PropTypes.any,
     disabled: PropTypes.bool.isRequired,
   }).isRequired,
   addItemToCart: PropTypes.func.isRequired,

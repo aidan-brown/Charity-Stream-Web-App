@@ -1,4 +1,5 @@
 const Sequelize = require('sequelize');
+const { logger } = require('../utils');
 
 const getConnection = () => {
   const {
@@ -8,7 +9,7 @@ const getConnection = () => {
     MCPWRD: password,
   } = process.env;
 
-  const connection = new Sequelize(
+  return new Sequelize(
     database, username, password,
     {
       host,
@@ -19,24 +20,20 @@ const getConnection = () => {
         idle: 10000,
       },
       typeValidation: true,
-      logging: process.env.NODE_ENV !== 'production',
+      logging: false,
     },
   );
-
-  return connection;
-};
-
-const testConnection = async () => {
-  try {
-    await getConnection().authenticate();
-  } catch (err) {
-    // eslint-disable-next-line no-console
-    console.log('There was an error connecting to the MySQL server');
-    process.exit(1);
-  }
 };
 
 module.exports = {
   getConnection,
-  testConnection,
+  testConnection: async () => {
+    try {
+      await getConnection().authenticate();
+    } catch (error) {
+      logger.error('MYSQL_CONNECTION_ERROR', 'Could not establish a connection with the MySQL server', {
+        error,
+      });
+    }
+  },
 };

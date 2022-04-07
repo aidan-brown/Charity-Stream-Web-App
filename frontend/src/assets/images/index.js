@@ -10,20 +10,27 @@ import pepband from './pepband.webp';
 
 import armor from './armor.webp';
 import armorHalf from './half-armor.webp';
+import armorEmpty from './empty-armor.webp';
 import health from './health.webp';
 import healthHalf from './half-health.webp';
+import healthEmpty from './empty-health.webp';
 import hunger from './hunger.webp';
 import hungerHalf from './half-hunger.webp';
 
+import steveFace from './steve.webp';
+
 export {
   bohchoi, cahriid, clipsothealien, dantayy5050, dawnshadowx3, laqqy, lumiinara, mysticat, pepband,
+  steveFace,
 };
 
 export const itemSymbols = {
   armor,
   armorHalf,
+  armorEmpty,
   health,
   healthHalf,
+  healthEmpty,
   hunger,
   hungerHalf,
 };
