@@ -21,7 +21,7 @@ const { getImages } = require('./images');
 const { basicAuth } = require('./handlers/authentication');
 const { testConnection } = require('./sql');
 const { createTables } = require('./sql/models');
-const { rcon } = require('./utils');
+const { rcon, logger } = require('./utils');
 const { dynmapGetData } = require('./handlers/dynmap');
 
 const app = express();
@@ -56,11 +56,11 @@ app.get('/', (_, res) => res.status(200).send('Success'));
 app.listen(port, async () => {
   // Test SQL connection, we can't run if this fails
   await testConnection();
-  await createTables();
+  const { Log, Command } = await createTables();
 
   // Schedule cron job to process rcon commands every 2 seconds
-  cron.schedule(`*/${process.env.CRON_TIME || 2} * * * * *`, rcon);
+  cron.schedule(`*/${process.env.CRON_TIME || 2} * * * * *`, rcon(Command));
 
-  // eslint-disable-next-line no-console
-  console.log(`Listening on port ${port}`);
+  logger.setLogTable(Log);
+  logger.log('START', `Listening on port ${port}`);
 });

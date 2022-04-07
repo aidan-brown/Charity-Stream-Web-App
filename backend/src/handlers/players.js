@@ -1,4 +1,5 @@
 const { Player } = require('../sql/models');
+const { logger } = require('../utils');
 
 module.exports = {
   getPlayers: async (_, res) => {
@@ -6,7 +7,9 @@ module.exports = {
       const players = await Player.findAll();
 
       res.send(players).status(200);
-    } catch (__) {
+    } catch (error) {
+      logger.log('GET_PLAYERS_ERROR', 'Error getting the players', { error });
+
       res.send('There was an error getting the players').status(500);
     }
   },
@@ -31,13 +34,19 @@ module.exports = {
         }
       }));
 
+      if (errors.length > 0) {
+        logger.log('CREATE_PLAYERS_ERROR', 'Error creating the players', { errors });
+      }
+
       res.status(errors.length === 0 ? 200 : 400).send({
         ...(errors.length > 0 && { errors }),
         newPlayers,
       });
-    } catch (err) {
-      if (err.name === 'SequelizeValidationError') {
-        const [{ message }] = err.errors;
+    } catch (error) {
+      logger.log('CREATE_PLAYERS_ERROR', 'Error creating the players', { error });
+
+      if (error.name === 'SequelizeValidationError') {
+        const [{ message }] = error.errors;
 
         res.send({ newPlayers, errors: [...errors, message] }).status(400);
       } else {
@@ -59,9 +68,15 @@ module.exports = {
         await toDelete.destroy();
         res.status(200).send('Player Deleted');
       } else {
+        logger.warn('PLAYER_DELETE_DNE', 'Player does not exist to be deleted', {
+          username,
+        });
+
         res.status(404).send('Player not found');
       }
-    } catch (err) {
+    } catch (error) {
+      logger.error('DELETE_PLAYER_ERROR', 'Error deleting the player', { error, username });
+
       res.status(500).send('An error occurred');
     }
   },

@@ -1,4 +1,5 @@
 const { DisabledElement } = require('../sql/models');
+const { logger } = require('../utils');
 
 module.exports = {
   getCheckoutStatus: async (_, res) => {
@@ -11,7 +12,11 @@ module.exports = {
       }) || {};
 
       res.status(200).send(!!disabled);
-    } catch (err) {
+    } catch (error) {
+      logger.error('GET_CHECKOUT_FAILED', 'Something went wrong trying to get checkout status', {
+        error,
+      });
+
       res.status(500).send('Something went wrong when trying to get checkout');
     }
   },
@@ -19,7 +24,8 @@ module.exports = {
     const { status } = req.body;
 
     if (status !== true && status !== false) {
-      res.status(400).send('Value must be true or false');
+      res.status(400).send('Status must be true or false');
+      return;
     }
 
     try {
@@ -48,8 +54,12 @@ module.exports = {
         });
       }
 
+      logger.info('CHECKOUT_TOGGLE', 'Successfully toggled checkout', { status });
+
       res.status(200).send('Successfully toggled checkout');
-    } catch (_) {
+    } catch (error) {
+      logger.error('TOGGLE_CHECKOUT_FAILED', 'Failed to toggle checkout', { error });
+
       res.status(500).send('Something went wrong when toggling checkout');
     }
   },
@@ -66,8 +76,12 @@ module.exports = {
         }
       });
 
+      logger.info('DISABLED_ELEMENTS', 'Successfully disabled elements');
+
       res.send('Success').status(200);
-    } catch (_) {
+    } catch (error) {
+      logger.error('TOGGLE_ELEMENTS_FAILED', 'Failed to toggle elements', { error });
+
       res.status(500).send('Failed to update elements');
     }
   },
