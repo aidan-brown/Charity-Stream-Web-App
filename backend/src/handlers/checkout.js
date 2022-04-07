@@ -78,7 +78,7 @@ module.exports = {
             if (type === 'effect') {
               cost *= (time / 30) * (power + 1);
               commands.push({
-                commandText: `minecraft:effect minecraft:give ${username} ${id}${nbt || ''} ${time} ${power + 1}`,
+                commandText: `minecraft:effect give ${username} ${id}${nbt || ''} ${time} ${power + 1}`,
               });
             } else if (type === 'mob') {
               if (nbt) {
