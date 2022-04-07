@@ -7,13 +7,17 @@ import {
   Button,
   Chip,
   Stack,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
 } from '@mui/material';
 import {
   Add, ArrowBack, ArrowForward, Delete,
 } from '@mui/icons-material';
 import { TabPanel } from '@mui/lab';
 import defaultCommands from './defaultCommands';
-import { getUrl } from '../../../../../Utils';
+import { getReq, getUrl } from '../../../../../Utils';
 import './CommandsPanel.scss';
 
 const CommandsPanel = ({ authHeader, setAlert }) => {
@@ -25,6 +29,19 @@ const CommandsPanel = ({ authHeader, setAlert }) => {
   ]);
   const [current, setCurrent] = useState(0);
   const [variables, setVariables] = useState({});
+  const [dataSource, setDataSource] = useState('none');
+  const [dataSourceVariables, setDataSourceVariables] = useState([]);
+
+  const dataSources = {
+    players: async () => {
+      const res = await getReq(`${getUrl()}/players`);
+
+      console.log(res);
+
+      if (res.status === 200) return res.json();
+      return [];
+    },
+  };
 
   useEffect(() => {
     const savedCommands = localStorage.getItem('mcs-admin-commands');
@@ -38,7 +55,9 @@ const CommandsPanel = ({ authHeader, setAlert }) => {
     const vars = JSON.stringify(commands[current].commands).match(/<%[^<%%>]*%>/g);
 
     if (vars) {
-      return [...new Set(vars.map((variable) => variable.replace('%>', '').replace('<%', '')))];
+      return [
+        ...new Set(vars.map((variable) => variable.replace('%>', '').replace('<%', ''))),
+      ].filter((v) => !dataSourceVariables.includes(v));
     }
 
     return [];
@@ -65,21 +84,48 @@ const CommandsPanel = ({ authHeader, setAlert }) => {
     setCommands(newCommands);
   };
 
-  const injectVariables = (index, command) => {
+  const injectVariables = async (index, command) => {
     let newCommand = command;
-    Object.keys(variables).forEach((key) => {
-      const [i, variable] = key.split('#@#');
+    const newCommands = [];
+    await Promise.all(Object.keys(variables).map(async (key) => {
+      const [i, v] = key.split('#@#');
+      const [variable, dataSrc] = v.split(':');
 
-      if (Number(i) === index) {
+      console.log(v);
+
+      if (dataSrc) {
+        console.log(dataSrc);
+        const data = await dataSources[dataSrc]();
+
+        await Promise.all(data.map((d) => {
+          newCommands.push(command.replaceAll(`<%${variable}%>`, d[variable]));
+          return null;
+        }));
+      } else if (Number(i) === index) {
         newCommand = newCommand.replaceAll(`<%${variable}%>`, variables[key]);
       }
-    });
+    }));
+
+    console.log(newCommands);
+
+    if (newCommands.length !== 0) {
+      let cs = [];
+
+      await Promise.all(newCommands.map((c) => {
+        cs = [...cs, ...JSON.parse(c)];
+        return null;
+      }));
+
+      console.log(cs);
+
+      return cs;
+    }
 
     return newCommand;
   };
 
-  const runCommand = (index) => {
-    const commandsToRun = injectVariables(index, JSON.stringify(commands[index].commands));
+  const runCommand = async (index) => {
+    const commandsToRun = await injectVariables(index, JSON.stringify(commands[index].commands));
 
     fetch(`${getUrl()}/run-commands`, {
       method: 'POST',
@@ -223,28 +269,68 @@ const CommandsPanel = ({ authHeader, setAlert }) => {
                       which if done right, will show up at the bottom of the
                       container.
                     </li>
+                    <li>
+                      You can also add a data source by selecting one below.
+                      This will allow you to add commands like:
+                      {' '}
+                      <b>&lt;%datadource:variable-name%&gt;</b>
+                      .
+                    </li>
                   </ul>
                 </div>
               )}
               <div className="modify-command-title">
-                <h2>{current === 0 ? 'Give Your Command a Name' : 'Command Name'}</h2>
-                <TextField
-                  className="modify-command-name"
-                  label="Command Name"
-                  variant="filled"
-                  value={commands[current].name}
-                  onChange={(e) => {
-                    setCommands(commands.map((c, i) => {
-                      if (i === current) {
-                        return {
-                          ...commands[current],
-                          name: e.target.value,
-                        };
-                      }
-                      return c;
-                    }));
-                  }}
-                />
+                <h2>{current === 0 ? 'Command a Name and Data Source (Optional)' : 'Command Name'}</h2>
+                <div className="command-meta">
+                  <TextField
+                    className="modify-command-name"
+                    label="Command Name"
+                    variant="filled"
+                    value={commands[current].name}
+                    onChange={(e) => {
+                      setCommands(commands.map((c, i) => {
+                        if (i === current) {
+                          return {
+                            ...commands[current],
+                            name: e.target.value,
+                          };
+                        }
+                        return c;
+                      }));
+                    }}
+                  />
+                  <FormControl className="modify-data-source">
+                    <InputLabel id="select-label">Data Source</InputLabel>
+                    <Select
+                      labelId="select-label"
+                      value={dataSource}
+                      label="Data Source"
+                      onChange={(e) => {
+                        const { value } = e.target;
+                        switch (value) {
+                          case 'none':
+                            setDataSourceVariables([]);
+                            break;
+                          case 'players':
+                            setDataSourceVariables([
+                              'username:players',
+                              'name:players',
+                              'association:players',
+                              'channel:players',
+                              'channelType:players',
+                            ]);
+                            break;
+                          default: break;
+                        }
+
+                        setDataSource(value);
+                      }}
+                    >
+                      <MenuItem value="none">None</MenuItem>
+                      <MenuItem value="players">Players</MenuItem>
+                    </Select>
+                  </FormControl>
+                </div>
               </div>
               <div className="new-commands">
                 <h2>{current === 0 ? 'Add Commands to Run' : 'Commands that Run'}</h2>
@@ -336,11 +422,11 @@ const CommandsPanel = ({ authHeader, setAlert }) => {
               >
                 <Add />
               </IconButton>
-              {variablesUsed.length !== 0 && (
+              {(variablesUsed.length !== 0 || dataSourceVariables.length !== 0) && (
               <div className="new-command-variables">
                 <h2>Variables You Used</h2>
                 <Stack className="new-variable" direction="row" spacing={1}>
-                  {variablesUsed.map((variable, i) => (
+                  {[...variablesUsed, ...dataSourceVariables].map((variable, i) => (
                     // eslint-disable-next-line react/no-array-index-key
                     <Chip key={`${variable}-${i}`} className="variable-chip" label={variable} color="secondary" />
                   ))}
