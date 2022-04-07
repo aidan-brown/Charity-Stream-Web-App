@@ -1,3 +1,4 @@
+/* eslint-disable react/forbid-prop-types */
 import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import Icon from '@mdi/react';
@@ -16,7 +17,7 @@ import StoreContent from './StoreContent/StoreContent';
 import './Store.scss';
 
 /** Responsible for constructing the store page component * */
-const Store = ({ addItemToCart }) => {
+const Store = ({ addItemToCart, cartItems, setCartItems }) => {
   const [filterTag, setFilterTag] = useState('all');
 
   const storeDiv = useRef();
@@ -38,43 +39,48 @@ const Store = ({ addItemToCart }) => {
         <nav className="store-nav bg-csh-secondary-gradient">
           <span tabIndex={0} role="button" onKeyDown={() => setFilterTag('all')} id="store-all" className="store-link" onClick={() => setFilterTag('all')}>
             <Icon path={mdiScriptText} />
-            All
+            <p>All</p>
           </span>
           <span tabIndex={0} role="button" onKeyDown={() => setFilterTag('tool')} id="a-tools" className="store-link" onClick={() => setFilterTag('tool')}>
             <Icon path={mdiPickaxe} />
-            Tools
+            <p>Tools</p>
           </span>
           <span tabIndex={0} role="button" onKeyDown={() => setFilterTag('weapon')} id="a-weapons" className="store-link" onClick={() => setFilterTag('weapon')}>
             <Icon path={mdiSwordCross} />
-            Weapons
+            <p>Weapons</p>
           </span>
           <span tabIndex={0} role="button" onKeyDown={() => setFilterTag('armor')} id="a-armor" className="store-link" onClick={() => setFilterTag('armor')}>
             <Icon path={mdiShield} />
-            Armor
+            <p>Armor</p>
           </span>
           <span tabIndex={0} role="button" onKeyDown={() => setFilterTag('food')} id="a-food" className="store-link" onClick={() => setFilterTag('food')}>
             <Icon path={mdiFoodDrumstick} />
-            Food
+            <p>Food</p>
           </span>
           <span tabIndex={0} role="button" onKeyDown={() => setFilterTag('material')} id="a-materials" className="store-link" onClick={() => setFilterTag('material')}>
             <Icon path={mdiSack} />
-            Materials
+            <p>Materials</p>
           </span>
           <span tabIndex={0} role="button" onKeyDown={() => setFilterTag('effects')} id="a-effects" className="store-link" onClick={() => setFilterTag('effects')}>
             <Icon path={mdiWizardHat} />
-            Effects
+            <p>Effects</p>
           </span>
           <span tabIndex={0} role="button" onKeyDown={() => setFilterTag('mobs')} id="a-mobs" className="store-link" onClick={() => setFilterTag('mobs')}>
             <Icon path={mdiSkull} />
-            Mobs
+            <p>Mobs</p>
           </span>
           <span tabIndex={0} role="button" onKeyDown={() => setFilterTag('misc')} id="a-misc" className="store-link" onClick={() => setFilterTag('misc')}>
             <Icon path={mdiFlask} />
-            Misc
+            <p>Misc</p>
           </span>
         </nav>
         <div className="store-content">
-          <StoreContent filterTag={filterTag} addItemToCart={addItemToCart} />
+          <StoreContent
+            filterTag={filterTag}
+            addItemToCart={addItemToCart}
+            cartItems={cartItems}
+            setCartItems={setCartItems}
+          />
         </div>
       </div>
     </div>
@@ -83,6 +89,8 @@ const Store = ({ addItemToCart }) => {
 
 Store.propTypes = {
   addItemToCart: PropTypes.func.isRequired,
+  cartItems: PropTypes.array.isRequired,
+  setCartItems: PropTypes.func.isRequired,
 };
 
 export default Store;

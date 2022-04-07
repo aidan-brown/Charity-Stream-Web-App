@@ -10,7 +10,7 @@ import {
 import { TabContext, TabList } from '@mui/lab';
 import { NavLink, useNavigate, useSearchParams } from 'react-router-dom';
 import { getUrl } from '../../../Utils';
-import { CommandsPanel, ItemDisablePanel, PlayerManagePanel } from './Panels';
+import { CommandsPanel, ItemUpdatePanel, PlayerManagePanel } from './Panels';
 import './AdminPanel.scss';
 
 const AdminPanel = ({ setIsAdmin }) => {
@@ -121,7 +121,7 @@ const AdminPanel = ({ setIsAdmin }) => {
               aria-label="Admin Panel Tabs"
             >
               <Tab label="Quick Commands" value="quick-commands" />
-              <Tab label="Disable Items" value="disabling-items" />
+              <Tab label="Update Items" value="update-items" />
               <Tab label="Players" value="players" />
             </TabList>
           </Box>
@@ -136,7 +136,7 @@ const AdminPanel = ({ setIsAdmin }) => {
             </Alert>
           )}
           <CommandsPanel authHeader={authHeader} setAlert={setAlert} />
-          <ItemDisablePanel authHeader={authHeader} setAlert={setAlert} />
+          <ItemUpdatePanel authHeader={authHeader} setAlert={setAlert} />
           <PlayerManagePanel authHeader={authHeader} setAlert={setAlert} />
         </TabContext>
       )}

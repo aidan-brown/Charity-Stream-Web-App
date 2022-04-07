@@ -1,5 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './App.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'jquery';
+import 'popper.js';
+import 'bootstrap/dist/js/bootstrap.min';
 import { Route, Routes, BrowserRouter } from 'react-router-dom';
 import Navbar from '../Navbar/Navbar';
 import Footer from '../Footer/Footer';
@@ -31,7 +35,7 @@ const App = () => {
     if (!player && lsGet) {
       setPlayer(lsGet);
     } else if (player === '') {
-      setPlayer('yakman3');
+      setPlayer('SupaPat');
     }
     lsGet = localStorage.getItem('cartItems');
     if (lsGet) {
@@ -96,7 +100,7 @@ const App = () => {
     let total = 0;
     cartItems.forEach((item) => {
       // eslint-disable-next-line no-mixed-operators
-      if (!('power' in item)) { total += (item.amount * item.price); } else { total += ((item.power + 1) * (item.time / 30 * item.price)); }
+      if (!('power' in item)) { total += (item.amount * (item.priceOverride !== null ? Number(item.priceOverride) : item.price)); } else { total += ((item.power + 1) * (item.time / 30 * (item.priceOverride !== null ? Number(item.priceOverride) : item.price))); }
     });
     return total;
   };
@@ -124,8 +128,16 @@ const App = () => {
   const proceedToCheckout = () => {
     if (cartItems.length === 0 || calculateTotal() < 2) return;
 
+    const items = cartItems;
+    items.forEach((item) => {
+      if (item.priceOverride !== null) {
+        // eslint-disable-next-line no-param-reassign
+        item.price = Number(item.priceOverride);
+      }
+    });
+
     const reqJSON = {
-      cart: cartItems,
+      cart: items,
       username: player,
     };
 
@@ -152,7 +164,7 @@ const App = () => {
 
   const CartComponents = () => (
     <span>
-      <button type="button" className="bg-csh-tertiary toggle-cart " onClick={toggleCartMenu} data-showcart={showCart}><span className="material-icons">{showCart === 'yes' ? 'arrow_back' : 'shopping_cart'}</span></button>
+      <button type="button" className="bg-csh-tertiary toggle-cart " onClick={toggleCartMenu} data-showcart={showCart}><span className="material-icons">{showCart === 'yes' ? 'arrow_forward' : 'shopping_cart'}</span></button>
       <img className="cart-add-item" ref={itemAddRef} src="" alt="item added to cart" data-show="no" />
       <Cart
         player={player}
@@ -181,7 +193,12 @@ const App = () => {
               element={(
                 <span>
                   {CartComponents()}
-                  <Stream setSelectedPlayer={setPlayer} addItemToCart={addItemToCart} />
+                  <Stream
+                    setSelectedPlayer={setPlayer}
+                    addItemToCart={addItemToCart}
+                    cartItems={cartItems}
+                    setCartItems={setCartItems}
+                  />
                 </span>
             )}
             />
@@ -190,7 +207,11 @@ const App = () => {
               element={(
                 <span>
                   {CartComponents()}
-                  <Store addItemToCart={addItemToCart} />
+                  <Store
+                    addItemToCart={addItemToCart}
+                    cartItems={cartItems}
+                    setCartItems={setCartItems}
+                  />
                 </span>
             )}
             />
@@ -202,7 +223,12 @@ const App = () => {
               element={!streamStarted ? <Landing setStreamStarted={setStreamStarted} /> : (
                 <span>
                   {CartComponents()}
-                  <Stream setSelectedPlayer={setPlayer} addItemToCart={addItemToCart} />
+                  <Stream
+                    setSelectedPlayer={setPlayer}
+                    addItemToCart={addItemToCart}
+                    cartItems={cartItems}
+                    setCartItems={setCartItems}
+                  />
                 </span>
               )}
             />

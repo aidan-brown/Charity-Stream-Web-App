@@ -1,3 +1,4 @@
+/* eslint-disable react/forbid-prop-types */
 /* eslint-disable no-mixed-operators */
 import React from 'react';
 import PropTypes from 'prop-types';
@@ -10,10 +11,18 @@ const CartEffect = ({
   <span className="cart-item">
     <div className="cart-item-description">
       <p className="cart-item-header">{effect.displayName}</p>
-      <p className="cart-item-price">
-        $
-        {(((effect.power + 1) * (effect.time / 30 * effect.price))).toFixed(2)}
-      </p>
+      <span className="cart-item-price">
+        <p className={`original-price ${effect.priceOverride !== null ? 'overrided' : ''}`}>
+          $
+          {(((effect.power + 1) * (effect.time / 30 * effect.price))).toFixed(2)}
+        </p>
+        {effect.priceOverride !== null && (
+        <p>
+          $
+          {(((effect.power + 1) * (effect.time / 30 * Number(effect.priceOverride)))).toFixed(2)}
+        </p>
+        )}
+      </span>
     </div>
     <div className="cart-item-brand bg-csh-primary-gradient">
       <img className="cart-item-icon" src={effect.icon} alt={effect.displayName} />
@@ -49,6 +58,7 @@ CartEffect.propTypes = {
     time: PropTypes.number.isRequired,
     power: PropTypes.number.isRequired,
     price: PropTypes.number.isRequired,
+    priceOverride: PropTypes.any,
   }).isRequired,
   changeEffectPower: PropTypes.func.isRequired,
   changeEffectTime: PropTypes.func.isRequired,

@@ -10,10 +10,12 @@ const {
   getCheckoutStatus,
   getMinecraftData,
   getPlayers,
+  getPriceOverrides,
   runRconCommands,
   verifyCart,
   verifyDonation,
   disableCheckout,
+  createPriceOverrides,
 } = require('./handlers');
 const { getImages } = require('./images');
 const { basicAuth } = require('./handlers/authentication');
@@ -33,6 +35,7 @@ app.get('/minecraft/:type', getMinecraftData);
 app.get('/players', getPlayers);
 app.get('/images/:type/:image', getImages);
 app.get('/checkout/status', getCheckoutStatus);
+app.get('/price-overrides', getPriceOverrides);
 app.post('/verify-checkout', verifyCart);
 app.post('/verify-donation', verifyDonation);
 app.get('/dynmap/icons/:playerName', dynmapGetPlayerIcon);
@@ -42,6 +45,7 @@ app.get('/dynmap/data', dynmapGetData);
 app.use(basicAuth);
 
 // Everything below this point requires auth
+app.put('/price-overrides', createPriceOverrides);
 app.put('/disable', disableElements);
 app.put('/disable/checkout', disableCheckout);
 app.post('/players', createPlayers);

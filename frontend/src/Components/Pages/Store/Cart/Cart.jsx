@@ -50,14 +50,7 @@ const Cart = ({
     <div className="Cart bg-csh-tertiary" data-showcart={showCart}>
       <div className="cart-playerselect">
         <Select className="cart-playerselect-select" value={player} onChange={(e) => setPlayer(e.target.value)} autoWidth>
-          {playerList.sort((a, b) => {
-            if (a.name > b.name) {
-              return 1;
-            } if (a.name < b.name) {
-              return -1;
-            }
-            return 0;
-          }).map((p) => <MenuItem value={p.username} key={p.username}>{`${p.name} [${p.username}]`}</MenuItem>)}
+          {playerList.sort((a, b) => a.name.localeCompare(b.name)).map((p) => <MenuItem value={p.username} key={p.username}>{`${p.name} [${p.username}]`}</MenuItem>)}
         </Select>
       </div>
       <div className="cart-content">
@@ -74,7 +67,12 @@ const Cart = ({
           );
         })}
       </div>
-      <p className="cart-disclaimer">Minimum of $2.00 per donation</p>
+      <p className="cart-disclaimer">
+        Minimum of $2.00 per donation
+        <br />
+        Please do not attempt to change the donation amount on the Just Giving page,
+        this will result in the order not being processed correctly
+      </p>
       <span className="cart-amount">
         <p>Total Amount</p>
         <p>

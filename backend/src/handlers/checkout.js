@@ -1,6 +1,6 @@
 const axios = require('axios');
 const {
-  Checkout, Player, DisabledElement, Command,
+  Checkout, Player, DisabledElement, Command, PriceOverride,
 } = require('../sql/models');
 const { all } = require('../minecraftData');
 const { getUrl, logger } = require('../utils');
@@ -29,6 +29,25 @@ const verifyPurchase = async (product) => {
   return false;
 };
 
+const verifyPrice = async (id, type, price, item) => {
+  const [priceOverride] = await PriceOverride.findAll({ where: { id, type } });
+
+  if (!priceOverride) {
+    if (price === item.price) return price;
+    return null;
+  }
+
+  if (priceOverride.price !== price) {
+    const { updatedAt } = priceOverride;
+
+    // We will not honor the old price if this is true
+    if ((new Date().getTime() - new Date(updatedAt).getTime()) / 1000 > 10) return null;
+    if (price !== item.price) return null;
+  }
+
+  return price;
+};
+
 module.exports = {
   verifyCart: async (req, res) => {
     const { username, cart } = req.body;
@@ -48,8 +67,12 @@ module.exports = {
           const { nbt } = all.find((i) => i.id === rawId && i.type === type) || {};
           const [id] = rawId.split('-');
 
-          if (await verifyPurchase(item)) {
-            let cost = price;
+          if (await verifyPurchase({ ...item, id })) {
+            const truePrice = await verifyPrice(id, type, price, item);
+
+            if (!truePrice) return false;
+
+            let cost = truePrice;
             if (type === 'effect') {
               cost *= (time / 30) * (power + 1);
               commands.push({
