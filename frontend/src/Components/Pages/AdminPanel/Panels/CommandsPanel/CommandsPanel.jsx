@@ -84,7 +84,7 @@ const CommandsPanel = ({ authHeader, setAlert }) => {
     setCommands(newCommands);
   };
 
-  const injectVariables = async (index, command) => {
+  const injectVariables = async (index, command, isDataSource) => {
     let newCommand = command;
     const newCommands = [];
     await Promise.all(Object.keys(variables).map(async (key) => {
