@@ -26,6 +26,14 @@ const DonationConfirmation = () => {
         .then((res) => {
           setResponse({ ...response, code: res.code, message: res.message });
           setLoading(false);
+        })
+        .catch(() => {
+          setResponse({
+            ...response,
+            code: 'UH_OH',
+            message: 'We could not contact our services, reach out on Twitch with the code below and we can help!',
+          });
+          setLoading(false);
         });
     }
   }, []);
