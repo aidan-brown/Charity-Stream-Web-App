@@ -1,5 +1,6 @@
 const { PriceOverride } = require('../sql/models');
 const { all } = require('../minecraftData');
+const { logger } = require('../utils');
 
 module.exports = {
   getPriceOverrides: async (_, res) => {
@@ -7,7 +8,9 @@ module.exports = {
       const priceOverrides = await PriceOverride.findAll();
 
       res.status(200).send(priceOverrides);
-    } catch (__) {
+    } catch (error) {
+      logger.log('GET_PRICE_OVERRIDES_ERROR', 'Error getting the price Overrides', { error });
+
       res.status(500).send('Something went wrong when trying to get the price overrides');
     }
   },
@@ -34,10 +37,15 @@ module.exports = {
         }
       }));
 
-      if (errors.length > 0) res.status(400).send({ errors });
-      else res.status(200).send({ message: 'Success' });
-    } catch (_) {
-      res.status(500).send('Failed to update elements');
+      if (errors.length > 0) {
+        logger.log('CREATE_PRICE_OVERRIDES_ERROR', 'Error creating the price overrides', { errors });
+
+        res.status(400).send({ errors });
+      } else res.status(200).send({ message: 'Success' });
+    } catch (error) {
+      logger.log('CREATE_PRICE_OVERRIDES_ERROR', 'Error creating the price overrides', { error });
+
+      res.status(500).send('Failed to create price overrides');
     }
   },
 };
