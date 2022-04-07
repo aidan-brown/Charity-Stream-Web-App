@@ -35,19 +35,19 @@ const verifyPrice = async (id, type, price, item) => {
   const [priceOverride] = await PriceOverride.findAll({ where: { id, type } });
 
   if (!priceOverride) {
-    if (price === item.price) return price;
+    if (Number(price) === Number(item.price)) return Number(price);
     return null;
   }
 
-  if (priceOverride.price !== price) {
+  if (Number(priceOverride.price) !== Number(price)) {
     const { updatedAt } = priceOverride;
 
     // We will not honor the old price if this is true
     if ((new Date().getTime() - new Date(updatedAt).getTime()) / 1000 > 10) return null;
-    if (price !== item.price) return null;
+    if (Number(price !== item.price)) return null;
   }
 
-  return price;
+  return Number(price);
 };
 
 module.exports = {
