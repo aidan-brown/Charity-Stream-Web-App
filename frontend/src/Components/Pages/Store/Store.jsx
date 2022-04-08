@@ -23,14 +23,14 @@ const Store = ({ addItemToCart, cartItems, setCartItems }) => {
   const storeDiv = useRef();
 
   useEffect(() => {
-    const lsGet = localStorage.getItem('filterTag');
+    const lsGet = localStorage.getItem('mcs-filterTag');
     if (lsGet) {
       setFilterTag(lsGet);
     }
   }, []);
 
   useEffect(() => {
-    localStorage.setItem('filterTag', filterTag);
+    localStorage.setItem('mcs-filterTag', filterTag);
   }, [filterTag]);
 
   return (

@@ -213,7 +213,7 @@ const verifyCheckout = async (req, res) => {
     if (!playerVerification) {
       logger.warn('PLAYER_DNE', 'Verify checkout player does not exist', { player });
 
-      res.status(404).send(`${player} does not exist`);
+      res.status(404).send({ message: 'Uh oh, looks like that player does not exist, refresh the page and try again!' });
     } else {
       // Verify the cart and create the commands at the same time
       const cartVerification = verifyCart(cart);
@@ -224,9 +224,9 @@ const verifyCheckout = async (req, res) => {
 
       // If there is something wrong with the cart
       if (errors.length !== 0) {
-        logger.warn('CART_VERIFY_ERROR', 'Verify cart found an error', { errors });
+        logger.warn('VERIFY_CART_ERROR', 'Verify cart found an error', { errors });
 
-        res.status(400).send({ errors, message: 'Something is wrong with your cart' });
+        res.status(400).send({ message: 'Uh oh, looks like something on our end went wrong, reach out on Twitch with this error code!. Error Code: VERIFY_CART_ERROR' });
       } else {
         const checkout = await Checkout.create({
           subTotal,
@@ -245,9 +245,9 @@ const verifyCheckout = async (req, res) => {
       }
     }
   } catch (error) {
-    logger.error('VERIFY_CART', 'Failed to verify cart', { error });
+    logger.error('VERIFY_CART_FAILURE', 'Failed to verify cart', { error });
 
-    res.status(500).send('Internal server error, failed to create checkout');
+    res.status(500).send({ message: 'Uh oh, looks like something on our end went wrong, reach out on Twitch with this error code!. Error Code: VERIFY_CART_FAILURE' });
   }
 };
 
@@ -291,7 +291,7 @@ const verifyDonation = async (req, res) => {
       const { donorLocalAmount } = data;
 
       if (status === 'PENDING') {
-        if (subTotal - 0.10 <= Number(donorLocalAmount)) {
+        if (Number(subTotal) - 0.10 <= Number(donorLocalAmount)) {
           checkout.donationID = donationID;
           checkout.status = 'ACCEPTED';
 

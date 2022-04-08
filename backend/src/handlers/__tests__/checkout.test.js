@@ -256,8 +256,8 @@ describe('Checkout Integration', () => {
           req.body.cart = [{
             id: 'cow',
             type: 'mob',
-            amount: 5,
-            price: 0.40,
+            amount: 10,
+            price: 0.20,
           }];
 
           await checkout.verifyCheckout(req, res);
@@ -266,7 +266,7 @@ describe('Checkout Integration', () => {
             subTotal: 2.00,
             status: 'PENDING',
             Commands: [{
-              commandText: 'minecraft:execute at fakeplayer run summon minecraft:area_effect_cloud ~ ~ ~ {Passengers:[{id:cow},{id:cow},{id:cow},{id:cow},{id:cow}]}',
+              commandText: 'minecraft:execute at fakeplayer run summon minecraft:area_effect_cloud ~ ~ ~ {Passengers:[{id:cow},{id:cow},{id:cow},{id:cow},{id:cow},{id:cow},{id:cow},{id:cow},{id:cow},{id:cow}]}',
             }],
           }, { include: [Command] });
           expect(res.send).toHaveBeenCalledWith(jgSuccessUrl('2.00'));
@@ -284,7 +284,7 @@ describe('Checkout Integration', () => {
           await checkout.verifyCheckout(req, res);
 
           expect(Checkout.create).toHaveBeenCalledWith({
-            subTotal: 4.40,
+            subTotal: 2.20,
             status: 'PENDING',
             Commands: [{
               commandText: 'minecraft:execute at fakeplayer run summon minecraft:area_effect_cloud ~ ~ ~ {Passengers:[{id:cow},{id:cow},{id:cow},{id:cow},{id:cow},{id:cow},{id:cow},{id:cow},{id:cow},{id:cow}]}',
@@ -293,7 +293,7 @@ describe('Checkout Integration', () => {
               commandText: 'minecraft:execute at fakeplayer run summon minecraft:area_effect_cloud ~ ~ ~ {Passengers:[{id:cow}]}',
             }],
           }, { include: [Command] });
-          expect(res.send).toHaveBeenCalledWith(jgSuccessUrl('4.40'));
+          expect(res.send).toHaveBeenCalledWith(jgSuccessUrl('2.20'));
           expect(res.status).toHaveBeenCalledWith(200);
         });
 
@@ -302,19 +302,19 @@ describe('Checkout Integration', () => {
             id: 'ender_dragon',
             type: 'mob',
             amount: 1,
-            price: 100.00,
+            price: 120.00,
           }];
 
           await checkout.verifyCheckout(req, res);
 
           expect(Checkout.create).toHaveBeenCalledWith({
-            subTotal: 100.00,
+            subTotal: 120.00,
             status: 'PENDING',
             Commands: [{
               commandText: 'minecraft:execute at fakeplayer run summon ender_dragon ~ ~ ~ {DragonPhase:0}',
             }],
           }, { include: [Command] });
-          expect(res.send).toHaveBeenCalledWith(jgSuccessUrl('100.00'));
+          expect(res.send).toHaveBeenCalledWith(jgSuccessUrl('120.00'));
           expect(res.status).toHaveBeenCalledWith(200);
         });
       });
@@ -330,13 +330,13 @@ describe('Checkout Integration', () => {
           await checkout.verifyCheckout(req, res);
 
           expect(Checkout.create).toHaveBeenCalledWith({
-            subTotal: 2.00,
+            subTotal: 4.40,
             status: 'PENDING',
             Commands: [{
               commandText: 'minecraft:give fakeplayer chainmail_chestplate 1',
             }],
           }, { include: [Command] });
-          expect(res.send).toHaveBeenCalledWith(jgSuccessUrl('2.00'));
+          expect(res.send).toHaveBeenCalledWith(jgSuccessUrl('4.40'));
           expect(res.status).toHaveBeenCalledWith(200);
         });
 
@@ -362,8 +362,8 @@ describe('Checkout Integration', () => {
 
         test.each`
           id            | price
-          ${'bow'}      | ${'2.50'} 
-          ${'crossbow'} | ${'4.00'}
+          ${'bow'}      | ${'3.80'} 
+          ${'crossbow'} | ${'8.40'}
         `('$id', async ({ id, price }) => {
           req.body.cart = [{
             id,
@@ -428,6 +428,34 @@ describe('Checkout Integration', () => {
         save: jest.fn(),
       }]);
       Checkout.findAll.mockResolvedValueOnce([]);
+
+      await checkout.verifyDonation(req, res);
+
+      expect(logger.info).toHaveBeenCalledWith(
+        'PURCHASE_SUCCESS',
+        'Successful purchase made',
+        {
+          checkoutID: 1,
+          donationID: 1234,
+          subTotal: 3,
+        },
+      );
+      expect(res.send).toHaveBeenCalledWith({
+        code: 'DONATION_VERIFY_SUCCESS',
+        message: 'Success',
+      });
+      expect(res.status).toHaveBeenCalledWith(200);
+    });
+
+    test('successful purchase 10 cents less', async () => {
+      Checkout.findAll.mockResolvedValueOnce([{
+        subTotal: 3.00,
+        id: 1,
+        status: 'PENDING',
+        save: jest.fn(),
+      }]);
+      Checkout.findAll.mockResolvedValueOnce([]);
+      axios.get.mockResolvedValue({ data: { donorLocalAmount: 2.90 } });
 
       await checkout.verifyDonation(req, res);
 

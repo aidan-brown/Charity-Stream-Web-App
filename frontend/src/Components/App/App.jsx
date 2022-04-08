@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { Alert } from '@mui/material';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'jquery';
@@ -15,6 +16,7 @@ import { getUrl, postReq } from '../../Utils';
 import CookieDisclaimer from '../CookieDisclaimer';
 
 const App = () => {
+  const [alert, setAlert] = useState();
   const [streamStarted, setStreamStarted] = useState(false);
   const [cartItems, setCartItems] = useState([]);
   const [player, setPlayer] = useState('');
@@ -31,23 +33,23 @@ const App = () => {
   useEffect(() => {
     if (localStorage.getItem('mcs-authHeader')) setIsAdmin(true);
 
-    let lsGet = localStorage.getItem('player');
+    let lsGet = localStorage.getItem('mcs-player');
     if (!player && lsGet) {
       setPlayer(lsGet);
     } else if (player === '') {
-      setPlayer('SupaPat');
+      setPlayer('');
     }
-    lsGet = localStorage.getItem('cartItems');
+    lsGet = localStorage.getItem('mcs-cartItems');
     if (lsGet) {
       setCartItems(JSON.parse(lsGet));
     }
   }, []);
 
   useEffect(() => {
-    localStorage.setItem('player', player);
+    localStorage.setItem('mcs-player', player);
   }, [player]);
   useEffect(() => {
-    localStorage.setItem('cartItems', JSON.stringify(cartItems));
+    localStorage.setItem('mcs-cartItems', JSON.stringify(cartItems));
   }, [cartItems]);
 
   const focusPopup = () => popupRef.current.focus();
@@ -125,7 +127,7 @@ const App = () => {
     }
   };
 
-  const proceedToCheckout = () => {
+  const proceedToCheckout = async () => {
     if (cartItems.length === 0 || calculateTotal() < 2) return;
 
     const items = cartItems;
@@ -141,21 +143,30 @@ const App = () => {
       player,
     };
 
-    postReq(`${getUrl()}/verify-checkout`, JSON.stringify(reqJSON))
-      .then((res) => res.text())
-      .then((JG_URL) => {
-        setCartItems([]);
-        setPopupClosed(false);
-        const newPopup = window.open(JG_URL, 'targetWindow',
-          `popup,
-          width=483,
-          height=680,
-          left=${(window.screen.width / 2) - 241.5},
-          top=${(window.screen.height / 2) - 340},
-        `);
-        popupRef.current = newPopup;
-        setPopup(newPopup);
+    const res = await postReq(`${getUrl()}/verify-checkout`, JSON.stringify(reqJSON));
+
+    if (res.status === 200) {
+      const JG_URL = await res.text();
+      setCartItems([]);
+      setPopupClosed(false);
+      const newPopup = window.open(JG_URL, 'targetWindow',
+        `popup,
+        width=483,
+        height=680,
+        left=${(window.screen.width / 2) - 241.5},
+        top=${(window.screen.height / 2) - 340},
+      `);
+      popupRef.current = newPopup;
+      setPopup(newPopup);
+    } else {
+      const json = await res.json();
+      const { message } = json;
+
+      setAlert({
+        severity: 'error',
+        message,
       });
+    }
   };
 
   const toggleCartMenu = () => {
@@ -207,6 +218,16 @@ const App = () => {
               element={(
                 <span>
                   {CartComponents()}
+                  {alert && (
+                  <Alert
+                    className="App-alert"
+                    onClose={() => setAlert()}
+                    variant="filled"
+                    severity={alert.severity}
+                  >
+                    {alert.message}
+                  </Alert>
+                  )}
                   <Store
                     addItemToCart={addItemToCart}
                     cartItems={cartItems}

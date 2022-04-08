@@ -16,7 +16,6 @@ import {
   Add, ArrowBack, ArrowForward, Delete,
 } from '@mui/icons-material';
 import { TabPanel } from '@mui/lab';
-import defaultCommands from './defaultCommands';
 import { getReq, getUrl } from '../../../../../Utils';
 import './CommandsPanel.scss';
 
@@ -25,49 +24,149 @@ const CommandsPanel = ({ authHeader, setAlert }) => {
     name: '',
     commands: [{ command: '', shouldWait: false }],
   },
-  ...defaultCommands,
   ]);
   const [current, setCurrent] = useState(0);
   const [variables, setVariables] = useState({});
-  const [dataSource, setDataSource] = useState('none');
-  const [dataSourceVariables, setDataSourceVariables] = useState([]);
-
   const dataSources = {
-    players: async () => {
-      const res = await getReq(`${getUrl()}/players`);
+    players: {
+      get: async () => {
+        const res = await getReq(`${getUrl()}/players`);
 
-      console.log(res);
-
-      if (res.status === 200) return res.json();
-      return [];
+        if (res.status === 200) return res.json();
+        return [];
+      },
+      variables: [
+        'players:username',
+        'players:name',
+        'players:association',
+        'players:teamSkyways',
+        'players:teamBedsWars',
+      ],
     },
   };
 
   useEffect(() => {
-    const savedCommands = localStorage.getItem('mcs-admin-commands');
+    const getCommands = async () => {
+      try {
+        const response = await fetch(`${getUrl()}/quick-commands`, {
+          headers: {
+            Authorization: authHeader,
+            'Content-Type': 'application/json',
+          },
+        });
 
-    if (savedCommands) {
-      setCommands(JSON.parse(savedCommands));
-    }
+        if (response.status !== 200) {
+          setAlert({
+            message: 'Failed to get quick Commands (check the logs for why using code=GET_QUICK_COMMANDS)',
+            severity: 'error',
+          });
+        } else {
+          const json = await response.json();
+          setCommands([
+            ...commands,
+            ...json.map((command) => ({
+              ...command,
+              commands: JSON.parse(command.commands),
+              variables: JSON.parse(command.variables),
+            })),
+          ]);
+        }
+      } catch (_) {
+        setAlert({
+          message: 'Failed to get quick Commands (check the logs for why using code=GET_QUICK_COMMANDS)',
+          severity: 'error',
+        });
+      }
+    };
+
+    getCommands();
   }, []);
 
   const variablesUsed = (() => {
-    const vars = JSON.stringify(commands[current].commands).match(/<%[^<%%>]*%>/g);
+    let vars = JSON.stringify(commands[current].commands).match(/<%[^<%%>]*%>/g);
+    const { dataSource } = commands[current];
+
+    if (vars && dataSource) {
+      vars = vars.filter((v) => !dataSources[dataSource].variables.includes(
+        v.replace('%>', '').replace('<%', ''),
+      ));
+    }
 
     if (vars) {
       return [
         ...new Set(vars.map((variable) => variable.replace('%>', '').replace('<%', ''))),
-      ].filter((v) => !dataSourceVariables.includes(v));
+      ];
     }
 
     return [];
   })();
 
-  const saveCommands = (newCommands) => {
-    localStorage.setItem('mcs-admin-commands', JSON.stringify(newCommands));
+  const saveCommands = async (newCommands, index = current) => {
+    try {
+      const response = await fetch(`${getUrl()}/quick-commands`, {
+        method: 'PUT',
+        headers: {
+          Authorization: authHeader,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          ...newCommands[index],
+          commands: JSON.stringify(newCommands[index].commands),
+          variables: JSON.stringify(newCommands[index].variables),
+        }),
+      });
+
+      if (response.status !== 200) {
+        setAlert({
+          message: 'Failed to crete quick Command (check the logs for why using code=CREATE_QUICK_COMMANDS_ERROR)',
+          severity: 'error',
+        });
+        return null;
+      }
+      setAlert({
+        message: 'Created command!',
+        severity: 'success',
+      });
+      return response.json();
+    } catch (_) {
+      setAlert({
+        message: 'Failed to create quick Command (check the logs for why using code=CREATE_QUICK_COMMANDS_ERROR)',
+        severity: 'error',
+      });
+      return null;
+    }
   };
 
-  const createCommand = () => {
+  const deleteCommand = async (id) => {
+    try {
+      const response = await fetch(`${getUrl()}/quick-commands/${id}`, {
+        method: 'DELETE',
+        headers: {
+          Authorization: authHeader,
+          'Content-Type': 'application/json',
+        },
+      });
+
+      if (response.status !== 200) {
+        setAlert({
+          message: 'Failed to delete quick Commands (check the logs for why using code=DELETE_QUICK_COMMANDS_ERROR)',
+          severity: 'error',
+        });
+      } else {
+        setAlert({
+          message: 'Deleted command!',
+          severity: 'success',
+        });
+      }
+    } catch (_) {
+      setAlert({
+        message: 'Failed to delete quick Commands (check the logs for why using code=DELETE_QUICK_COMMANDS_ERROR)',
+        severity: 'error',
+      });
+    }
+  };
+
+  const createCommand = async () => {
     const newCommands = [
       {
         name: '',
@@ -80,52 +179,57 @@ const CommandsPanel = ({ authHeader, setAlert }) => {
       },
     ];
 
-    saveCommands(newCommands);
-    setCommands(newCommands);
+    const { newId } = await saveCommands(newCommands, newCommands.length - 1);
+    setCommands(newCommands.map((c, i) => (i === newCommands.length - 1
+      ? { ...c, id: newId } : c)));
   };
 
-  const injectVariables = async (index, command, isDataSource) => {
-    let newCommand = command;
-    const newCommands = [];
-    await Promise.all(Object.keys(variables).map(async (key) => {
-      const [i, v] = key.split('#@#');
-      const [variable, dataSrc] = v.split(':');
+  const injectVariables = async (index, command, commandDataSource) => {
+    if (commandDataSource) {
+      const newCommands = [];
+      const data = await dataSources[commandDataSource].get();
 
-      console.log(v);
+      await Promise.all(data.map((d) => {
+        let newCommand = command;
 
-      if (dataSrc) {
-        console.log(dataSrc);
-        const data = await dataSources[dataSrc]();
-
-        await Promise.all(data.map((d) => {
-          newCommands.push(command.replaceAll(`<%${variable}%>`, d[variable]));
-          return null;
-        }));
-      } else if (Number(i) === index) {
-        newCommand = newCommand.replaceAll(`<%${variable}%>`, variables[key]);
-      }
-    }));
-
-    console.log(newCommands);
-
-    if (newCommands.length !== 0) {
-      let cs = [];
-
-      await Promise.all(newCommands.map((c) => {
-        cs = [...cs, ...JSON.parse(c)];
+        dataSources[commandDataSource].variables.forEach((v) => {
+          newCommand = newCommand.replaceAll(`<%${v}%>`, d[v.replace(`${commandDataSource}:`, '')]);
+        });
+        newCommands.push(newCommand);
         return null;
       }));
 
-      console.log(cs);
+      let commandsToBeRun = [];
+      newCommands.forEach((c) => {
+        commandsToBeRun = [
+          ...commandsToBeRun,
+          ...JSON.parse(c),
+        ];
+      });
 
-      return cs;
+      return JSON.stringify(commandsToBeRun);
     }
+    let newCommand = command;
+
+    Object.keys(variables).forEach((key) => {
+      const [i, variable] = key.split('#@#');
+
+      if (Number(i) === index) {
+        newCommand = newCommand.replaceAll(`<%${variable}%>`, variables[key]);
+      }
+    });
 
     return newCommand;
   };
 
   const runCommand = async (index) => {
-    const commandsToRun = await injectVariables(index, JSON.stringify(commands[index].commands));
+    const { dataSource } = commands[index];
+    const commandsToRun = await injectVariables(
+      index,
+      JSON.stringify(commands[index].commands),
+      dataSource,
+      [...commands[index].variables, ...(dataSource ? dataSources[dataSource].variables : [])],
+    );
 
     fetch(`${getUrl()}/run-commands`, {
       method: 'POST',
@@ -176,7 +280,7 @@ const CommandsPanel = ({ authHeader, setAlert }) => {
                           className="variable"
                           label={variable}
                           variant="filled"
-                          value={variables[`${i + 1}#@#${variable}`]}
+                          value={variables[`${i + 1}#@#${variable}`] || ''}
                           onChange={(e) => {
                             setVariables({
                               ...variables,
@@ -219,7 +323,7 @@ const CommandsPanel = ({ authHeader, setAlert }) => {
                 onClick={() => {
                   setCurrent(current - 1);
                 }}
-                aria-label="delete"
+                aria-label="back-button"
                 size="large"
               >
                 <ArrowBack fontSize="inherit" />
@@ -228,10 +332,10 @@ const CommandsPanel = ({ authHeader, setAlert }) => {
               {current !== 0 && (
                 <IconButton
                   onClick={() => {
+                    deleteCommand(commands[current].id);
                     const newCommands = commands.filter((_, i) => i !== current);
 
                     setCommands(newCommands);
-                    saveCommands(newCommands);
                     setCurrent(current - 1);
                   }}
                   aria-label="delete"
@@ -245,7 +349,7 @@ const CommandsPanel = ({ authHeader, setAlert }) => {
                 onClick={() => {
                   setCurrent(current + 1);
                 }}
-                aria-label="delete"
+                aria-label="forward-button"
                 size="large"
               >
                 <ArrowForward fontSize="inherit" />
@@ -303,27 +407,20 @@ const CommandsPanel = ({ authHeader, setAlert }) => {
                     <InputLabel id="select-label">Data Source</InputLabel>
                     <Select
                       labelId="select-label"
-                      value={dataSource}
+                      value={commands[current].dataSource || ''}
                       label="Data Source"
                       onChange={(e) => {
                         const { value } = e.target;
-                        switch (value) {
-                          case 'none':
-                            setDataSourceVariables([]);
-                            break;
-                          case 'players':
-                            setDataSourceVariables([
-                              'username:players',
-                              'name:players',
-                              'association:players',
-                              'channel:players',
-                              'channelType:players',
-                            ]);
-                            break;
-                          default: break;
-                        }
 
-                        setDataSource(value);
+                        setCommands(commands.map((c, j) => {
+                          if (j === current) {
+                            return {
+                              ...commands[current],
+                              dataSource: value === 'none' ? null : value,
+                            };
+                          }
+                          return c;
+                        }));
                       }}
                     >
                       <MenuItem value="none">None</MenuItem>
@@ -422,13 +519,15 @@ const CommandsPanel = ({ authHeader, setAlert }) => {
               >
                 <Add />
               </IconButton>
-              {(variablesUsed.length !== 0 || dataSourceVariables.length !== 0) && (
+              {(variablesUsed.length !== 0 || commands[current].dataSource) && (
               <div className="new-command-variables">
                 <h2>Variables You Used</h2>
                 <Stack className="new-variable" direction="row" spacing={1}>
-                  {[...variablesUsed, ...dataSourceVariables].map((variable, i) => (
+                  {[...variablesUsed, ...(commands[current].dataSource
+                    ? dataSources[commands[current].dataSource].variables
+                    : [])].map((variable, i) => (
                     // eslint-disable-next-line react/no-array-index-key
-                    <Chip key={`${variable}-${i}`} className="variable-chip" label={variable} color="secondary" />
+                      <Chip key={`${variable}-${i}`} className="variable-chip" label={variable} color="secondary" />
                   ))}
                 </Stack>
               </div>

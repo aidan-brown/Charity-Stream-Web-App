@@ -28,7 +28,7 @@ const AnalyticsPanel = ({ authHeader, setAlert }) => {
       }
     } catch (_) {
       setAlert({
-        message: 'Failed to toggle those items on/off',
+        message: 'Failed to get logs',
         severity: 'error',
       });
     }

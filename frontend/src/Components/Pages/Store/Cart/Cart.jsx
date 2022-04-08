@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { MenuItem, Select, Button } from '@mui/material';
+import {
+  MenuItem, Select, FormControl, InputLabel,
+} from '@mui/material';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import LoadingButton from '@mui/lab/LoadingButton';
 import { getUrl, getReq } from '../../../../Utils';
 import CartEffect from './CartEffect';
 import CartItem from './CartItem';
@@ -19,7 +23,8 @@ const Cart = ({
   calculateTotal,
 }) => {
   const [playerList, setPlayerList] = useState([]);
-  const [checkoutDisabled, setCheckoutDisabled] = useState(false);
+  const [checkoutDisabled, setCheckoutDisabled] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   const fetchCheckoutStatus = () => {
     getReq(`${getUrl()}/checkout/status`)
@@ -49,13 +54,31 @@ const Cart = ({
   return (
     <div className="Cart bg-csh-tertiary" data-showcart={showCart}>
       <div className="cart-playerselect">
-        <Select className="cart-playerselect-select" value={player} onChange={(e) => setPlayer(e.target.value)} autoWidth>
-          {playerList.sort((a, b) => a.name.localeCompare(b.name)).map((p) => <MenuItem value={p.username} key={p.username}>{`${p.name} [${p.username}]`}</MenuItem>)}
-        </Select>
+        <FormControl fullWidth>
+          <InputLabel id="select-label">Select Player for Donation</InputLabel>
+          <Select
+            labelId="select-label"
+            className="cart-playerselect-select"
+            value={player}
+            onChange={(e) => setPlayer(e.target.value)}
+            autoWidth
+          >
+            {playerList.sort((a, b) => a.name.localeCompare(b.name)).map((p) => <MenuItem value={p.username} key={p.username}>{`${p.name} [${p.username}]`}</MenuItem>)}
+          </Select>
+        </FormControl>
       </div>
       <div className="cart-content">
         {cartItems.map((item, index) => {
-          if (!('power' in item)) return <CartItem key={item.displayName} item={item} changeCartAmount={changeCartAmount(index)} removeFromCart={removeFromCart(index)} />;
+          if (!('power' in item)) {
+            return (
+              <CartItem
+                key={item.displayName}
+                item={item}
+                changeCartAmount={changeCartAmount(index)}
+                removeFromCart={removeFromCart(index)}
+              />
+            );
+          }
           return (
             <CartEffect
               key={item.displayName}
@@ -81,13 +104,25 @@ const Cart = ({
         </p>
       </span>
       <hr />
-      <Button className="cart-checkout bg-csh-secondary-gradient" onClick={proceedToCheckout} disabled={(checkoutDisabled || calculateTotal() < 2)}>
+      <LoadingButton
+        loading={loading}
+        className="cart-checkout bg-csh-secondary-gradient"
+        onClick={async () => {
+          setLoading(true);
+          await proceedToCheckout();
+          setLoading(false);
+        }}
+        startIcon={<ShoppingCartIcon />}
+        disabled={(checkoutDisabled || calculateTotal() < 2 || player === '')}
+      >
         {(() => {
           if (checkoutDisabled) return 'Waiting For Game To Start';
           if (calculateTotal() < 2) return 'Minimum of $2.00';
+          if (player === '') return 'Must select a player';
+          if (loading) return 'Verifying Cart...';
           return 'Proceed To Checkout';
         })()}
-      </Button>
+      </LoadingButton>
     </div>
   );
 };
