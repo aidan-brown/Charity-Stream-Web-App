@@ -7,6 +7,7 @@ const {
   deletePlayer,
   disableElements,
   dynmapGetPlayerIcon,
+  getAnalytics,
   getCheckoutStatus,
   getMinecraftData,
   getPlayers,
@@ -45,6 +46,7 @@ app.get('/dynmap/data', dynmapGetData);
 app.use(basicAuth);
 
 // Everything below this point requires auth
+app.get('/analytics', getAnalytics);
 app.put('/price-overrides', createPriceOverrides);
 app.put('/disable', disableElements);
 app.put('/disable/checkout', disableCheckout);

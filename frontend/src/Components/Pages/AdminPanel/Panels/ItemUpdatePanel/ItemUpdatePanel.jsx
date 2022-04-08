@@ -21,7 +21,7 @@ const ItemUpdatePanel = ({ authHeader, setAlert }) => {
   const [toDisable, setToDisable] = useState([]);
   const [toPriceChange, setToPriceChange] = useState([]);
   const [filter, setFilter] = useState('');
-  const [gameMode, setGameMode] = useState('none');
+  const [gameMode, setGameMode] = useState('select');
   const [overrideToggle, setOverrideToggle] = useState('mass');
   const [massPriceOverride, setMassPriceOverride] = useState(0);
   const [items, setItems] = useState([]);
@@ -186,7 +186,7 @@ const ItemUpdatePanel = ({ authHeader, setAlert }) => {
             );
 
             if (priceChange) return priceChange.price;
-            if (item.priceOverride) return item.priceOverride;
+            if (item.priceOverride !== null) return item.priceOverride;
             return 0;
           })()}
           onChange={(e) => {
@@ -380,36 +380,29 @@ const ItemUpdatePanel = ({ authHeader, setAlert }) => {
               onChange={(e) => {
                 setGameMode(e.target.value);
                 switch (e.target.value) {
-                  case 'none':
-                  case 'sky-wars': {
-                    const newToDisabled = [];
-                    setItems(items.map((item) => {
-                      const { disabled, id, type } = item;
-                      if (disabled && !toDisable.find((d) => d.id === id && d.type === type)) {
-                        newToDisabled.push({ id, disabled: false, type });
-                      }
-                      return { ...item, disabled: false };
-                    }));
-
-                    setFilter('');
-                    setToDisable(newToDisabled);
-                    break;
-                  }
+                  case 'select': break;
                   case 'hunger-games': {
                     const newToDisabled = [];
                     setItems(items.map((item) => {
-                      let disabled = false;
-                      const { id, type } = item;
+                      let disabledToggle = false;
+                      const { id, type, disabled } = item;
 
-                      if (id === 'mining_fatigue') disabled = true;
-                      if (id === 'haste') disabled = true;
-                      if (id.includes('_pickaxe')) disabled = true;
-                      if (id.includes('_shovel') && type === 'tool') disabled = true;
-                      if (disabled) newToDisabled.push({ id, disabled, type });
+                      if (id === 'mining_fatigue') disabledToggle = true;
+                      else if (id === 'haste') disabledToggle = true;
+                      else if (id.includes('_pickaxe')) disabledToggle = true;
+                      else if (id.includes('_shovel') && type === 'tool') disabledToggle = true;
+
+                      if (disabled || disabledToggle) {
+                        newToDisabled.push({
+                          id,
+                          disabled: disabledToggle,
+                          type,
+                        });
+                      }
 
                       return {
                         ...item,
-                        disabled,
+                        disabled: disabledToggle,
                       };
                     }));
 
@@ -420,16 +413,22 @@ const ItemUpdatePanel = ({ authHeader, setAlert }) => {
                   case 'bed-wars': {
                     const newToDisabled = [];
                     setItems(items.map((item) => {
-                      let disabled = false;
-                      const { id, type } = item;
+                      let disabledToggle = false;
+                      const { id, type, disabled } = item;
 
-                      if (type === 'material') disabled = true;
-                      if (type === 'mob' && id !== 'lightning_bolt') disabled = true;
-                      if (disabled) newToDisabled.push({ id, disabled, type });
+                      if (type === 'material') disabledToggle = true;
+                      else if (type === 'mob' && id !== 'lightning_bolt') disabledToggle = true;
+                      if (disabled || disabledToggle) {
+                        newToDisabled.push({
+                          id,
+                          disabled: disabledToggle,
+                          type,
+                        });
+                      }
 
                       return {
                         ...item,
-                        disabled,
+                        disabled: disabledToggle,
                       };
                     }));
 
@@ -437,12 +436,29 @@ const ItemUpdatePanel = ({ authHeader, setAlert }) => {
                     setToDisable(newToDisabled);
                     break;
                   }
-                  default:
+                  default: {
+                    const newToDisabled = [];
+                    setItems(items.map((item) => {
+                      const { disabled, id, type } = item;
+                      if (disabled) {
+                        newToDisabled.push({ id, disabled: false, type });
+                      }
+
+                      return {
+                        ...item,
+                        disabled: false,
+                      };
+                    }));
+
+                    setFilter('');
+                    setToDisable(newToDisabled);
                     break;
+                  }
                 }
               }}
             >
-              <MenuItem value="none">None</MenuItem>
+              <MenuItem value="select">No Game Mode</MenuItem>
+              <MenuItem value="none">Reset</MenuItem>
               <MenuItem value="hunger-games">Hunger Games</MenuItem>
               <MenuItem value="sky-wars">Sky Wars</MenuItem>
               <MenuItem value="bed-wars">Bed Wars</MenuItem>
@@ -478,7 +494,7 @@ const ItemUpdatePanel = ({ authHeader, setAlert }) => {
             .map((item, index) => (
               <div key={`${item.type}-${item.id}`} className="item">
                 <StoreItem
-                  className={toDisable.find((d) => d.id === item.id) ? 'selected' : null}
+                  className={toDisable.find((d) => d.id === item.id && d.type === item.type) ? 'selected' : null}
                   isStore={false}
                   item={item}
                   addItemToCart={() => toggleDisabled(item)}
@@ -493,7 +509,7 @@ const ItemUpdatePanel = ({ authHeader, setAlert }) => {
             .map((mob, index) => (
               <div key={`${mob.type}-${mob.id}`} className="item">
                 <StoreMob
-                  className={toDisable.find((d) => d.id === mob.id) ? 'selected' : null}
+                  className={toDisable.find((d) => d.id === mob.id && d.type === mob.type) ? 'selected' : null}
                   isStore={false}
                   mob={mob}
                   addItemToCart={() => toggleDisabled(mob)}
@@ -508,7 +524,7 @@ const ItemUpdatePanel = ({ authHeader, setAlert }) => {
             .map((effect, index) => (
               <div key={`${effect.type}-${effect.id}`} className="item">
                 <StoreEffect
-                  className={toDisable.find((d) => d.id === effect.id) ? 'selected' : null}
+                  className={toDisable.find((d) => d.id === effect.id && d.type === effect.type) ? 'selected' : null}
                   isStore={false}
                   effect={effect}
                   addItemToCart={() => toggleDisabled(effect)}

@@ -1,3 +1,4 @@
+const { getAnalytics } = require('./analytics');
 const { getCheckoutStatus, disableCheckout, disableElements } = require('./disable');
 const getMinecraftData = require('./minecraftData');
 const { getPlayers, createPlayers, deletePlayer } = require('./players');
@@ -14,6 +15,7 @@ module.exports = {
   disableElements,
   dynmapGetData,
   dynmapGetPlayerIcon,
+  getAnalytics,
   getCheckoutStatus,
   getMinecraftData,
   getPlayers,
