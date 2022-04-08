@@ -11,14 +11,21 @@
     "displayName": "Gold Ingot",
     "type": "material",
     "description": "An ingot full of potential. Can be used to craft gold armor, weapons, and tools.",
-    "price": 0.40
+    "price": 0.25
   },
   {
     "id": "diamond",
     "displayName": "Diamond",
     "type": "material",
     "description": "A shiny gem. Can be used to craft powerful diamond armor, weapons, and tools.",
-    "price": 2.00
+    "price": 1.10
+  },
+  {
+    "id": "netherite_ingot",
+    "displayName": "Netherite Ingot",
+    "type": "material",
+    "description": "The only metal stronger than diamonds. Can be used to craft powerful netherite armor, weapons, and tools.",
+    "price": 1.50
   },
   {
     "id": "lapis_lazuli",
@@ -27,12 +34,5 @@
     "description": "Shiny gems. Can be used to enchant armor, weapons, and tools. (mirror not included)",
     "price": 0.80,
     "count": 10
-  },
-  {
-    "id": "netherite_ingot",
-    "displayName": "Netherite Ingot",
-    "type": "material",
-    "description": "The only metal stronger than diamonds. Can be used to craft powerful netherite armor, weapons, and tools.",
-    "price": 2.50
   }
 ]

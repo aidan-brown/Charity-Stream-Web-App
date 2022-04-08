@@ -4,7 +4,7 @@
     "displayName": "Gold Sword",
     "type": "weapon",
     "description": "Gold isn't really known for making great swords but we made one anyways. Help your favorite player look stylish in battle!",
-    "price": 0.80,
+    "price": 1.00,
     "damage": 4,
     "durability": 32
   },
@@ -13,7 +13,7 @@
     "displayName": "Iron Sword",
     "type": "weapon",
     "description": "An upgraded sword for combat. Help your favorite player triumph in battle!",
-    "price": 1.00,
+    "price": 1.50,
     "damage": 6,
     "durability": 250
   },
@@ -22,7 +22,7 @@
     "displayName": "Diamond Sword",
     "type": "weapon",
     "description": "One of the best swords for combat. Help your favorite player triumph in battle with style!",
-    "price": 4.00,
+    "price": 7.30,
     "damage": 7,
     "durability": 1561
   },
@@ -31,7 +31,7 @@
     "displayName": "Netherite Sword",
     "type": "weapon",
     "description": "This is the best of the best, they'll do lots of damage with this one. Help your favorite player triumph in battle with style!",
-    "price": 5.00,
+    "price": 10.80,
     "damage": 8,
     "durability": 2031
   },
@@ -49,7 +49,7 @@
     "displayName": "Iron Axe",
     "type": "weapon",
     "description": "A barbarian's #1 weapon of choice and great for separating heads from their bodies. Help your favorite player decimate the battlefield!",
-    "price": 2.00,
+    "price": 1.50,
     "damage": 9,
     "durability": 250
   },
@@ -58,7 +58,7 @@
     "displayName": "Diamond Axe",
     "type": "weapon",
     "description": "A very durable axe for long term head cleaving. Help your favorite player decimate the battlefield forever!",
-    "price": 5.00,
+    "price": 9.40,
     "damage": 9,
     "durability": 1561
   },
@@ -67,7 +67,7 @@
     "displayName": "Netherite Axe",
     "type": "weapon",
     "description": "There are no nuclear warheads in Minecraft but I think this would be the closest to a weapon of mass destruction. Help your favorite player become the god of the battlefield!",
-    "price": 7.00,
+    "price": 13.50,
     "damage": 10,
     "durability": 2031
   },
@@ -86,7 +86,7 @@
     "displayName": "Bow",
     "type": "weapon",
     "description": "Minecraft's signature ranged weapon. Can take out foes at a distance! (comes with 20 arrows)",
-    "price": 2.50,
+    "price": 3.80,
     "damage": 4,
     "durability": 384
   },
@@ -95,9 +95,9 @@
     "displayName": "Crossbow",
     "type": "weapon",
     "description": "Minecraft's *NEW* signature ranged weapon. Can take out foes at a distance! (comes with 20 arrows)",
-    "price": 4.00,
+    "price": 8.40,
     "damage": 9,
-    "maxDurability": 465
+    "durability": 465
   },
   {
     "id": "arrow",
