@@ -11,7 +11,7 @@ const AnalyticsPanel = ({ authHeader, setAlert }) => {
 
   const getLogs = async () => {
     try {
-      const response = fetch(`${getUrl()}/analytics?${filter}`, {
+      const response = await fetch(`${getUrl()}/analytics?${filter}`, {
         headers: {
           Authorization: authHeader,
           'Content-Type': 'application/json',
@@ -38,30 +38,47 @@ const AnalyticsPanel = ({ authHeader, setAlert }) => {
     <TabPanel value="analytics">
       <div className="analytics">
         <div className="top-bar">
-          <TextField
-            className="search"
-            variant="filled"
-            placeholder="Search Logs...."
-            sx={{ width: '20%' }}
-            onChange={(e) => {
-              setFilter(e.target.value);
-            }}
-            label="Search Logs.."
-            value={filter}
-          />
-          <Button
-            // className="mass-price-button"
-            variant="contained"
-            color="secondary"
-            onClick={getLogs}
-          >
-            Search
-          </Button>
+          <div className="search-bar">
+            <TextField
+              className="search"
+              variant="filled"
+              placeholder="Search Logs...."
+              onChange={(e) => {
+                setFilter(e.target.value);
+              }}
+              label="Search Logs.."
+              value={filter}
+            />
+            <Button
+              className="search-button"
+              variant="contained"
+              color="secondary"
+              onClick={getLogs}
+            >
+              Search
+            </Button>
+          </div>
         </div>
         <div className="content">
-          {logs.map((log) => {
-            <p>log</p>;
-          })}
+          {logs.length === 0 && (
+            <h1>Nothing to see here (no logs)</h1>
+          )}
+          <div>
+            {logs.map(({
+              type, message, code, additional,
+            }) => (
+              <p>
+                {type}
+                [
+                {code}
+                ]:
+                {' '}
+                {message}
+                {' '}
+                {additional}
+              </p>
+            ))}
+          </div>
         </div>
       </div>
     </TabPanel>

@@ -149,9 +149,10 @@ const createCommands = async (cart, player) => {
   const commands = [];
   cart.forEach((cartItem) => {
     const {
-      id, type, amount = 1, time, power,
+      id: rawId, type, amount = 1, time, power,
     } = cartItem;
-    const { nbt, count = 1 } = all.find((i) => i.id === id && i.type === type) || {};
+    const { nbt, count = 1 } = all.find((i) => i.id === rawId && i.type === type) || {};
+    const [id] = rawId.split('-');
 
     switch (type) {
       case 'effect':

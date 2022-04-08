@@ -18,11 +18,25 @@
     width: 90%;
     margin: auto;
 
-    .search {
-      border-radius: 7.55px;
-      margin-bottom: 5px;
-      margin-top: 5px;
-      margin-right: 5px;
+    .search-bar {
+      display: flex;
+      flex-wrap: nowrap;
+      width: 50%;
+
+      .search {
+        width: 100%;
+        border-radius: 7.55px;
+        margin-bottom: 5px;
+        margin-top: 5px;
+        margin-right: 5px;
+      }
+
+      .search-button {
+        border-radius: 7.55px;
+        margin-bottom: 5px;
+        margin-top: 5px;
+        margin-left: 5px;
+      }
     }
   }
 
