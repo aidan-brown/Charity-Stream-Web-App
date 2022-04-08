@@ -286,7 +286,7 @@ const Stream = ({
       </div>
       <h2 className="stream-row-title row-center">Check Out Our Live Map</h2>
       <div className="stream-row">
-        <iframe className="stream-row-item stream-row-iframe" title="Dynmap" src="https://dionysus.csh.rit.edu" />
+        <iframe className="stream-row-item stream-row-iframe dynmap" title="Dynmap" src="https://dionysus.csh.rit.edu" />
       </div>
       <h2 className="stream-row-title row-reverse">About the Stream</h2>
       <div className="stream-row row-reverse bg-csh-secondary-gradient">

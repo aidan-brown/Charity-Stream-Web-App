@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import Icon from '@mdi/react';
 import { mdiCartPlus } from '@mdi/js';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
+import { isSafari } from 'react-device-detect';
 import { getUrl } from '../../../../Utils';
 
 const StoreEffect = ({
@@ -11,8 +12,19 @@ const StoreEffect = ({
 }) => (
   <span tabIndex={0} role="button" className={`store-item bg-csh-tertiary ${className || ''}`} onClick={addItemToCart} onKeyDown={addItemToCart} data-disabled={effect.disabled}>
     <div className="store-item-header bg-csh-primary-gradient">
-      <LazyLoadImage className="store-item-image" src={`${getUrl()}/images/effects/${effect.id}-full.webp`} alt={effect.displayName} effect="blur" />
-      <LazyLoadImage className="store-item-icon" src={`${getUrl()}/images/effects/${effect.id}.webp`} alt={effect.displayName} effect="blur" />
+      {!isSafari
+        ? (
+          <>
+            <LazyLoadImage className="store-item-image" src={`${getUrl()}/images/effects/${effect.id}-full.webp`} alt={effect.displayName} effect="blur" />
+            <LazyLoadImage className="store-item-icon" src={`${getUrl()}/images/effects/${effect.id}.webp`} alt={effect.displayName} effect="blur" />
+          </>
+        )
+        : (
+          <>
+            <img className="store-item-image" src={`${getUrl()}/images/effects/${effect.id}-full.webp`} alt={effect.displayName} />
+            <img className="store-item-icon" src={`${getUrl()}/images/effects/${effect.id}.webp`} alt={effect.displayName} />
+          </>
+        )}
       <p className="store-item-displayName">{effect.displayName}</p>
       <span className="store-item-price">
         <p className={`original-price ${effect.priceOverride !== null ? 'overrided' : ''}`}>
