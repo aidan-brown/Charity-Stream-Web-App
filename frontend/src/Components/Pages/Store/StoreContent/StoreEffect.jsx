@@ -1,3 +1,4 @@
+/* eslint-disable react/forbid-prop-types */
 import React from 'react';
 import PropTypes from 'prop-types';
 import Icon from '@mdi/react';
@@ -13,19 +14,25 @@ const StoreEffect = ({
       <LazyLoadImage className="store-item-image" src={`${getUrl()}/images/effects/${effect.id}-full.webp`} alt={effect.displayName} effect="blur" />
       <LazyLoadImage className="store-item-icon" src={`${getUrl()}/images/effects/${effect.id}.webp`} alt={effect.displayName} effect="blur" />
       <p className="store-item-displayName">{effect.displayName}</p>
-      <p className="store-item-price">
-        $
-        {effect.price.toFixed(2)}
-        /30sec * Power Level
-      </p>
+      <span className="store-item-price">
+        <p className={`original-price ${effect.priceOverride !== null ? 'overrided' : ''}`}>
+          $
+          {effect.price.toFixed(2)}
+        </p>
+        {effect.priceOverride !== null && (
+        <p>
+          $
+          {Number(effect.priceOverride).toFixed(2)}
+        </p>
+        )}
+        /30sec x Power Level
+      </span>
     </div>
-    <div className="store-item-description">
-      <dl className="store-item-stats">
-        <span>
-          <dt>Description</dt>
-          <dd>{effect.description}</dd>
-        </span>
-      </dl>
+    <div className="store-item-text">
+      <span className="store-item-description">
+        <h3>Description</h3>
+        <p>{effect.description}</p>
+      </span>
     </div>
     {isStore && <Icon path={mdiCartPlus} className="add-cart" />}
   </span>
@@ -37,6 +44,7 @@ StoreEffect.propTypes = {
     displayName: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
     price: PropTypes.number.isRequired,
+    priceOverride: PropTypes.any,
     disabled: PropTypes.bool.isRequired,
   }).isRequired,
   addItemToCart: PropTypes.func.isRequired,

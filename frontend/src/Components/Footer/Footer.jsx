@@ -7,7 +7,8 @@ const Footer = () => (
     <div className="footer-disclaimer bg-csh-secondary-gradient">
       <i>
         Disclaimer: This website and stream is in no way
-        affliated with Minecraft and/or Microsoft
+        affliated with Minecraft and/or Mojang AB.
+        &quot;Minecraft&quot; is a registered trademark of Mojang AB.
       </i>
     </div>
     <div className="footer-row">

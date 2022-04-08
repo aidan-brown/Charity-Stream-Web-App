@@ -1,3 +1,4 @@
+/* eslint-disable react/forbid-prop-types */
 import React, { useEffect, useRef, useState } from 'react';
 import Icon from '@mdi/react';
 import {
@@ -16,6 +17,7 @@ import {
   mdiWizardHat,
 } from '@mdi/js';
 import { Link } from 'react-router-dom';
+import { Popover } from '@mui/material';
 
 import PropTypes from 'prop-types';
 import './Stream.scss';
@@ -23,11 +25,15 @@ import './PlayerList.scss';
 import './PerspectiveList.scss';
 import StreamWindow from './StreamWindow/StreamWindow';
 import StoreContent from '../Store/StoreContent/StoreContent';
-import { getUrl, getReq } from '../../../Utils';
+import { getUrl, getReq, ItemSymbols } from '../../../Utils';
 import AssociationLogos from '../../../assets';
+import BackgroundVideo from '../../../assets/landing-stream-clips.mp4';
+import { steveFace } from '../../../assets/images';
 
 /** Class for constructing the stream page * */
-const Stream = ({ setSelectedPlayer, addItemToCart }) => {
+const Stream = ({
+  setSelectedPlayer, addItemToCart, cartItems, setCartItems,
+}) => {
   const streamDiv = useRef();
   const [channel, setChannel] = useState('cshba');
   const [streamWidth, setStreamWidth] = useState('100%');
@@ -102,25 +108,103 @@ const Stream = ({ setSelectedPlayer, addItemToCart }) => {
     </ul>
   );
 
-  const PlayerList = () => (
-    <ul className="PlayerList StreamList">
-      {playerList.sort((a, b) => b.association.localeCompare(a.association)).map((player) => {
-        const playerAssociation = player.association === 'streamer' && player.channel.toUpperCase() in AssociationLogos
-          ? player.channel
-          : player.association;
-        const Logo = playerAssociation.toUpperCase() in AssociationLogos
-          ? AssociationLogos[playerAssociation.toUpperCase()]
-          : AssociationLogos.RIT;
-        return (
-          <Link key={player.username} className={`list-element ${playerAssociation}`} onClick={() => playerOnClick(player)} to="/Store">
-            <p>{`${player.name} [${player.username}]`}</p>
-            <Logo className="team-logo" />
-            <Icon path={mdiCart} className="shop-logo" />
-          </Link>
-        );
-      })}
-    </ul>
-  );
+  const PlayerList = () => {
+    const [anchorEls, setAnchorEls] = useState({});
+    const [playerData, setPlayerData] = useState({});
+    let openPopovers = [];
+
+    const handlePopoverClose = (playerName) => () => {
+      setAnchorEls({ ...anchorEls, [playerName]: null });
+    };
+
+    const handlePopoverOpen = (playerName) => (e) => {
+      playerList.forEach((player) => {
+        anchorEls[player.username] = null;
+      });
+      openPopovers = [];
+      setAnchorEls({ ...anchorEls, [playerName]: e.currentTarget });
+      openPopovers.push(playerName);
+    };
+
+    useEffect(() => {
+      const interval = setInterval(() => {
+        getReq(`${getUrl()}/dynmap/data`)
+          .then((res) => res.json())
+          .then((res) => {
+            const players = {};
+            res.players.forEach((player) => {
+              players[player.account] = { health: player.health, armor: player.armor };
+            });
+            setPlayerData(players);
+          });
+      }, 5000);
+      return () => {
+        clearInterval(interval);
+      };
+    }, []);
+
+    const open = {};
+    playerList.forEach((player) => {
+      open[player.username] = Boolean(anchorEls[player.username]);
+    });
+
+    return (
+      <ul className="PlayerList StreamList">
+        {playerList.sort((a, b) => b.association.localeCompare(a.association)).map((player) => {
+          const playerAssociation = player.association === 'streamer' && player.channel.toUpperCase() in AssociationLogos
+            ? player.channel
+            : player.association;
+          const Logo = playerAssociation.toUpperCase() in AssociationLogos
+            ? AssociationLogos[playerAssociation.toUpperCase()]
+            : AssociationLogos.RIT;
+          const pData = playerData[player.username];
+          const playerConnected = player.username in playerData;
+          return (
+            <>
+              <Link
+                key={`${player.username}link`}
+                className={`list-element ${playerAssociation}`}
+                onClick={() => playerOnClick(player)}
+                aria-owns={open[player.username] ? `${player.username}-popover` : undefined}
+                aria-haspopup="true"
+                onMouseEnter={handlePopoverOpen(player.username)}
+                onMouseLeave={handlePopoverClose(player.username)}
+                to="/Store"
+              >
+                <p>{`${player.name} [${player.username}]`}</p>
+                <Logo className="team-logo" />
+                <Icon path={mdiCart} className="shop-logo" />
+              </Link>
+              <Popover
+                key={`${player.username}popover`}
+                id={`${player.username}-popover`}
+                className="player-popover"
+                sx={{ pointerEvents: 'none' }}
+                open={open[player.username]}
+                anchorEl={anchorEls[player.username]}
+                anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+                transformOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+                onClose={handlePopoverClose(player.username)}
+                disableRestoreFocus
+              >
+                <img className="player-icon" src={`${getUrl()}/dynmap/icons/${player.username}`} alt={player.username} onError={(e) => { e.currentTarget.src = steveFace; }} />
+                <span className="player-health">
+                  {playerConnected ? `${pData.health} (` : ''}
+                  {playerConnected && ItemSymbols('health', pData ? pData.health : null, true)}
+                  {playerConnected ? ')' : ''}
+                </span>
+                <span className="player-armor">
+                  {playerConnected ? `${pData.armor} (` : 'Not Connected'}
+                  {playerConnected && ItemSymbols('armor', pData ? pData.armor : null, true)}
+                  {playerConnected ? ')' : ''}
+                </span>
+              </Popover>
+            </>
+          );
+        })}
+      </ul>
+    );
+  };
 
   return (
     <div className="Stream">
@@ -162,7 +246,12 @@ const Stream = ({ setSelectedPlayer, addItemToCart }) => {
         <div id="shop-list" className="stream-list bg-csh-secondary-gradient hide">
           <h4>Quick Buy</h4>
           <div className="StreamList">
-            <StoreContent filterTag={filterTag} addItemToCart={addItemToCart} />
+            <StoreContent
+              filterTag={filterTag}
+              addItemToCart={addItemToCart}
+              cartItems={cartItems}
+              setCartItems={setCartItems}
+            />
             <nav className="quick-store-nav bg-csh-secondary">
               <button type="button" id="store-all" className="stream-button bg-csh-secondary btn hide" onKeyDown={handleQuickBuyFilters('all')} onClick={handleQuickBuyFilters('all')}>
                 <Icon path={mdiScriptText} className="stream-button-icon" />
@@ -195,10 +284,14 @@ const Stream = ({ setSelectedPlayer, addItemToCart }) => {
           </div>
         </div>
       </div>
-      <h2 className="stream-row-title row-reverse">About the Stream</h2>
-      <div className="stream-row row-reverse">
+      <h2 className="stream-row-title row-center">Check Out Our Live Map</h2>
+      <div className="stream-row">
         <iframe className="stream-row-item stream-row-iframe" title="Dynmap" src="https://dionysus.csh.rit.edu" />
-        <article className="stream-row-item stream-row-text-box bg-csh-secondary-gradient">
+      </div>
+      <h2 className="stream-row-title row-reverse">About the Stream</h2>
+      <div className="stream-row row-reverse bg-csh-secondary-gradient">
+        <video className="stream-row-item" playsInline autoPlay muted loop preload="none" src={BackgroundVideo} />
+        <article className="stream-row-item stream-row-text-box">
           <p>
             CSH&apos;s annual Minecraft Charity Stream is a large-scale competition
             between players in a series of minigames, with all donations
@@ -217,7 +310,7 @@ const Stream = ({ setSelectedPlayer, addItemToCart }) => {
         </article>
       </div>
       <h2 className="stream-row-title">About the Hub World</h2>
-      <div className="stream-row">
+      <div className="stream-row bg-csh-secondary-gradient">
         <iframe
           className="stream-row-item stream-row-iframe"
           src="https://www.youtube.com/embed/PU6Bopb1CVE"
@@ -248,6 +341,8 @@ const Stream = ({ setSelectedPlayer, addItemToCart }) => {
 Stream.propTypes = {
   setSelectedPlayer: PropTypes.func.isRequired,
   addItemToCart: PropTypes.func.isRequired,
+  cartItems: PropTypes.array.isRequired,
+  setCartItems: PropTypes.func.isRequired,
 };
 
 export default Stream;

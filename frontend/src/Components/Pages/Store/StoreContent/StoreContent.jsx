@@ -1,3 +1,4 @@
+/* eslint-disable react/forbid-prop-types */
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { getUrl, getReq } from '../../../../Utils';
@@ -6,7 +7,9 @@ import StoreMob from './StoreMob';
 import StoreEffect from './StoreEffect';
 import './StoreContent.scss';
 
-const StoreContent = ({ filterTag, addItemToCart, className }) => {
+const StoreContent = ({
+  filterTag, addItemToCart, className, cartItems, setCartItems,
+}) => {
   const [items, setItems] = useState([]);
   const [effects, setEffects] = useState([]);
   const [mobs, setMobs] = useState([]);
@@ -40,6 +43,38 @@ const StoreContent = ({ filterTag, addItemToCart, className }) => {
       clearInterval(shopPoll);
     };
   }, []);
+
+  const findItem = (id, type) => {
+    if (type === 'mob') {
+      return mobs.find((mob) => mob.id === id);
+    } if (type === 'effect') {
+      return effects.find((effect) => effect.id === id);
+    }
+    return items.find((itm) => itm.id === id);
+  };
+
+  useEffect(() => {
+    if (items.length !== 0 && mobs.length !== 0 && effects.length !== 0) {
+      let updated = false;
+      const newCartItems = cartItems
+        .filter((item) => {
+          if (findItem(item.id, item.type).disabled) updated = true;
+          return !findItem(item.id, item.type).disabled;
+        })
+        .map((item) => {
+          const itemLookup = findItem(item.id, item.type);
+          if (item.priceOverride !== itemLookup.priceOverride) {
+            updated = true;
+            return { ...item, priceOverride: itemLookup.priceOverride };
+          }
+          return item;
+        });
+
+      if (updated) {
+        setCartItems(newCartItems);
+      }
+    }
+  }, [items, effects, mobs]);
 
   return (
     <div className={`StoreContent${className ? ` ${className}` : ''}`}>
@@ -105,6 +140,8 @@ StoreContent.propTypes = {
   filterTag: PropTypes.string.isRequired,
   className: PropTypes.string,
   addItemToCart: PropTypes.func.isRequired,
+  cartItems: PropTypes.array.isRequired,
+  setCartItems: PropTypes.func.isRequired,
 };
 
 StoreContent.defaultProps = {

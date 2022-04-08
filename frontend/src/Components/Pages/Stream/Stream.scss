@@ -219,16 +219,18 @@
 .stream-row {
     display: flex;
     flex-direction: row;
-    justify-content: space-evenly;
-    margin: 1rem;
+    justify-content: center;
+    margin: 1rem auto;
+    min-height: 576px;
+    width: fit-content;
+    box-shadow: .45rem .45rem .25rem rgba(0, 0, 0, 0.25);
+    border-radius: .5rem;
+    overflow: hidden;
 
     /* An item in the stream-row */
     .stream-row-item {
-        margin: 0 1rem;
+        margin: 0;
         width: 45vmax;
-        aspect-ratio: 2/1;
-        box-shadow: .45rem .45rem .25rem rgba(0, 0, 0, 0.25);
-        border-radius: .5rem;
     }
 
     .stream-row-iframe {
@@ -267,6 +269,11 @@
 .row-reverse {
     flex-direction: row-reverse;
     text-align: left;
+}
+
+.row-center {
+    justify-content: center;
+    text-align: center;
 }
 
 /* Breakpoint when the window reaches medium width (1200px) */
@@ -376,17 +383,20 @@
     /* The div tag of a row on the stream page */
     .stream-row {
         display: flex;
-        flex-direction: column-reverse;
-        justify-content: flex-start;
+        flex-direction: column;
+        justify-content: center;
         margin: 1rem 0;
-        height: auto;
+        height: fit-content;
+        min-height: 0;
+        width: 100%;
+        background: transparent !important;
+        box-shadow: none;
+        border-radius: 0;
+        margin: 0;
 
         /* An item in the stream-row */
         .stream-row-item {
             width: 100%;
-            box-shadow: .25rem .45rem .25rem rgba(0, 0, 0, 0.25);
-            border-radius: 0;
-            margin: 0;
         }
 
         .stream-row-iframe {
@@ -401,6 +411,7 @@
             text-align: left;
             font-size: 1.25rem;
             padding: 0 2rem;
+            margin-top: 1rem;
 
             a {
                 &:link {

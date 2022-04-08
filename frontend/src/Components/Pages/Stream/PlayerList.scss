@@ -72,6 +72,34 @@
     }
 }
 
+.player-popover {
+    .MuiPopover-paper {
+        display: grid;
+        grid-template-areas: 
+        "player-icon player-health"
+        "player-icon player-armor";
+        grid-column-gap: 5px;
+        padding: 0.5rem;
+
+        .player-icon {
+            grid-area: player-icon;
+            aspect-ratio: 1/1;
+            width: 32px;
+            margin: auto;
+        }
+
+        .player-health {
+            grid-area: player-health;
+            margin: auto 0 auto auto;
+        }
+
+        .player-armor {
+            grid-area: player-armor;
+            margin: auto 0 auto auto;
+        }
+    }
+}
+
 /* ==Team Styles== */
 /* CSH */
 .csh {
