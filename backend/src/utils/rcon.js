@@ -1,5 +1,5 @@
 const { Rcon } = require('rcon-client');
-const { logger } = require('.');
+const logger = require('./logger');
 
 module.exports = (CommandTable) => async (scheduled) => {
   const cronId = scheduled.getTime();

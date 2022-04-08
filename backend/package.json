@@ -5,13 +5,13 @@
     "main": "server.js",
     "scripts": {
         "start": "nodemon src/server.js",
-        "start-prod": "node src/server.js"
+        "start-prod": "node src/server.js",
+        "test": "jest --coverage"
     },
-    "author": {
-        "email": "pr@csh.rit.edu",
-        "name": "Computer Science House",
-        "url": "https://csh.rit.edu"
-    },
+    "contributors": [
+        { "name": "River Marks" },
+        { "name": "Joe Abbate" }
+    ],
     "license": "MIT",
     "dependencies": {
         "axios": "^0.26.1",
@@ -31,6 +31,7 @@
         "eslint": "^7.10.0",
         "eslint-config-airbnb-base": "^14.2.0",
         "eslint-plugin-import": "^2.22.1",
+        "jest": "^27.5.1",
         "nodemon": "^2.0.4"
     }
 }

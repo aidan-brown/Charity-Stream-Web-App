@@ -12,7 +12,7 @@ const {
   getPlayers,
   getPriceOverrides,
   runRconCommands,
-  verifyCart,
+  verifyCheckout,
   verifyDonation,
   disableCheckout,
   createPriceOverrides,
@@ -36,7 +36,7 @@ app.get('/players', getPlayers);
 app.get('/images/:type/:image', getImages);
 app.get('/checkout/status', getCheckoutStatus);
 app.get('/price-overrides', getPriceOverrides);
-app.post('/verify-checkout', verifyCart);
+app.post('/verify-checkout', verifyCheckout);
 app.post('/verify-donation', verifyDonation);
 app.get('/dynmap/icons/:playerName', dynmapGetPlayerIcon);
 app.get('/dynmap/data', dynmapGetData);
