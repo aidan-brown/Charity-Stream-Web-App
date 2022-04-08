@@ -39,7 +39,7 @@ const CommandsPanel = ({ authHeader, setAlert }) => {
         'players:username',
         'players:name',
         'players:association',
-        'players:teamSkyways',
+        'players:teamSkyWars',
         'players:teamBedsWars',
       ],
     },

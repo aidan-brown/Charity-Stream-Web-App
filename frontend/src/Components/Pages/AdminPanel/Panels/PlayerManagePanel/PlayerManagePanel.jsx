@@ -123,7 +123,7 @@ const PlayerManagePanel = ({ authHeader, setAlert }) => {
           association: null,
           channel: null,
           channelType: null,
-          teamSkyways: null,
+          teamSkyWays: null,
           teamBedsWars: null,
         };
 
@@ -257,7 +257,7 @@ const PlayerManagePanel = ({ authHeader, setAlert }) => {
             {'<tab>'}
             <b>channelType</b>
             {'<tab>'}
-            <b>teamSkywars</b>
+            <b>teamSkyWars</b>
             {'<tab>'}
             <b>teamBedsWars</b>
             {'<newline>'}

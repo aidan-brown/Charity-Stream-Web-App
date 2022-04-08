@@ -35,7 +35,7 @@ const Player = sequelize.define('Player', {
   channelType: {
     type: DataTypes.ENUM('TWITCH', 'YOUTUBE'),
   },
-  teamSkyways: {
+  teamSkyWars: {
     type: DataTypes.STRING,
   },
   teamBedsWars: {
