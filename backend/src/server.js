@@ -17,6 +17,9 @@ const {
   verifyDonation,
   disableCheckout,
   createPriceOverrides,
+  getQuickCommands,
+  createOrUpdateQuickCommand,
+  deleteQuickCommand,
 } = require('./handlers');
 const { getImages } = require('./images');
 const { basicAuth } = require('./handlers/authentication');
@@ -47,6 +50,10 @@ app.use(basicAuth);
 
 // Everything below this point requires auth
 app.get('/analytics', getAnalytics);
+app.route('/quick-commands')
+  .get(getQuickCommands)
+  .put(createOrUpdateQuickCommand);
+app.delete('/quick-commands/:commandId', deleteQuickCommand);
 app.put('/price-overrides', createPriceOverrides);
 app.put('/disable', disableElements);
 app.put('/disable/checkout', disableCheckout);

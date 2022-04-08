@@ -123,6 +123,8 @@ const PlayerManagePanel = ({ authHeader, setAlert }) => {
           association: null,
           channel: null,
           channelType: null,
+          teamSkyways: null,
+          teamBedsWars: null,
         };
 
         if (data.length >= 3) {
@@ -254,10 +256,14 @@ const PlayerManagePanel = ({ authHeader, setAlert }) => {
             <b>channel</b>
             {'<tab>'}
             <b>channelType</b>
+            {'<tab>'}
+            <b>teamSkywars</b>
+            {'<tab>'}
+            <b>teamBedsWars</b>
             {'<newline>'}
           </p>
           <TextField
-            placeholder="Corey Rigney\tyakman3\tcsh\n"
+            placeholder="Corey Rigney\tyakman3\tcsh\t\t6\t7\n"
             fullWidth
             className="create-bulk-field"
             label="Player Paste Area"

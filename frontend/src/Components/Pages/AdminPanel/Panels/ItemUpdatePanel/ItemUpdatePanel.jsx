@@ -169,7 +169,7 @@ const ItemUpdatePanel = ({ authHeader, setAlert }) => {
     }));
   };
 
-  const priceOverride = (item, index) => (item.priceOverride !== null || toPriceChange.find(
+  const priceOverride = (item) => (item.priceOverride !== null || toPriceChange.find(
     (p) => p.id === item.id && p.type === item.type,
   )
     ? (
@@ -226,29 +226,34 @@ const ItemUpdatePanel = ({ authHeader, setAlert }) => {
               (p) => p.id === item.id && p.type === item.type,
             );
 
+            const newPrice = toPriceChange[priceChangeIndex].price < 0
+              ? 0 : Number(toPriceChange[priceChangeIndex].price);
+
             changePrices([{
               id: item.id,
               type: item.type,
-              price: toPriceChange[priceChangeIndex].price,
+              price: newPrice,
             }]);
             setToPriceChange([
               ...toPriceChange.slice(0, priceChangeIndex),
               {
                 ...toPriceChange[priceChangeIndex],
-                price: toPriceChange[priceChangeIndex].price,
+                price: newPrice,
               },
               ...toPriceChange.slice(priceChangeIndex + 1),
             ]);
-            const newPrice = Number(toPriceChange[priceChangeIndex].price);
 
-            setItems([
-              ...items.slice(0, index),
-              {
-                ...items[index],
-                priceOverride: newPrice === item.price ? null : newPrice,
-              },
-              ...items.slice(index + 1),
-            ]);
+            setItems(
+              items.map((i) => {
+                if (i.id === item.id) {
+                  return {
+                    ...i,
+                    priceOverride: newPrice === Number(item.price) ? null : newPrice,
+                  };
+                }
+                return i;
+              }),
+            );
           }}
         >
           Apply
@@ -264,14 +269,17 @@ const ItemUpdatePanel = ({ authHeader, setAlert }) => {
             setToPriceChange(toPriceChange.filter(
               (p) => p.id !== item.id && p.type !== item.type,
             ));
-            setItems([
-              ...items.slice(0, index),
-              {
-                ...items[index],
-                priceOverride: null,
-              },
-              ...items.slice(index + 1),
-            ]);
+            setItems(
+              items.map((i) => {
+                if (i.id === item.id) {
+                  return {
+                    ...i,
+                    priceOverride: null,
+                  };
+                }
+                return i;
+              }),
+            );
           }}
         >
           <Delete />
@@ -491,7 +499,7 @@ const ItemUpdatePanel = ({ authHeader, setAlert }) => {
           {items
             .filter((i) => (JSON.stringify(Object.values(i)).includes(filter)))
             .filter(({ type }) => type !== 'mob' && type !== 'effect')
-            .map((item, index) => (
+            .map((item) => (
               <div key={`${item.type}-${item.id}`} className="item">
                 <StoreItem
                   className={toDisable.find((d) => d.id === item.id && d.type === item.type) ? 'selected' : null}
@@ -500,13 +508,13 @@ const ItemUpdatePanel = ({ authHeader, setAlert }) => {
                   addItemToCart={() => toggleDisabled(item)}
                   key={item.id}
                 />
-                {priceOverride(item, index)}
+                {priceOverride(item)}
               </div>
             ))}
           {items
             .filter((i) => (JSON.stringify(Object.values(i)).includes(filter)))
             .filter(({ type }) => type === 'mob')
-            .map((mob, index) => (
+            .map((mob) => (
               <div key={`${mob.type}-${mob.id}`} className="item">
                 <StoreMob
                   className={toDisable.find((d) => d.id === mob.id && d.type === mob.type) ? 'selected' : null}
@@ -515,13 +523,13 @@ const ItemUpdatePanel = ({ authHeader, setAlert }) => {
                   addItemToCart={() => toggleDisabled(mob)}
                   key={mob.id}
                 />
-                {priceOverride(mob, index)}
+                {priceOverride(mob)}
               </div>
             ))}
           {items
             .filter((i) => (JSON.stringify(Object.values(i)).includes(filter)))
             .filter(({ type }) => type === 'effect')
-            .map((effect, index) => (
+            .map((effect) => (
               <div key={`${effect.type}-${effect.id}`} className="item">
                 <StoreEffect
                   className={toDisable.find((d) => d.id === effect.id && d.type === effect.type) ? 'selected' : null}
@@ -530,7 +538,7 @@ const ItemUpdatePanel = ({ authHeader, setAlert }) => {
                   addItemToCart={() => toggleDisabled(effect)}
                   key={effect.id}
                 />
-                {priceOverride(effect, index)}
+                {priceOverride(effect)}
               </div>
             ))}
         </div>

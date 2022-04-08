@@ -3,6 +3,7 @@ const DisabledElement = require('./disabledElement');
 const Checkout = require('./checkout');
 const Command = require('./command');
 const Log = require('./log');
+const QuickCommand = require('./quickCommand');
 const PriceOverride = require('./priceOverride');
 
 const createTables = async () => {
@@ -13,6 +14,7 @@ const createTables = async () => {
   await Player.sync({ alter, force });
   await DisabledElement.sync({ alter, force });
   await Log.sync({ alter, force });
+  await QuickCommand.sync({ alter, force });
   await PriceOverride.sync({ alter, force });
 
   // Have to remove the command table first, then make
@@ -26,6 +28,7 @@ const createTables = async () => {
     Checkout,
     Command,
     Log,
+    QuickCommand,
     Player,
     PriceOverride,
   };
@@ -36,6 +39,7 @@ module.exports = {
   Checkout,
   Command,
   Log,
+  QuickCommand,
   Player,
   PriceOverride,
   createTables,

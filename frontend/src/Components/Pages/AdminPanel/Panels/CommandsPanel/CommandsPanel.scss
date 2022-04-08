@@ -52,10 +52,19 @@
               display: flex;
             }
   
-            .modify-command-name {
-              width: 30%;
-              margin: 8px;
+            .command-meta {
               display: flex;
+              align-items: center;
+
+              .modify-command-name {
+                width: 50%;
+                margin: 8px;
+                display: flex;
+              }
+
+              .modify-data-source {
+                width: 50%;
+              }
             }
           }
   
