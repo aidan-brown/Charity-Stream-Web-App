@@ -9,8 +9,12 @@
         "test": "jest --coverage"
     },
     "contributors": [
-        { "name": "River Marks" },
-        { "name": "Joe Abbate" }
+        {
+            "name": "River Marks"
+        },
+        {
+            "name": "Joe Abbate"
+        }
     ],
     "license": "MIT",
     "dependencies": {
@@ -28,6 +32,7 @@
         "stripe": "^8.195.0"
     },
     "devDependencies": {
+        "@types/jest": "^27.4.1",
         "eslint": "^7.10.0",
         "eslint-config-airbnb-base": "^14.2.0",
         "eslint-plugin-import": "^2.22.1",

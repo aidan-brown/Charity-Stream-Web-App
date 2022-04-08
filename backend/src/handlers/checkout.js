@@ -54,7 +54,7 @@ const verifyCart = async (cart) => {
     }
 
     return {
-      status: type === 'effect' ? power < 10 && time <= 300 : true,
+      status: type === 'effect' ? power < 5 && time <= 120 : true,
     };
   };
 
@@ -149,7 +149,7 @@ const createCommands = async (cart, player) => {
   const commands = [];
   cart.forEach((cartItem) => {
     const {
-      id, type, amount, time, power,
+      id, type, amount = 1, time, power,
     } = cartItem;
     const { nbt, count = 1 } = all.find((i) => i.id === id && i.type === type) || {};
 
@@ -163,7 +163,7 @@ const createCommands = async (cart, player) => {
         if (nbt) {
           [...Array(amount * count)].forEach(() => {
             commands.push({
-              commandText: `minecraft:execute at ${player} run summon ${id} ~ ~ ~ ${nbt || ''}`,
+              commandText: `minecraft:execute at ${player} run summon ${id} ~ ~ ~ ${nbt}`,
             });
           });
         } else {
@@ -228,7 +228,7 @@ const verifyCheckout = async (req, res) => {
         res.status(400).send({ errors, message: 'Something is wrong with your cart' });
       } else {
         const checkout = await Checkout.create({
-          subTotal: subTotal.toFixed(2),
+          subTotal,
           status: 'PENDING',
           Commands: await commands,
         }, { include: [Command] });
@@ -246,7 +246,7 @@ const verifyCheckout = async (req, res) => {
   } catch (error) {
     logger.error('VERIFY_CART', 'Failed to verify cart', { error });
 
-    res.status(500).send('Failed to create checkout');
+    res.status(500).send('Internal server error, failed to create checkout');
   }
 };
 
@@ -262,7 +262,7 @@ const verifyDonation = async (req, res) => {
 
       res.status(400).send({
         code: 'DONATION_ID_TWICE',
-        message: 'Oops, looks like this Donation ID has already been used. (this can be from refreshing this page, you can just close this window and head back to the main site!)',
+        message: 'This Donation ID has already been used. (this can be from refreshing this page, you can just close this window and head back to the main site!)',
       });
       return;
     }
@@ -290,7 +290,7 @@ const verifyDonation = async (req, res) => {
       const { donorLocalAmount } = data;
 
       if (status === 'PENDING') {
-        if (subTotal - 0.10 <= Number(donorLocalAmount).toFixed(2)) {
+        if (subTotal - 0.10 <= Number(donorLocalAmount)) {
           checkout.donationID = donationID;
           checkout.status = 'ACCEPTED';
 
@@ -310,7 +310,7 @@ const verifyDonation = async (req, res) => {
             message: 'Success',
           });
         } else {
-          logger.warn('DONATION_MISMATCH', 'Purchase successful prices did not line up', {
+          logger.error('DONATION_MISMATCH', 'Purchase successful prices did not line up', {
             donorLocalAmount, subTotal, checkoutID, donationID,
           });
 
@@ -331,7 +331,7 @@ const verifyDonation = async (req, res) => {
       }
     }
   } catch (err) {
-    logger.error('VERIFY_DONATION_FAILED', 'Failed to create checkout', {
+    logger.error('VERIFY_DONATION_FAILED', 'Failed to verify donation', {
       error: err, donationID, checkoutID,
     });
 
