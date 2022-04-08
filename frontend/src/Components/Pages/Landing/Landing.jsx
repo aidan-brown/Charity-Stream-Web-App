@@ -6,11 +6,11 @@ import { msToTime } from '../../../Utils';
 
 const Landing = ({ setStreamStarted }) => {
   const streamYear = '4th';
-  const streamDate = new Date('April 8, 2022 19:00:00');
+  const streamDate = new Date('April 8, 2022 23:00:00 UTC');
   const [remainingTime, setRemainingTime] = useState(streamDate - Date.now());
 
   setTimeout(() => {
-    setRemainingTime(streamDate - Date.now());
+    setRemainingTime(streamDate.getTime() - Date.now());
     if (remainingTime <= 0) setStreamStarted(true);
   }, 1000);
 
