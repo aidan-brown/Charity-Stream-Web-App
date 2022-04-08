@@ -13,9 +13,12 @@ module.exports = {
       });
 
       let waits = 0;
-      commands.forEach((({ command, shouldWait }) => {
+      commands.forEach((({ command, shouldWait }, i) => {
         waits += shouldWait ? 1 : 0;
-        sleep(1000 * waits, () => rcon.send(command));
+        sleep(1000 * waits, async () => {
+          await rcon.send(command);
+          if (i === commands.length - 1) await rcon.end();
+        });
       }));
 
       logger.info('SCHEDULED_COMMANDS', 'Successfully scheduled commands', { commands });
