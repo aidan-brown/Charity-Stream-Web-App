@@ -27,8 +27,6 @@ const ItemUpdatePanel = ({ authHeader, setAlert }) => {
   const [items, setItems] = useState([]);
   const [checkoutStatus, setCheckoutStatus] = useState(false);
 
-  console.log(items);
-
   useEffect(() => {
     const getCheckoutStatus = () => {
       getReq(`${getUrl()}/checkout/status`)
@@ -439,7 +437,6 @@ const ItemUpdatePanel = ({ authHeader, setAlert }) => {
                     break;
                   }
                   default: {
-                    console.log('hello');
                     const newToDisabled = [];
                     setItems(items.map((item) => {
                       const { disabled, id, type } = item;
