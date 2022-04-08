@@ -1,7 +1,9 @@
 let LogTable;
 
 const logger = async (type, code, message, additional = null) => {
-  process.stdout.write(`${type}: [${code}] ${message} ${additional ? JSON.stringify(additional) : ''}\n`);
+  const outputFunc = type === 'ERROR' ? process.stderr : process.stdout;
+
+  outputFunc.write(`${type}: [${code}] ${message} ${additional ? JSON.stringify(additional) : ''}\n`);
 
   if (type !== 'LOG') {
     try {
