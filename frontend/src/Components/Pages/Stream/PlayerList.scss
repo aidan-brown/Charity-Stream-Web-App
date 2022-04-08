@@ -173,6 +173,9 @@
 
     .team-logo {
         opacity: 1;
+        height: 2.15rem;
+        left: 1.5rem;
+        transform: rotate(-5deg);
     }
 }
 
@@ -211,6 +214,38 @@
 
     .team-logo {
         opacity: 1;
+    }
+}
+
+.roxkstar74 {
+    background: rgb(242,179,7);
+    background: linear-gradient(-90deg, rgba(242,179,7,1) 31%, rgba(252,238,193,1) 100%);
+
+    .team-logo {
+        opacity: 1;
+        height: 4rem;
+        top: -.25rem;
+    }
+}
+
+.samanthiiana {
+    background: rgb(158,70,154);
+    background: linear-gradient(90deg, rgba(158,70,154,1) 0%, rgba(33,31,94,1) 64%, rgba(105,102,202,1) 100%);
+
+    .team-logo {
+        opacity: 1;
+    }
+}
+
+.skeleton_weeb {
+    background: rgb(214,155,220);
+    background: linear-gradient(90deg, rgba(224,220,216,1) 0%, rgba(214,155,220,1) 71%, rgba(120,81,142,1) 100%);
+
+    .team-logo {
+        opacity: 1;
+        transform: rotate(0);
+        height: 3rem;
+        bottom: -5px;
     }
 }
 
