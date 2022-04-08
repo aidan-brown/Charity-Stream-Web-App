@@ -2,7 +2,13 @@
   position: relative;
   padding: 10px;
   font-family: 'Poppins';
-
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  width: 100%;
+  text-align: left;
+  padding: 5px;
+  
   .StoreContent {
     border-radius: 7.55px;
     height: 79vh;
@@ -80,14 +86,6 @@
   .selected {
     border: 10px solid rgb(255, 0, 170);
   }
-
-  display: flex;
-  flex-wrap: wrap;
-  flex-direction: column;
-  width: 100%;
-  text-align: left;
-
-  padding: 5px;
 
   h1.title {
     font-size: 50px;

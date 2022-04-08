@@ -1,19 +1,21 @@
 [
   {
     "id": "bread",
-    "displayName": "Bread",
+    "displayName": "5x Bread",
     "type": "food",
     "description": "A good basic food.",
     "price": 0.50,
-    "hungerFill": 5
+    "hungerFill": 5,
+    "count": 5
   },
   {
     "id": "cooked_beef",
-    "displayName": "Steak",
+    "displayName": "5x Steak",
     "type": "food",
     "description": "A very filling food.",
     "price": 1.00,
-    "hungerFill": 8
+    "hungerFill": 8,
+    "count": 5
   },
   {
     "id": "golden_apple",
@@ -29,8 +31,8 @@
     "displayName": "Enchanted Golden Apple",
     "type": "food",
     "description": "The ultimate food, this apple makes the player tough and filled with vitality!",
-    "effects": "Gives a lot of extra health, health regen and fire resistance!",
-    "price": 15.00,
+    "effects": "Gives lots of extra health, regen and fire resistance!",
+    "price": 10.00,
     "hungerFill": 4
   }
 ]

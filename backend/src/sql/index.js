@@ -18,6 +18,7 @@ const getConnection = () => {
         max: 5,
         min: 0,
         idle: 10000,
+        acquire: 60000,
       },
       typeValidation: true,
       logging: false,

@@ -138,7 +138,7 @@ const App = () => {
 
     const reqJSON = {
       cart: items,
-      username: player,
+      player,
     };
 
     postReq(`${getUrl()}/verify-checkout`, JSON.stringify(reqJSON))

@@ -3,7 +3,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { MenuItem, Select } from '@mui/material';
-import { POWER_LEVELS, TIME_LEVELS } from '../../../../constants';
+import {
+  POWER_LEVELS, TIME_LEVELS, RESTRICTED_EFFECTS, RESTRICTED_POWER_LEVELS,
+} from '../../../../constants';
 
 const CartEffect = ({
   effect, changeEffectPower, changeEffectTime, removeFromCart,
@@ -30,11 +32,16 @@ const CartEffect = ({
     </div>
     <div className="cart-effect-stats bg-csh-tertiary">
       <Select className="effect-select" value={effect.power} onChange={(e) => changeEffectPower(e.target.value)}>
-        {Object.keys(POWER_LEVELS).map((lvl) => (
-          <MenuItem value={POWER_LEVELS[lvl]} key={effect.displayName}>
-            {lvl}
-          </MenuItem>
-        ))}
+        {(() => {
+          const powerLevels = RESTRICTED_EFFECTS[effect.id]
+            ? RESTRICTED_POWER_LEVELS
+            : POWER_LEVELS;
+          return Object.keys(powerLevels).map((lvl) => (
+            <MenuItem value={powerLevels[lvl]} key={effect.displayName}>
+              {lvl}
+            </MenuItem>
+          ));
+        })()}
       </Select>
       <Select className="effect-select" value={effect.time} onChange={(e) => changeEffectTime(e.target.value)}>
         {Object.keys(TIME_LEVELS).map((lvl) => (
@@ -52,6 +59,7 @@ const CartEffect = ({
 
 CartEffect.propTypes = {
   effect: PropTypes.shape({
+    id: PropTypes.string.isRequired,
     icon: PropTypes.string.isRequired,
     img: PropTypes.string.isRequired,
     displayName: PropTypes.string.isRequired,

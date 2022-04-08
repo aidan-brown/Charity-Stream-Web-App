@@ -221,7 +221,6 @@
     flex-direction: row;
     justify-content: center;
     margin: 1rem auto;
-    min-height: 576px;
     width: fit-content;
     box-shadow: .45rem .45rem .25rem rgba(0, 0, 0, 0.25);
     border-radius: .5rem;
@@ -236,6 +235,10 @@
     .stream-row-iframe {
         border: none;
         aspect-ratio: auto;
+    }
+
+    .dynmap {
+        aspect-ratio: 16 / 9;
     }
 
     .stream-row-text-box {
