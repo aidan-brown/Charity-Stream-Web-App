@@ -1,6 +1,7 @@
 export default [
   {
     name: 'Quick Teleport',
+    dataSource: null,
     variables: [
       'location',
       'locationDisplayName',

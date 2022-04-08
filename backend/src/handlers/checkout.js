@@ -146,61 +146,80 @@ const verifyCart = async (cart) => {
  * @returns The commands that should be created
  */
 const createCommands = async (cart, player) => {
+  const maxCommands = process.env.MAX_COMMANDS || 10000;
+
+  let attemptedMobsCount = 0;
   const commands = [];
-  cart.forEach((cartItem) => {
-    const {
-      id: rawId, type, amount = 1, time, power,
-    } = cartItem;
-    const { nbt, count = 1 } = all.find((i) => i.id === rawId && i.type === type) || {};
-    const [id] = rawId.split('-');
+  try {
+    cart.forEach((cartItem) => {
+      if (commands.length > maxCommands) throw new Error('Too many commands trying to be run');
 
-    switch (type) {
-      case 'effect':
-        commands.push({
-          commandText: `minecraft:effect give ${player} ${id}${nbt || ''} ${time} ${power + 1}`,
-        });
-        break;
-      case 'mob':
-        if (nbt) {
-          [...Array(amount * count)].forEach(() => {
-            commands.push({
-              commandText: `minecraft:execute at ${player} run summon ${id} ~ ~ ~ ${nbt}`,
-            });
-          });
-        } else {
-          const totalGroups = Math.ceil((amount * count) / 10);
-          const leftOver = amount % 10;
+      const {
+        id: rawId, type, amount = 1, time, power,
+      } = cartItem;
+      const { nbt, count = 1 } = all.find((i) => i.id === rawId && i.type === type) || {};
+      const [id] = rawId.split('-');
 
-          [...Array(totalGroups)].forEach((_, i) => {
-            let num = 10;
-            if (i === totalGroups - 1 && leftOver !== 0) num = leftOver;
-
-            commands.push({
-              commandText: `minecraft:execute at ${
-                player
-              } run summon minecraft:area_effect_cloud ~ ~ ~ {Passengers:[${
-                [...Array(num)].map(() => `{id:${id}}`).join(',')
-              }]}`,
-            });
-          });
-        }
-        break;
-      default: {
-        commands.push({
-          commandText: `minecraft:give ${player} ${id}${nbt || ''} ${amount * count}`,
-        });
-
-        if (id === 'bow' || id === 'crossbow') {
+      switch (type) {
+        case 'effect':
           commands.push({
-            commandText: `minecraft:give ${player} arrow 20`,
+            commandText: `minecraft:effect give ${player} ${id}${nbt || ''} ${time} ${power + 1}`,
           });
-        }
-        break;
-      }
-    }
-  });
+          break;
+        case 'mob':
+          if (nbt) {
+            attemptedMobsCount += amount * count;
+            [...Array(amount * count)].forEach(() => {
+              // Attack on the server trying to generate a lot of commands
+              if (commands.length > maxCommands) throw new Error('Too many commands trying to be run');
 
-  return commands;
+              commands.push({
+                commandText: `minecraft:execute at ${player} run summon ${id} ~ ~ ~ ${nbt}`,
+              });
+            });
+          } else {
+            attemptedMobsCount += amount * count;
+
+            const totalGroups = Math.ceil((amount * count) / 10);
+            const leftOver = amount % 10;
+
+            [...Array(totalGroups)].forEach((_, i) => {
+              if (commands.length > maxCommands) throw new Error('Too many commands trying to be run');
+
+              let num = 10;
+              if (i === totalGroups - 1 && leftOver !== 0) num = leftOver;
+
+              commands.push({
+                commandText: `minecraft:execute at ${
+                  player
+                } run summon minecraft:area_effect_cloud ~ ~ ~ {Passengers:[${
+                  [...Array(num)].map(() => `{id:${id}}`).join(',')
+                }]}`,
+              });
+            });
+          }
+          break;
+        default: {
+          commands.push({
+            commandText: `minecraft:give ${player} ${id}${nbt || ''} ${amount * count}`,
+          });
+
+          if (id === 'bow' || id === 'crossbow') {
+            commands.push({
+              commandText: `minecraft:give ${player} arrow 20`,
+            });
+          }
+          break;
+        }
+      }
+    });
+
+    return { commands };
+  } catch (err) {
+    logger.warn('SPAWN_TOO_MANY_MOBS', 'They\'re trying to run too many commands', { attemptedMobsCount });
+
+    return { error: 'It looks like you\'re trying to spawn too many mobs, try decreasing that value. If you think this is an error, reach out to us on Twitch with the following error code: SPAWN_TOO_MANY_MOBS' };
+  }
 };
 
 const verifyCheckout = async (req, res) => {
@@ -213,41 +232,47 @@ const verifyCheckout = async (req, res) => {
     if (!playerVerification) {
       logger.warn('PLAYER_DNE', 'Verify checkout player does not exist', { player });
 
-      res.status(404).send(`${player} does not exist`);
+      res.status(404).send({ message: 'Uh oh, looks like that player does not exist, refresh the page and try again!' });
     } else {
       // Verify the cart and create the commands at the same time
       const cartVerification = verifyCart(cart);
-      const commands = createCommands(cart, player);
+      const createCommandsPromise = createCommands(cart, player);
 
       // Await the cart verification (that's the next thing we need to check)
       const { errors, subTotal } = await cartVerification;
 
       // If there is something wrong with the cart
       if (errors.length !== 0) {
-        logger.warn('CART_VERIFY_ERROR', 'Verify cart found an error', { errors });
+        logger.warn('VERIFY_CART_ERROR', 'Verify cart found an error', { errors });
 
-        res.status(400).send({ errors, message: 'Something is wrong with your cart' });
+        res.status(400).send({ message: 'Uh oh, looks like something on our end went wrong, reach out on Twitch with this error code: VERIFY_CART_ERROR' });
       } else {
-        const checkout = await Checkout.create({
-          subTotal,
-          status: 'PENDING',
-          Commands: await commands,
-        }, { include: [Command] });
+        const { commands, error } = await createCommandsPromise;
 
-        const exitUrl = encodeURIComponent(`${getUrl()}/donation-confirmation/JUSTGIVING-DONATION-ID/${checkout.id}`);
-        const redirectUrl = `http://link.justgiving.com/v1/fundraisingpage/donate/pageId/15252893?amount=${subTotal.toFixed(2)}&currency=USD&reference=mcstream&exitUrl=${exitUrl}`;
+        if (error) {
+          res.status(400).send({ message: error });
+        } else {
+          const checkout = await Checkout.create({
+            subTotal,
+            status: 'PENDING',
+            Commands: commands,
+          }, { include: [Command] });
 
-        logger.info('CHECKOUT_CREATED', 'Successfully created checkout', {
-          checkoutID: checkout.id,
-        });
+          const exitUrl = encodeURIComponent(`${getUrl()}/donation-confirmation/JUSTGIVING-DONATION-ID/${checkout.id}`);
+          const redirectUrl = `http://link.justgiving.com/v1/fundraisingpage/donate/pageId/15252893?amount=${subTotal.toFixed(2)}&currency=USD&reference=mcstream&exitUrl=${exitUrl}`;
 
-        res.status(200).send(redirectUrl);
+          logger.info('CHECKOUT_CREATED', 'Successfully created checkout', {
+            checkoutID: checkout.id,
+          });
+
+          res.status(200).send(redirectUrl);
+        }
       }
     }
   } catch (error) {
-    logger.error('VERIFY_CART', 'Failed to verify cart', { error });
+    logger.error('VERIFY_CART_FAILURE', 'Failed to verify cart', { error });
 
-    res.status(500).send('Internal server error, failed to create checkout');
+    res.status(500).send({ message: 'Uh oh, looks like something on our end went wrong, reach out on Twitch with this error code: VERIFY_CART_FAILURE' });
   }
 };
 
@@ -291,7 +316,7 @@ const verifyDonation = async (req, res) => {
       const { donorLocalAmount } = data;
 
       if (status === 'PENDING') {
-        if (subTotal - 0.10 <= Number(donorLocalAmount)) {
+        if (Number(subTotal) - 0.10 <= Number(donorLocalAmount)) {
           checkout.donationID = donationID;
           checkout.status = 'ACCEPTED';
 
