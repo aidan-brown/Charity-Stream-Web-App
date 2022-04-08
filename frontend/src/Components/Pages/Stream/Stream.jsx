@@ -1,3 +1,4 @@
+/* eslint-disable react/forbid-prop-types */
 import React, { useEffect, useRef, useState } from 'react';
 import Icon from '@mdi/react';
 import {
@@ -26,10 +27,13 @@ import StreamWindow from './StreamWindow/StreamWindow';
 import StoreContent from '../Store/StoreContent/StoreContent';
 import { getUrl, getReq, ItemSymbols } from '../../../Utils';
 import AssociationLogos from '../../../assets';
+import BackgroundVideo from '../../../assets/landing-stream-clips.mp4';
 import { steveFace } from '../../../assets/images';
 
 /** Class for constructing the stream page * */
-const Stream = ({ setSelectedPlayer, addItemToCart }) => {
+const Stream = ({
+  setSelectedPlayer, addItemToCart, cartItems, setCartItems,
+}) => {
   const streamDiv = useRef();
   const [channel, setChannel] = useState('cshba');
   const [streamWidth, setStreamWidth] = useState('100%');
@@ -242,7 +246,12 @@ const Stream = ({ setSelectedPlayer, addItemToCart }) => {
         <div id="shop-list" className="stream-list bg-csh-secondary-gradient hide">
           <h4>Quick Buy</h4>
           <div className="StreamList">
-            <StoreContent filterTag={filterTag} addItemToCart={addItemToCart} />
+            <StoreContent
+              filterTag={filterTag}
+              addItemToCart={addItemToCart}
+              cartItems={cartItems}
+              setCartItems={setCartItems}
+            />
             <nav className="quick-store-nav bg-csh-secondary">
               <button type="button" id="store-all" className="stream-button bg-csh-secondary btn hide" onKeyDown={handleQuickBuyFilters('all')} onClick={handleQuickBuyFilters('all')}>
                 <Icon path={mdiScriptText} className="stream-button-icon" />
@@ -275,10 +284,14 @@ const Stream = ({ setSelectedPlayer, addItemToCart }) => {
           </div>
         </div>
       </div>
+      <h2 className="stream-row-title row-center">Check Out Our Live Map</h2>
+      <div className="stream-row">
+        <iframe className="stream-row-item stream-row-iframe dynmap" title="Dynmap" src="https://dionysus.csh.rit.edu" />
+      </div>
       <h2 className="stream-row-title row-reverse">About the Stream</h2>
-      <div className="stream-row row-reverse">
-        <iframe className="stream-row-item stream-row-iframe" title="Dynmap" src="https://dionysus.csh.rit.edu" />
-        <article className="stream-row-item stream-row-text-box bg-csh-secondary-gradient">
+      <div className="stream-row row-reverse bg-csh-secondary-gradient">
+        <video className="stream-row-item" playsInline autoPlay muted loop preload="none" src={BackgroundVideo} />
+        <article className="stream-row-item stream-row-text-box">
           <p>
             CSH&apos;s annual Minecraft Charity Stream is a large-scale competition
             between players in a series of minigames, with all donations
@@ -297,7 +310,7 @@ const Stream = ({ setSelectedPlayer, addItemToCart }) => {
         </article>
       </div>
       <h2 className="stream-row-title">About the Hub World</h2>
-      <div className="stream-row">
+      <div className="stream-row bg-csh-secondary-gradient">
         <iframe
           className="stream-row-item stream-row-iframe"
           src="https://www.youtube.com/embed/PU6Bopb1CVE"
@@ -328,6 +341,8 @@ const Stream = ({ setSelectedPlayer, addItemToCart }) => {
 Stream.propTypes = {
   setSelectedPlayer: PropTypes.func.isRequired,
   addItemToCart: PropTypes.func.isRequired,
+  cartItems: PropTypes.array.isRequired,
+  setCartItems: PropTypes.func.isRequired,
 };
 
 export default Stream;

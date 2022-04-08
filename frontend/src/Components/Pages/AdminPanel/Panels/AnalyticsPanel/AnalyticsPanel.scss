@@ -1,0 +1,54 @@
+.analytics {
+  position: relative;
+  padding: 10px;
+  font-family: 'Poppins';
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  width: 100%;
+  text-align: left;
+  padding: 5px;
+  justify-content: center;
+  align-items: center;
+
+  .top-bar {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    width: 90%;
+    margin: auto;
+
+    .search-bar {
+      display: flex;
+      flex-wrap: nowrap;
+      width: 50%;
+
+      .search {
+        width: 100%;
+        border-radius: 7.55px;
+        margin-bottom: 5px;
+        margin-top: 5px;
+        margin-right: 5px;
+      }
+
+      .search-button {
+        border-radius: 7.55px;
+        margin-bottom: 5px;
+        margin-top: 5px;
+        margin-left: 5px;
+      }
+    }
+  }
+
+  .content {
+    font-size: 40px;
+    display: flex;
+    justify-content: center;
+    border-radius: 7.55px;
+    height: 79vh;
+    overflow-y: auto;
+    background-color: #dadada;
+    padding: 10px;
+    width: 90%;
+  }
+}

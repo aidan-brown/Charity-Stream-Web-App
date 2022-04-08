@@ -10,45 +10,60 @@ import './DonationConfirmation.scss';
 const DonationConfirmation = () => {
   const { donationID, checkoutID } = useParams();
   const [response, setResponse] = useState({
-    status: 200,
-    message: <h1>Thank you for your donation!</h1>,
+    code: 'DONATION_VERIFY_SUCCESS',
+    message: '',
   });
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     if (donationID && checkoutID) {
-      console.log(donationID);
-      console.log(checkoutID);
       const reqJSON = {
         donationID,
         checkoutID,
       };
       postReq(`${getUrl()}/verify-donation`, JSON.stringify(reqJSON))
-        .then((res) => setResponse({ ...response, status: res.status }));
+        .then((res) => res.json())
+        .then((res) => {
+          setResponse({ ...response, code: res.code, message: res.message });
+          setLoading(false);
+        })
+        .catch(() => {
+          setResponse({
+            ...response,
+            code: 'UH_OH',
+            message: 'We could not contact our services, reach out on Twitch with the code below and we can help!',
+          });
+          setLoading(false);
+        });
     }
   }, []);
 
   return (
     <div className="DonationConfirmation">
+      {!loading && (
       <span>
-        {response.status !== 200 && (
-          <>
-            <h1>Oops something went wrong!</h1>
-            <p>
-              Message us in chat and we'll try to assist the best we can
-              <br />
-              Please include this code in your message
-            </p>
-            <p className="donation-code">
-              (
-              {donationID}
-              :
-              {checkoutID}
-              )
-            </p>
-          </>
+        {response.code !== 'DONATION_VERIFY_SUCCESS' && (
+        <>
+          <h1>Oops something went wrong!</h1>
+          <p>{response.message}</p>
+          <p className="donation-code">
+            (
+            {donationID}
+            :
+            {checkoutID}
+            )
+          </p>
+        </>
+        )}
+        {response.code === 'DONATION_VERIFY_SUCCESS' && (
+        <>
+          <h1>Donation successful!</h1>
+          <p>Be sure to watch the stream to see the effects of your donation</p>
+        </>
         )}
         <Button className="close-window" onClick={() => window.close()}>Click to close this window</Button>
       </span>
+      )}
     </div>
   );
 };

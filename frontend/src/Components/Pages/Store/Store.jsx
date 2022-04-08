@@ -1,3 +1,4 @@
+/* eslint-disable react/forbid-prop-types */
 import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import Icon from '@mdi/react';
@@ -16,7 +17,7 @@ import StoreContent from './StoreContent/StoreContent';
 import './Store.scss';
 
 /** Responsible for constructing the store page component * */
-const Store = ({ addItemToCart }) => {
+const Store = ({ addItemToCart, cartItems, setCartItems }) => {
   const [filterTag, setFilterTag] = useState('all');
 
   const storeDiv = useRef();
@@ -74,7 +75,12 @@ const Store = ({ addItemToCart }) => {
           </span>
         </nav>
         <div className="store-content">
-          <StoreContent filterTag={filterTag} addItemToCart={addItemToCart} />
+          <StoreContent
+            filterTag={filterTag}
+            addItemToCart={addItemToCart}
+            cartItems={cartItems}
+            setCartItems={setCartItems}
+          />
         </div>
       </div>
     </div>
@@ -83,6 +89,8 @@ const Store = ({ addItemToCart }) => {
 
 Store.propTypes = {
   addItemToCart: PropTypes.func.isRequired,
+  cartItems: PropTypes.array.isRequired,
+  setCartItems: PropTypes.func.isRequired,
 };
 
 export default Store;

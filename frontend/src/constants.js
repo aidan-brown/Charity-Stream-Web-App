@@ -36,12 +36,24 @@ export const TEMP_CHANNELS = [
   'roxkstar74',
 ];
 
+export const RESTRICTED_EFFECTS = {
+  resistance: true,
+  strength: true,
+  poison: true,
+  wither: true,
+};
+
 export const POWER_LEVELS = {
   I: 0,
   II: 1,
   III: 2,
   IV: 3,
   V: 4,
+};
+
+export const RESTRICTED_POWER_LEVELS = {
+  I: 0,
+  II: 1,
 };
 
 export const TIME_LEVELS = {

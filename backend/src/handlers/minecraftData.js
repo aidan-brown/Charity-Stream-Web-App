@@ -9,6 +9,7 @@ const {
   weapons,
 } = require('../minecraftData');
 const { DisabledElement, PriceOverride } = require('../sql/models');
+const { logger } = require('../utils');
 
 const getMinecraftData = async (req, res) => {
   const { type } = req.params;
@@ -272,7 +273,9 @@ const getMinecraftData = async (req, res) => {
         res.status(400).send('Valid mc data types are: armors, effects, foods, materials, misc, mobs, tools, weapons, and items');
         break;
     }
-  } catch (_) {
+  } catch (error) {
+    logger.log('GET_DISABLED_ITEMS_FAILED', 'Failed to get disabled items', { error });
+
     res.status(500).send('Could not find disabled items');
   }
 };
