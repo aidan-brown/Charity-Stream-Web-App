@@ -20,6 +20,7 @@ const {
   getQuickCommands,
   createOrUpdateQuickCommand,
   deleteQuickCommand,
+  getStats,
 } = require('./handlers');
 const { getImages } = require('./images');
 const { basicAuth } = require('./handlers/authentication');
@@ -44,6 +45,7 @@ app.post('/verify-checkout', verifyCheckout);
 app.post('/verify-donation', verifyDonation);
 app.get('/dynmap/icons/:playerName', dynmapGetPlayerIcon);
 app.get('/dynmap/data', dynmapGetData);
+app.get('/donation-stats', getStats);
 
 // This tells node to use auth for the routes below here
 app.use(basicAuth);

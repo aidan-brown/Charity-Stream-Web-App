@@ -8,8 +8,8 @@ const PriceOverride = require('./priceOverride');
 
 const createTables = async () => {
   const { DEPLOYMENT_ENV } = process.env;
-  const force = DEPLOYMENT_ENV !== 'production' && DEPLOYMENT_ENV !== 'develop';
-  const alter = DEPLOYMENT_ENV !== 'production';
+  const force = false; // DEPLOYMENT_ENV !== 'production' && DEPLOYMENT_ENV !== 'develop';
+  const alter = false; // DEPLOYMENT_ENV !== 'production';
 
   await Player.sync({ alter, force });
   await DisabledElement.sync({ alter, force });

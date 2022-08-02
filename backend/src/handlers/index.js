@@ -7,6 +7,7 @@ const { getPlayers, createPlayers, deletePlayer } = require('./players');
 const { runRconCommands } = require('./rcon');
 const { verifyCheckout, verifyDonation } = require('./checkout');
 const { createOrUpdateQuickCommand, getQuickCommands, deleteQuickCommand } = require('./quickCommand');
+const { getStats } = require('./stats');
 
 module.exports = {
   createOrUpdateQuickCommand,
@@ -24,6 +25,7 @@ module.exports = {
   getPlayers,
   getPriceOverrides,
   getQuickCommands,
+  getStats,
   runRconCommands,
   verifyCheckout,
   verifyDonation,
