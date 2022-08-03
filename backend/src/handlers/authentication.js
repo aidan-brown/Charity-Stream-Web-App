@@ -12,7 +12,11 @@ const basicAuth = (req, res, next) => {
       const [username, password] = new Buffer.from(auth.split(' ')[1], 'base64').toString().split(':');
       /* eslint-enable new-cap */
 
-      if (username === process.env.username && password === process.env.password) return next();
+      const { AUTH_PASSWORD, AUTH_USERNAME } = process.env;
+
+      if (username === AUTH_USERNAME && password === AUTH_PASSWORD) {
+        return next();
+      }
 
       res.status(401).send('Incorrect Credentials.');
       return null;

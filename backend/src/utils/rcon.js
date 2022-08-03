@@ -27,9 +27,9 @@ module.exports = (CommandTable) => async (scheduled) => {
 
       // Connect to the server for this instance
       const rcon = await Rcon.connect({
-        host: process.env.MCSERVER,
-        port: 25569,
-        password: process.env.MCSERVERPWRD,
+        host: process.env.MC_SERVER_HOST,
+        port: process.env.MC_SERVER_RCON_PORT,
+        password: process.env.MC_SERVER_RCON_PASSWORD,
       });
 
       // Mark commands as running

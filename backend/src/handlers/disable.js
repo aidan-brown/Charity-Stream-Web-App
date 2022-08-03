@@ -37,15 +37,17 @@ module.exports = {
       });
 
       if (checkout) {
-        await DisabledElement.update({
-          disabled: status,
-        },
-        {
-          where: {
-            id: 'checkout-disable',
-            type: 'checkout',
+        await DisabledElement.update(
+          {
+            disabled: status,
           },
-        });
+          {
+            where: {
+              id: 'checkout-disable',
+              type: 'checkout',
+            },
+          },
+        );
       } else {
         await DisabledElement.create({
           id: 'checkout-disable',

@@ -7,8 +7,8 @@ const QuickCommand = require('./quickCommand');
 const PriceOverride = require('./priceOverride');
 
 const createTables = async () => {
-  const { DEPLOYMENT_ENV } = process.env;
-  const force = DEPLOYMENT_ENV !== 'production' && DEPLOYMENT_ENV !== 'develop';
+  const { DEPLOYMENT_ENV, DB_DROP_TABLES } = process.env;
+  const force = DB_DROP_TABLES === 'true';
   const alter = DEPLOYMENT_ENV !== 'production';
 
   await Player.sync({ alter, force });

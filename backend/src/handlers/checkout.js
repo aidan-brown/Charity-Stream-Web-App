@@ -304,13 +304,11 @@ const verifyDonation = async (req, res) => {
       });
     } else {
       const { JG_APPID, JG_AUTH } = process.env;
-      const { data } = await axios.default.get(
-        `https://api.justgiving.com/${JG_APPID}/v1/donation/${donationID}`, {
-          headers: {
-            Basic: `${JG_AUTH}`,
-          },
+      const { data } = await axios.default.get(`https://api.justgiving.com/${JG_APPID}/v1/donation/${donationID}`, {
+        headers: {
+          Basic: `${JG_AUTH}`,
         },
-      );
+      });
 
       const { subTotal, status } = checkout;
       const { donorLocalAmount } = data;
