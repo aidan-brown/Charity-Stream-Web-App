@@ -5,7 +5,7 @@ module.exports = {
     const { playerName } = req.params;
 
     try {
-      const response = await axios.default.get(`${process.env.DYNMAP_URL}/tiles/faces/32x32/${playerName}.png`, {
+      const response = await axios.default.get(`${process.env.MC_SERVER_DYNMAP}/tiles/faces/32x32/${playerName}.png`, {
         responseType: 'arraybuffer',
       });
       const img = Buffer.from(response.data, 'base64');
@@ -23,7 +23,7 @@ module.exports = {
   },
   dynmapGetData: async (_, res) => {
     try {
-      const { data } = await axios.default.get(`${process.env.DYNMAP_URL}/standalone/dynmap_lobbyWorld.json`);
+      const { data } = await axios.default.get(`${process.env.MC_SERVER_DYNMAP}/standalone/dynmap_lobbyWorld.json`);
 
       res.status(200).send(data);
     } catch (err) {

@@ -1,6 +1,6 @@
 {
-    "name": "charity-streaming-house",
-    "version": "0.0.1",
+    "name": "mcs-backend",
+    "version": "1.0.0",
     "description": "The backend for the CSH Minecraft Charity stream",
     "main": "server.js",
     "scripts": {
@@ -9,34 +9,27 @@
         "test": "jest --coverage"
     },
     "contributors": [
-        {
-            "name": "River Marks"
-        },
-        {
-            "name": "Joe Abbate"
-        }
+        { "name": "River Marks" },
+        { "name": "Joe Abbate" }
     ],
     "license": "MIT",
     "dependencies": {
-        "axios": "^0.26.1",
-        "body-parser": "^1.19.1",
-        "cors": "^2.8.5",
-        "dotenv": "^10.0.0",
-        "express": "^4.17.1",
-        "http": "^0.0.1-security",
-        "https": "^1.0.0",
-        "mysql2": "^2.2.5",
-        "node-cron": "^3.0.0",
-        "rcon-client": "^4.2.3",
-        "sequelize": "^6.17.0",
-        "stripe": "^8.195.0"
+        "axios": "0.27.2",
+        "body-parser": "1.20.0",
+        "cors": "2.8.5",
+        "dotenv": "16.0.1",
+        "express": "4.18.1",
+        "mysql2": "2.3.3",
+        "node-cron": "3.0.1",
+        "rcon-client": "4.2.3",
+        "sequelize": "6.21.3"
     },
     "devDependencies": {
-        "@types/jest": "^27.4.1",
-        "eslint": "^7.10.0",
-        "eslint-config-airbnb-base": "^14.2.0",
-        "eslint-plugin-import": "^2.22.1",
-        "jest": "^27.5.1",
-        "nodemon": "^2.0.4"
+        "@types/jest": "28.1.6",
+        "eslint": "8.21.0",
+        "eslint-config-airbnb-base": "15.0.0",
+        "eslint-plugin-import": "2.26.0",
+        "jest": "28.1.3",
+        "nodemon": "2.0.19"
     }
 }

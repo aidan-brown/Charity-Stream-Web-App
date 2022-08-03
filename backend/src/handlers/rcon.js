@@ -7,9 +7,9 @@ module.exports = {
 
     try {
       const rcon = await Rcon.connect({
-        host: process.env.MCSERVER,
-        port: 25569,
-        password: process.env.MCSERVERPWRD,
+        host: process.env.MC_SERVER_HOST,
+        port: process.env.MC_SERVER_RCON_PORT,
+        password: process.env.MC_SERVER_RCON_PASSWORD,
       });
 
       let waits = 0;

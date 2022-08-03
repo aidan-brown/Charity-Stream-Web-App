@@ -3,14 +3,16 @@ const { logger } = require('../utils');
 
 const getConnection = () => {
   const {
-    MCHOST: host,
-    MCDB: database,
-    MCUSER: username,
-    MCPWRD: password,
+    DB_HOST: host,
+    DB_NAME: database,
+    DB_USERNAME: username,
+    DB_PASSWORD: password,
   } = process.env;
 
   return new Sequelize(
-    database, username, password,
+    database,
+    username,
+    password,
     {
       host,
       dialect: 'mysql',
