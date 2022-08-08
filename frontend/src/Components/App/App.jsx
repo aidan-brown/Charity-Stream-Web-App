@@ -6,6 +6,7 @@ import 'jquery';
 import 'popper.js';
 import 'bootstrap/dist/js/bootstrap.min';
 import { Route, Routes, BrowserRouter } from 'react-router-dom';
+import { CookiesProvider } from 'react-cookie';
 import Navbar from '../Navbar/Navbar';
 import Footer from '../Footer/Footer';
 import {
@@ -14,6 +15,8 @@ import {
 import Cart from '../Pages/Store/Cart/Cart';
 import { getUrl, postReq } from '../../Utils';
 import CookieDisclaimer from '../CookieDisclaimer';
+import Login from '../Pages/Login/Login';
+import LoginCallback from '../Pages/Login/LoginCallback';
 
 const App = () => {
   const [alert, setAlert] = useState();
@@ -24,26 +27,25 @@ const App = () => {
   const [popup, setPopup] = useState({ closed: true });
   const [popupClosed, setPopupClosed] = useState();
   const [popupWaitInt, setPopupWaitInt] = useState();
-  const [isAdmin, setIsAdmin] = useState(false);
 
   const itemAddRef = useRef();
   const popupRef = useRef(popup);
   const popupBlur = useRef();
 
-  useEffect(() => {
-    if (localStorage.getItem('mcs-authHeader')) setIsAdmin(true);
+  // useEffect(() => {
+  //   if (localStorage.getItem('mcs-authHeader')) setIsAdmin(true);
 
-    let lsGet = localStorage.getItem('mcs-player');
-    if (!player && lsGet) {
-      setPlayer(lsGet);
-    } else if (player === '') {
-      setPlayer('');
-    }
-    lsGet = localStorage.getItem('mcs-cartItems');
-    if (lsGet) {
-      setCartItems(JSON.parse(lsGet));
-    }
-  }, []);
+  //   let lsGet = localStorage.getItem('mcs-player');
+  //   if (!player && lsGet) {
+  //     setPlayer(lsGet);
+  //   } else if (player === '') {
+  //     setPlayer('');
+  //   }
+  //   lsGet = localStorage.getItem('mcs-cartItems');
+  //   if (lsGet) {
+  //     setCartItems(JSON.parse(lsGet));
+  //   }
+  // }, []);
 
   useEffect(() => {
     localStorage.setItem('mcs-player', player);
@@ -193,79 +195,83 @@ const App = () => {
   );
 
   return (
-    <BrowserRouter>
-      <div className="App">
-        <Navbar isAdmin={isAdmin} streamStarted={streamStarted} />
-        <main className="Content">
-          <Routes>
-            <Route
-              exact
-              path="/stream"
-              element={(
-                <span>
-                  {CartComponents()}
-                  <Stream
-                    setSelectedPlayer={setPlayer}
-                    addItemToCart={addItemToCart}
-                    cartItems={cartItems}
-                    setCartItems={setCartItems}
-                  />
-                </span>
+    <CookiesProvider>
+      <BrowserRouter>
+        <div className="App">
+          <Navbar streamStarted={streamStarted} />
+          <main className="Content">
+            <Routes>
+              <Route
+                exact
+                path="/stream"
+                element={(
+                  <span>
+                    {CartComponents()}
+                    <Stream
+                      setSelectedPlayer={setPlayer}
+                      addItemToCart={addItemToCart}
+                      cartItems={cartItems}
+                      setCartItems={setCartItems}
+                    />
+                  </span>
             )}
-            />
-            <Route
-              path="/store"
-              element={(
-                <span>
-                  {CartComponents()}
-                  {alert && (
-                  <Alert
-                    className="App-alert"
-                    onClose={() => setAlert()}
-                    variant="filled"
-                    severity={alert.severity}
-                  >
-                    {alert.message}
-                  </Alert>
-                  )}
-                  <Store
-                    addItemToCart={addItemToCart}
-                    cartItems={cartItems}
-                    setCartItems={setCartItems}
-                  />
-                </span>
+              />
+              <Route
+                path="/store"
+                element={(
+                  <span>
+                    {CartComponents()}
+                    {alert && (
+                    <Alert
+                      className="App-alert"
+                      onClose={() => setAlert()}
+                      variant="filled"
+                      severity={alert.severity}
+                    >
+                      {alert.message}
+                    </Alert>
+                    )}
+                    <Store
+                      addItemToCart={addItemToCart}
+                      cartItems={cartItems}
+                      setCartItems={setCartItems}
+                    />
+                  </span>
             )}
-            />
-            <Route path="/donation-confirmation/:donationID/:checkoutID" element={<DonationConfirmation />} />
-            <Route path="/admin-panel" element={<AdminPanel setIsAdmin={setIsAdmin} />} />
-            <Route
-              exact
-              path="/"
-              element={!streamStarted ? <Landing setStreamStarted={setStreamStarted} /> : (
-                <span>
-                  {CartComponents()}
-                  <Stream
-                    setSelectedPlayer={setPlayer}
-                    addItemToCart={addItemToCart}
-                    cartItems={cartItems}
-                    setCartItems={setCartItems}
-                  />
-                </span>
-              )}
-            />
-          </Routes>
-        </main>
-        <Footer />
-      </div>
-      <span className="popup-blur off" ref={popupBlur}>
-        <p className="popup-message bg-csh-secondary">
-          Please continue in the new window
-          <br />
-          Click here if it hasn&apos;t popped up
-        </p>
-      </span>
-      <CookieDisclaimer />
-    </BrowserRouter>
+              />
+              <Route path="/donation-confirmation/:donationID/:checkoutID" element={<DonationConfirmation />} />
+              <Route path="/admin-panel" element={<AdminPanel />} />
+              <Route exact path="/login" element={<Login />} />
+              <Route exact path="/login/:info" element={<LoginCallback />} />
+              <Route
+                exact
+                path="/"
+                element={!streamStarted ? <Landing setStreamStarted={setStreamStarted} /> : (
+                  <span>
+                    {CartComponents()}
+                    <Stream
+                      setSelectedPlayer={setPlayer}
+                      addItemToCart={addItemToCart}
+                      cartItems={cartItems}
+                      setCartItems={setCartItems}
+                    />
+                  </span>
+                )}
+              />
+            </Routes>
+          </main>
+          <Footer />
+        </div>
+        <span className="popup-blur off" ref={popupBlur}>
+          <p className="popup-message bg-csh-secondary">
+            Please continue in the new window
+            <br />
+            Click here if it hasn&apos;t popped up
+          </p>
+        </span>
+        <CookieDisclaimer />
+      </BrowserRouter>
+    </CookiesProvider>
   );
 };
 

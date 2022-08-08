@@ -5,6 +5,8 @@ const Command = require('./command');
 const Log = require('./log');
 const QuickCommand = require('./quickCommand');
 const PriceOverride = require('./priceOverride');
+const Account = require('./account');
+const Token = require('./token');
 
 const createTables = async () => {
   const { DEPLOYMENT_ENV, DB_DROP_TABLES } = process.env;
@@ -16,6 +18,8 @@ const createTables = async () => {
   await Log.sync({ alter, force });
   await QuickCommand.sync({ alter, force });
   await PriceOverride.sync({ alter, force });
+  await Account.sync({ alter, force });
+  await Token.sync({ alter, force });
 
   // Have to remove the command table first, then make
   // the checkout table before the command table (fk ref)
@@ -23,18 +27,16 @@ const createTables = async () => {
   await Checkout.sync({ alter, force });
   await Command.sync({ alter, force });
 
+  // Tables that are needed when app starts for dependency injection
   return {
-    DisabledElement,
-    Checkout,
     Command,
     Log,
-    QuickCommand,
-    Player,
-    PriceOverride,
+    Account,
   };
 };
 
 module.exports = {
+  Account,
   DisabledElement,
   Checkout,
   Command,
@@ -42,5 +44,6 @@ module.exports = {
   QuickCommand,
   Player,
   PriceOverride,
+  Token,
   createTables,
 };

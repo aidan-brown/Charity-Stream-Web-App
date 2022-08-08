@@ -1,13 +1,20 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import { Avatar, Button, CircularProgress } from '@mui/material';
 import AssociationLogos from '../../assets';
 import { Toggler } from '../../assets/svg';
 import './Navbar.scss';
 import '../Bootstrap-Colors/palette.scss';
+import useAccount from '../../Utils/useAccount';
 
 /** Class for constructing the main navbar of the page * */
-const Navbar = ({ streamStarted, isAdmin }) => {
+const Navbar = ({ streamStarted }) => {
+  const [isPopoverOpen, setIsPopoverOpen] = useState(false);
+  const { account, isLoading } = useAccount();
+
+  const isAdmin = account?.role === 'ADMIN';
+
   useEffect(() => {
     let activeLink;
     switch (window.location.pathname) {
@@ -75,14 +82,50 @@ const Navbar = ({ streamStarted, isAdmin }) => {
             )}
           </ul>
         </div>
+        {isLoading && (
+          <CircularProgress />
+        )}
+        {!isLoading && (
+          <>
+            {account && (
+            <button
+              type="button"
+              className="account"
+              onClick={() => {
+                setIsPopoverOpen(!isPopoverOpen);
+              }}
+            >
+              <p className="name">
+                {account.name}
+              </p>
+              <Avatar
+                alt={account.name}
+                src={account.picture}
+                referrerPolicy="no-referrer"
+              />
+            </button>
+            )}
+            {!account && (
+            <Button variant="contained" href="/login">
+              Login
+            </Button>
+            )}
+          </>
+        )}
       </div>
+      {isPopoverOpen && (
+        <div className="navbar-account-popover">
+          <Button variant="contained" href="/logout">
+            Logout
+          </Button>
+        </div>
+      )}
     </nav>
   );
 };
 
 Navbar.propTypes = {
   streamStarted: PropTypes.bool.isRequired,
-  isAdmin: PropTypes.bool.isRequired,
 };
 
 export default Navbar;

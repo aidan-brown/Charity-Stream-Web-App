@@ -3,34 +3,22 @@ import PropTypes from 'prop-types';
 import { Button, TextField } from '@mui/material';
 import { TabPanel } from '@mui/lab';
 import './AnalyticsPanel.scss';
-import { getUrl } from '../../../../../Utils';
+import { getAnalytics } from '../../adminPanel.api';
 
-const AnalyticsPanel = ({ authHeader, setAlert }) => {
+const AnalyticsPanel = ({ setAlert }) => {
   const [logs, setLogs] = useState([]);
   const [filter, setFilter] = useState('');
 
   const getLogs = async () => {
-    try {
-      const response = await fetch(`${getUrl()}/analytics?${filter}`, {
-        headers: {
-          Authorization: authHeader,
-          'Content-Type': 'application/json',
-        },
-      });
+    const newLogs = getAnalytics(filter);
 
-      if (response.status !== 200) {
-        setAlert({
-          message: 'Failed to get logs',
-          severity: 'error',
-        });
-      } else {
-        setLogs(await response.json());
-      }
-    } catch (_) {
+    if (!newLogs) {
       setAlert({
         message: 'Failed to get logs',
         severity: 'error',
       });
+    } else {
+      setLogs(newLogs);
     }
   };
 
@@ -86,7 +74,6 @@ const AnalyticsPanel = ({ authHeader, setAlert }) => {
 };
 
 AnalyticsPanel.propTypes = {
-  authHeader: PropTypes.string.isRequired,
   setAlert: PropTypes.func.isRequired,
 };
 

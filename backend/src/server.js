@@ -2,6 +2,9 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const cron = require('node-cron');
+const passport = require('passport');
+const session = require('express-session');
+const cookieParser = require('cookie-parser');
 const {
   createPlayers,
   deletePlayer,
@@ -20,56 +23,163 @@ const {
   getQuickCommands,
   createOrUpdateQuickCommand,
   deleteQuickCommand,
+  google,
+  tokenRefresh,
+  getAccount,
 } = require('./handlers');
 const { getImages } = require('./images');
-const { basicAuth } = require('./handlers/authentication');
 const { testConnection } = require('./sql');
 const { createTables } = require('./sql/models');
-const { rcon, logger } = require('./utils');
+const {
+  rcon, logger, setLogTable, setCommandTable,
+} = require('./utils');
 const { dynmapGetData } = require('./handlers/dynmap');
+const {
+  verifyRole, Roles, setAccountTable,
+} = require('./utils/auth');
 
-const app = express();
-const port = 8080;
+require('./utils/passportConfig')(passport);
 
-app.use(cors());
-app.use(express.json());
+const app = express()
+  .use(cors({
+    origin: 'http://localhost:3000',
+    methods: ['GET', 'PUT', 'POST', 'DELETE'],
+    optionsSuccessStatus: 204,
+    credentials: true,
+  }))
+  .use(express.json())
+  .use(cookieParser())
+  .use(
+    session({
+      secret: 'secret', // TODO: Make this a real secret (or possibly remove it)
+      resave: false,
+      saveUninitialized: true,
+      cookie: {
+        secure: process.env.DEPLOYMENT_ENV === 'production',
+        httpOnly: true,
+      },
+    }),
+  );
 
-// Routes that do not require auth
-app.get('/minecraft/:type', getMinecraftData);
-app.get('/players', getPlayers);
-app.get('/images/:type/:image', getImages);
+// ***** Routes to handle Authentication *****
+app.post('/google/auth', google);
+app.get('/token/refresh', tokenRefresh);
+
+// ***** Basic routes for data retrieval *****
 app.get('/checkout/status', getCheckoutStatus);
-app.get('/price-overrides', getPriceOverrides);
-app.post('/verify-checkout', verifyCheckout);
-app.post('/verify-donation', verifyDonation);
 app.get('/dynmap/icons/:playerName', dynmapGetPlayerIcon);
 app.get('/dynmap/data', dynmapGetData);
+app.get('/images/:type/:image', getImages);
+app.get('/minecraft/:type', getMinecraftData);
+app.get('/players', getPlayers);
+app.get('/price-overrides', getPriceOverrides);
 
-// This tells node to use auth for the routes below here
-app.use(basicAuth);
+// ***** Routes that require an account
+app.get(
+  '/account',
+  passport.authenticate('jwt', { session: false }),
+  getAccount,
+);
 
-// Everything below this point requires auth
-app.get('/analytics', getAnalytics);
-app.route('/quick-commands')
-  .get(getQuickCommands)
-  .put(createOrUpdateQuickCommand);
-app.delete('/quick-commands/:commandId', deleteQuickCommand);
-app.put('/price-overrides', createPriceOverrides);
-app.put('/disable', disableElements);
-app.put('/disable/checkout', disableCheckout);
-app.post('/players', createPlayers);
-app.delete('/players/:username', deletePlayer);
-app.post('/run-commands', runRconCommands);
-app.get('/', (_, res) => res.status(200).send('Success'));
+app.post(
+  '/verify-checkout',
+  passport.authenticate('jwt', { session: false }),
+  verifyCheckout,
+);
+app.post(
+  '/verify-donation',
+  passport.authenticate('jwt', { session: false }),
+  verifyDonation,
+);
 
-app.listen(port, async () => {
+// ***** Routes that require an ADMIN account
+app.get(
+  '/analytics',
+  passport.authenticate('jwt', { session: false }),
+  verifyRole(Roles.ADMIN),
+  getAnalytics,
+);
+
+app.get(
+  '/quick-commands',
+  passport.authenticate('jwt', { session: false }),
+  verifyRole(Roles.ADMIN),
+  getQuickCommands,
+);
+
+app.put(
+  '/quick-commands',
+  passport.authenticate('jwt', { session: false }),
+  verifyRole(Roles.ADMIN),
+  createOrUpdateQuickCommand,
+);
+
+app.delete(
+  '/quick-commands/:commandId',
+  passport.authenticate('jwt', { session: false }),
+  verifyRole(Roles.ADMIN),
+  deleteQuickCommand,
+);
+
+app.put(
+  '/price-overrides',
+  passport.authenticate('jwt', { session: false }),
+  verifyRole(Roles.ADMIN),
+  createPriceOverrides,
+);
+
+app.put(
+  '/disable',
+  passport.authenticate('jwt', { session: false }),
+  verifyRole(Roles.ADMIN),
+  disableElements,
+);
+
+app.put(
+  '/disable/checkout',
+  passport.authenticate('jwt', { session: false }),
+  verifyRole(Roles.ADMIN),
+  disableCheckout,
+);
+
+app.post(
+  '/players',
+  passport.authenticate('jwt', { session: false }),
+  verifyRole(Roles.ADMIN),
+  createPlayers,
+);
+
+app.delete(
+  '/players/:username',
+  passport.authenticate('jwt', { session: false }),
+  verifyRole(Roles.ADMIN),
+  deletePlayer,
+);
+
+app.post(
+  '/run-commands',
+  passport.authenticate('jwt', { session: false }),
+  verifyRole(Roles.ADMIN),
+  runRconCommands,
+);
+
+// The port that the webserver will be listening on (default 8080)
+const PORT = process.env.APP_PORT || 8080;
+
+// Start the app
+app.listen(PORT, async () => {
   // Test SQL connection, we can't run if this fails
   await testConnection();
-  const { Log, Command } = await createTables();
+  const { Log, Command, Account } = await createTables();
+
+  // Dependency Inject tables that are required on launch
+  setLogTable(Log);
+  setCommandTable(Command);
+  setAccountTable(Account);
 
   // Schedule cron job to process rcon commands every 2 seconds
-  cron.schedule(`*/${process.env.CRON_TIME || 2} * * * * *`, rcon(Command));
+  cron.schedule(`*/${process.env.CRON_TIME || 2} * * * * *`, rcon);
 
-  logger.setLogTable(Log);
-  logger.log('START', `Listening on port ${port}`);
+  // Log the start of the server
+  logger.log('START', `Listening on port ${PORT}`);
 });

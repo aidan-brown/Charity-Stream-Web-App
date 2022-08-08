@@ -1,11 +1,13 @@
 const getUrl = require('./getUrl');
-const rcon = require('./rcon');
+const { rcon, setCommandTable } = require('./rcon');
 const sleep = require('./sleep');
-const logger = require('./logger');
+const { logger, setLogTable } = require('./logger');
 
 module.exports = {
   getUrl,
   logger,
+  setLogTable,
   rcon,
+  setCommandTable,
   sleep,
 };

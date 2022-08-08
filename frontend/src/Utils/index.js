@@ -1,4 +1,6 @@
-import { postReq, getReq, putReq } from './fetchRequests';
+import {
+  postReq, getReq, putReq, deleteReq,
+} from './fetchRequests';
 import msToTime from './timeConvert';
 import getUrl from './getUrl';
 import ItemSymbols from './reactUtils';
@@ -8,6 +10,7 @@ export {
   getReq,
   postReq,
   putReq,
+  deleteReq,
   msToTime,
   ItemSymbols,
 };

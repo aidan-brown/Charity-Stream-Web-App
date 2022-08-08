@@ -172,3 +172,6 @@ The two function parameters `(request, response)`are directly from Express's rou
   - [ ] Allowing multiple admin accounts, moving away from Basic Auth
 - [ ] Checkout logic cleanup
 - [ ] Typescript adoption / use ES6
+- [ ] Setup Jest properly
+- [ ] Add tests for all the files
+- [ ] Update how game data is retrieved

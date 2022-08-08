@@ -91,7 +91,7 @@ describe('Checkout Integration', () => {
         req.body.cart = [];
         await checkout.verifyCheckout(req, res);
 
-        expect(logger.warn).toHaveBeenCalledWith('CART_VERIFY_ERROR', 'Verify cart found an error', {
+        expect(logger.warn).toHaveBeenCalledWith('VERIFY_CART_ERROR', 'Verify cart found an error', {
           errors,
         });
         expect(res.send).toHaveBeenCalledWith({
@@ -116,7 +116,7 @@ describe('Checkout Integration', () => {
 
         await checkout.verifyCheckout(req, res);
 
-        expect(logger.warn).toHaveBeenCalledWith('CART_VERIFY_ERROR', 'Verify cart found an error', {
+        expect(logger.warn).toHaveBeenCalledWith('VERIFY_CART_ERROR', 'Verify cart found an error', {
           errors,
         });
         expect(res.send).toHaveBeenCalledWith({
@@ -137,7 +137,7 @@ describe('Checkout Integration', () => {
         req.body.cart[0].id = 'not_an_item';
         await checkout.verifyCheckout(req, res);
 
-        expect(logger.warn).toHaveBeenCalledWith('CART_VERIFY_ERROR', 'Verify cart found an error', {
+        expect(logger.warn).toHaveBeenCalledWith('VERIFY_CART_ERROR', 'Verify cart found an error', {
           errors,
         });
         expect(res.send).toHaveBeenCalledWith({
@@ -181,7 +181,7 @@ describe('Checkout Integration', () => {
 
         await checkout.verifyCheckout(req, res);
 
-        expect(logger.warn).toHaveBeenCalledWith('CART_VERIFY_ERROR', 'Verify cart found an error', {
+        expect(logger.warn).toHaveBeenCalledWith('VERIFY_CART_ERROR', 'Verify cart found an error', {
           errors,
         });
         expect(res.send).toHaveBeenCalledWith({
