@@ -16,8 +16,9 @@ import StoreMob from '../../../Store/StoreContent/StoreMob';
 import StoreItem from '../../../Store/StoreContent/StoreItem';
 import { getUrl, getReq } from '../../../../../Utils';
 import './ItemUpdatePanel.scss';
+import { checkoutDisable, disableItem, pricesOverride } from '../../adminPanel.api';
 
-const ItemUpdatePanel = ({ authHeader, setAlert }) => {
+const ItemUpdatePanel = ({ setAlert }) => {
   const [toDisable, setToDisable] = useState([]);
   const [toPriceChange, setToPriceChange] = useState([]);
   const [filter, setFilter] = useState('');
@@ -61,87 +62,44 @@ const ItemUpdatePanel = ({ authHeader, setAlert }) => {
     getElements();
   }, []);
 
-  const disableItems = () => {
-    fetch(`${getUrl()}/disable`, {
-      method: 'PUT',
-      headers: {
-        Authorization: authHeader,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(toDisable),
-    }).then((res) => {
-      if (res.status !== 200) {
-        setAlert({
-          message: 'Failed to toggle those items on/off',
-          severity: 'error',
-        });
-      } else {
-        setToDisable([]);
-        setAlert({
-          message: 'Successfully toggled those items on/off',
-          severity: 'success',
-        });
-      }
-    }).catch(() => {
+  const disableItems = async () => {
+    if (await disableItem(toDisable)) {
+      setToDisable([]);
+      setAlert({
+        message: 'Successfully toggled those items on/off',
+        severity: 'success',
+      });
+    } else {
       setAlert({
         message: 'Failed to toggle those items on/off',
         severity: 'error',
       });
-    });
+    }
   };
 
-  const changePrices = (prices) => {
-    fetch(`${getUrl()}/price-overrides`, {
-      method: 'PUT',
-      headers: {
-        Authorization: authHeader,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(prices),
-    }).then((res) => {
-      if (res.status !== 200) {
-        setAlert({
-          message: 'Failed to change price',
-          severity: 'error',
-        });
-      } else {
-        setToPriceChange([]);
-        setAlert({
-          message: 'Success',
-          severity: 'success',
-        });
-      }
-    }).catch(() => {
+  const changePrices = async (prices) => {
+    if (await pricesOverride(prices)) {
+      setToPriceChange([]);
+      setAlert({
+        message: 'Success',
+        severity: 'success',
+      });
+    } else {
       setAlert({
         message: 'Failed to change price',
         severity: 'error',
       });
-    });
+    }
   };
 
-  const disableCheckout = (status) => {
-    fetch(`${getUrl()}/disable/checkout`, {
-      method: 'PUT',
-      headers: {
-        Authorization: authHeader,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ status }),
-    }).then((res) => {
-      if (res.status !== 200) {
-        setAlert({
-          message: 'Failed to Disable Checkout',
-          severity: 'error',
-        });
-        setCheckoutStatus(!status);
-      }
-    }).catch(() => {
+  const disableCheckout = async (status) => {
+    if (!await checkoutDisable(status)) {
       setAlert({
         message: 'Failed to Disable Checkout',
         severity: 'error',
       });
       setCheckoutStatus(!status);
-    });
+    }
   };
 
   const toggleDisabled = (item) => {
@@ -548,7 +506,6 @@ const ItemUpdatePanel = ({ authHeader, setAlert }) => {
 };
 
 ItemUpdatePanel.propTypes = {
-  authHeader: PropTypes.string.isRequired,
   setAlert: PropTypes.func.isRequired,
 };
 

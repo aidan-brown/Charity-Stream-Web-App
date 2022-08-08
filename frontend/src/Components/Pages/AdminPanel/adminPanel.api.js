@@ -1,5 +1,5 @@
 import {
-  getReq, getUrl, putReq, deleteReq,
+  getReq, getUrl, putReq, deleteReq, postReq,
 } from '../../../Utils';
 
 export const getAnalytics = async (filter) => {
@@ -63,5 +63,60 @@ export const runCommands = async (commandsToRun) => {
   if (response.status < 300) {
     return true;
   }
+  return false;
+};
+
+export const disableItem = async (items) => {
+  const response = await putReq(`${getUrl()}/disable`, JSON.stringify(items));
+
+  if (response.status < 300) {
+    return true;
+  }
+
+  return false;
+};
+
+export const pricesOverride = async (prices) => {
+  const response = await putReq(`${getUrl()}/price-overrides`, JSON.stringify(prices));
+
+  if (response.status < 300) {
+    return true;
+  }
+
+  return false;
+};
+
+export const checkoutDisable = async (status) => {
+  const response = await putReq(`${getUrl()}/disable/checkout`, JSON.stringify({ status }));
+
+  if (response.status < 300) {
+    return true;
+  }
+
+  return false;
+};
+
+export const createNewPlayers = async (newPlayers) => {
+  const response = await postReq(`${getUrl()}/disable/checkout`, JSON.stringify(newPlayers));
+
+  if (response.status < 300) {
+    const { errors, newPlayers: nps } = response;
+
+    return {
+      errors,
+      nps,
+    };
+  }
+
+  return {};
+};
+
+export const deletePlayer = async (username) => {
+  const response = await deleteReq(`${getUrl()}/players/${username}`);
+
+  if (response.status < 300) {
+    return true;
+  }
+
   return false;
 };

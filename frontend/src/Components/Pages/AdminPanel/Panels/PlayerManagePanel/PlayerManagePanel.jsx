@@ -14,8 +14,9 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import { ASSOCIATIONS, CHANNEL_TYPES } from '../../../../../constants';
 import { getUrl, getReq } from '../../../../../Utils';
 import './PlayerManagePanel.scss';
+import { createNewPlayers, deletePlayer } from '../../adminPanel.api';
 
-const PlayerManagePanel = ({ authHeader, setAlert }) => {
+const PlayerManagePanel = ({ setAlert }) => {
   const [player, setPlayer] = useState({});
   const [players, setPlayers] = useState([]);
   const [text, setText] = useState('');
@@ -45,69 +46,39 @@ const PlayerManagePanel = ({ authHeader, setAlert }) => {
     getPlayers();
   }, []);
 
-  const createPlayers = (newPlayers) => {
-    fetch(`${getUrl()}/players`, {
-      method: 'POST',
-      headers: {
-        Authorization: authHeader,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(newPlayers),
-    })
-      .then((res) => res.json())
-      .then((res) => {
-        const { errors, newPlayers: nps } = res;
+  const createPlayers = async (newPlayers) => {
+    const { errors, nps } = await createNewPlayers(newPlayers);
 
-        if (nps) {
-          setPlayers([...players, ...nps]);
-        }
+    if (nps) {
+      setPlayers([...players, ...nps]);
+    }
 
-        if (errors) {
-          setAlert({
-            message: `Errors: ${JSON.stringify(errors)}`,
-            severity: 'error',
-          });
-        } else {
-          setAlert({
-            message: 'Successfully Created player(s)',
-            severity: 'success',
-          });
-        }
-      }).catch(() => {
-        setAlert({
-          message: 'Could not create players',
-          severity: 'error',
-        });
+    if (errors) {
+      setAlert({
+        message: `Errors: ${JSON.stringify(errors)}`,
+        severity: 'error',
       });
+    } else {
+      setAlert({
+        message: 'Successfully Created player(s)',
+        severity: 'success',
+      });
+    }
   };
 
-  const deletePlayer = (usn) => {
-    fetch(`${getUrl()}/players/${usn}`, {
-      method: 'DELETE',
-      headers: {
-        Authorization: authHeader,
-        'Content-Type': 'application/json',
-      },
-    })
-      .then((res) => {
-        if (res.status !== 200) {
-          setAlert({
-            message: 'Could not delete player',
-            severity: 'error',
-          });
-        } else {
-          setAlert({
-            message: `Successfully Deleted ${usn}`,
-            severity: 'success',
-          });
-          setPlayers(players.filter((p) => p.username !== usn));
-        }
-      }).catch(() => {
-        setAlert({
-          message: 'Could not delete player',
-          severity: 'error',
-        });
+  const removePlayer = async (usn) => {
+    if (await deletePlayer(usn)) {
+      setAlert({
+        message: `Successfully Deleted ${usn}`,
+        severity: 'success',
       });
+      setPlayers(players.filter((p) => p.username !== usn));
+    } else {
+      setAlert({
+        message: 'Could not delete player',
+        severity: 'error',
+      });
+    }
   };
 
   const generatePlayers = () => {
@@ -307,7 +278,7 @@ const PlayerManagePanel = ({ authHeader, setAlert }) => {
                     aria-label="delete"
                     size="large"
                     onClick={() => {
-                      deletePlayer(un);
+                      removePlayer(un);
                     }}
                   >
                     <DeleteIcon />
@@ -322,7 +293,6 @@ const PlayerManagePanel = ({ authHeader, setAlert }) => {
 };
 
 PlayerManagePanel.propTypes = {
-  authHeader: PropTypes.string.isRequired,
   setAlert: PropTypes.func.isRequired,
 };
 
