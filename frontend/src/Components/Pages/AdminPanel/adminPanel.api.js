@@ -97,7 +97,7 @@ export const checkoutDisable = async (status) => {
 };
 
 export const createNewPlayers = async (newPlayers) => {
-  const response = await postReq(`${getUrl()}/disable/checkout`, JSON.stringify(newPlayers));
+  const response = await postReq(`${getUrl()}/players`, JSON.stringify(newPlayers));
 
   if (response.status < 300) {
     const { errors, newPlayers: nps } = response;
