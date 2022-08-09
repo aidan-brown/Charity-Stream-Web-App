@@ -1,6 +1,7 @@
 const { default: axios } = require('axios');
 const jwt = require('jsonwebtoken');
 const { Token, Account } = require('../../sql/models');
+const { hashValue } = require('../../utils/crypto');
 
 const GOOGLE_USER_URL = 'https://www.googleapis.com/oauth2/v2/userinfo';
 
@@ -11,10 +12,10 @@ module.exports = async (req, res) => {
     // Get user account using access token from Google
     const { data: googleUser } = await axios.get(`${GOOGLE_USER_URL}?access_token=${token}`);
     const {
-      id, email, name, picture, locale,
+      id, name, picture, locale,
     } = googleUser;
     const newUser = {
-      id, email, name, picture, locale,
+      id, name, picture, locale,
     };
 
     // Find or create user
@@ -37,17 +38,22 @@ module.exports = async (req, res) => {
       { expiresIn: '7d' },
     );
 
-    // Add the tokens to the table
-    await Token.update({
-      accessToken,
-      refreshToken,
-    }, {
-      where: {
-        id: account.id,
-      },
-    });
+    const { hash, salt } = hashValue(refreshToken);
 
-    // Add the token to an http only cookie and the user to a readable cookie
+    if (await Token.findOne({ where: { accountId: account.id } })) {
+      await Token.update({
+        hash,
+        salt,
+      }, {
+        where: {
+          accountId: account.id,
+        },
+      });
+    } else {
+      await Token.create({ accountId: account.id, hash, salt });
+    }
+
+    // Add the token to an http only cookie and send back account
     res
       .cookie('tokens', {
         accessToken,

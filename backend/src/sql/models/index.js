@@ -18,12 +18,18 @@ const createTables = async () => {
   await Log.sync({ alter, force });
   await QuickCommand.sync({ alter, force });
   await PriceOverride.sync({ alter, force });
-  await Account.sync({ alter, force });
-  await Token.sync({ alter, force });
 
   // Have to remove the command table first, then make
   // the checkout table before the command table (fk ref)
-  if (force) await Command.drop();
+  if (force) {
+    await Command.drop();
+    await Token.drop();
+  }
+
+  // FK refs
+  await Account.sync({ alter, force });
+  await Token.sync({ alter, force });
+
   await Checkout.sync({ alter, force });
   await Command.sync({ alter, force });
 

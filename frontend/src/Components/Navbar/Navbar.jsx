@@ -96,10 +96,10 @@ const Navbar = ({ streamStarted }) => {
               }}
             >
               <p className="name">
-                {account.name}
+                {account.name || 'Account'}
               </p>
               <Avatar
-                alt={account.name}
+                alt={account.name || 'Account'}
                 src={account.picture}
                 referrerPolicy="no-referrer"
               />

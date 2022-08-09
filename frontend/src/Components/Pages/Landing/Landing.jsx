@@ -5,8 +5,8 @@ import BackgroundVideo from '../../../assets/landing-stream-clips.mp4';
 import { msToTime } from '../../../Utils';
 
 const Landing = ({ setStreamStarted }) => {
-  const streamYear = '4th';
-  const streamDate = new Date('April 8, 2022 23:00:00 UTC');
+  const streamYear = '5th';
+  const streamDate = new Date('April 8, 2023 23:00:00 UTC');
   const [remainingTime, setRemainingTime] = useState(streamDate - Date.now());
 
   setTimeout(() => {

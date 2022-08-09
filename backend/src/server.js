@@ -3,7 +3,6 @@ const express = require('express');
 const cors = require('cors');
 const cron = require('node-cron');
 const passport = require('passport');
-const session = require('express-session');
 const cookieParser = require('cookie-parser');
 const {
   createPlayers,
@@ -31,35 +30,30 @@ const { getImages } = require('./images');
 const { testConnection } = require('./sql');
 const { createTables } = require('./sql/models');
 const {
-  rcon, logger, setLogTable, setCommandTable,
+  logger,
+  rcon,
+  setLogTable,
+  setCommandTable,
+  getUrl,
 } = require('./utils');
 const { dynmapGetData } = require('./handlers/dynmap');
 const {
-  verifyRole, Roles, setAccountTable,
+  Roles,
+  verifyRole,
+  setAccountTable,
 } = require('./utils/auth');
 
 require('./utils/passportConfig')(passport);
 
 const app = express()
   .use(cors({
-    origin: 'http://localhost:3000',
+    origin: getUrl(),
     methods: ['GET', 'PUT', 'POST', 'DELETE'],
     optionsSuccessStatus: 204,
     credentials: true,
   }))
   .use(express.json())
-  .use(cookieParser())
-  .use(
-    session({
-      secret: 'secret', // TODO: Make this a real secret (or possibly remove it)
-      resave: false,
-      saveUninitialized: true,
-      cookie: {
-        secure: process.env.DEPLOYMENT_ENV === 'production',
-        httpOnly: true,
-      },
-    }),
-  );
+  .use(cookieParser());
 
 // ***** Routes to handle Authentication *****
 app.post('/google/auth', google);

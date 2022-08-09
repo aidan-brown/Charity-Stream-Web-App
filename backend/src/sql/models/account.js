@@ -12,19 +12,15 @@ const Account = sequelize.define('Account', {
   },
   name: {
     type: DataTypes.STRING,
-    allowNull: false,
-  },
-  email: {
-    type: DataTypes.STRING,
-    allowNull: false,
+    allowNull: true,
   },
   picture: {
     type: DataTypes.STRING,
-    allowNull: false,
+    allowNull: true,
   },
   locale: {
     type: DataTypes.STRING,
-    allowNull: false,
+    allowNull: true,
   },
   role: {
     type: DataTypes.ENUM(Roles.ADMIN, Roles.USER),

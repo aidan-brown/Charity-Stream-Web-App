@@ -1,22 +1,33 @@
 const { DataTypes } = require('sequelize');
 const { getConnection } = require('..');
+const Account = require('./account');
 
 const sequelize = getConnection();
 
 const Token = sequelize.define('Token', {
-  id: {
+  accountId: {
     type: DataTypes.STRING,
     allowNull: false,
     primaryKey: true,
+    references: {
+      model: Account,
+      key: 'id',
+    },
   },
-  accessToken: {
+  hash: {
     type: DataTypes.TEXT,
     allowNull: false,
   },
-  refreshToken: {
+  salt: {
     type: DataTypes.TEXT,
     allowNull: false,
   },
+});
+
+Token.belongsTo(Account, {
+  foreignKey: 'accountId',
+  onDelete: 'CASCADE',
+  onUpdate: 'CASCADE',
 });
 
 module.exports = Token;

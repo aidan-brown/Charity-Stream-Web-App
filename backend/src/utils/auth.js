@@ -7,13 +7,13 @@ const Roles = {
 
 module.exports = {
   Roles,
-  verifyRole: (role) => async (req, res, next) => {
+  verifyRole: (...roles) => async (req, res, next) => {
     const { user } = req;
 
     if (user) {
-      const { role: assignedRole } = await AccountTable.findByPk(user.id);
+      const { role } = await AccountTable.findByPk(user.id);
 
-      if (role === assignedRole) {
+      if (roles.includes(role)) {
         return next();
       }
     }
