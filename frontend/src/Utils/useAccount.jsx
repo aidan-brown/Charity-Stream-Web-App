@@ -1,28 +1,17 @@
-import { useState, useEffect } from 'react';
+import { useQuery } from '@tanstack/react-query';
 import getAccount from '../api/account.api';
-import refreshToken from '../api/token.api';
+import { refreshToken } from '../api/token.api';
 
 const useAccount = () => {
-  const [account, setAccount] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    const getUserAccount = async () => {
+  const { data: account, isLoading } = useQuery(
+    ['account'],
+    async () => {
       if (await refreshToken()) {
-        const userAccount = await getAccount();
-
-        if (userAccount) {
-          setAccount(userAccount);
-        }
-
-        setIsLoading(false);
-      } else {
-        setIsLoading(false);
+        return getAccount();
       }
-    };
-
-    getUserAccount();
-  }, []);
+      return null;
+    },
+  );
 
   return { account, isLoading };
 };

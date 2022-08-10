@@ -1,14 +1,16 @@
 import { CircularProgress } from '@mui/material';
+import { useQueryClient } from '@tanstack/react-query';
 import React, { useEffect } from 'react';
 import {
   useLocation, useNavigate,
 } from 'react-router-dom';
-import { postToken } from './login.api';
+import { postToken } from '../../../api/token.api';
 import './Login.scss';
 
 const LoginCallback = () => {
   const { hash } = useLocation();
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
 
   useEffect(() => {
     const sendToken = async () => {
@@ -22,6 +24,7 @@ const LoginCallback = () => {
 
       if (accessToken) {
         await postToken(accessToken);
+        queryClient.invalidateQueries(['account']);
         navigate('/store', { replace: true });
       }
     };

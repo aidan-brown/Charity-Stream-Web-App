@@ -5,8 +5,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'jquery';
 import 'popper.js';
 import 'bootstrap/dist/js/bootstrap.min';
-import { Route, Routes, BrowserRouter } from 'react-router-dom';
-import { CookiesProvider } from 'react-cookie';
+import { Route, Routes } from 'react-router-dom';
 import Navbar from '../Navbar/Navbar';
 import Footer from '../Footer/Footer';
 import {
@@ -32,20 +31,18 @@ const App = () => {
   const popupRef = useRef(popup);
   const popupBlur = useRef();
 
-  // useEffect(() => {
-  //   if (localStorage.getItem('mcs-authHeader')) setIsAdmin(true);
-
-  //   let lsGet = localStorage.getItem('mcs-player');
-  //   if (!player && lsGet) {
-  //     setPlayer(lsGet);
-  //   } else if (player === '') {
-  //     setPlayer('');
-  //   }
-  //   lsGet = localStorage.getItem('mcs-cartItems');
-  //   if (lsGet) {
-  //     setCartItems(JSON.parse(lsGet));
-  //   }
-  // }, []);
+  useEffect(() => {
+    let lsGet = localStorage.getItem('mcs-player');
+    if (!player && lsGet) {
+      setPlayer(lsGet);
+    } else if (player === '') {
+      setPlayer('');
+    }
+    lsGet = localStorage.getItem('mcs-cartItems');
+    if (lsGet) {
+      setCartItems(JSON.parse(lsGet));
+    }
+  }, []);
 
   useEffect(() => {
     localStorage.setItem('mcs-player', player);
@@ -103,8 +100,18 @@ const App = () => {
   const calculateTotal = () => {
     let total = 0;
     cartItems.forEach((item) => {
-      // eslint-disable-next-line no-mixed-operators
-      if (!('power' in item)) { total += (item.amount * (item.priceOverride !== null ? Number(item.priceOverride) : item.price)); } else { total += ((item.power + 1) * (item.time / 30 * (item.priceOverride !== null ? Number(item.priceOverride) : item.price))); }
+      if (!('power' in item)) {
+        total += (item.amount * (
+          item.priceOverride !== null
+            ? Number(item.priceOverride)
+            : item.price));
+      } else {
+        // eslint-disable-next-line no-mixed-operators
+        total += ((item.power + 1) * (item.time / 30 * (
+          item.priceOverride !== null
+            ? Number(item.priceOverride)
+            : item.price)));
+      }
     });
     return total;
   };
@@ -195,33 +202,32 @@ const App = () => {
   );
 
   return (
-    <CookiesProvider>
-      <BrowserRouter>
-        <div className="App">
-          <Navbar streamStarted={streamStarted} />
-          <main className="Content">
-            <Routes>
-              <Route
-                exact
-                path="/stream"
-                element={(
-                  <span>
-                    {CartComponents()}
-                    <Stream
-                      setSelectedPlayer={setPlayer}
-                      addItemToCart={addItemToCart}
-                      cartItems={cartItems}
-                      setCartItems={setCartItems}
-                    />
-                  </span>
+    <>
+      <div className="App">
+        <Navbar streamStarted={streamStarted} />
+        <main className="Content">
+          <Routes>
+            <Route
+              exact
+              path="/stream"
+              element={(
+                <span>
+                  {CartComponents()}
+                  <Stream
+                    setSelectedPlayer={setPlayer}
+                    addItemToCart={addItemToCart}
+                    cartItems={cartItems}
+                    setCartItems={setCartItems}
+                  />
+                </span>
             )}
-              />
-              <Route
-                path="/store"
-                element={(
-                  <span>
-                    {CartComponents()}
-                    {alert && (
+            />
+            <Route
+              path="/store"
+              element={(
+                <span>
+                  {CartComponents()}
+                  {alert && (
                     <Alert
                       className="App-alert"
                       onClose={() => setAlert()}
@@ -230,48 +236,47 @@ const App = () => {
                     >
                       {alert.message}
                     </Alert>
-                    )}
-                    <Store
-                      addItemToCart={addItemToCart}
-                      cartItems={cartItems}
-                      setCartItems={setCartItems}
-                    />
-                  </span>
+                  )}
+                  <Store
+                    addItemToCart={addItemToCart}
+                    cartItems={cartItems}
+                    setCartItems={setCartItems}
+                  />
+                </span>
             )}
-              />
-              <Route path="/donation-confirmation/:donationID/:checkoutID" element={<DonationConfirmation />} />
-              <Route path="/admin-panel" element={<AdminPanel />} />
-              <Route exact path="/login" element={<Login />} />
-              <Route exact path="/login/:info" element={<LoginCallback />} />
-              <Route
-                exact
-                path="/"
-                element={!streamStarted ? <Landing setStreamStarted={setStreamStarted} /> : (
-                  <span>
-                    {CartComponents()}
-                    <Stream
-                      setSelectedPlayer={setPlayer}
-                      addItemToCart={addItemToCart}
-                      cartItems={cartItems}
-                      setCartItems={setCartItems}
-                    />
-                  </span>
-                )}
-              />
-            </Routes>
-          </main>
-          <Footer />
-        </div>
-        <span className="popup-blur off" ref={popupBlur}>
-          <p className="popup-message bg-csh-secondary">
-            Please continue in the new window
-            <br />
-            Click here if it hasn&apos;t popped up
-          </p>
-        </span>
-        <CookieDisclaimer />
-      </BrowserRouter>
-    </CookiesProvider>
+            />
+            <Route path="/donation-confirmation/:donationID/:checkoutID" element={<DonationConfirmation />} />
+            <Route path="/admin-panel" element={<AdminPanel />} />
+            <Route exact path="/login" element={<Login />} />
+            <Route exact path="/login/:info" element={<LoginCallback />} />
+            <Route
+              exact
+              path="/"
+              element={!streamStarted ? <Landing setStreamStarted={setStreamStarted} /> : (
+                <span>
+                  {CartComponents()}
+                  <Stream
+                    setSelectedPlayer={setPlayer}
+                    addItemToCart={addItemToCart}
+                    cartItems={cartItems}
+                    setCartItems={setCartItems}
+                  />
+                </span>
+              )}
+            />
+          </Routes>
+        </main>
+        <Footer />
+      </div>
+      <span className="popup-blur off" ref={popupBlur}>
+        <p className="popup-message bg-csh-secondary">
+          Please continue in the new window
+          <br />
+          Click here if it hasn&apos;t popped up
+        </p>
+      </span>
+      <CookieDisclaimer />
+    </>
   );
 };
 

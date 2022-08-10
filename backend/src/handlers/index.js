@@ -4,6 +4,7 @@ const { getAnalytics } = require('./analytics');
 const { getCheckoutStatus, disableCheckout, disableElements } = require('./disable');
 const google = require('./auth/google');
 const tokenRefresh = require('./auth/tokenRefresh');
+const logout = require('./auth/logout');
 const { getAccount } = require('./account');
 const getMinecraftData = require('./minecraftData');
 const { getPlayers, createPlayers, deletePlayer } = require('./players');
@@ -31,6 +32,7 @@ module.exports = {
   google,
   runRconCommands,
   tokenRefresh,
+  logout,
   verifyCheckout,
   verifyDonation,
 };

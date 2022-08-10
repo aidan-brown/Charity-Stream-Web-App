@@ -25,6 +25,7 @@ const {
   google,
   tokenRefresh,
   getAccount,
+  logout,
 } = require('./handlers');
 const { getImages } = require('./images');
 const { testConnection } = require('./sql');
@@ -57,7 +58,8 @@ const app = express()
 
 // ***** Routes to handle Authentication *****
 app.post('/google/auth', google);
-app.get('/token/refresh', tokenRefresh);
+app.post('/token/refresh', tokenRefresh);
+app.post('/logout', logout);
 
 // ***** Basic routes for data retrieval *****
 app.get('/checkout/status', getCheckoutStatus);
