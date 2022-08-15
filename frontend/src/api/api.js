@@ -1,4 +1,4 @@
-import getUrl from '../Utils/getUrl';
+import getApiUrl from '../Utils/getApiUrl';
 import { verifyToken } from './token.api';
 
 const requestBuilder = (method) => async ({
@@ -13,7 +13,7 @@ const requestBuilder = (method) => async ({
     token = await verifyToken();
   }
 
-  const response = await fetch(`${getUrl()}${route}`, {
+  const response = await fetch(`${getApiUrl()}${route}`, {
     method,
     headers: {
       'Content-Type': 'application/json',

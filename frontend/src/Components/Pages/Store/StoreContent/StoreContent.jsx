@@ -10,7 +10,7 @@ import {
   getMinecraftItems,
   getMinecraftMobs,
 } from '../../../../api';
-import { getUrl } from '../../../../Utils';
+import { getApiUrl } from '../../../../Utils';
 import './StoreContent.scss';
 
 const StoreContent = ({
@@ -58,7 +58,7 @@ const StoreContent = ({
         <StoreItem
           item={item}
           addItemToCart={() => addItemToCart({
-            ...item, amount: 1, icon: `${getUrl()}/images/items/${item.id}.webp`, img: `${getUrl()}/images/items/${item.id}-full.webp`,
+            ...item, amount: 1, icon: `${getApiUrl()}/images/items/${item.id}.webp`, img: `${getApiUrl()}/images/items/${item.id}-full.webp`,
           })}
           key={item.id}
         />
@@ -67,7 +67,7 @@ const StoreContent = ({
         <StoreMob
           mob={mob}
           addItemToCart={() => addItemToCart({
-            ...mob, amount: 1, icon: `${getUrl()}/images/mobs/${mob.id}.webp`, img: `${getUrl()}/images/mobs/${mob.id}-full.webp`, type: 'mob',
+            ...mob, amount: 1, icon: `${getApiUrl()}/images/mobs/${mob.id}.webp`, img: `${getApiUrl()}/images/mobs/${mob.id}-full.webp`, type: 'mob',
           })}
           key={mob.id}
         />
@@ -76,7 +76,7 @@ const StoreContent = ({
         <StoreEffect
           effect={effect}
           addItemToCart={() => addItemToCart({
-            ...effect, time: 30, power: 0, icon: `${getUrl()}/images/effects/${effect.id}.webp`, img: `${getUrl()}/images/effects/${effect.id}-full.webp`, type: 'effect',
+            ...effect, time: 30, power: 0, icon: `${getApiUrl()}/images/effects/${effect.id}.webp`, img: `${getApiUrl()}/images/effects/${effect.id}-full.webp`, type: 'effect',
           })}
           key={effect.id}
         />
@@ -85,7 +85,7 @@ const StoreContent = ({
         <StoreItem
           item={item}
           addItemToCart={() => addItemToCart({
-            ...item, amount: 1, icon: `${getUrl()}/images/items/${item.id}.webp`, img: `${getUrl()}/images/items/${item.id}-full.webp`,
+            ...item, amount: 1, icon: `${getApiUrl()}/images/items/${item.id}.webp`, img: `${getApiUrl()}/images/items/${item.id}-full.webp`,
           })}
           key={item.id}
         />
@@ -94,7 +94,7 @@ const StoreContent = ({
         <StoreMob
           mob={mob}
           addItemToCart={() => addItemToCart({
-            ...mob, amount: 1, icon: `${getUrl()}/images/mobs/${mob.id}.webp`, img: `${getUrl()}/images/mobs/${mob.id}-full.webp`, type: 'mob',
+            ...mob, amount: 1, icon: `${getApiUrl()}/images/mobs/${mob.id}.webp`, img: `${getApiUrl()}/images/mobs/${mob.id}-full.webp`, type: 'mob',
           })}
           key={mob.id}
         />
@@ -103,7 +103,7 @@ const StoreContent = ({
         <StoreEffect
           effect={effect}
           addItemToCart={() => addItemToCart({
-            ...effect, time: 30, power: 0, icon: `${getUrl()}/images/effects/${effect.id}.webp`, img: `${getUrl()}/images/effects/${effect.id}-full.webp`, type: 'effect',
+            ...effect, time: 30, power: 0, icon: `${getApiUrl()}/images/effects/${effect.id}.webp`, img: `${getApiUrl()}/images/effects/${effect.id}-full.webp`, type: 'effect',
           })}
           key={effect.id}
         />

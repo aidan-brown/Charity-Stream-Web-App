@@ -1,48 +1,46 @@
-const { default: axios } = require('axios');
 const jwt = require('jsonwebtoken');
 const { Token, Account } = require('../../sql/models');
 const { hashValue } = require('../../utils/crypto');
-
-const GOOGLE_USER_URL = 'https://www.googleapis.com/oauth2/v2/userinfo';
+const services = require('./services');
 
 module.exports = async (req, res) => {
   const { token } = req.body;
+  const { oauthService } = req.params;
 
+  let user;
   try {
-    // Get user account using access token from Google
-    const { data: googleUser } = await axios.get(`${GOOGLE_USER_URL}?access_token=${token}`);
-    const {
-      id,
-      name,
-      picture,
-      locale,
-      email,
-    } = googleUser;
+    switch (oauthService) {
+      case 'google':
+        user = await services.google(token);
+        break;
+      case 'twitch':
+        user = await services.twitch(token);
+        break;
+      case 'microsoft':
+        user = await services.microsoft(token);
+        break;
+      default:
+        throw new Error(`${oauthService} is not a valid service`);
+    }
 
-    const newUser = {
-      id,
-      name,
-      picture,
-      locale,
-      email,
-    };
+    const { id, service } = user;
 
     // Find or create user
     const [account] = await Account.findOrCreate({
-      where: { id },
-      defaults: newUser,
+      where: { id, service },
+      defaults: user,
     });
 
     // Token for accessing sensitive data
     const accessToken = jwt.sign(
-      { id },
+      { id, service },
       process.env.JWT_SECRET_KEY,
       { expiresIn: '15m' },
     );
 
     // Token for getting new tokens
     const refreshToken = jwt.sign(
-      { id },
+      { id, service },
       process.env.JWT_SECRET_KEY,
       { expiresIn: '7d' },
     );

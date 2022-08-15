@@ -254,7 +254,7 @@ const App = () => {
             <Route path="/donation-confirmation/:donationID/:checkoutID" element={<DonationConfirmation />} />
             <Route path="/admin-panel" element={<AdminPanel />} />
             <Route exact path="/login" element={<Login />} />
-            <Route exact path="/login/:info" element={<LoginCallback />} />
+            <Route exact path="/login/callback/:service" element={<LoginCallback />} />
             <Route
               exact
               path="/"

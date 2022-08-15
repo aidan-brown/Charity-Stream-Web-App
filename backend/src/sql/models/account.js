@@ -1,6 +1,6 @@
 const { DataTypes } = require('sequelize');
 const { getConnection } = require('..');
-const { Roles } = require('../../utils/auth');
+const { ROLES } = require('../../constants');
 
 const sequelize = getConnection();
 
@@ -10,9 +10,14 @@ const Account = sequelize.define('Account', {
     allowNull: false,
     primaryKey: true,
   },
+  service: {
+    type: DataTypes.ENUM('GOOGLE', 'TWITCH', 'MICROSOFT'),
+    allowNull: false,
+    primaryKey: true,
+  },
   email: {
     type: DataTypes.STRING,
-    allowNull: false,
+    allowNull: true,
   },
   name: {
     type: DataTypes.STRING,
@@ -27,8 +32,8 @@ const Account = sequelize.define('Account', {
     allowNull: true,
   },
   role: {
-    type: DataTypes.ENUM(Roles.ADMIN, Roles.USER),
-    defaultValue: Roles.USER,
+    type: DataTypes.ENUM(ROLES.ADMIN, ROLES.PLAYER, ROLES.USER),
+    defaultValue: ROLES.USER,
   },
 });
 

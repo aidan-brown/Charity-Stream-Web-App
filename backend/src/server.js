@@ -22,7 +22,7 @@ const {
   getQuickCommands,
   createOrUpdateQuickCommand,
   deleteQuickCommand,
-  google,
+  oauth,
   tokenRefresh,
   getAccount,
   logout,
@@ -39,10 +39,10 @@ const {
 } = require('./utils');
 const { dynmapGetData } = require('./handlers/dynmap');
 const {
-  Roles,
   verifyRole,
   setAccountTable,
-} = require('./utils/auth');
+} = require('./utils/verifyRole');
+const { ROLES } = require('./constants');
 
 require('./utils/passportConfig')(passport);
 
@@ -57,7 +57,7 @@ const app = express()
   .use(cookieParser());
 
 // ***** Routes to handle Authentication *****
-app.post('/google/auth', google);
+app.post('/:oauthService/auth', oauth);
 app.post('/token/refresh', tokenRefresh);
 app.post('/logout', logout);
 
@@ -92,70 +92,70 @@ app.post(
 app.get(
   '/analytics',
   passport.authenticate('jwt', { session: false }),
-  verifyRole(Roles.ADMIN),
+  verifyRole(ROLES.ADMIN),
   getAnalytics,
 );
 
 app.get(
   '/quick-commands',
   passport.authenticate('jwt', { session: false }),
-  verifyRole(Roles.ADMIN),
+  verifyRole(ROLES.ADMIN),
   getQuickCommands,
 );
 
 app.put(
   '/quick-commands',
   passport.authenticate('jwt', { session: false }),
-  verifyRole(Roles.ADMIN),
+  verifyRole(ROLES.ADMIN),
   createOrUpdateQuickCommand,
 );
 
 app.delete(
   '/quick-commands/:commandId',
   passport.authenticate('jwt', { session: false }),
-  verifyRole(Roles.ADMIN),
+  verifyRole(ROLES.ADMIN),
   deleteQuickCommand,
 );
 
 app.put(
   '/price-overrides',
   passport.authenticate('jwt', { session: false }),
-  verifyRole(Roles.ADMIN),
+  verifyRole(ROLES.ADMIN),
   createPriceOverrides,
 );
 
 app.put(
   '/disable',
   passport.authenticate('jwt', { session: false }),
-  verifyRole(Roles.ADMIN),
+  verifyRole(ROLES.ADMIN),
   disableElements,
 );
 
 app.put(
   '/disable/checkout',
   passport.authenticate('jwt', { session: false }),
-  verifyRole(Roles.ADMIN),
+  verifyRole(ROLES.ADMIN),
   disableCheckout,
 );
 
 app.post(
   '/players',
   passport.authenticate('jwt', { session: false }),
-  verifyRole(Roles.ADMIN),
+  verifyRole(ROLES.ADMIN),
   createPlayers,
 );
 
 app.delete(
   '/players/:username',
   passport.authenticate('jwt', { session: false }),
-  verifyRole(Roles.ADMIN),
+  verifyRole(ROLES.ADMIN),
   deletePlayer,
 );
 
 app.post(
   '/run-commands',
   passport.authenticate('jwt', { session: false }),
-  verifyRole(Roles.ADMIN),
+  verifyRole(ROLES.ADMIN),
   runRconCommands,
 );
 

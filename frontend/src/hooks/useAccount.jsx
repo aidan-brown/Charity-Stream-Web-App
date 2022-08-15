@@ -5,9 +5,6 @@ const useAccount = () => {
   const { data: account, isLoading } = useQuery(
     ['account'],
     getAccount,
-    {
-      staleTime: Infinity,
-    },
   );
 
   return { account, isLoading };

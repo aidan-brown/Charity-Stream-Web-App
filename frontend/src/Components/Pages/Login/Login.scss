@@ -17,7 +17,7 @@
     margin-bottom: 50px;
   }
 
-  .google {
+  .Google {
     display: flex;
     align-items: center;
     height: 40px;
@@ -43,5 +43,60 @@
       background-color: white;
     }
   }
+
+  .Twitch {
+    display: flex;
+    align-items: center;
+    height: 40px;
+    width: 300px;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 300;
+    font-size: 14px;
+    background-color: white;
+    color: #000000;
+    margin-top: 10px;
+
+
+    .text {
+      padding: 0 8px;
+    }
+
+    img {
+      margin-right: 16px;
+      width: 18px;
+      height: 18px;
+    }
+
+    &:hover {
+      background-color: white;
+    }
+  }
   
+  .Microsoft {
+    display: flex;
+    align-items: center;
+    height: 40px;
+    width: 300px;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 300;
+    font-size: 14px;
+    background-color: white;
+    color: #000000;
+    margin-top: 10px;
+
+
+    .text {
+      padding: 0 8px;
+    }
+
+    img {
+      margin-right: 16px;
+      width: 18px;
+      height: 18px;
+    }
+
+    &:hover {
+      background-color: white;
+    }
+  }
 }

@@ -1,19 +1,14 @@
 let AccountTable;
 
-const Roles = {
-  ADMIN: 'ADMIN',
-  USER: 'USER',
-};
-
 module.exports = {
-  Roles,
   verifyRole: (...roles) => async (req, res, next) => {
     const { user } = req;
 
     if (user) {
-      const { role } = await AccountTable.findByPk(user.id);
+      const { id, service } = user;
+      const account = await AccountTable.findOne({ where: { id, service } });
 
-      if (roles.includes(role)) {
+      if (account && roles.includes(account.role)) {
         return next();
       }
     }

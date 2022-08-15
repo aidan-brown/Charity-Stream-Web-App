@@ -2,7 +2,7 @@ const { createPriceOverrides, getPriceOverrides } = require('./priceOverride');
 const { dynmapGetPlayerIcon, dynmapGetData } = require('./dynmap');
 const { getAnalytics } = require('./analytics');
 const { getCheckoutStatus, disableCheckout, disableElements } = require('./disable');
-const google = require('./auth/google');
+const oauth = require('./auth/oauth');
 const tokenRefresh = require('./auth/tokenRefresh');
 const logout = require('./auth/logout');
 const { getAccount } = require('./account');
@@ -29,7 +29,7 @@ module.exports = {
   getPlayers,
   getPriceOverrides,
   getQuickCommands,
-  google,
+  oauth,
   runRconCommands,
   tokenRefresh,
   logout,

@@ -1,9 +1,9 @@
 import Cookies from 'js-cookie';
 import jwtDecode from 'jwt-decode';
-import getUrl from '../Utils/getUrl';
+import { getApiUrl } from '../Utils';
 
 const refreshToken = async () => {
-  const response = await fetch(`${getUrl()}/token/refresh`, {
+  const response = await fetch(`${getApiUrl()}/token/refresh`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -37,8 +37,15 @@ export const verifyToken = async () => {
   throw new Error('REDIRECT_TO_LOGIN');
 };
 
-export const postToken = async (token, service = 'google') => {
-  const response = await fetch(`${getUrl()}/${service}/auth`, {
+// const getToken = async (code) => {
+//   const response =
+// }
+
+export const postToken = async ({
+  token = undefined,
+  service = 'google',
+}) => {
+  const response = await fetch(`${getApiUrl()}/${service}/auth`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

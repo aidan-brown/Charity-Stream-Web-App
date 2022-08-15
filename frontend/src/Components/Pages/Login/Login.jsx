@@ -1,26 +1,57 @@
-import { Button, Divider, Typography } from '@mui/material';
 import React, { useEffect, useState } from 'react';
+import { Button, Divider, Typography } from '@mui/material';
+import { getUrl } from '../../../Utils';
 import GoogleLogo from '../../../assets/images/google-logo.png';
+import TwitchLogo from '../../../assets/images/twitch-logo.webp';
+import MicrosoftLogo from '../../../assets/images/microsoft-logo.png';
 import './Login.scss';
-
-const GOOGLE_AUTH_URI = 'https://accounts.google.com/o/oauth2/v2/auth';
 
 const Login = () => {
   const [email, setEmail] = useState();
 
-  const params = {
-    google: {
-      client_id: '357881516625-bbiafmdb5m5of50jlrsp92611qnftuvo.apps.googleusercontent.com',
-      redirect_uri: 'http://localhost:3000/login/callback',
-      response_type: 'token',
-      scope: 'https://www.googleapis.com/auth/userinfo.profile',
-      include_granted_scopes: true,
-      state: 'state_parameter_passthrough_value',
-      ...(email && { login_hint: email }),
+  const services = {
+    Google: {
+      logo: GoogleLogo,
+      uri: 'https://accounts.google.com/o/oauth2/v2/auth',
+      params: {
+        client_id: '357881516625-bbiafmdb5m5of50jlrsp92611qnftuvo.apps.googleusercontent.com',
+        redirect_uri: `${getUrl()}/login/callback/google`,
+        response_type: 'token',
+        scope: 'https://www.googleapis.com/auth/userinfo.profile',
+        ...(email && { login_hint: email }),
+      },
+    },
+    Twitch: {
+      logo: TwitchLogo,
+      uri: 'https://id.twitch.tv/oauth2/authorize',
+      params: {
+        client_id: 'q2typr9nmx5nl2uz4snd8tce7mtj0f',
+        redirect_uri: `${getUrl()}/login/callback/twitch`,
+        response_type: 'token',
+        scope: 'user%3Aread%3Aemail',
+      },
+    },
+    Microsoft: {
+      logo: MicrosoftLogo,
+      uri: 'https://login.microsoftonline.com/7507ed45-3e6b-4ed4-828c-ed073ddfb682/oauth2/v2.0/authorize',
+      params: {
+        client_id: 'd44f6e87-3f99-4faa-803c-dc87ab123967',
+        redirect_uri: `${getUrl()}/login/callback/microsoft`,
+        response_type: 'token',
+        scope: 'user.read%20mail.read',
+        // ...(email && { login_hint: email }),
+      },
     },
   };
 
-  const buildAuthUrl = (service, url) => `${url}?${Object.keys(params[service]).map((key) => `${key}=${params[service][key]}`).join('&')}`;
+  const buildAuthUrl = (service) => {
+    const { uri, params } = services[service];
+    const query = Object.keys(params)
+      .map((key) => `${key}=${params[key]}`)
+      .join('&');
+
+    return `${uri}?${query}`;
+  };
 
   useEffect(() => {
     const returningEmail = localStorage.getItem('mcs-auth-email');
@@ -36,10 +67,16 @@ const Login = () => {
         Login
       </Typography>
       <Divider className="divider" variant="middle" />
-      <Button className="google" variant="contained" href={buildAuthUrl('google', GOOGLE_AUTH_URI)}>
-        <img src={GoogleLogo} alt="Google Sign in" />
-        <span className="text">Sign in with Google</span>
-      </Button>
+      {Object.keys(services).map((service) => (
+        <Button key={service} className={service} variant="contained" href={buildAuthUrl(service)}>
+          <img src={services[service].logo} alt={`${service} Sign in`} />
+          <span className="text">
+            Sign in with
+            {' '}
+            {service}
+          </span>
+        </Button>
+      ))}
     </div>
   );
 };

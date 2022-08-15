@@ -22,7 +22,7 @@ import PropTypes from 'prop-types';
 import { useQuery } from '@tanstack/react-query';
 import StreamWindow from './StreamWindow/StreamWindow';
 import StoreContent from '../Store/StoreContent/StoreContent';
-import { getUrl, ItemSymbols } from '../../../Utils';
+import { getApiUrl, ItemSymbols } from '../../../Utils';
 import AssociationLogos from '../../../assets';
 import BackgroundVideo from '../../../assets/landing-stream-clips.mp4';
 import { steveFace } from '../../../assets/images';
@@ -173,7 +173,7 @@ const Stream = ({
                 onClose={handlePopoverClose(player.username)}
                 disableRestoreFocus
               >
-                <img className="player-icon" src={`${getUrl()}/dynmap/icons/${player.username}`} alt={player.username} onError={(e) => { e.currentTarget.src = steveFace; }} />
+                <img className="player-icon" src={`${getApiUrl()}/dynmap/icons/${player.username}`} alt={player.username} onError={(e) => { e.currentTarget.src = steveFace; }} />
                 <span className="player-health">
                   {playerConnected ? `${pData.health} (` : ''}
                   {playerConnected && ItemSymbols('health', pData ? pData.health : null, true)}

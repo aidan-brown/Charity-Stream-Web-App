@@ -9,9 +9,9 @@ module.exports = (passport) => {
       },
       async (jwtPayload, done) => {
         try {
-          const { id } = jwtPayload;
+          const { id, service } = jwtPayload;
 
-          done(null, { id });
+          done(null, { id, service });
         } catch (error) {
           done(error, false);
         }

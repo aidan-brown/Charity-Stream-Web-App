@@ -2,10 +2,13 @@ const { Account } = require('../sql/models');
 
 module.exports = {
   getAccount: async (req, res) => {
-    const { user } = req;
+    const { user = {} } = req;
 
     try {
-      const account = await Account.findByPk(user.id);
+      const { id, service } = user;
+      const account = await Account.findOne({
+        where: { id, service },
+      });
 
       if (account) {
         return res.status(200).send(account);
