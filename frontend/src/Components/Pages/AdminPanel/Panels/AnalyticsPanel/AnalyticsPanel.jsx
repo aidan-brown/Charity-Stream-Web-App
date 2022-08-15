@@ -3,22 +3,30 @@ import PropTypes from 'prop-types';
 import { Button, TextField } from '@mui/material';
 import { TabPanel } from '@mui/lab';
 import './AnalyticsPanel.scss';
-import { getAnalytics } from '../../adminPanel.api';
+import { useNavigate } from 'react-router-dom';
+import { getAnalytics } from '../../../../../api/adminPanel.api';
 
 const AnalyticsPanel = ({ setAlert }) => {
+  const navigate = useNavigate();
   const [logs, setLogs] = useState([]);
   const [filter, setFilter] = useState('');
 
   const getLogs = async () => {
-    const newLogs = getAnalytics(filter);
+    try {
+      const newLogs = await getAnalytics(filter);
 
-    if (!newLogs) {
-      setAlert({
-        message: 'Failed to get logs',
-        severity: 'error',
-      });
-    } else {
-      setLogs(newLogs);
+      if (!newLogs) {
+        setAlert({
+          message: 'Failed to get logs',
+          severity: 'error',
+        });
+      } else {
+        setLogs(newLogs);
+      }
+    } catch (err) {
+      if (err === 'REDIRECT_TO_LOGIN') {
+        navigate('/login');
+      }
     }
   };
 

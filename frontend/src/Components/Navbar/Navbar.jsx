@@ -1,17 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import { useQueryClient } from '@tanstack/react-query';
 import { Avatar, Button, CircularProgress } from '@mui/material';
 import AssociationLogos from '../../assets';
 import { Toggler } from '../../assets/svg';
 import './Navbar.scss';
 import '../Bootstrap-Colors/palette.scss';
-import useAccount from '../../Utils/useAccount';
 
 /** Class for constructing the main navbar of the page * */
 const Navbar = ({ streamStarted }) => {
+  const queryClient = useQueryClient();
+  const account = queryClient.getQueryData(['account']);
+
   const [isPopoverOpen, setIsPopoverOpen] = useState(false);
-  const { account, isLoading } = useAccount();
 
   const isAdmin = account?.role === 'ADMIN';
 
@@ -82,35 +84,28 @@ const Navbar = ({ streamStarted }) => {
             )}
           </ul>
         </div>
-        {isLoading && (
-          <CircularProgress />
+        {account && (
+          <button
+            type="button"
+            className="account"
+            onClick={() => {
+              setIsPopoverOpen(!isPopoverOpen);
+            }}
+          >
+            <p className="name">
+              {account.name || 'Account'}
+            </p>
+            <Avatar
+              alt={account.name || 'Account'}
+              src={account.picture}
+              referrerPolicy="no-referrer"
+            />
+          </button>
         )}
-        {!isLoading && (
-          <>
-            {account && (
-            <button
-              type="button"
-              className="account"
-              onClick={() => {
-                setIsPopoverOpen(!isPopoverOpen);
-              }}
-            >
-              <p className="name">
-                {account.name || 'Account'}
-              </p>
-              <Avatar
-                alt={account.name || 'Account'}
-                src={account.picture}
-                referrerPolicy="no-referrer"
-              />
-            </button>
-            )}
-            {!account && (
-            <Button variant="contained" href="/login">
-              Login
-            </Button>
-            )}
-          </>
+        {!account && (
+          <Button variant="contained" href="/login">
+            Login
+          </Button>
         )}
       </div>
       {isPopoverOpen && (

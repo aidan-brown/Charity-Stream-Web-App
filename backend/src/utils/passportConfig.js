@@ -13,7 +13,11 @@ module.exports = (passport) => {
       },
       async (jwtPayload, done) => {
         try {
-          const { id } = jwtPayload;
+          const { id, exp } = jwtPayload;
+
+          if (((exp * 1000) - Date.now()) <= 0) {
+            throw new Error('Access Token is expired');
+          }
 
           done(null, { id });
         } catch (error) {

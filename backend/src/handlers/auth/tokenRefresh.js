@@ -10,7 +10,12 @@ module.exports = async (req, res) => {
 
     if (refreshToken) {
       try {
-        const { id } = jwt.verify(refreshToken, process.env.JWT_SECRET_KEY);
+        const jwtToken = jwt.verify(refreshToken, process.env.JWT_SECRET_KEY);
+        const { id, exp } = jwtToken;
+
+        if (((exp * 1000) - Date.now()) <= 0) {
+          throw new Error('Refresh Token is expired');
+        }
 
         const savedToken = await Token.findOne({
           where: {
@@ -34,7 +39,7 @@ module.exports = async (req, res) => {
               httpOnly: true,
             })
             .status(201)
-            .send('Issued new token');
+            .send({ expires: `${Date.now() + 900000}` });
         }
 
         return res.status(400).send('Invalid Refresh token');

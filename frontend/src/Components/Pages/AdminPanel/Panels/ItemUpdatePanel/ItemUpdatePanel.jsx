@@ -11,14 +11,17 @@ import {
 } from '@mui/material';
 import { TabPanel } from '@mui/lab';
 import { Clear, Check, Delete } from '@mui/icons-material';
+import { useNavigate } from 'react-router-dom';
 import StoreEffect from '../../../Store/StoreContent/StoreEffect';
 import StoreMob from '../../../Store/StoreContent/StoreMob';
 import StoreItem from '../../../Store/StoreContent/StoreItem';
 import { getUrl, getReq } from '../../../../../Utils';
 import './ItemUpdatePanel.scss';
-import { checkoutDisable, disableItem, pricesOverride } from '../../adminPanel.api';
+import { checkoutDisable, disableItem, pricesOverride } from '../../../../../api/adminPanel.api';
 
 const ItemUpdatePanel = ({ setAlert }) => {
+  const navigate = useNavigate();
+
   const [toDisable, setToDisable] = useState([]);
   const [toPriceChange, setToPriceChange] = useState([]);
   const [filter, setFilter] = useState('');
@@ -63,42 +66,60 @@ const ItemUpdatePanel = ({ setAlert }) => {
   }, []);
 
   const disableItems = async () => {
-    if (await disableItem(toDisable)) {
-      setToDisable([]);
-      setAlert({
-        message: 'Successfully toggled those items on/off',
-        severity: 'success',
-      });
-    } else {
-      setAlert({
-        message: 'Failed to toggle those items on/off',
-        severity: 'error',
-      });
+    try {
+      if (await disableItem(toDisable)) {
+        setToDisable([]);
+        setAlert({
+          message: 'Successfully toggled those items on/off',
+          severity: 'success',
+        });
+      } else {
+        setAlert({
+          message: 'Failed to toggle those items on/off',
+          severity: 'error',
+        });
+      }
+    } catch (err) {
+      if (err === 'REDIRECT_TO_LOGIN') {
+        navigate('/login');
+      }
     }
   };
 
   const changePrices = async (prices) => {
-    if (await pricesOverride(prices)) {
-      setToPriceChange([]);
-      setAlert({
-        message: 'Success',
-        severity: 'success',
-      });
-    } else {
-      setAlert({
-        message: 'Failed to change price',
-        severity: 'error',
-      });
+    try {
+      if (await pricesOverride(prices)) {
+        setToPriceChange([]);
+        setAlert({
+          message: 'Success',
+          severity: 'success',
+        });
+      } else {
+        setAlert({
+          message: 'Failed to change price',
+          severity: 'error',
+        });
+      }
+    } catch (err) {
+      if (err === 'REDIRECT_TO_LOGIN') {
+        navigate('/login');
+      }
     }
   };
 
   const disableCheckout = async (status) => {
-    if (!await checkoutDisable(status)) {
-      setAlert({
-        message: 'Failed to Disable Checkout',
-        severity: 'error',
-      });
-      setCheckoutStatus(!status);
+    try {
+      if (!await checkoutDisable(status)) {
+        setAlert({
+          message: 'Failed to Disable Checkout',
+          severity: 'error',
+        });
+        setCheckoutStatus(!status);
+      }
+    } catch (err) {
+      if (err === 'REDIRECT_TO_LOGIN') {
+        navigate('/login');
+      }
     }
   };
 

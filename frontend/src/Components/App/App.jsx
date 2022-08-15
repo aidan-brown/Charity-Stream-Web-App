@@ -16,8 +16,13 @@ import { getUrl, postReq } from '../../Utils';
 import CookieDisclaimer from '../CookieDisclaimer';
 import Login from '../Pages/Login/Login';
 import LoginCallback from '../Pages/Login/LoginCallback';
+import useAccount from '../../Utils/useAccount';
 
 const App = () => {
+  const account = useAccount();
+
+  console.log(account);
+
   const [alert, setAlert] = useState();
   const [streamStarted, setStreamStarted] = useState(false);
   const [cartItems, setCartItems] = useState([]);
@@ -182,24 +187,45 @@ const App = () => {
     setShowCart(showCart === 'yes' ? 'no' : 'yes');
   };
 
-  const CartComponents = () => (
-    <span>
-      <button type="button" className="bg-csh-tertiary toggle-cart " onClick={toggleCartMenu} data-showcart={showCart}><span className="material-icons">{showCart === 'yes' ? 'arrow_forward' : 'shopping_cart'}</span></button>
-      <img className="cart-add-item" ref={itemAddRef} src="" alt="item added to cart" data-show="no" />
-      <Cart
-        player={player}
-        setPlayer={setPlayer}
-        cartItems={cartItems}
-        changeCartAmount={changeCartAmount}
-        changeEffectPower={changeEffectPower}
-        changeEffectTime={changeEffectTime}
-        removeFromCart={removeItemFromCart}
-        proceedToCheckout={proceedToCheckout}
-        showCart={showCart}
-        calculateTotal={calculateTotal}
-      />
-    </span>
-  );
+  const CartComponents = () => {
+    if (true) {
+      console.log('ji');
+    }
+
+    return (
+      <span>
+        <button
+          type="button"
+          className="bg-csh-tertiary toggle-cart "
+          onClick={toggleCartMenu}
+          data-showcart={showCart}
+        >
+          <span className="material-icons">
+            {showCart === 'yes' ? 'arrow_forward' : 'shopping_cart'}
+          </span>
+        </button>
+        <img
+          className="cart-add-item"
+          ref={itemAddRef}
+          src=""
+          alt="item added to cart"
+          data-show="no"
+        />
+        <Cart
+          player={player}
+          setPlayer={setPlayer}
+          cartItems={cartItems}
+          changeCartAmount={changeCartAmount}
+          changeEffectPower={changeEffectPower}
+          changeEffectTime={changeEffectTime}
+          removeFromCart={removeItemFromCart}
+          proceedToCheckout={proceedToCheckout}
+          showCart={showCart}
+          calculateTotal={calculateTotal}
+        />
+      </span>
+    );
+  };
 
   return (
     <>

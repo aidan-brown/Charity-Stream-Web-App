@@ -1,14 +1,5 @@
-const { getUrl, getReq } = require('../Utils');
+import { Get } from './api';
 
-const getAccount = async () => {
-  const response = await getReq(`${getUrl()}/account`);
-
-  if (response.status === 200) {
-    const account = await response.json();
-    return account;
-  }
-
-  return null;
-};
+const getAccount = async () => Get('/account', true);
 
 export default getAccount;

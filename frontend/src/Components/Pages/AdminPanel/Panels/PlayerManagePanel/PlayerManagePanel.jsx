@@ -11,12 +11,15 @@ import {
 } from '@mui/material';
 import { TabPanel } from '@mui/lab';
 import DeleteIcon from '@mui/icons-material/Delete';
+import { useNavigate } from 'react-router-dom';
 import { ASSOCIATIONS, CHANNEL_TYPES } from '../../../../../constants';
 import { getUrl, getReq } from '../../../../../Utils';
 import './PlayerManagePanel.scss';
-import { createNewPlayers, deletePlayer } from '../../adminPanel.api';
+import { createNewPlayers, deletePlayer } from '../../../../../api/adminPanel.api';
 
 const PlayerManagePanel = ({ setAlert }) => {
+  const navigate = useNavigate();
+
   const [player, setPlayer] = useState({});
   const [players, setPlayers] = useState([]);
   const [text, setText] = useState('');
@@ -47,37 +50,49 @@ const PlayerManagePanel = ({ setAlert }) => {
   }, []);
 
   const createPlayers = async (newPlayers) => {
-    const { errors, nps } = await createNewPlayers(newPlayers);
+    try {
+      const { errors, nps } = await createNewPlayers(newPlayers);
 
-    if (nps) {
-      setPlayers([...players, ...nps]);
-    }
+      if (nps) {
+        setPlayers([...players, ...nps]);
+      }
 
-    if (errors) {
-      setAlert({
-        message: `Errors: ${JSON.stringify(errors)}`,
-        severity: 'error',
-      });
-    } else {
-      setAlert({
-        message: 'Successfully Created player(s)',
-        severity: 'success',
-      });
+      if (errors) {
+        setAlert({
+          message: `Errors: ${JSON.stringify(errors)}`,
+          severity: 'error',
+        });
+      } else {
+        setAlert({
+          message: 'Successfully Created player(s)',
+          severity: 'success',
+        });
+      }
+    } catch (err) {
+      if (err === 'REDIRECT_TO_LOGIN') {
+        navigate('/login');
+      }
     }
   };
 
   const removePlayer = async (usn) => {
-    if (await deletePlayer(usn)) {
-      setAlert({
-        message: `Successfully Deleted ${usn}`,
-        severity: 'success',
-      });
-      setPlayers(players.filter((p) => p.username !== usn));
-    } else {
-      setAlert({
-        message: 'Could not delete player',
-        severity: 'error',
-      });
+    try {
+      if (await deletePlayer(usn)) {
+        setAlert({
+          message: `Successfully Deleted ${usn}`,
+          severity: 'success',
+        });
+        setPlayers(players.filter((p) => p.username !== usn));
+      } else {
+        setAlert({
+          message: 'Could not delete player',
+          severity: 'error',
+        });
+      }
+    } catch (err) {
+      if (err === 'REDIRECT_TO_LOGIN') {
+        navigate('/login');
+      }
     }
   };
 

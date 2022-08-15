@@ -16,12 +16,15 @@ import {
   Add, ArrowBack, ArrowForward, Delete,
 } from '@mui/icons-material';
 import { TabPanel } from '@mui/lab';
+import { useNavigate } from 'react-router-dom';
 import {
   deleteQuickCommand, getPlayers, getQuickCommands, runCommands, saveQuickCommands,
-} from '../../adminPanel.api';
+} from '../../../../../api/adminPanel.api';
 import './CommandsPanel.scss';
 
 const CommandsPanel = ({ setAlert }) => {
+  const navigate = useNavigate();
+
   const [commands, setCommands] = useState([{
     name: '',
     commands: [{ command: '', shouldWait: false }],
@@ -44,18 +47,24 @@ const CommandsPanel = ({ setAlert }) => {
 
   useEffect(() => {
     const getCommands = async () => {
-      const quickCommands = await getQuickCommands();
+      try {
+        const quickCommands = await getQuickCommands();
 
-      if (quickCommands) {
-        setCommands([
-          ...commands,
-          quickCommands,
-        ]);
-      } else {
-        setAlert({
-          message: 'Failed to get quick Commands (check the logs for why using code=GET_QUICK_COMMANDS)',
-          severity: 'error',
-        });
+        if (quickCommands) {
+          setCommands([
+            ...commands,
+            quickCommands,
+          ]);
+        } else {
+          setAlert({
+            message: 'Failed to get quick Commands (check the logs for why using code=GET_QUICK_COMMANDS)',
+            severity: 'error',
+          });
+        }
+      } catch (err) {
+        if (err === 'REDIRECT_TO_LOGIN') {
+          navigate('/login');
+        }
       }
     };
 
@@ -82,40 +91,53 @@ const CommandsPanel = ({ setAlert }) => {
   })();
 
   const saveCommands = async (newCommands, index = current) => {
-    const savedCommands = await saveQuickCommands({
-      ...newCommands[index],
-      commands: JSON.stringify(newCommands[index].commands),
-      variables: JSON.stringify(newCommands[index].variables),
-    });
-
-    if (savedCommands) {
-      setAlert({
-        message: 'Created command!',
-        severity: 'success',
+    try {
+      const savedCommands = await saveQuickCommands({
+        ...newCommands[index],
+        commands: JSON.stringify(newCommands[index].commands),
+        variables: JSON.stringify(newCommands[index].variables),
       });
-      return savedCommands;
-    }
 
-    setAlert({
-      message: 'Failed to crete quick Command (check the logs for why using code=CREATE_QUICK_COMMANDS_ERROR)',
-      severity: 'error',
-    });
-    return null;
+      if (savedCommands) {
+        setAlert({
+          message: 'Created command!',
+          severity: 'success',
+        });
+        return savedCommands;
+      }
+
+      setAlert({
+        message: 'Failed to crete quick Command (check the logs for why using code=CREATE_QUICK_COMMANDS_ERROR)',
+        severity: 'error',
+      });
+      return {};
+    } catch (err) {
+      if (err === 'REDIRECT_TO_LOGIN') {
+        navigate('/login');
+      }
+      return {};
+    }
   };
 
   const deleteCommand = async (id) => {
-    const status = await deleteQuickCommand(id);
+    try {
+      const status = await deleteQuickCommand(id);
 
-    if (status) {
-      setAlert({
-        message: 'Deleted command!',
-        severity: 'success',
-      });
-    } else {
-      setAlert({
-        message: 'Failed to delete quick Commands (check the logs for why using code=DELETE_QUICK_COMMANDS_ERROR)',
-        severity: 'error',
-      });
+      if (status) {
+        setAlert({
+          message: 'Deleted command!',
+          severity: 'success',
+        });
+      } else {
+        setAlert({
+          message: 'Failed to delete quick Commands (check the logs for why using code=DELETE_QUICK_COMMANDS_ERROR)',
+          severity: 'error',
+        });
+      }
+    } catch (err) {
+      if (err === 'REDIRECT_TO_LOGIN') {
+        navigate('/login');
+      }
     }
   };
 
@@ -176,26 +198,34 @@ const CommandsPanel = ({ setAlert }) => {
   };
 
   const runCommand = async (index) => {
-    const { dataSource } = commands[index];
-    const commandsToRun = await injectVariables(
-      index,
-      JSON.stringify(commands[index].commands),
-      dataSource,
-      [...commands[index].variables, ...(dataSource ? dataSources[dataSource].variables : [])],
-    );
+    try {
+      const { dataSource } = commands[index];
+      const commandsToRun = await injectVariables(
+        index,
+        JSON.stringify(commands[index].commands),
+        dataSource,
+        [...commands[index].variables, ...(dataSource ? dataSources[dataSource].variables : [])],
+      );
 
-    const status = await runCommands(commandsToRun);
+      const status = await runCommands(commandsToRun);
 
-    if (status) {
-      setAlert({
-        message: 'Commands are scheduled to run!',
-        severity: 'success',
-      });
-    } else {
-      setAlert({
-        message: 'Failed to run command',
-        severity: 'error',
-      });
+      if (status) {
+        setAlert({
+          message: 'Commands are scheduled to run!',
+          severity: 'success',
+        });
+      } else {
+        setAlert({
+          message: 'Failed to run command',
+          severity: 'error',
+        });
+      }
+      return {};
+    } catch (err) {
+      if (err === 'REDIRECT_TO_LOGIN') {
+        navigate('/login');
+      }
+      return {};
     }
   };
 

@@ -10,6 +10,10 @@ const Account = sequelize.define('Account', {
     allowNull: false,
     primaryKey: true,
   },
+  email: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
   name: {
     type: DataTypes.STRING,
     allowNull: true,

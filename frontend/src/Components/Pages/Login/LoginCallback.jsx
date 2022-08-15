@@ -1,6 +1,6 @@
 import { CircularProgress } from '@mui/material';
-import { useQueryClient } from '@tanstack/react-query';
-import React, { useEffect } from 'react';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import React, { useEffect, useState } from 'react';
 import {
   useLocation, useNavigate,
 } from 'react-router-dom';
@@ -11,26 +11,40 @@ const LoginCallback = () => {
   const { hash } = useLocation();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
+  const [loading, setLoading] = useState(false);
+
+  const { mutate: sendToken } = useMutation(async () => {
+    const urlParams = {};
+    hash.split('&').forEach((param) => {
+      const [key, value] = param.split('=');
+      urlParams[key] = value;
+    });
+
+    const { access_token: accessToken } = urlParams;
+
+    if (accessToken) {
+      const { account, expires } = await postToken(accessToken);
+
+      // Save email for reauth and when the token expires
+      localStorage.setItem('mcs-auth-email', account.email);
+      localStorage.setItem('mcs-auth-expires', expires);
+
+      queryClient.invalidateQueries(['account']);
+      setLoading(false);
+    }
+  });
 
   useEffect(() => {
-    const sendToken = async () => {
-      const urlParams = {};
-      hash.split('&').forEach((param) => {
-        const [key, value] = param.split('=');
-        urlParams[key] = value;
-      });
+    if (!loading) {
+      sendToken();
+    }
+  }, []);
 
-      const { access_token: accessToken } = urlParams;
-
-      if (accessToken) {
-        await postToken(accessToken);
-        queryClient.invalidateQueries(['account']);
-        navigate('/store', { replace: true });
-      }
-    };
-
-    sendToken();
-  }, [hash]);
+  useEffect(() => {
+    if (loading) {
+      navigate('/store', { replace: true });
+    }
+  }, [loading]);
 
   return (
     <div className="login">
