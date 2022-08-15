@@ -1,5 +1,12 @@
-import { Get } from './api';
+import { Get, Post } from './api';
 
-const getAccount = async () => Get({ route: '/account', shouldAuth: true });
+export const getAccount = async () => Get({
+  route: '/account',
+  shouldAuth: true,
+});
 
-export default getAccount;
+export const logoutAccount = async () => Post({
+  route: '/logout',
+  shouldAuth: true,
+  toJson: false,
+});

@@ -19,6 +19,7 @@ const requestBuilder = (method) => async ({
       'Content-Type': 'application/json',
       ...(token && { Authorization: `Bearer ${token}` }),
     },
+    credentials: 'include',
     ...(body && { body: JSON.stringify(body) }),
   });
 

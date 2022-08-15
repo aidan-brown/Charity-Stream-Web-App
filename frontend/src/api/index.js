@@ -1,4 +1,4 @@
-import getAccount from './account.api';
+import { getAccount, logoutAccount } from './account.api';
 import {
   getAnalytics,
   getQuickCommands,
@@ -33,6 +33,7 @@ import {
 
 export {
   getAccount,
+  logoutAccount,
   getAnalytics,
   getQuickCommands,
   saveQuickCommands,

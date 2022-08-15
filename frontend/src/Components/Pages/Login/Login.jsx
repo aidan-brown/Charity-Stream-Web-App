@@ -9,6 +9,7 @@ import './Login.scss';
 const Login = () => {
   const [email, setEmail] = useState();
 
+  // TODO: Maybe move these client ids to env vars? idk if it's bad to have them here
   const services = {
     Google: {
       logo: GoogleLogo,
@@ -17,7 +18,7 @@ const Login = () => {
         client_id: '357881516625-bbiafmdb5m5of50jlrsp92611qnftuvo.apps.googleusercontent.com',
         redirect_uri: `${getUrl()}/login/callback/google`,
         response_type: 'token',
-        scope: 'https://www.googleapis.com/auth/userinfo.profile',
+        scope: 'https://www.googleapis.com/auth/userinfo.profile%20https://www.googleapis.com/auth/userinfo.email',
         ...(email && { login_hint: email }),
       },
     },
@@ -39,7 +40,6 @@ const Login = () => {
         redirect_uri: `${getUrl()}/login/callback/microsoft`,
         response_type: 'token',
         scope: 'user.read%20mail.read',
-        // ...(email && { login_hint: email }),
       },
     },
   };
@@ -56,7 +56,7 @@ const Login = () => {
   useEffect(() => {
     const returningEmail = localStorage.getItem('mcs-auth-email');
 
-    if (returningEmail) {
+    if (returningEmail && !['null', 'undefined'].includes(returningEmail)) {
       setEmail(returningEmail);
     }
   }, [email, setEmail]);

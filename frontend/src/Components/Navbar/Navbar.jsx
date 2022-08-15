@@ -1,16 +1,20 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { Avatar, Button, CircularProgress } from '@mui/material';
+import { useQueryClient } from '@tanstack/react-query';
 import AssociationLogos from '../../assets';
 import { Toggler } from '../../assets/svg';
+import useAccount from '../../hooks';
+import { logoutAccount } from '../../api';
 import './Navbar.scss';
 import '../Bootstrap-Colors/palette.scss';
-import { useAccount } from '../../hooks';
 
 /** Class for constructing the main navbar of the page * */
 const Navbar = ({ streamStarted }) => {
+  const queryClient = useQueryClient();
   const { account, isLoading } = useAccount();
+  const navigate = useNavigate();
 
   const [isPopoverOpen, setIsPopoverOpen] = useState(false);
 
@@ -114,7 +118,15 @@ const Navbar = ({ streamStarted }) => {
       </div>
       {isPopoverOpen && (
         <div className="navbar-account-popover">
-          <Button variant="contained" href="/logout">
+          <Button
+            variant="contained"
+            onClick={async () => {
+              await logoutAccount();
+              setIsPopoverOpen(false);
+              queryClient.removeQueries(['account']);
+              navigate('/');
+            }}
+          >
             Logout
           </Button>
         </div>

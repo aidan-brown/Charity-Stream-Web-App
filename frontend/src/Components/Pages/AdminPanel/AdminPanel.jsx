@@ -9,7 +9,7 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import {
   AnalyticsPanel, CommandsPanel, ItemUpdatePanel, PlayerManagePanel,
 } from './Panels';
-import { useAccount } from '../../../hooks';
+import useAccount from '../../../hooks';
 import './AdminPanel.scss';
 import Loading from '../Loading';
 

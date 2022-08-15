@@ -12,9 +12,6 @@ const refreshToken = async () => {
   });
 
   if (response.status === 201) {
-    const { expires } = await response.json();
-    localStorage.setItem('mcs-auth-expires', expires);
-
     return true;
   }
 
@@ -36,10 +33,6 @@ export const verifyToken = async () => {
   // If that does not work, we have to redirect
   throw new Error('REDIRECT_TO_LOGIN');
 };
-
-// const getToken = async (code) => {
-//   const response =
-// }
 
 export const postToken = async ({
   token = undefined,

@@ -6,7 +6,12 @@ const MICROSOFT_URL = 'https://graph.microsoft.com/v1.0/me';
 
 module.exports = {
   google: async (token) => {
-    const { data: googleUser } = await axios.get(`${GOOGLE_URL}?access_token=${token}`);
+    const { data: googleUser } = await axios.get(`${GOOGLE_URL}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
     const {
       id,
       name,

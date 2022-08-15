@@ -8,7 +8,7 @@ module.exports = async (req, res) => {
   if (refreshToken) {
     try {
       const jwtToken = jwt.verify(refreshToken, process.env.JWT_SECRET_KEY);
-      const { id } = jwtToken;
+      const { id, service } = jwtToken;
 
       const savedToken = await Token.findOne({
         where: {
@@ -18,7 +18,7 @@ module.exports = async (req, res) => {
 
       if (savedToken && verifyHash(refreshToken, savedToken.hash, savedToken.salt)) {
         const accessToken = jwt.sign(
-          { id },
+          { id, service },
           process.env.JWT_SECRET_KEY,
           { expiresIn: '15m' },
         );
