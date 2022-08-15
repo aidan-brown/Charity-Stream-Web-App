@@ -1,23 +1,15 @@
-const { Strategy: JwtStrategy } = require('passport-jwt');
+const { Strategy: JwtStrategy, ExtractJwt } = require('passport-jwt');
 
 module.exports = (passport) => {
   passport.use(
     new JwtStrategy(
       {
-        jwtFromRequest: (req) => {
-          const { tokens = {} } = req.cookies;
-
-          return tokens.accessToken;
-        },
+        jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
         secretOrKey: process.env.JWT_SECRET_KEY,
       },
       async (jwtPayload, done) => {
         try {
-          const { id, exp } = jwtPayload;
-
-          if (((exp * 1000) - Date.now()) <= 0) {
-            throw new Error('Access Token is expired');
-          }
+          const { id } = jwtPayload;
 
           done(null, { id });
         } catch (error) {

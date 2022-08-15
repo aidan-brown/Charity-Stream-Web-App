@@ -1,6 +1,8 @@
+import Cookies from 'js-cookie';
+import jwtDecode from 'jwt-decode';
 import getUrl from '../Utils/getUrl';
 
-export const refreshToken = async () => {
+const refreshToken = async () => {
   const response = await fetch(`${getUrl()}/token/refresh`, {
     method: 'POST',
     headers: {
@@ -19,6 +21,22 @@ export const refreshToken = async () => {
   return false;
 };
 
+export const verifyToken = async () => {
+  const token = Cookies.get('accessToken');
+  const expires = jwtDecode(token)?.exp;
+
+  if (expires > (new Date() / 1000)) {
+    return token;
+  }
+
+  if (await refreshToken()) {
+    return Cookies.get('accessToken');
+  }
+
+  // If that does not work, we have to redirect
+  throw new Error('REDIRECT_TO_LOGIN');
+};
+
 export const postToken = async (token, service = 'google') => {
   const response = await fetch(`${getUrl()}/${service}/auth`, {
     method: 'POST',
@@ -34,20 +52,4 @@ export const postToken = async (token, service = 'google') => {
   }
 
   throw new Error('There was a problem logging you in');
-};
-
-export const verifyToken = async () => {
-  // Grab the expire time from local storage TODO: Eventually make this baked into the cookie
-  const expires = Number(localStorage.getItem('mcs-auth-expires') || 0);
-
-  if (expires && expires > Date.now()) {
-    return;
-  }
-
-  if (await refreshToken()) {
-    return;
-  }
-
-  // If that does not work, we have to redirect
-  throw new Error('REDIRECT_TO_LOGIN');
 };

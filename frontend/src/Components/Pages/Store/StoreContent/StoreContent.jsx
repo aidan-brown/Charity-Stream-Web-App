@@ -5,9 +5,13 @@ import { useQuery } from '@tanstack/react-query';
 import StoreItem from './StoreItem';
 import StoreMob from './StoreMob';
 import StoreEffect from './StoreEffect';
-import { getMinecraftEffects, getMinecraftItems, getMinecraftMobs } from '../../../../api/items.api';
-import './StoreContent.scss';
+import {
+  getMinecraftEffects,
+  getMinecraftItems,
+  getMinecraftMobs,
+} from '../../../../api';
 import { getUrl } from '../../../../Utils';
+import './StoreContent.scss';
 
 const StoreContent = ({
   filterTag, addItemToCart, className, cartItems, setCartItems,

@@ -15,7 +15,7 @@ import Cart from '../Pages/Store/Cart/Cart';
 import CookieDisclaimer from '../CookieDisclaimer';
 import Login from '../Pages/Login/Login';
 import LoginCallback from '../Pages/Login/LoginCallback';
-import { verifyCheckout } from '../../api/checkout.api';
+import { verifyCheckout } from '../../api';
 
 const App = () => {
   const [alert, setAlert] = useState();

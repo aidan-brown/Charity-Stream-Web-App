@@ -4,14 +4,15 @@ import React, { useEffect, useState } from 'react';
 import {
   useLocation, useNavigate,
 } from 'react-router-dom';
-import { postToken } from '../../../api/token.api';
+import { postToken } from '../../../api';
 import './Login.scss';
 
+// TODO: Address react memory leak in here
 const LoginCallback = () => {
   const { hash } = useLocation();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   const { mutate: sendToken } = useMutation(async () => {
     const urlParams = {};
@@ -35,13 +36,11 @@ const LoginCallback = () => {
   });
 
   useEffect(() => {
-    if (!loading) {
-      sendToken();
-    }
+    sendToken();
   }, []);
 
   useEffect(() => {
-    if (loading) {
+    if (!loading) {
       navigate('/store', { replace: true });
     }
   }, [loading]);

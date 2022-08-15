@@ -3,20 +3,22 @@ import { verifyToken } from './token.api';
 
 const requestBuilder = (method) => async ({
   route,
-  shouldAuth = false,
   body = undefined,
+  shouldAuth = false,
   toJson = true,
 }) => {
+  let token;
+
   if (shouldAuth) {
-    await verifyToken();
+    token = await verifyToken();
   }
 
   const response = await fetch(`${getUrl()}${route}`, {
     method,
     headers: {
       'Content-Type': 'application/json',
+      ...(token && { Authorization: `Bearer ${token}` }),
     },
-    ...(shouldAuth && { credentials: 'include' }),
     ...(body && { body: JSON.stringify(body) }),
   });
 

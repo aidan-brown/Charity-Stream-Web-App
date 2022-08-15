@@ -4,7 +4,7 @@ import { Button, TextField } from '@mui/material';
 import { TabPanel } from '@mui/lab';
 import './AnalyticsPanel.scss';
 import { useNavigate } from 'react-router-dom';
-import { getAnalytics } from '../../../../../api/adminPanel.api';
+import { getAnalytics } from '../../../../../api';
 
 const AnalyticsPanel = ({ setAlert }) => {
   const navigate = useNavigate();

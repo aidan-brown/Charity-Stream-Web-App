@@ -48,29 +48,3 @@ export const disableItem = async (items) => Put({
   body: items,
   shouldAuth: true,
 });
-
-export const checkoutDisable = async (status) => Put({
-  route: '/disable/checkout',
-  body: { status },
-  shouldAuth: true,
-});
-
-export const getPlayers = async () => Get({ route: '/players' });
-
-export const createNewPlayers = async (players) => {
-  const { errors, newPlayers: nps } = await Post({
-    route: '/players',
-    body: players,
-    shouldAuth: true,
-  });
-
-  return {
-    errors,
-    nps,
-  };
-};
-
-export const deletePlayer = async (username) => Delete({
-  route: `/players/${username}`,
-  shouldAuth: true,
-});

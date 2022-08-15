@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import { postToken } from '../api/token.api';
+import { postToken } from '../api';
 
 const useLogin = () => {
   const { hash } = useLocation();

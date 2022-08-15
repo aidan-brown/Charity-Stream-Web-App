@@ -5,7 +5,6 @@ import {
   QueryClient,
   QueryClientProvider,
 } from '@tanstack/react-query';
-import { CookiesProvider } from 'react-cookie';
 import { datadogRum } from '@datadog/browser-rum-recorder';
 import App from './Components/App/App';
 import './index.css';
@@ -24,16 +23,21 @@ datadogRum.init({
 /* eslint-enable no-underscore-dangle */
 
 // Create a client
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: true,
+      retry: false,
+    },
+  },
+});
 
 /* eslint-disable react/jsx-filename-extension */
 ReactDOM.render(
   <QueryClientProvider client={queryClient}>
-    <CookiesProvider>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
-    </CookiesProvider>
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
   </QueryClientProvider>,
   document.getElementById('root'),
 );

@@ -18,11 +18,7 @@ import {
 } from '@mdi/js';
 import { Link } from 'react-router-dom';
 import { Popover } from '@mui/material';
-
 import PropTypes from 'prop-types';
-import './Stream.scss';
-import './PlayerList.scss';
-import './PerspectiveList.scss';
 import { useQuery } from '@tanstack/react-query';
 import StreamWindow from './StreamWindow/StreamWindow';
 import StoreContent from '../Store/StoreContent/StoreContent';
@@ -30,8 +26,10 @@ import { getUrl, ItemSymbols } from '../../../Utils';
 import AssociationLogos from '../../../assets';
 import BackgroundVideo from '../../../assets/landing-stream-clips.mp4';
 import { steveFace } from '../../../assets/images';
-import { getPlayers } from '../../../api/adminPanel.api';
-import getDynmapData from '../../../api/dynmap.api';
+import { getPlayers, getDynmapData } from '../../../api';
+import './Stream.scss';
+import './PlayerList.scss';
+import './PerspectiveList.scss';
 
 /** Class for constructing the stream page * */
 const Stream = ({

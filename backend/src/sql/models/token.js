@@ -22,10 +22,6 @@ const Token = sequelize.define('Token', {
     type: DataTypes.TEXT,
     allowNull: false,
   },
-  expires: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
 });
 
 Token.belongsTo(Account, {

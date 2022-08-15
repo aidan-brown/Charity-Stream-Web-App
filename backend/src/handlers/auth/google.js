@@ -1,6 +1,5 @@
 const { default: axios } = require('axios');
 const jwt = require('jsonwebtoken');
-const dayjs = require('dayjs');
 const { Token, Account } = require('../../sql/models');
 const { hashValue } = require('../../utils/crypto');
 
@@ -34,9 +33,6 @@ module.exports = async (req, res) => {
       defaults: newUser,
     });
 
-    const accessExpires = dayjs().set('minutes', 15).second();
-    const refreshExpires = dayjs().set('day', 7).second();
-
     // Token for accessing sensitive data
     const accessToken = jwt.sign(
       { id },
@@ -58,7 +54,6 @@ module.exports = async (req, res) => {
       await Token.update({
         hash,
         salt,
-        expires: refreshExpires,
       }, {
         where: {
           accountId: id,
@@ -69,21 +64,18 @@ module.exports = async (req, res) => {
         accountId: id,
         hash,
         salt,
-        expires: refreshExpires,
       });
     }
 
     // Add the token to an http only cookie and send back account
     res
-      .cookie('tokens', {
-        accessToken,
-        refreshToken,
-      }, {
+      .cookie('accessToken', accessToken)
+      .cookie('refreshToken', refreshToken, {
         secure: process.env.DEPLOYMENT_ENV === 'production',
         httpOnly: true,
       })
       .status(201)
-      .send({ account, expires: accessExpires });
+      .send({ account });
   } catch (err) {
     res.status(400).send('Bad Request');
   }

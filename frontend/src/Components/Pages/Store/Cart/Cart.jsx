@@ -9,8 +9,7 @@ import { useQuery } from '@tanstack/react-query';
 import CartEffect from './CartEffect';
 import CartItem from './CartItem';
 import './Cart.scss';
-import { getCheckoutStatus } from '../../../../api/checkout.api';
-import { getPlayers } from '../../../../api/adminPanel.api';
+import { getCheckoutStatus, getPlayers } from '../../../../api';
 
 const Cart = ({
   player,

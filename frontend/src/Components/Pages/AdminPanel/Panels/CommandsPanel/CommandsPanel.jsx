@@ -18,8 +18,12 @@ import {
 import { TabPanel } from '@mui/lab';
 import { useNavigate } from 'react-router-dom';
 import {
-  deleteQuickCommand, getPlayers, getQuickCommands, runCommands, saveQuickCommands,
-} from '../../../../../api/adminPanel.api';
+  deleteQuickCommand,
+  getPlayers,
+  getQuickCommands,
+  runCommands,
+  saveQuickCommands,
+} from '../../../../../api';
 import './CommandsPanel.scss';
 
 const CommandsPanel = ({ setAlert }) => {

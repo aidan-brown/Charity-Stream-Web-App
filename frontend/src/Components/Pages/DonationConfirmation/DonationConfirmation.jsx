@@ -4,7 +4,7 @@ import { Button } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { verifyDonation } from '../../../api/checkout.api';
+import { verifyDonation } from '../../../api';
 
 import './DonationConfirmation.scss';
 

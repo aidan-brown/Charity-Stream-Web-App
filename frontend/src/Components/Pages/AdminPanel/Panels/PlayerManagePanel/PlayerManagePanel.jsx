@@ -15,7 +15,11 @@ import { useQuery } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 import { ASSOCIATIONS, CHANNEL_TYPES } from '../../../../../constants';
 import './PlayerManagePanel.scss';
-import { createNewPlayers, deletePlayer, getPlayers } from '../../../../../api/adminPanel.api';
+import {
+  createNewPlayers,
+  deletePlayer,
+  getPlayers,
+} from '../../../../../api';
 
 const PlayerManagePanel = ({ setAlert }) => {
   const navigate = useNavigate();

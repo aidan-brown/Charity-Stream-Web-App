@@ -1,4 +1,4 @@
-import { Get, Post } from './api';
+import { Get, Post, Put } from './api';
 
 export const getCheckoutStatus = async () => {
   const response = await Get({
@@ -22,5 +22,11 @@ export const verifyCheckout = async (body) => {
 export const verifyDonation = async (body) => Post({
   route: '/verify-donation',
   body,
+  shouldAuth: true,
+});
+
+export const checkoutDisable = async (status) => Put({
+  route: '/disable/checkout',
+  body: { status },
   shouldAuth: true,
 });
