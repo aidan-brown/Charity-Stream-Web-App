@@ -1,4 +1,6 @@
 module.exports = async (ms, callback) => {
-  await new Promise((resolve) => setTimeout(resolve, ms));
+  await new Promise((resolve) => {
+    setTimeout(resolve, ms);
+  });
   callback();
 };

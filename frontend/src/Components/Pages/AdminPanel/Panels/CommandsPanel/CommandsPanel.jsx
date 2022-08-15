@@ -16,10 +16,19 @@ import {
   Add, ArrowBack, ArrowForward, Delete,
 } from '@mui/icons-material';
 import { TabPanel } from '@mui/lab';
-import { getReq, getUrl } from '../../../../../Utils';
+import { useNavigate } from 'react-router-dom';
+import {
+  deleteQuickCommand,
+  getPlayers,
+  getQuickCommands,
+  runCommands,
+  saveQuickCommands,
+} from '../../../../../api';
 import './CommandsPanel.scss';
 
-const CommandsPanel = ({ authHeader, setAlert }) => {
+const CommandsPanel = ({ setAlert }) => {
+  const navigate = useNavigate();
+
   const [commands, setCommands] = useState([{
     name: '',
     commands: [{ command: '', shouldWait: false }],
@@ -29,12 +38,7 @@ const CommandsPanel = ({ authHeader, setAlert }) => {
   const [variables, setVariables] = useState({});
   const dataSources = {
     players: {
-      get: async () => {
-        const res = await getReq(`${getUrl()}/players`);
-
-        if (res.status === 200) return res.json();
-        return [];
-      },
+      get: getPlayers,
       variables: [
         'players:username',
         'players:name',
@@ -48,34 +52,23 @@ const CommandsPanel = ({ authHeader, setAlert }) => {
   useEffect(() => {
     const getCommands = async () => {
       try {
-        const response = await fetch(`${getUrl()}/quick-commands`, {
-          headers: {
-            Authorization: authHeader,
-            'Content-Type': 'application/json',
-          },
-        });
+        const quickCommands = await getQuickCommands();
 
-        if (response.status !== 200) {
+        if (quickCommands) {
+          setCommands([
+            ...commands,
+            quickCommands,
+          ]);
+        } else {
           setAlert({
             message: 'Failed to get quick Commands (check the logs for why using code=GET_QUICK_COMMANDS)',
             severity: 'error',
           });
-        } else {
-          const json = await response.json();
-          setCommands([
-            ...commands,
-            ...json.map((command) => ({
-              ...command,
-              commands: JSON.parse(command.commands),
-              variables: JSON.parse(command.variables),
-            })),
-          ]);
         }
-      } catch (_) {
-        setAlert({
-          message: 'Failed to get quick Commands (check the logs for why using code=GET_QUICK_COMMANDS)',
-          severity: 'error',
-        });
+      } catch (err) {
+        if (err === 'REDIRECT_TO_LOGIN') {
+          navigate('/login');
+        }
       }
     };
 
@@ -94,7 +87,7 @@ const CommandsPanel = ({ authHeader, setAlert }) => {
 
     if (vars) {
       return [
-        ...new Set(vars.map((variable) => variable.replace('%>', '').replace('<%', ''))),
+        ...new Set(vars?.map((variable) => variable.replace('%>', '').replace('<%', ''))),
       ];
     }
 
@@ -103,66 +96,52 @@ const CommandsPanel = ({ authHeader, setAlert }) => {
 
   const saveCommands = async (newCommands, index = current) => {
     try {
-      const response = await fetch(`${getUrl()}/quick-commands`, {
-        method: 'PUT',
-        headers: {
-          Authorization: authHeader,
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          ...newCommands[index],
-          commands: JSON.stringify(newCommands[index].commands),
-          variables: JSON.stringify(newCommands[index].variables),
-        }),
+      const savedCommands = await saveQuickCommands({
+        ...newCommands[index],
+        commands: JSON.stringify(newCommands[index].commands),
+        variables: JSON.stringify(newCommands[index].variables),
       });
 
-      if (response.status !== 200) {
+      if (savedCommands) {
         setAlert({
-          message: 'Failed to crete quick Command (check the logs for why using code=CREATE_QUICK_COMMANDS_ERROR)',
-          severity: 'error',
+          message: 'Created command!',
+          severity: 'success',
         });
-        return null;
+        return savedCommands;
       }
+
       setAlert({
-        message: 'Created command!',
-        severity: 'success',
-      });
-      return response.json();
-    } catch (_) {
-      setAlert({
-        message: 'Failed to create quick Command (check the logs for why using code=CREATE_QUICK_COMMANDS_ERROR)',
+        message: 'Failed to crete quick Command (check the logs for why using code=CREATE_QUICK_COMMANDS_ERROR)',
         severity: 'error',
       });
-      return null;
+      return {};
+    } catch (err) {
+      if (err === 'REDIRECT_TO_LOGIN') {
+        navigate('/login');
+      }
+      return {};
     }
   };
 
   const deleteCommand = async (id) => {
     try {
-      const response = await fetch(`${getUrl()}/quick-commands/${id}`, {
-        method: 'DELETE',
-        headers: {
-          Authorization: authHeader,
-          'Content-Type': 'application/json',
-        },
-      });
+      const status = await deleteQuickCommand(id);
 
-      if (response.status !== 200) {
-        setAlert({
-          message: 'Failed to delete quick Commands (check the logs for why using code=DELETE_QUICK_COMMANDS_ERROR)',
-          severity: 'error',
-        });
-      } else {
+      if (status) {
         setAlert({
           message: 'Deleted command!',
           severity: 'success',
         });
+      } else {
+        setAlert({
+          message: 'Failed to delete quick Commands (check the logs for why using code=DELETE_QUICK_COMMANDS_ERROR)',
+          severity: 'error',
+        });
       }
-    } catch (_) {
-      setAlert({
-        message: 'Failed to delete quick Commands (check the logs for why using code=DELETE_QUICK_COMMANDS_ERROR)',
-        severity: 'error',
-      });
+    } catch (err) {
+      if (err === 'REDIRECT_TO_LOGIN') {
+        navigate('/login');
+      }
     }
   };
 
@@ -180,7 +159,7 @@ const CommandsPanel = ({ authHeader, setAlert }) => {
     ];
 
     const { newId } = await saveCommands(newCommands, newCommands.length - 1);
-    setCommands(newCommands.map((c, i) => (i === newCommands.length - 1
+    setCommands(newCommands?.map((c, i) => (i === newCommands.length - 1
       ? { ...c, id: newId } : c)));
   };
 
@@ -223,41 +202,35 @@ const CommandsPanel = ({ authHeader, setAlert }) => {
   };
 
   const runCommand = async (index) => {
-    const { dataSource } = commands[index];
-    const commandsToRun = await injectVariables(
-      index,
-      JSON.stringify(commands[index].commands),
-      dataSource,
-      [...commands[index].variables, ...(dataSource ? dataSources[dataSource].variables : [])],
-    );
+    try {
+      const { dataSource } = commands[index];
+      const commandsToRun = await injectVariables(
+        index,
+        JSON.stringify(commands[index].commands),
+        dataSource,
+        [...commands[index].variables, ...(dataSource ? dataSources[dataSource].variables : [])],
+      );
 
-    fetch(`${getUrl()}/run-commands`, {
-      method: 'POST',
-      headers: {
-        Authorization: authHeader,
-        'Content-Type': 'application/json',
-      },
-      body: commandsToRun,
-    })
-      .then((res) => {
-        if (res.status !== 200) {
-          setAlert({
-            message: 'Failed to run command',
-            severity: 'error',
-          });
-        } else {
-          setAlert({
-            message: 'Commands are scheduled to run!',
-            severity: 'success',
-          });
-        }
-      })
-      .catch(() => {
+      const status = await runCommands(commandsToRun);
+
+      if (status) {
+        setAlert({
+          message: 'Commands are scheduled to run!',
+          severity: 'success',
+        });
+      } else {
         setAlert({
           message: 'Failed to run command',
           severity: 'error',
         });
-      });
+      }
+      return {};
+    } catch (err) {
+      if (err === 'REDIRECT_TO_LOGIN') {
+        navigate('/login');
+      }
+      return {};
+    }
   };
 
   return (
@@ -267,14 +240,14 @@ const CommandsPanel = ({ authHeader, setAlert }) => {
           <h1>Your Quick Commands</h1>
           <div className="quick-commands">
             {commands
-              .filter((_, i) => i !== 0)
-              .map((command, i) => {
+              ?.filter((_, i) => i !== 0)
+              ?.map((command, i) => {
                 const { name, variables: vars } = command;
 
                 return (
                   <div key={name} className="command">
                     <div className="variables">
-                      {vars.map((variable) => (
+                      {vars?.map((variable) => (
                         <TextField
                           key={`${name}-${variable}`}
                           className="variable"
@@ -392,7 +365,7 @@ const CommandsPanel = ({ authHeader, setAlert }) => {
                     variant="filled"
                     value={commands[current].name}
                     onChange={(e) => {
-                      setCommands(commands.map((c, i) => {
+                      setCommands(commands?.map((c, i) => {
                         if (i === current) {
                           return {
                             ...commands[current],
@@ -412,7 +385,7 @@ const CommandsPanel = ({ authHeader, setAlert }) => {
                       onChange={(e) => {
                         const { value } = e.target;
 
-                        setCommands(commands.map((c, j) => {
+                        setCommands(commands?.map((c, j) => {
                           if (j === current) {
                             return {
                               ...commands[current],
@@ -431,7 +404,7 @@ const CommandsPanel = ({ authHeader, setAlert }) => {
               </div>
               <div className="new-commands">
                 <h2>{current === 0 ? 'Add Commands to Run' : 'Commands that Run'}</h2>
-                {commands[current].commands.map(({ command, shouldWait }, i) => (
+                {commands[current]?.commands?.map(({ command, shouldWait }, i) => (
                 // eslint-disable-next-line react/no-array-index-key
                   <div key={i} className="new-command">
                     <TextField
@@ -440,11 +413,11 @@ const CommandsPanel = ({ authHeader, setAlert }) => {
                       sx={{ m: 1, width: '100%' }}
                       value={command}
                       onChange={(e) => {
-                        setCommands(commands.map((c, j) => {
+                        setCommands(commands?.map((c, j) => {
                           if (j === current) {
                             return {
                               ...commands[current],
-                              commands: commands[current].commands.map((co, k) => (
+                              commands: commands[current]?.commands?.map((co, k) => (
                                 i === k
                                   ? { ...co, command: e.target.value }
                                   : co
@@ -458,11 +431,11 @@ const CommandsPanel = ({ authHeader, setAlert }) => {
                     <Switch
                       checked={shouldWait}
                       onChange={(e) => {
-                        setCommands(commands.map((c, j) => {
+                        setCommands(commands?.map((c, j) => {
                           if (j === current) {
                             return {
                               ...commands[current],
-                              commands: commands[current].commands.map((co, k) => (
+                              commands: commands[current]?.commands?.map((co, k) => (
                                 i === k
                                   ? { ...co, shouldWait: e.target.checked }
                                   : co
@@ -503,7 +476,7 @@ const CommandsPanel = ({ authHeader, setAlert }) => {
                   borderRadius: '7.55px',
                 }}
                 onClick={() => {
-                  setCommands(commands.map((c, i) => {
+                  setCommands(commands?.map((c, i) => {
                     if (i === current) {
                       return {
                         ...commands[current],
@@ -525,7 +498,7 @@ const CommandsPanel = ({ authHeader, setAlert }) => {
                 <Stack className="new-variable" direction="row" spacing={1}>
                   {[...variablesUsed, ...(commands[current].dataSource
                     ? dataSources[commands[current].dataSource].variables
-                    : [])].map((variable, i) => (
+                    : [])]?.map((variable, i) => (
                     // eslint-disable-next-line react/no-array-index-key
                       <Chip key={`${variable}-${i}`} className="variable-chip" label={variable} color="secondary" />
                   ))}
@@ -553,7 +526,6 @@ const CommandsPanel = ({ authHeader, setAlert }) => {
 };
 
 CommandsPanel.propTypes = {
-  authHeader: PropTypes.string.isRequired,
   setAlert: PropTypes.func.isRequired,
 };
 

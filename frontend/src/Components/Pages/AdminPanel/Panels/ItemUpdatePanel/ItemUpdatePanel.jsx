@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import {
   Button,
@@ -11,13 +11,23 @@ import {
 } from '@mui/material';
 import { TabPanel } from '@mui/lab';
 import { Clear, Check, Delete } from '@mui/icons-material';
+import { useNavigate } from 'react-router-dom';
+import { useQuery } from '@tanstack/react-query';
 import StoreEffect from '../../../Store/StoreContent/StoreEffect';
 import StoreMob from '../../../Store/StoreContent/StoreMob';
 import StoreItem from '../../../Store/StoreContent/StoreItem';
-import { getUrl, getReq } from '../../../../../Utils';
+import {
+  checkoutDisable,
+  disableItem,
+  pricesOverride,
+  getCheckoutStatus,
+  getAllMinecraftItems,
+} from '../../../../../api';
 import './ItemUpdatePanel.scss';
 
-const ItemUpdatePanel = ({ authHeader, setAlert }) => {
+const ItemUpdatePanel = ({ setAlert }) => {
+  const navigate = useNavigate();
+
   const [toDisable, setToDisable] = useState([]);
   const [toPriceChange, setToPriceChange] = useState([]);
   const [filter, setFilter] = useState('');
@@ -27,121 +37,94 @@ const ItemUpdatePanel = ({ authHeader, setAlert }) => {
   const [items, setItems] = useState([]);
   const [checkoutStatus, setCheckoutStatus] = useState(false);
 
-  useEffect(() => {
-    const getCheckoutStatus = () => {
-      getReq(`${getUrl()}/checkout/status`)
-        .then((res) => res.text())
-        .then((res) => {
-          setCheckoutStatus(res === 'true');
-        }).catch(() => {
-          setAlert({
-            message: 'Could not get checkout status',
-            severity: 'error',
-          });
-        });
-    };
-
-    getCheckoutStatus();
-  }, []);
-
-  useEffect(() => {
-    const getElements = () => {
-      getReq(`${getUrl()}/minecraft/all`)
-        .then((res) => res.json())
-        .then((res) => {
-          setItems(res);
-        }).catch(() => {
-          setAlert({
-            message: 'Could not get items from backend',
-            severity: 'alert',
-          });
-        });
-    };
-
-    getElements();
-  }, []);
-
-  const disableItems = () => {
-    fetch(`${getUrl()}/disable`, {
-      method: 'PUT',
-      headers: {
-        Authorization: authHeader,
-        'Content-Type': 'application/json',
+  useQuery(
+    ['checkout-status'],
+    () => getCheckoutStatus(),
+    {
+      onSuccess: (status) => {
+        setCheckoutStatus(status);
       },
-      body: JSON.stringify(toDisable),
-    }).then((res) => {
-      if (res.status !== 200) {
+      onError: () => {
         setAlert({
-          message: 'Failed to toggle those items on/off',
+          message: 'Could not get checkout status',
           severity: 'error',
         });
-      } else {
+      },
+    },
+  );
+
+  useQuery(
+    ['minecraft-items'],
+    () => getAllMinecraftItems(),
+    {
+      onSuccess: (newItems) => {
+        setItems(newItems);
+      },
+      onError: () => {
+        setAlert({
+          message: 'Could not get items from backend',
+          severity: 'error',
+        });
+      },
+    },
+  );
+
+  const disableItems = async () => {
+    try {
+      if (await disableItem(toDisable)) {
         setToDisable([]);
         setAlert({
           message: 'Successfully toggled those items on/off',
           severity: 'success',
         });
-      }
-    }).catch(() => {
-      setAlert({
-        message: 'Failed to toggle those items on/off',
-        severity: 'error',
-      });
-    });
-  };
-
-  const changePrices = (prices) => {
-    fetch(`${getUrl()}/price-overrides`, {
-      method: 'PUT',
-      headers: {
-        Authorization: authHeader,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(prices),
-    }).then((res) => {
-      if (res.status !== 200) {
+      } else {
         setAlert({
-          message: 'Failed to change price',
+          message: 'Failed to toggle those items on/off',
           severity: 'error',
         });
-      } else {
+      }
+    } catch (err) {
+      if (err === 'REDIRECT_TO_LOGIN') {
+        navigate('/login');
+      }
+    }
+  };
+
+  const changePrices = async (prices) => {
+    try {
+      if (await pricesOverride(prices)) {
         setToPriceChange([]);
         setAlert({
           message: 'Success',
           severity: 'success',
         });
+      } else {
+        setAlert({
+          message: 'Failed to change price',
+          severity: 'error',
+        });
       }
-    }).catch(() => {
-      setAlert({
-        message: 'Failed to change price',
-        severity: 'error',
-      });
-    });
+    } catch (err) {
+      if (err === 'REDIRECT_TO_LOGIN') {
+        navigate('/login');
+      }
+    }
   };
 
-  const disableCheckout = (status) => {
-    fetch(`${getUrl()}/disable/checkout`, {
-      method: 'PUT',
-      headers: {
-        Authorization: authHeader,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ status }),
-    }).then((res) => {
-      if (res.status !== 200) {
+  const disableCheckout = async (status) => {
+    try {
+      if (!await checkoutDisable(status)) {
         setAlert({
           message: 'Failed to Disable Checkout',
           severity: 'error',
         });
         setCheckoutStatus(!status);
       }
-    }).catch(() => {
-      setAlert({
-        message: 'Failed to Disable Checkout',
-        severity: 'error',
-      });
-      setCheckoutStatus(!status);
-    });
+    } catch (err) {
+      if (err === 'REDIRECT_TO_LOGIN') {
+        navigate('/login');
+      }
+    }
   };
 
   const toggleDisabled = (item) => {
@@ -548,7 +531,6 @@ const ItemUpdatePanel = ({ authHeader, setAlert }) => {
 };
 
 ItemUpdatePanel.propTypes = {
-  authHeader: PropTypes.string.isRequired,
   setAlert: PropTypes.func.isRequired,
 };
 

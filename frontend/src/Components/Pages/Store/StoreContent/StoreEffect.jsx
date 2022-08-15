@@ -5,7 +5,7 @@ import Icon from '@mdi/react';
 import { mdiCartPlus } from '@mdi/js';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { isSafari } from 'react-device-detect';
-import { getUrl } from '../../../../Utils';
+import { getApiUrl } from '../../../../Utils';
 
 const StoreEffect = ({
   effect, addItemToCart, isStore, className,
@@ -15,14 +15,14 @@ const StoreEffect = ({
       {!isSafari
         ? (
           <>
-            <LazyLoadImage className="store-item-image" src={`${getUrl()}/images/effects/${effect.id}-full.webp`} alt={effect.displayName} effect="blur" />
-            <LazyLoadImage className="store-item-icon" src={`${getUrl()}/images/effects/${effect.id}.webp`} alt={effect.displayName} effect="blur" />
+            <LazyLoadImage className="store-item-image" src={`${getApiUrl()}/images/effects/${effect.id}-full.webp`} alt={effect.displayName} effect="blur" />
+            <LazyLoadImage className="store-item-icon" src={`${getApiUrl()}/images/effects/${effect.id}.webp`} alt={effect.displayName} effect="blur" />
           </>
         )
         : (
           <>
-            <img className="store-item-image" src={`${getUrl()}/images/effects/${effect.id}-full.webp`} alt={effect.displayName} />
-            <img className="store-item-icon" src={`${getUrl()}/images/effects/${effect.id}.webp`} alt={effect.displayName} />
+            <img className="store-item-image" src={`${getApiUrl()}/images/effects/${effect.id}-full.webp`} alt={effect.displayName} />
+            <img className="store-item-icon" src={`${getApiUrl()}/images/effects/${effect.id}.webp`} alt={effect.displayName} />
           </>
         )}
       <p className="store-item-displayName">{effect.displayName}</p>

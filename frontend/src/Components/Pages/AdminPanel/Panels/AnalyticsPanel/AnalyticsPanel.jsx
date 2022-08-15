@@ -3,34 +3,30 @@ import PropTypes from 'prop-types';
 import { Button, TextField } from '@mui/material';
 import { TabPanel } from '@mui/lab';
 import './AnalyticsPanel.scss';
-import { getUrl } from '../../../../../Utils';
+import { useNavigate } from 'react-router-dom';
+import { getAnalytics } from '../../../../../api';
 
-const AnalyticsPanel = ({ authHeader, setAlert }) => {
+const AnalyticsPanel = ({ setAlert }) => {
+  const navigate = useNavigate();
   const [logs, setLogs] = useState([]);
   const [filter, setFilter] = useState('');
 
   const getLogs = async () => {
     try {
-      const response = await fetch(`${getUrl()}/analytics?${filter}`, {
-        headers: {
-          Authorization: authHeader,
-          'Content-Type': 'application/json',
-        },
-      });
+      const newLogs = await getAnalytics(filter);
 
-      if (response.status !== 200) {
+      if (!newLogs) {
         setAlert({
           message: 'Failed to get logs',
           severity: 'error',
         });
       } else {
-        setLogs(await response.json());
+        setLogs(newLogs);
       }
-    } catch (_) {
-      setAlert({
-        message: 'Failed to get logs',
-        severity: 'error',
-      });
+    } catch (err) {
+      if (err === 'REDIRECT_TO_LOGIN') {
+        navigate('/login');
+      }
     }
   };
 
@@ -86,7 +82,6 @@ const AnalyticsPanel = ({ authHeader, setAlert }) => {
 };
 
 AnalyticsPanel.propTypes = {
-  authHeader: PropTypes.string.isRequired,
   setAlert: PropTypes.func.isRequired,
 };
 

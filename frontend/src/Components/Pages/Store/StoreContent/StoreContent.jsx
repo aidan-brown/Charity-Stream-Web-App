@@ -1,48 +1,24 @@
 /* eslint-disable react/forbid-prop-types */
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { getUrl, getReq } from '../../../../Utils';
+import { useQuery } from '@tanstack/react-query';
 import StoreItem from './StoreItem';
 import StoreMob from './StoreMob';
 import StoreEffect from './StoreEffect';
+import {
+  getMinecraftEffects,
+  getMinecraftItems,
+  getMinecraftMobs,
+} from '../../../../api';
+import { getApiUrl } from '../../../../Utils';
 import './StoreContent.scss';
 
 const StoreContent = ({
   filterTag, addItemToCart, className, cartItems, setCartItems,
 }) => {
-  const [items, setItems] = useState([]);
-  const [effects, setEffects] = useState([]);
-  const [mobs, setMobs] = useState([]);
-
-  const fetchShopItems = () => {
-    getReq(`${getUrl()}/minecraft/items`)
-      .then((res) => res.json())
-      .then((res) => {
-        setItems(res);
-      })
-      .catch(() => {});
-    getReq(`${getUrl()}/minecraft/mobs`)
-      .then((res) => res.json())
-      .then((res) => {
-        setMobs(res);
-      })
-      .catch(() => {});
-    getReq(`${getUrl()}/minecraft/effects`)
-      .then((res) => res.json())
-      .then((res) => {
-        setEffects(res);
-      })
-      .catch(() => {});
-  };
-
-  useEffect(() => {
-    fetchShopItems();
-
-    const shopPoll = setInterval(fetchShopItems, 10000);
-    return () => {
-      clearInterval(shopPoll);
-    };
-  }, []);
+  const { data: items = [] } = useQuery(['items'], () => getMinecraftItems());
+  const { data: mobs = [] } = useQuery(['mobs'], () => getMinecraftMobs());
+  const { data: effects = [] } = useQuery(['effects'], () => getMinecraftEffects());
 
   const findItem = (id, type) => {
     if (type === 'mob') {
@@ -82,7 +58,7 @@ const StoreContent = ({
         <StoreItem
           item={item}
           addItemToCart={() => addItemToCart({
-            ...item, amount: 1, icon: `${getUrl()}/images/items/${item.id}.webp`, img: `${getUrl()}/images/items/${item.id}-full.webp`,
+            ...item, amount: 1, icon: `${getApiUrl()}/images/items/${item.id}.webp`, img: `${getApiUrl()}/images/items/${item.id}-full.webp`,
           })}
           key={item.id}
         />
@@ -91,7 +67,7 @@ const StoreContent = ({
         <StoreMob
           mob={mob}
           addItemToCart={() => addItemToCart({
-            ...mob, amount: 1, icon: `${getUrl()}/images/mobs/${mob.id}.webp`, img: `${getUrl()}/images/mobs/${mob.id}-full.webp`, type: 'mob',
+            ...mob, amount: 1, icon: `${getApiUrl()}/images/mobs/${mob.id}.webp`, img: `${getApiUrl()}/images/mobs/${mob.id}-full.webp`, type: 'mob',
           })}
           key={mob.id}
         />
@@ -100,7 +76,7 @@ const StoreContent = ({
         <StoreEffect
           effect={effect}
           addItemToCart={() => addItemToCart({
-            ...effect, time: 30, power: 0, icon: `${getUrl()}/images/effects/${effect.id}.webp`, img: `${getUrl()}/images/effects/${effect.id}-full.webp`, type: 'effect',
+            ...effect, time: 30, power: 0, icon: `${getApiUrl()}/images/effects/${effect.id}.webp`, img: `${getApiUrl()}/images/effects/${effect.id}-full.webp`, type: 'effect',
           })}
           key={effect.id}
         />
@@ -109,7 +85,7 @@ const StoreContent = ({
         <StoreItem
           item={item}
           addItemToCart={() => addItemToCart({
-            ...item, amount: 1, icon: `${getUrl()}/images/items/${item.id}.webp`, img: `${getUrl()}/images/items/${item.id}-full.webp`,
+            ...item, amount: 1, icon: `${getApiUrl()}/images/items/${item.id}.webp`, img: `${getApiUrl()}/images/items/${item.id}-full.webp`,
           })}
           key={item.id}
         />
@@ -118,7 +94,7 @@ const StoreContent = ({
         <StoreMob
           mob={mob}
           addItemToCart={() => addItemToCart({
-            ...mob, amount: 1, icon: `${getUrl()}/images/mobs/${mob.id}.webp`, img: `${getUrl()}/images/mobs/${mob.id}-full.webp`, type: 'mob',
+            ...mob, amount: 1, icon: `${getApiUrl()}/images/mobs/${mob.id}.webp`, img: `${getApiUrl()}/images/mobs/${mob.id}-full.webp`, type: 'mob',
           })}
           key={mob.id}
         />
@@ -127,7 +103,7 @@ const StoreContent = ({
         <StoreEffect
           effect={effect}
           addItemToCart={() => addItemToCart({
-            ...effect, time: 30, power: 0, icon: `${getUrl()}/images/effects/${effect.id}.webp`, img: `${getUrl()}/images/effects/${effect.id}-full.webp`, type: 'effect',
+            ...effect, time: 30, power: 0, icon: `${getApiUrl()}/images/effects/${effect.id}.webp`, img: `${getApiUrl()}/images/effects/${effect.id}-full.webp`, type: 'effect',
           })}
           key={effect.id}
         />

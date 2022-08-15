@@ -11,4 +11,9 @@ module.exports = {
     'mob',
     'effect',
   ],
+  ROLES: {
+    ADMIN: 'ADMIN',
+    PLAYER: 'PLAYER',
+    USER: 'USER',
+  },
 };

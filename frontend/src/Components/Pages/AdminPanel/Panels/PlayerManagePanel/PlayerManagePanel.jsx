@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import {
   Button,
@@ -11,103 +11,78 @@ import {
 } from '@mui/material';
 import { TabPanel } from '@mui/lab';
 import DeleteIcon from '@mui/icons-material/Delete';
+import { useQuery } from '@tanstack/react-query';
+import { useNavigate } from 'react-router-dom';
 import { ASSOCIATIONS, CHANNEL_TYPES } from '../../../../../constants';
-import { getUrl, getReq } from '../../../../../Utils';
 import './PlayerManagePanel.scss';
+import {
+  createNewPlayers,
+  deletePlayer,
+  getPlayers,
+} from '../../../../../api';
 
-const PlayerManagePanel = ({ authHeader, setAlert }) => {
+const PlayerManagePanel = ({ setAlert }) => {
+  const navigate = useNavigate();
+
   const [player, setPlayer] = useState({});
   const [players, setPlayers] = useState([]);
   const [text, setText] = useState('');
 
-  useEffect(() => {
-    const getPlayers = () => {
-      getReq(`${getUrl()}/players`)
-        .then((res) => {
-          if (res.status !== 200) {
-            setAlert({
-              message: 'Could not get players from backend',
-              severity: 'error',
-            });
-          } else {
-            res.json().then((r) => {
-              setPlayers(r);
-            });
-          }
-        }).catch(() => {
-          setAlert({
-            message: 'Could not get players from backend',
-            severity: 'error',
-          });
-        });
-    };
-
-    getPlayers();
-  }, []);
-
-  const createPlayers = (newPlayers) => {
-    fetch(`${getUrl()}/players`, {
-      method: 'POST',
-      headers: {
-        Authorization: authHeader,
-        'Content-Type': 'application/json',
+  useQuery(
+    ['players'],
+    () => getPlayers(),
+    {
+      onSuccess: (newPlayers) => {
+        setPlayers(newPlayers);
       },
-      body: JSON.stringify(newPlayers),
-    })
-      .then((res) => res.json())
-      .then((res) => {
-        const { errors, newPlayers: nps } = res;
+    },
+  );
 
-        if (nps) {
-          setPlayers([...players, ...nps]);
-        }
+  const createPlayers = async (newPlayers) => {
+    try {
+      const { errors, nps } = await createNewPlayers(newPlayers);
 
-        if (errors) {
-          setAlert({
-            message: `Errors: ${JSON.stringify(errors)}`,
-            severity: 'error',
-          });
-        } else {
-          setAlert({
-            message: 'Successfully Created player(s)',
-            severity: 'success',
-          });
-        }
-      }).catch(() => {
+      if (nps) {
+        setPlayers([...players, ...nps]);
+      }
+
+      if (errors) {
         setAlert({
-          message: 'Could not create players',
+          message: `Errors: ${JSON.stringify(errors)}`,
           severity: 'error',
         });
-      });
+      } else {
+        setAlert({
+          message: 'Successfully Created player(s)',
+          severity: 'success',
+        });
+      }
+    } catch (err) {
+      if (err === 'REDIRECT_TO_LOGIN') {
+        navigate('/login');
+      }
+    }
   };
 
-  const deletePlayer = (usn) => {
-    fetch(`${getUrl()}/players/${usn}`, {
-      method: 'DELETE',
-      headers: {
-        Authorization: authHeader,
-        'Content-Type': 'application/json',
-      },
-    })
-      .then((res) => {
-        if (res.status !== 200) {
-          setAlert({
-            message: 'Could not delete player',
-            severity: 'error',
-          });
-        } else {
-          setAlert({
-            message: `Successfully Deleted ${usn}`,
-            severity: 'success',
-          });
-          setPlayers(players.filter((p) => p.username !== usn));
-        }
-      }).catch(() => {
+  const removePlayer = async (usn) => {
+    try {
+      if (await deletePlayer(usn)) {
+        setAlert({
+          message: `Successfully Deleted ${usn}`,
+          severity: 'success',
+        });
+        setPlayers(players.filter((p) => p.username !== usn));
+      } else {
         setAlert({
           message: 'Could not delete player',
           severity: 'error',
         });
-      });
+      }
+    } catch (err) {
+      if (err === 'REDIRECT_TO_LOGIN') {
+        navigate('/login');
+      }
+    }
   };
 
   const generatePlayers = () => {
@@ -307,7 +282,7 @@ const PlayerManagePanel = ({ authHeader, setAlert }) => {
                     aria-label="delete"
                     size="large"
                     onClick={() => {
-                      deletePlayer(un);
+                      removePlayer(un);
                     }}
                   >
                     <DeleteIcon />
@@ -322,7 +297,6 @@ const PlayerManagePanel = ({ authHeader, setAlert }) => {
 };
 
 PlayerManagePanel.propTypes = {
-  authHeader: PropTypes.string.isRequired,
   setAlert: PropTypes.func.isRequired,
 };
 

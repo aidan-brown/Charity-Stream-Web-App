@@ -1,72 +1,79 @@
 const { Rcon } = require('rcon-client');
 const logger = require('./logger');
 
-module.exports = (CommandTable) => async (scheduled) => {
-  const cronId = scheduled.getTime();
+let CommandTable;
 
-  try {
+module.exports = {
+  rcon: async (scheduled) => {
+    const cronId = scheduled.getTime();
+
+    try {
     // If any commands need to be run, set the cron timeStamp
     // on the command (max 20)
-    const [updates] = await CommandTable.update({ cronId }, {
-      where: {
-        status: 'READY',
-        cronId: null,
-      },
-      limit: 20,
-    });
-
-    // If we found rows to update
-    if (updates !== 0) {
-      // Get all these updated commands
-      const commands = await CommandTable.findAll({
+      const [updates] = await CommandTable.update({ cronId }, {
         where: {
           status: 'READY',
-          cronId,
+          cronId: null,
         },
+        limit: 20,
       });
 
-      // Connect to the server for this instance
-      const rcon = await Rcon.connect({
-        host: process.env.MC_SERVER_HOST,
-        port: process.env.MC_SERVER_RCON_PORT,
-        password: process.env.MC_SERVER_RCON_PASSWORD,
-      });
+      // If we found rows to update
+      if (updates !== 0) {
+      // Get all these updated commands
+        const commands = await CommandTable.findAll({
+          where: {
+            status: 'READY',
+            cronId,
+          },
+        });
 
-      // Mark commands as running
-      await CommandTable.update({ status: 'RUNNING' }, { where: { cronId } });
+        // Connect to the server for this instance
+        const rcon = await Rcon.connect({
+          host: process.env.MC_SERVER_HOST,
+          port: process.env.MC_SERVER_RCON_PORT,
+          password: process.env.MC_SERVER_RCON_PASSWORD,
+        });
 
-      // Now we want to loop through all the commands
-      // and run them as many times as
-      /* eslint-disable no-await-in-loop */
-      for (let i = 0; i < commands.length; i += 1) {
-        const { commandText, id } = commands[i];
+        // Mark commands as running
+        await CommandTable.update({ status: 'RUNNING' }, { where: { cronId } });
 
-        // Run the command against the server
-        await rcon.send(commandText);
+        // Now we want to loop through all the commands
+        // and run them as many times as
+        /* eslint-disable no-await-in-loop */
+        for (let i = 0; i < commands.length; i += 1) {
+          const { commandText, id } = commands[i];
 
-        // Set this command as finished, as it has now run
-        await CommandTable.update({ status: 'FINISHED' }, { where: { id } });
+          // Run the command against the server
+          await rcon.send(commandText);
+
+          // Set this command as finished, as it has now run
+          await CommandTable.update({ status: 'FINISHED' }, { where: { id } });
+        }
+        /* eslint-enable no-await-in-loop */
+
+        // Close the command
+        await rcon.end();
       }
-      /* eslint-enable no-await-in-loop */
+    } catch (error) {
+      logger.error('RCON_SCHEDULE_FAILED', 'Failed to run RCON commands', { error });
 
-      // Close the command
-      await rcon.end();
+      // We want to make sure the failed commands will be run, so we reschedule them
+      try {
+        await CommandTable.update({ cronId: null, status: 'READY' }, {
+          where: {
+            cronId,
+            status: 'RUNNING',
+          },
+        });
+      } catch (err) {
+        logger.error('RCON_SCHEDULE_BACKUP_FAILED', 'Failed to reschedule commands to be run', {
+          originalError: error, error: err,
+        });
+      }
     }
-  } catch (error) {
-    logger.error('RCON_SCHEDULE_FAILED', 'Failed to run RCON commands', { error });
-
-    // We want to make sure the failed commands will be run, so we reschedule them
-    try {
-      await CommandTable.update({ cronId: null, status: 'READY' }, {
-        where: {
-          cronId,
-          status: 'RUNNING',
-        },
-      });
-    } catch (err) {
-      logger.error('RCON_SCHEDULE_BACKUP_FAILED', 'Failed to reschedule commands to be run', {
-        originalError: error, error: err,
-      });
-    }
-  }
+  },
+  setCommandTable: (commandTable) => {
+    CommandTable = commandTable;
+  },
 };

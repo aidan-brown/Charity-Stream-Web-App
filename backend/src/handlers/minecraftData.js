@@ -11,6 +11,7 @@ const {
 const { DisabledElement, PriceOverride } = require('../sql/models');
 const { logger } = require('../utils');
 
+// TODO: Redo this function, it could have better querying and not be so many loops
 const getMinecraftData = async (req, res) => {
   const { type } = req.params;
 
