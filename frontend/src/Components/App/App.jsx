@@ -12,17 +12,12 @@ import {
   Stream, Store, AdminPanel, Landing, DonationConfirmation,
 } from '../Pages';
 import Cart from '../Pages/Store/Cart/Cart';
-import { getUrl, postReq } from '../../Utils';
 import CookieDisclaimer from '../CookieDisclaimer';
 import Login from '../Pages/Login/Login';
 import LoginCallback from '../Pages/Login/LoginCallback';
-import useAccount from '../../Utils/useAccount';
+import { verifyCheckout } from '../../api/checkout.api';
 
 const App = () => {
-  const account = useAccount();
-
-  console.log(account);
-
   const [alert, setAlert] = useState();
   const [streamStarted, setStreamStarted] = useState(false);
   const [cartItems, setCartItems] = useState([]);
@@ -152,18 +147,15 @@ const App = () => {
       }
     });
 
-    const reqJSON = {
-      cart: items,
-      player,
-    };
+    try {
+      const jgUrl = await verifyCheckout({
+        cart: items,
+        player,
+      });
 
-    const res = await postReq(`${getUrl()}/verify-checkout`, JSON.stringify(reqJSON));
-
-    if (res.status === 200) {
-      const JG_URL = await res.text();
       setCartItems([]);
       setPopupClosed(false);
-      const newPopup = window.open(JG_URL, 'targetWindow',
+      const newPopup = window.open(jgUrl, 'targetWindow',
         `popup,
         width=483,
         height=680,
@@ -172,14 +164,8 @@ const App = () => {
       `);
       popupRef.current = newPopup;
       setPopup(newPopup);
-    } else {
-      const json = await res.json();
-      const { message } = json;
-
-      setAlert({
-        severity: 'error',
-        message,
-      });
+    } catch (err) {
+      // TODO: Handle error
     }
   };
 
@@ -187,45 +173,39 @@ const App = () => {
     setShowCart(showCart === 'yes' ? 'no' : 'yes');
   };
 
-  const CartComponents = () => {
-    if (true) {
-      console.log('ji');
-    }
-
-    return (
-      <span>
-        <button
-          type="button"
-          className="bg-csh-tertiary toggle-cart "
-          onClick={toggleCartMenu}
-          data-showcart={showCart}
-        >
-          <span className="material-icons">
-            {showCart === 'yes' ? 'arrow_forward' : 'shopping_cart'}
-          </span>
-        </button>
-        <img
-          className="cart-add-item"
-          ref={itemAddRef}
-          src=""
-          alt="item added to cart"
-          data-show="no"
-        />
-        <Cart
-          player={player}
-          setPlayer={setPlayer}
-          cartItems={cartItems}
-          changeCartAmount={changeCartAmount}
-          changeEffectPower={changeEffectPower}
-          changeEffectTime={changeEffectTime}
-          removeFromCart={removeItemFromCart}
-          proceedToCheckout={proceedToCheckout}
-          showCart={showCart}
-          calculateTotal={calculateTotal}
-        />
-      </span>
-    );
-  };
+  const CartComponents = () => (
+    <span>
+      <button
+        type="button"
+        className="bg-csh-tertiary toggle-cart "
+        onClick={toggleCartMenu}
+        data-showcart={showCart}
+      >
+        <span className="material-icons">
+          {showCart === 'yes' ? 'arrow_forward' : 'shopping_cart'}
+        </span>
+      </button>
+      <img
+        className="cart-add-item"
+        ref={itemAddRef}
+        src=""
+        alt="item added to cart"
+        data-show="no"
+      />
+      <Cart
+        player={player}
+        setPlayer={setPlayer}
+        cartItems={cartItems}
+        changeCartAmount={changeCartAmount}
+        changeEffectPower={changeEffectPower}
+        changeEffectTime={changeEffectTime}
+        removeFromCart={removeItemFromCart}
+        proceedToCheckout={proceedToCheckout}
+        showCart={showCart}
+        calculateTotal={calculateTotal}
+      />
+    </span>
+  );
 
   return (
     <>

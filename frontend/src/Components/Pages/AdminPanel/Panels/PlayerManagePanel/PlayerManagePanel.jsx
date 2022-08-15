@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import {
   Button,
@@ -11,11 +11,11 @@ import {
 } from '@mui/material';
 import { TabPanel } from '@mui/lab';
 import DeleteIcon from '@mui/icons-material/Delete';
+import { useQuery } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 import { ASSOCIATIONS, CHANNEL_TYPES } from '../../../../../constants';
-import { getUrl, getReq } from '../../../../../Utils';
 import './PlayerManagePanel.scss';
-import { createNewPlayers, deletePlayer } from '../../../../../api/adminPanel.api';
+import { createNewPlayers, deletePlayer, getPlayers } from '../../../../../api/adminPanel.api';
 
 const PlayerManagePanel = ({ setAlert }) => {
   const navigate = useNavigate();
@@ -24,30 +24,15 @@ const PlayerManagePanel = ({ setAlert }) => {
   const [players, setPlayers] = useState([]);
   const [text, setText] = useState('');
 
-  useEffect(() => {
-    const getPlayers = () => {
-      getReq(`${getUrl()}/players`)
-        .then((res) => {
-          if (res.status !== 200) {
-            setAlert({
-              message: 'Could not get players from backend',
-              severity: 'error',
-            });
-          } else {
-            res.json().then((r) => {
-              setPlayers(r);
-            });
-          }
-        }).catch(() => {
-          setAlert({
-            message: 'Could not get players from backend',
-            severity: 'error',
-          });
-        });
-    };
-
-    getPlayers();
-  }, []);
+  useQuery(
+    ['players'],
+    () => getPlayers(),
+    {
+      onSuccess: (newPlayers) => {
+        setPlayers(newPlayers);
+      },
+    },
+  );
 
   const createPlayers = async (newPlayers) => {
     try {

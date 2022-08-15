@@ -9,15 +9,28 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import {
   AnalyticsPanel, CommandsPanel, ItemUpdatePanel, PlayerManagePanel,
 } from './Panels';
+import { useAccount } from '../../../hooks';
 import './AdminPanel.scss';
+import Loading from '../Loading';
 
 const AdminPanel = () => {
   const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
+  const { account, isLoading } = useAccount();
+
   const [alert, setAlert] = useState();
   const [tab, setTab] = useState(searchParams.get('tab') || 'quick-commands');
-  const navigate = useNavigate();
 
   useEffect(() => navigate(`/admin-panel?tab=${tab}`), [tab]);
+  useEffect(() => {
+    if (!isLoading && account?.role !== 'ADMIN') {
+      navigate('/');
+    }
+  }, [account, isLoading]);
+
+  if (isLoading) {
+    return <Loading />;
+  }
 
   return (
     <Box className="admin-panel" sx={{ width: '100%', typography: 'body1' }}>

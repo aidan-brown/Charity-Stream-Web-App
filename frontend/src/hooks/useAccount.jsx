@@ -6,10 +6,7 @@ const useAccount = () => {
     ['account'],
     getAccount,
     {
-      onSuccess: () => {
-      },
-      onError: () => {
-      },
+      staleTime: Infinity,
     },
   );
 

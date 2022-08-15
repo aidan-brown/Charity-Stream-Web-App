@@ -1,9 +1,10 @@
 /* eslint-disable react/jsx-closing-tag-location */
 /* eslint-disable react/no-unescaped-entities */
 import { Button } from '@mui/material';
-import React, { useEffect, useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
+import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { getUrl, postReq } from '../../../Utils';
+import { verifyDonation } from '../../../api/checkout.api';
 
 import './DonationConfirmation.scss';
 
@@ -13,34 +14,28 @@ const DonationConfirmation = () => {
     code: 'DONATION_VERIFY_SUCCESS',
     message: '',
   });
-  const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    if (donationID && checkoutID) {
-      const reqJSON = {
-        donationID,
-        checkoutID,
-      };
-      postReq(`${getUrl()}/verify-donation`, JSON.stringify(reqJSON))
-        .then((res) => res.json())
-        .then((res) => {
-          setResponse({ ...response, code: res.code, message: res.message });
-          setLoading(false);
-        })
-        .catch(() => {
-          setResponse({
-            ...response,
-            code: 'UH_OH',
-            message: 'We could not contact our services, reach out on Twitch with the code below and we can help!',
-          });
-          setLoading(false);
+  const { isLoading } = useQuery(
+    ['donation', { donationID, checkoutID }],
+    () => verifyDonation(),
+    {
+      onSuccess: (res) => {
+        setResponse({ ...response, code: res.code, message: res.message });
+      },
+      onError: () => {
+        setResponse({
+          ...response,
+          code: 'UH_OH',
+          message: 'We could not contact our services, reach out on Twitch with the code below and we can help!',
         });
-    }
-  }, []);
+      },
+      enabled: donationID && checkoutID,
+    },
+  );
 
   return (
     <div className="DonationConfirmation">
-      {!loading && (
+      {!isLoading && (
       <span>
         {response.code !== 'DONATION_VERIFY_SUCCESS' && (
         <>

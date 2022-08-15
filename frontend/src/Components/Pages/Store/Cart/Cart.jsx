@@ -1,14 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import {
   MenuItem, Select, FormControl, InputLabel,
 } from '@mui/material';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import LoadingButton from '@mui/lab/LoadingButton';
-import { getUrl, getReq } from '../../../../Utils';
+import { useQuery } from '@tanstack/react-query';
 import CartEffect from './CartEffect';
 import CartItem from './CartItem';
 import './Cart.scss';
+import { getCheckoutStatus } from '../../../../api/checkout.api';
+import { getPlayers } from '../../../../api/adminPanel.api';
 
 const Cart = ({
   player,
@@ -22,34 +24,20 @@ const Cart = ({
   showCart,
   calculateTotal,
 }) => {
-  const [playerList, setPlayerList] = useState([]);
-  const [checkoutDisabled, setCheckoutDisabled] = useState(true);
   const [loading, setLoading] = useState(false);
 
-  const fetchCheckoutStatus = () => {
-    getReq(`${getUrl()}/checkout/status`)
-      .then((res) => res.text())
-      .then((res) => {
-        setCheckoutDisabled(res === 'true');
-      })
-      .catch(() => {});
-  };
+  const { data: players = [] } = useQuery(
+    ['players'],
+    () => getPlayers(),
+  );
 
-  useEffect(() => {
-    getReq(`${getUrl()}/players`)
-      .then((res) => res.json())
-      .then((res) => {
-        setPlayerList(res);
-      })
-      .catch(() => {});
-
-    fetchCheckoutStatus();
-
-    const checkoutPoll = setInterval(fetchCheckoutStatus, 10000);
-    return () => {
-      clearInterval(checkoutPoll);
-    };
-  }, []);
+  const { data: checkoutDisabled } = useQuery(
+    ['checkout-status'],
+    () => getCheckoutStatus(),
+    {
+      refetchInterval: 10000,
+    },
+  );
 
   return (
     <div className="Cart bg-csh-tertiary" data-showcart={showCart}>
@@ -63,7 +51,7 @@ const Cart = ({
             onChange={(e) => setPlayer(e.target.value)}
             autoWidth
           >
-            {playerList.sort((a, b) => a.name.localeCompare(b.name)).map((p) => <MenuItem value={p.username} key={p.username}>{`${p.name} [${p.username}]`}</MenuItem>)}
+            {players.sort((a, b) => a.name.localeCompare(b.name)).map((p) => <MenuItem value={p.username} key={p.username}>{`${p.name} [${p.username}]`}</MenuItem>)}
           </Select>
         </FormControl>
       </div>

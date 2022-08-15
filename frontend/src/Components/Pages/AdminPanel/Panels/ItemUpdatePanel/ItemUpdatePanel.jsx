@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import {
   Button,
@@ -12,12 +12,14 @@ import {
 import { TabPanel } from '@mui/lab';
 import { Clear, Check, Delete } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
+import { useQuery } from '@tanstack/react-query';
 import StoreEffect from '../../../Store/StoreContent/StoreEffect';
 import StoreMob from '../../../Store/StoreContent/StoreMob';
 import StoreItem from '../../../Store/StoreContent/StoreItem';
-import { getUrl, getReq } from '../../../../../Utils';
 import './ItemUpdatePanel.scss';
 import { checkoutDisable, disableItem, pricesOverride } from '../../../../../api/adminPanel.api';
+import { getCheckoutStatus } from '../../../../../api/checkout.api';
+import { getAllMinecraftItems } from '../../../../../api/items.api';
 
 const ItemUpdatePanel = ({ setAlert }) => {
   const navigate = useNavigate();
@@ -31,39 +33,37 @@ const ItemUpdatePanel = ({ setAlert }) => {
   const [items, setItems] = useState([]);
   const [checkoutStatus, setCheckoutStatus] = useState(false);
 
-  useEffect(() => {
-    const getCheckoutStatus = () => {
-      getReq(`${getUrl()}/checkout/status`)
-        .then((res) => res.text())
-        .then((res) => {
-          setCheckoutStatus(res === 'true');
-        }).catch(() => {
-          setAlert({
-            message: 'Could not get checkout status',
-            severity: 'error',
-          });
+  useQuery(
+    ['checkout-status'],
+    () => getCheckoutStatus(),
+    {
+      onSuccess: (status) => {
+        setCheckoutStatus(status);
+      },
+      onError: () => {
+        setAlert({
+          message: 'Could not get checkout status',
+          severity: 'error',
         });
-    };
+      },
+    },
+  );
 
-    getCheckoutStatus();
-  }, []);
-
-  useEffect(() => {
-    const getElements = () => {
-      getReq(`${getUrl()}/minecraft/all`)
-        .then((res) => res.json())
-        .then((res) => {
-          setItems(res);
-        }).catch(() => {
-          setAlert({
-            message: 'Could not get items from backend',
-            severity: 'alert',
-          });
+  useQuery(
+    ['minecraft-items'],
+    () => getAllMinecraftItems(),
+    {
+      onSuccess: (newItems) => {
+        setItems(newItems);
+      },
+      onError: () => {
+        setAlert({
+          message: 'Could not get items from backend',
+          severity: 'error',
         });
-    };
-
-    getElements();
-  }, []);
+      },
+    },
+  );
 
   const disableItems = async () => {
     try {

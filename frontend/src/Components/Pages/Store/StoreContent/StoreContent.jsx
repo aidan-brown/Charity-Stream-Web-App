@@ -1,48 +1,20 @@
 /* eslint-disable react/forbid-prop-types */
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { getUrl, getReq } from '../../../../Utils';
+import { useQuery } from '@tanstack/react-query';
 import StoreItem from './StoreItem';
 import StoreMob from './StoreMob';
 import StoreEffect from './StoreEffect';
+import { getMinecraftEffects, getMinecraftItems, getMinecraftMobs } from '../../../../api/items.api';
 import './StoreContent.scss';
+import { getUrl } from '../../../../Utils';
 
 const StoreContent = ({
   filterTag, addItemToCart, className, cartItems, setCartItems,
 }) => {
-  const [items, setItems] = useState([]);
-  const [effects, setEffects] = useState([]);
-  const [mobs, setMobs] = useState([]);
-
-  const fetchShopItems = () => {
-    getReq(`${getUrl()}/minecraft/items`)
-      .then((res) => res.json())
-      .then((res) => {
-        setItems(res);
-      })
-      .catch(() => {});
-    getReq(`${getUrl()}/minecraft/mobs`)
-      .then((res) => res.json())
-      .then((res) => {
-        setMobs(res);
-      })
-      .catch(() => {});
-    getReq(`${getUrl()}/minecraft/effects`)
-      .then((res) => res.json())
-      .then((res) => {
-        setEffects(res);
-      })
-      .catch(() => {});
-  };
-
-  useEffect(() => {
-    fetchShopItems();
-
-    const shopPoll = setInterval(fetchShopItems, 10000);
-    return () => {
-      clearInterval(shopPoll);
-    };
-  }, []);
+  const { data: items = [] } = useQuery(['items'], () => getMinecraftItems());
+  const { data: mobs = [] } = useQuery(['mobs'], () => getMinecraftMobs());
+  const { data: effects = [] } = useQuery(['effects'], () => getMinecraftEffects());
 
   const findItem = (id, type) => {
     if (type === 'mob') {

@@ -1,7 +1,12 @@
 import getUrl from '../Utils/getUrl';
 import { verifyToken } from './token.api';
 
-const requestBuilder = (method) => async (route, shouldAuth = false, body = undefined) => {
+const requestBuilder = (method) => async ({
+  route,
+  shouldAuth = false,
+  body = undefined,
+  toJson = true,
+}) => {
   if (shouldAuth) {
     await verifyToken();
   }
@@ -16,10 +21,13 @@ const requestBuilder = (method) => async (route, shouldAuth = false, body = unde
   });
 
   if (response.status < 400) {
-    return response.json();
+    if (toJson) {
+      return response.json();
+    }
+    return response;
   }
 
-  throw new Error(await response.text());
+  throw new Error(JSON.stringify(await response.json()));
 };
 
 export const Get = requestBuilder('GET');

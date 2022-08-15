@@ -1,5 +1,5 @@
 /* eslint-disable react/forbid-prop-types */
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import Icon from '@mdi/react';
 import {
   mdiForum,
@@ -23,12 +23,15 @@ import PropTypes from 'prop-types';
 import './Stream.scss';
 import './PlayerList.scss';
 import './PerspectiveList.scss';
+import { useQuery } from '@tanstack/react-query';
 import StreamWindow from './StreamWindow/StreamWindow';
 import StoreContent from '../Store/StoreContent/StoreContent';
-import { getUrl, getReq, ItemSymbols } from '../../../Utils';
+import { getUrl, ItemSymbols } from '../../../Utils';
 import AssociationLogos from '../../../assets';
 import BackgroundVideo from '../../../assets/landing-stream-clips.mp4';
 import { steveFace } from '../../../assets/images';
+import { getPlayers } from '../../../api/adminPanel.api';
+import getDynmapData from '../../../api/dynmap.api';
 
 /** Class for constructing the stream page * */
 const Stream = ({
@@ -37,17 +40,20 @@ const Stream = ({
   const streamDiv = useRef();
   const [channel, setChannel] = useState('cshba');
   const [streamWidth, setStreamWidth] = useState('100%');
-  const [playerList, setPlayerList] = useState([]);
   const [filterTag, setFilterTag] = useState('all');
 
-  useEffect(() => {
-    getReq(`${getUrl()}/players`)
-      .then((res) => res.json())
-      .then((res) => {
-        setPlayerList(res);
-      })
-      .catch(() => {});
-  }, []);
+  const { data: playerList = [] } = useQuery(
+    ['players'],
+    () => getPlayers(),
+  );
+
+  const { data: playerData = {} } = useQuery(
+    ['dynmap-data'],
+    () => getDynmapData(),
+    {
+      refetchInterval: 5000,
+    },
+  );
 
   const playerOnClick = (player) => {
     setSelectedPlayer(player.username);
@@ -110,7 +116,6 @@ const Stream = ({
 
   const PlayerList = () => {
     const [anchorEls, setAnchorEls] = useState({});
-    const [playerData, setPlayerData] = useState({});
     let openPopovers = [];
 
     const handlePopoverClose = (playerName) => () => {
@@ -125,23 +130,6 @@ const Stream = ({
       setAnchorEls({ ...anchorEls, [playerName]: e.currentTarget });
       openPopovers.push(playerName);
     };
-
-    useEffect(() => {
-      const interval = setInterval(() => {
-        getReq(`${getUrl()}/dynmap/data`)
-          .then((res) => res.json())
-          .then((res) => {
-            const players = {};
-            res.players.forEach((player) => {
-              players[player.account] = { health: player.health, armor: player.armor };
-            });
-            setPlayerData(players);
-          });
-      }, 5000);
-      return () => {
-        clearInterval(interval);
-      };
-    }, []);
 
     const open = {};
     playerList.forEach((player) => {
