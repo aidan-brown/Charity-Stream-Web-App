@@ -1,11 +1,11 @@
 import { DataTypes, Model, Optional } from 'sequelize'
-import sequelizeConnection from '..'
+import sequelizeConnection from '../config'
 import Command from './command'
 
 export enum Status {
-  ACCEPTED,
-  CANCELLED,
-  PENDING,
+  ACCEPTED = 'ACCEPTED',
+  CANCELLED = 'CANCELLED',
+  PENDING = 'PENDING',
 }
 
 interface CheckoutAttributes {
@@ -29,9 +29,9 @@ Checkout.init({
   },
   status: {
     type: DataTypes.ENUM(
-      Status.ACCEPTED.toString(),
-      Status.CANCELLED.toString(),
-      Status.PENDING.toString()
+      Status.ACCEPTED,
+      Status.CANCELLED,
+      Status.PENDING
     ),
     allowNull: false
   },

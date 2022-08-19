@@ -1,5 +1,5 @@
 import logout from './logout'
-import oauth  from './oauth'
+import oauth from './oauth'
 import tokenRefresh from './tokenRefresh'
 
 export {

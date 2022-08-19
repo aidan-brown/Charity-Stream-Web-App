@@ -1,5 +1,5 @@
 import { DataTypes, Model, Optional } from 'sequelize'
-import sequelizeConnection from '..'
+import sequelizeConnection from '../config'
 import Account from './account'
 
 interface TokenAttributes {

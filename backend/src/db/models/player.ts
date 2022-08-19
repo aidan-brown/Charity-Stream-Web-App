@@ -1,23 +1,23 @@
 import { DataTypes, Model, Optional } from 'sequelize'
-import sequelizeConnection from '..'
+import sequelizeConnection from '../config'
 
 export enum Association {
-  CSH,
-  BLACKBAUD,
-  HOGS,
-  EHOUSE,
-  SSE,
-  ARTHOUSE,
-  IHOUSE,
-  PEPBAND,
-  RIT,
-  STREAMER,
-  OTHER
+  CSH = 'CSH',
+  BLACKBAUD = 'BLACKBAUD',
+  HOGS = 'HOGS',
+  EHOUSE = 'EHOUSE',
+  SSE = 'SSE',
+  ARTHOUSE = 'ARTHOUSE',
+  IHOUSE = 'IHOUSE',
+  PEPBAND = 'PEPBAND',
+  RIT = 'RIT',
+  STREAMER = 'STREAMER',
+  OTHER = 'OTHER'
 }
 
 export enum ChannelType {
-  TWITCH,
-  YOUTUBE
+  TWITCH = 'TWITCH',
+  YOUTUBE = 'YOUTUBE'
 }
 
 interface PlayerAttributes {
@@ -54,17 +54,17 @@ Player.init({
   },
   association: {
     type: DataTypes.ENUM(
-      Association.ARTHOUSE.toString(),
-      Association.BLACKBAUD.toString(),
-      Association.CSH.toString(),
-      Association.EHOUSE.toString(),
-      Association.HOGS.toString(),
-      Association.IHOUSE.toString(),
-      Association.OTHER.toString(),
-      Association.PEPBAND.toString(),
-      Association.RIT.toString(),
-      Association.SSE.toString(),
-      Association.STREAMER.toString()
+      Association.ARTHOUSE,
+      Association.BLACKBAUD,
+      Association.CSH,
+      Association.EHOUSE,
+      Association.HOGS,
+      Association.IHOUSE,
+      Association.OTHER,
+      Association.PEPBAND,
+      Association.RIT,
+      Association.SSE,
+      Association.STREAMER
     ),
     allowNull: false
   },
@@ -73,8 +73,8 @@ Player.init({
   },
   channelType: {
     type: DataTypes.ENUM(
-      ChannelType.TWITCH.toString(),
-      ChannelType.YOUTUBE.toString()
+      ChannelType.TWITCH,
+      ChannelType.YOUTUBE
     )
   },
   teamSkyWars: {

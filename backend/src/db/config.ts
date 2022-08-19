@@ -1,7 +1,5 @@
 import { Sequelize } from 'sequelize'
-import { logger } from '../utils'
 import dotenv from 'dotenv'
-export * from './createTables'
 
 dotenv.config()
 
@@ -29,18 +27,5 @@ const sequelizeConnection = new Sequelize(
     logging: false
   }
 )
-
-export async function testConnection (): Promise<void> {
-  try {
-    await sequelizeConnection.authenticate()
-  } catch (error) {
-    void logger.error(
-      'MYSQL_CONNECTION_ERROR',
-      'Could not establish a connection with the MySQL server', {
-        error
-      }
-    )
-  }
-}
 
 export default sequelizeConnection

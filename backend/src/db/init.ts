@@ -1,16 +1,19 @@
-import { 
-  Player, 
-  DisabledElement, 
-  Log, 
-  QuickCommand, 
-  PriceOverride, 
-  Command, 
-  Token, 
-  Account, 
-  Checkout 
+import dotenv from 'dotenv'
+import {
+  Player,
+  DisabledElement,
+  Log,
+  QuickCommand,
+  PriceOverride,
+  Command,
+  Token,
+  Account,
+  Checkout
 } from './models'
 
-export async function createTables (): Promise<void> {
+dotenv.config()
+
+export default async function dbInit (): Promise<void> {
   const { DEPLOYMENT_ENV, DB_DROP_TABLES } = process.env
   const force = DB_DROP_TABLES === 'true'
   const alter = DEPLOYMENT_ENV !== 'production'

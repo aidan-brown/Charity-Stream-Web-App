@@ -24,31 +24,42 @@ import {
   logout,
   oauth,
   tokenRefresh
-} from './handlers/index'
-import { testConnection, createTables } from './db/index'
+} from './handlers'
 import {
   logger,
   rcon,
   getUrl,
   passportConfig,
   verifyRole
-} from './utils/index'
+} from './utils'
 import { Role } from './db/models/account'
+import dbInit from './db/init'
+import { testConnection } from './db/testConnection'
 
+// Inject env vars
 dotenv.config()
+
+// Setup token authentication
 passportConfig(passport)
 
+// Create the express application
 const app = express()
-  .use(
-    cors({
-      origin: getUrl(),
-      methods: ['GET', 'PUT', 'POST', 'DELETE'],
-      optionsSuccessStatus: 204,
-      credentials: true
-    })
-  )
-  .use(express.json())
-  .use(cookieParser())
+
+// Add CORS to the app for allowing credentials
+app.use(
+  cors({
+    origin: getUrl(),
+    methods: ['GET', 'PUT', 'POST', 'DELETE'],
+    optionsSuccessStatus: 204,
+    credentials: true
+  })
+)
+
+// Allow json to be sent to the app
+app.use(express.json())
+
+// Add cookie parser for handling token auth
+app.use(cookieParser())
 
 // ***** Routes to handle Authentication *****
 app.post('/:oauthService/auth', oauth as RequestHandler)
@@ -161,7 +172,7 @@ app.listen(PORT, () => {
   // Test SQL connection, we can't run if this fails
   testConnection()
     .then(() => {
-      createTables()
+      dbInit()
         .then(() => {
           // Schedule cron job to process rcon commands every 2 seconds
           cron.schedule(
@@ -176,11 +187,11 @@ app.listen(PORT, () => {
         })
         .catch(err => {
           // eslint-disable-next-line no-console
-          console.log('Failed to create tables', err)
+          console.log('Error creating tables', err)
         })
     })
     .catch(err => {
       // eslint-disable-next-line no-console
-      console.log('Failed to connect to the DB', err)
+      console.log('Could not connect to the db to test connection', err)
     })
 })

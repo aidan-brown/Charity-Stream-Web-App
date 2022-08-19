@@ -1,5 +1,5 @@
 import { Optional, DataTypes, Model } from 'sequelize'
-import sequelizeConnection from '..'
+import sequelizeConnection from '../config'
 
 export enum LogType {
   ERROR = 'ERROR',

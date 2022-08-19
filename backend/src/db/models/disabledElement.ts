@@ -1,5 +1,5 @@
 import { Model, DataTypes } from 'sequelize'
-import sequelizeConnection from '..'
+import sequelizeConnection from '../config'
 
 interface DisabledElementAttributes {
   id: string

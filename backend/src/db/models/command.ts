@@ -1,11 +1,11 @@
 import { DataTypes, Model, Optional } from 'sequelize'
-import sequelizeConnection from '..'
+import sequelizeConnection from '../config'
 
 export enum Status {
-  FINISHED,
-  READY,
-  RUNNING,
-  WAITING,
+  FINISHED = 'FINISHED',
+  READY = 'READY',
+  RUNNING = 'RUNNING',
+  WAITING = 'WAITING',
 }
 
 interface CommandAttributes {
@@ -40,12 +40,12 @@ Command.init({
   },
   status: {
     type: DataTypes.ENUM(
-      Status.FINISHED.toString(),
-      Status.READY.toString(),
-      Status.RUNNING.toString(),
-      Status.WAITING.toString()
+      Status.FINISHED,
+      Status.READY,
+      Status.RUNNING,
+      Status.WAITING
     ),
-    defaultValue: Status.WAITING.toString()
+    defaultValue: Status.WAITING
   }
 }, {
   sequelize: sequelizeConnection
