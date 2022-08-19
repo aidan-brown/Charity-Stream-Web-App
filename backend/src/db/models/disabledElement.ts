@@ -1,5 +1,5 @@
 import { Model, DataTypes } from 'sequelize'
-import { sequelizeConnection } from '..'
+import sequelizeConnection from '..'
 
 interface DisabledElementAttributes {
   id: string
@@ -8,8 +8,6 @@ interface DisabledElementAttributes {
 }
 
 export interface DisabledElementInput extends DisabledElementAttributes {}
-
-export interface DisabledElementOutput extends Required<DisabledElementAttributes> {}
 
 class DisabledElement extends Model<DisabledElementAttributes, DisabledElementInput> implements DisabledElementAttributes {
   declare id: string

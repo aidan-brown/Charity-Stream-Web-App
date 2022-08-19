@@ -13,9 +13,12 @@ export async function getCheckoutStatus (_: Request, res: Response): Promise<Res
 
     return res.status(200).send(!!(disabled ?? false))
   } catch (error) {
-    logger.error('GET_CHECKOUT_FAILED', 'Something went wrong trying to get checkout status', {
-      error
-    })
+    void logger.error(
+      'GET_CHECKOUT_FAILED',
+      'Something went wrong trying to get checkout status', {
+        error
+      }
+    )
 
     return res.status(500).send('Something went wrong when trying to get checkout')
   }
@@ -56,11 +59,21 @@ export async function disableCheckout (req: Request, res: Response): Promise<Res
       })
     }
 
-    logger.info('CHECKOUT_TOGGLE', 'Successfully toggled checkout', { status })
+    void logger.info(
+      'CHECKOUT_TOGGLE',
+      'Successfully toggled checkout', {
+        status
+      }
+    )
 
     return res.status(200).send('Successfully toggled checkout')
   } catch (error) {
-    logger.error('TOGGLE_CHECKOUT_FAILED', 'Failed to toggle checkout', { error })
+    void logger.error(
+      'TOGGLE_CHECKOUT_FAILED',
+      'Failed to toggle checkout', {
+        error
+      }
+    )
 
     return res.status(500).send('Something went wrong when toggling checkout')
   }
@@ -78,11 +91,19 @@ export async function disableElements (req: Request, res: Response): Promise<Res
       }
     }))
 
-    logger.info('DISABLED_ELEMENTS', 'Successfully disabled elements')
+    void logger.info(
+      'DISABLED_ELEMENTS',
+      'Successfully disabled elements'
+    )
 
     return res.send('Success').status(200)
   } catch (error) {
-    logger.error('TOGGLE_ELEMENTS_FAILED', 'Failed to toggle elements', { error })
+    void logger.error(
+      'TOGGLE_ELEMENTS_FAILED',
+      'Failed to toggle elements', {
+        error
+      }
+    )
 
     return res.status(500).send('Failed to update elements')
   }

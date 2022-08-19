@@ -1,5 +1,5 @@
 import { DataTypes, Model, Optional } from 'sequelize'
-import { sequelizeConnection } from '..'
+import sequelizeConnection from '..'
 
 export enum Status {
   FINISHED,
@@ -16,8 +16,6 @@ interface CommandAttributes {
 }
 
 export interface CommandInput extends Optional<CommandAttributes, 'id' | 'commandText' | 'cronId'> {}
-
-export interface CommandOutput extends Required<CommandAttributes> {}
 
 class Command extends Model<CommandAttributes, CommandInput> implements CommandAttributes {
   declare id: number

@@ -1,5 +1,5 @@
 import { DataTypes, Model, Optional } from 'sequelize'
-import { sequelizeConnection } from '..'
+import sequelizeConnection from '..'
 import Account from './account'
 
 interface TokenAttributes {
@@ -9,8 +9,6 @@ interface TokenAttributes {
 }
 
 export interface TokenInput extends Optional<TokenAttributes, 'accountId' | 'hash' | 'salt'> {}
-
-export interface TokenOutput extends Required<TokenAttributes> {}
 
 class Token extends Model<TokenAttributes, TokenInput> implements TokenAttributes {
   declare accountId: string

@@ -20,19 +20,30 @@ export default async function runRconCommands (req: Request, res: Response): Pro
     let waits = 0
     commands.forEach(({ command, shouldWait }, i) => {
       waits += shouldWait ? 1 : 0
-      sleep(1000 * waits, async () => {
+      void sleep(1000 * waits, async () => {
         await rcon.send(command)
-        if (i === commands.length - 1) await rcon.end()
+        if (i === commands.length - 1) {
+          await rcon.end()
+        }
       })
     })
 
-    logger.info('SCHEDULED_COMMANDS', 'Successfully scheduled commands', { commands })
+    void logger.info(
+      'SCHEDULED_COMMANDS',
+      'Successfully scheduled commands', {
+        commands
+      }
+    )
 
     return res.status(200).send('Those should run TM')
   } catch (error) {
-    logger.error('SCHEDULE_COMMANDS_FAILED', 'Failed to schedule RCON commands to be run', {
-      error, commands
-    })
+    void logger.error(
+      'SCHEDULE_COMMANDS_FAILED',
+      'Failed to schedule RCON commands to be run', {
+        error,
+        commands
+      }
+    )
 
     return res.status(500).send('Those did not run TM')
   }

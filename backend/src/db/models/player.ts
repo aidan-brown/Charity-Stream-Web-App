@@ -1,5 +1,5 @@
 import { DataTypes, Model, Optional } from 'sequelize'
-import { sequelizeConnection } from '..'
+import sequelizeConnection from '..'
 
 export enum Association {
   CSH,
@@ -31,8 +31,6 @@ interface PlayerAttributes {
 }
 
 export interface PlayerInput extends Optional<PlayerAttributes, 'username' | 'name' | 'association'> {}
-
-export interface PlayerOutput extends Required<PlayerAttributes> {}
 
 class Player extends Model<PlayerAttributes, PlayerInput> implements PlayerAttributes {
   declare username: string

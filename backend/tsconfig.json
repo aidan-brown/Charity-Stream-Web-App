@@ -1,14 +1,8 @@
 {
   "compilerOptions": {
-    "target": "es2016",
-    "module": "commonjs",
-    "strict": true,
-    "esModuleInterop": true,
-    "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true,
-    "experimentalDecorators": true,
-    "emitDecoratorMetadata": true,
-    "resolveJsonModule": true,
+    "outDir": "dist",
   },
-  "include": ["./src/**/*"]
+  "extends": "@tsconfig/recommended/tsconfig.json",
+  "include": ["./src/**/*"],
+  "exclude": ["node_modules", "**/*.spec.ts"]
 }

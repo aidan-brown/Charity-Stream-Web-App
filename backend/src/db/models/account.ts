@@ -1,5 +1,5 @@
 import { DataTypes, Model, Optional } from 'sequelize'
-import { sequelizeConnection } from '..'
+import sequelizeConnection from '..'
 
 export enum Role {
   ADMIN = 'ADMIN',
@@ -20,12 +20,10 @@ interface AccountAttributes {
   name?: string
   picture?: string
   locale?: string
-  role: Role
+  role?: Role
 }
 
 export interface AccountInput extends Optional<AccountAttributes, 'id' | 'service'> {}
-
-export interface AccountOutput extends Required<AccountAttributes> {}
 
 class Account extends Model<AccountAttributes, AccountInput> implements AccountAttributes {
   declare id: string
@@ -34,7 +32,7 @@ class Account extends Model<AccountAttributes, AccountInput> implements AccountA
   declare name?: string
   declare picture?: string
   declare locale?: string
-  declare role: Role
+  declare role?: Role
 }
 
 Account.init({

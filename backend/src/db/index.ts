@@ -1,5 +1,9 @@
-import Sequelize from 'sequelize'
+import { Sequelize } from 'sequelize'
 import { logger } from '../utils'
+import dotenv from 'dotenv'
+export * from './createTables'
+
+dotenv.config()
 
 const {
   DB_HOST: host,
@@ -8,10 +12,10 @@ const {
   DB_PASSWORD: password
 } = process.env
 
-export const sequelizeConnection = new Sequelize(
-  database,
-  username,
-  password,
+const sequelizeConnection = new Sequelize(
+  database ?? 'mcsdb',
+  username ?? 'root',
+  password ?? 'password',
   {
     host,
     dialect: 'mysql',
@@ -30,8 +34,13 @@ export async function testConnection (): Promise<void> {
   try {
     await sequelizeConnection.authenticate()
   } catch (error) {
-    logger.error('MYSQL_CONNECTION_ERROR', 'Could not establish a connection with the MySQL server', {
-      error
-    })
+    void logger.error(
+      'MYSQL_CONNECTION_ERROR',
+      'Could not establish a connection with the MySQL server', {
+        error
+      }
+    )
   }
 }
+
+export default sequelizeConnection

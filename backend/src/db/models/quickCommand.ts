@@ -1,5 +1,5 @@
 import { DataTypes, Model, Optional } from 'sequelize'
-import { sequelizeConnection } from '..'
+import sequelizeConnection from '..'
 
 interface QuickCommandAttributes {
   id: number
@@ -10,8 +10,6 @@ interface QuickCommandAttributes {
 }
 
 export interface QuickCommandInput extends Optional<QuickCommandAttributes, 'id' | 'variables' | 'commands' | 'name'> {}
-
-export interface QuickCommandOutput extends Required<QuickCommandAttributes> {}
 
 class QuickCommand extends Model<QuickCommandAttributes, QuickCommandInput> implements QuickCommandAttributes {
   declare id: number

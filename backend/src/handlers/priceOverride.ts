@@ -8,7 +8,12 @@ export async function getPriceOverrides (_: Request, res: Response): Promise<Res
 
     return res.status(200).send(priceOverrides)
   } catch (error) {
-    logger.log('GET_PRICE_OVERRIDES_ERROR', 'Error getting the price Overrides', { error })
+    void logger.log(
+      'GET_PRICE_OVERRIDES_ERROR',
+      'Error getting the price Overrides', {
+        error
+      }
+    )
 
     return res.status(500).send('Something went wrong when trying to get the price overrides')
   }
@@ -37,14 +42,24 @@ export async function createPriceOverrides (req: Request, res: Response): Promis
     }))
 
     if (errors.length > 0) {
-      logger.log('CREATE_PRICE_OVERRIDES_ERROR', 'Error creating the price overrides', { errors })
+      void logger.log(
+        'CREATE_PRICE_OVERRIDES_ERROR',
+        'Error creating the price overrides', {
+          errors
+        }
+      )
 
       return res.status(400).send({ errors })
     }
 
     return res.status(200).send({ message: 'Success' })
   } catch (error) {
-    logger.log('CREATE_PRICE_OVERRIDES_ERROR', 'Error creating the price overrides', { error })
+    void logger.log(
+      'CREATE_PRICE_OVERRIDES_ERROR',
+      'Error creating the price overrides', {
+        error
+      }
+    )
 
     return res.status(500).send('Failed to create price overrides')
   }

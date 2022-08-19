@@ -1,6 +1,6 @@
-export default async function sleep (ms: number, callback: () => void): Promise<void> {
+export default async function sleep (ms: number, callback: () => Promise<void>): Promise<void> {
   await new Promise((resolve) => {
     setTimeout(resolve, ms)
   })
-  callback()
+  await callback()
 }

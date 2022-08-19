@@ -10,8 +10,10 @@ export default function verifyRole (...roles: Role[]) {
       const { id, service } = user as JWTUser
       const account = await Account.findOne({ where: { id, service } })
 
-      if (account !== null && roles.includes(account.role)) {
-        return next()
+      if (account?.role !== undefined) {
+        if (roles.includes(account.role)) {
+          return next()
+        }
       }
     }
 

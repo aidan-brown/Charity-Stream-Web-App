@@ -8,7 +8,7 @@ export async function getPlayers (_: Request, res: Response): Promise<Response> 
 
     return res.send(players).status(200)
   } catch (error) {
-    logger.log('GET_PLAYERS_ERROR', 'Error getting the players', { error })
+    void logger.log('GET_PLAYERS_ERROR', 'Error getting the players', { error })
 
     return res.send('There was an error getting the players').status(500)
   }
@@ -35,7 +35,12 @@ export async function createPlayers (req: Request, res: Response): Promise<Respo
     }))
 
     if (errors.length > 0) {
-      logger.log('CREATE_PLAYERS_ERROR', 'Error creating the players', { errors })
+      void logger.log(
+        'CREATE_PLAYERS_ERROR',
+        'Error creating the players', {
+          errors
+        }
+      )
     }
 
     return res.status(errors.length === 0 ? 200 : 400).send({
@@ -43,7 +48,13 @@ export async function createPlayers (req: Request, res: Response): Promise<Respo
       newPlayers
     })
   } catch (error) {
-    logger.log('CREATE_PLAYERS_ERROR', 'Error creating the players', { error })
+    void logger.log(
+      'CREATE_PLAYERS_ERROR',
+      'Error creating the players', {
+        error
+
+      }
+    )
 
     return res.send({
       errors: [
@@ -63,14 +74,23 @@ export async function deletePlayer (req: Request, res: Response): Promise<Respon
       await toDelete.destroy()
       return res.status(200).send('Player Deleted')
     } else {
-      logger.warn('PLAYER_DELETE_DNE', 'Player does not exist to be deleted', {
-        username
-      })
+      void logger.warn(
+        'PLAYER_DELETE_DNE',
+        'Player does not exist to be deleted', {
+          username
+        }
+      )
 
       return res.status(404).send('Player not found')
     }
   } catch (error) {
-    logger.error('DELETE_PLAYER_ERROR', 'Error deleting the player', { error, username })
+    void logger.error(
+      'DELETE_PLAYER_ERROR',
+      'Error deleting the player', {
+        error,
+        username
+      }
+    )
 
     return res.status(500).send('An error occurred')
   }

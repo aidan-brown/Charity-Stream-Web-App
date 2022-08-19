@@ -1,5 +1,5 @@
 import { DataTypes, Model, Optional } from 'sequelize'
-import { sequelizeConnection } from '..'
+import sequelizeConnection from '..'
 import Command from './command'
 
 export enum Status {
@@ -15,8 +15,6 @@ interface CheckoutAttributes {
 }
 
 export interface CheckoutInput extends Optional<CheckoutAttributes, 'status' | 'subTotal'> {}
-
-export interface CheckoutOutput extends Required<CheckoutAttributes> {}
 
 class Checkout extends Model<CheckoutAttributes, CheckoutInput> implements CheckoutAttributes {
   declare status: string

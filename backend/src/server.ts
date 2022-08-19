@@ -4,37 +4,36 @@ import cron from 'node-cron'
 import passport from 'passport'
 import cookieParser from 'cookie-parser'
 import dotenv from 'dotenv'
-import passportConfig from './utils/passportConfig'
 import {
+  getAccount,
+  getAnalytics,
+  getCheckoutStatus,
+  disableCheckout,
+  disableElements,
+  dynmapGetData,
+  dynmapGetPlayerIcon,
+  getPriceOverrides,
+  createPriceOverrides,
+  getPlayers,
   createPlayers,
   deletePlayer,
-  disableElements,
-  dynmapGetPlayerIcon,
-  getCheckoutStatus,
-  getPlayers,
-  getPriceOverrides,
-  disableCheckout,
-  createPriceOverrides,
   getQuickCommands,
   createOrUpdateQuickCommand,
-  deleteQuickCommand
-} from './handlers'
-import { testConnection } from './db'
+  deleteQuickCommand,
+  runRconCommands,
+  logout,
+  oauth,
+  tokenRefresh
+} from './handlers/index'
+import { testConnection, createTables } from './db/index'
 import {
   logger,
   rcon,
-  getUrl
-} from './utils'
-import { dynmapGetData } from './handlers/dynmap'
-import oauth from './handlers/auth/oauth'
-import tokenRefresh from './handlers/auth/tokenRefresh'
-import logout from './handlers/auth/logout'
-import { createTables } from './db/models'
-import verifyRole from './utils/verifyRole'
+  getUrl,
+  passportConfig,
+  verifyRole
+} from './utils/index'
 import { Role } from './db/models/account'
-import getAccount from './handlers/account'
-import getAnalytics from './handlers/analytics'
-import runRconCommands from './handlers/rcon'
 
 dotenv.config()
 passportConfig(passport)

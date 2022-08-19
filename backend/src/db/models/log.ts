@@ -1,5 +1,5 @@
 import { Optional, DataTypes, Model } from 'sequelize'
-import { sequelizeConnection } from '..'
+import sequelizeConnection from '..'
 
 export enum LogType {
   ERROR = 'ERROR',
@@ -17,8 +17,6 @@ interface LogAttributes {
 }
 
 export interface LogInput extends Optional<LogAttributes, 'id' | 'message' | 'code' | 'type'> {}
-
-export interface LogOutput extends Required<LogAttributes> {}
 
 export class Log extends Model<LogAttributes, LogInput> implements LogAttributes {
   declare id: number
