@@ -1,0 +1,187 @@
+import express, { RequestHandler } from 'express'
+import cors from 'cors'
+import cron from 'node-cron'
+import passport from 'passport'
+import cookieParser from 'cookie-parser'
+import dotenv from 'dotenv'
+import passportConfig from './utils/passportConfig'
+import {
+  createPlayers,
+  deletePlayer,
+  disableElements,
+  dynmapGetPlayerIcon,
+  getCheckoutStatus,
+  getPlayers,
+  getPriceOverrides,
+  disableCheckout,
+  createPriceOverrides,
+  getQuickCommands,
+  createOrUpdateQuickCommand,
+  deleteQuickCommand
+} from './handlers'
+import { testConnection } from './db'
+import {
+  logger,
+  rcon,
+  getUrl
+} from './utils'
+import { dynmapGetData } from './handlers/dynmap'
+import oauth from './handlers/auth/oauth'
+import tokenRefresh from './handlers/auth/tokenRefresh'
+import logout from './handlers/auth/logout'
+import { createTables } from './db/models'
+import verifyRole from './utils/verifyRole'
+import { Role } from './db/models/account'
+import getAccount from './handlers/account'
+import getAnalytics from './handlers/analytics'
+import runRconCommands from './handlers/rcon'
+
+dotenv.config()
+passportConfig(passport)
+
+const app = express()
+  .use(
+    cors({
+      origin: getUrl(),
+      methods: ['GET', 'PUT', 'POST', 'DELETE'],
+      optionsSuccessStatus: 204,
+      credentials: true
+    })
+  )
+  .use(express.json())
+  .use(cookieParser())
+
+// ***** Routes to handle Authentication *****
+app.post('/:oauthService/auth', oauth as RequestHandler)
+app.post('/token/refresh', tokenRefresh as RequestHandler)
+app.post('/logout', logout as RequestHandler)
+
+// ***** Basic routes for data retrieval *****
+app.get('/checkout/status', getCheckoutStatus as RequestHandler)
+app.get('/dynmap/icons/:playerName', dynmapGetPlayerIcon as RequestHandler)
+app.get('/dynmap/data', dynmapGetData as RequestHandler)
+// app.get('/images/:type/:image', getImages as RequestHandler)
+// app.get('/minecraft/:type', getMinecraftData as RequestHandler)
+app.get('/players', getPlayers as RequestHandler)
+app.get('/price-overrides', getPriceOverrides as RequestHandler)
+
+// ***** Routes that require an account
+app.get(
+  '/account',
+  passport.authenticate('jwt'),
+  getAccount as RequestHandler
+)
+
+// app.post(
+//   '/verify-checkout',
+//   passport.authenticate('jwt'),
+//   verifyCheckout as RequestHandler
+// )
+// app.post(
+//   '/verify-donation',
+//   passport.authenticate('jwt'),
+//   verifyDonation as RequestHandler
+// )
+
+// ***** Routes that require an ADMIN account
+app.get(
+  '/analytics',
+  passport.authenticate('jwt'),
+  verifyRole(Role.ADMIN),
+  getAnalytics as RequestHandler
+)
+
+app.get(
+  '/quick-commands',
+  passport.authenticate('jwt'),
+  verifyRole(Role.ADMIN),
+  getQuickCommands as RequestHandler
+)
+
+app.put(
+  '/quick-commands',
+  passport.authenticate('jwt'),
+  verifyRole(Role.ADMIN),
+  createOrUpdateQuickCommand
+)
+
+app.delete(
+  '/quick-commands/:commandId',
+  passport.authenticate('jwt'),
+  verifyRole(Role.ADMIN),
+  deleteQuickCommand
+)
+
+app.put(
+  '/price-overrides',
+  passport.authenticate('jwt'),
+  verifyRole(Role.ADMIN),
+  createPriceOverrides
+)
+
+app.put(
+  '/disable',
+  passport.authenticate('jwt'),
+  verifyRole(Role.ADMIN),
+  disableElements
+)
+
+app.put(
+  '/disable/checkout',
+  passport.authenticate('jwt'),
+  verifyRole(Role.ADMIN),
+  disableCheckout
+)
+
+app.post(
+  '/players',
+  passport.authenticate('jwt'),
+  verifyRole(Role.ADMIN),
+  createPlayers
+)
+
+app.delete(
+  '/players/:username',
+  passport.authenticate('jwt'),
+  verifyRole(Role.ADMIN),
+  deletePlayer
+)
+
+app.post(
+  '/run-commands',
+  passport.authenticate('jwt'),
+  verifyRole(Role.ADMIN),
+  runRconCommands
+)
+
+// The port that the webserver will be listening on (default 8080)
+const PORT = process.env.APP_PORT ?? 8080
+
+// Start the app
+app.listen(PORT, () => {
+  // Test SQL connection, we can't run if this fails
+  testConnection()
+    .then(() => {
+      createTables()
+        .then(() => {
+          // Schedule cron job to process rcon commands every 2 seconds
+          cron.schedule(
+            `*/${process.env.CRON_TIME ?? 2} * * * * *`,
+            (now: Date) => {
+              void rcon(now)
+            }
+          )
+
+          // Log the start of the server
+          void logger.log('START', `Listening on port ${PORT}`)
+        })
+        .catch(err => {
+          // eslint-disable-next-line no-console
+          console.log('Failed to create tables', err)
+        })
+    })
+    .catch(err => {
+      // eslint-disable-next-line no-console
+      console.log('Failed to connect to the DB', err)
+    })
+})
