@@ -1,5 +1,6 @@
 import { CircularProgress } from '@mui/material';
 import { useQueryClient } from '@tanstack/react-query';
+import Cookies from 'js-cookie';
 import React, { useEffect } from 'react';
 import {
   useLocation, useNavigate, useParams,
@@ -22,10 +23,13 @@ const LoginCallback = () => {
           urlParams[key] = value;
         });
 
-        const { access_token: accessToken } = urlParams;
+        const { access_token: token } = urlParams;
 
-        if (accessToken) {
-          const { account } = await postToken({ token: accessToken, service });
+        if (token) {
+          const { account, accessToken } = await postToken({ token, service });
+
+          // Add access token to the cookies
+          Cookies.set('accessToken', accessToken);
 
           // Save email for re-auth
           if (account.email) {

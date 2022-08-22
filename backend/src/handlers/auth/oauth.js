@@ -67,13 +67,12 @@ module.exports = async (req, res) => {
 
     // Add the token to an http only cookie and send back account
     res
-      .cookie('accessToken', accessToken)
       .cookie('refreshToken', refreshToken, {
         secure: process.env.DEPLOYMENT_ENV === 'production',
         httpOnly: true,
       })
       .status(201)
-      .send({ account });
+      .send({ account, accessToken });
   } catch (err) {
     res.status(400).send('Bad Request');
   }

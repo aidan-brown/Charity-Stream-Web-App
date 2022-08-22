@@ -24,9 +24,8 @@ module.exports = async (req, res) => {
         );
 
         return res
-          .cookie('accessToken', accessToken)
           .status(201)
-          .send('Success');
+          .send({ accessToken });
       }
 
       return res.status(400).send('Invalid Refresh token');
