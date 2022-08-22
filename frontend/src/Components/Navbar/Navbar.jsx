@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { Avatar, Button, CircularProgress } from '@mui/material';
 import { useQueryClient } from '@tanstack/react-query';
+import Cookies from 'js-cookie';
 import AssociationLogos from '../../assets';
 import { Toggler } from '../../assets/svg';
 import useAccount from '../../hooks';
@@ -124,6 +125,7 @@ const Navbar = ({ streamStarted }) => {
               await logoutAccount();
               setIsPopoverOpen(false);
               queryClient.removeQueries(['account']);
+              Cookies.remove('accessToken');
               navigate('/');
             }}
           >
