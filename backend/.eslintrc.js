@@ -9,7 +9,7 @@ module.exports = {
   parserOptions: {
     ecmaVersion: 'latest',
     sourceType: 'module',
-    project: ['backend/tsconfig.json']
+    project: ['tsconfig.json']
   },
   rules: {
     'linebreak-style': 0,
