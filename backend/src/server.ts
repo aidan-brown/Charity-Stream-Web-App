@@ -78,88 +78,88 @@ app.get('/price-overrides', getPriceOverrides as RequestHandler);
 // ***** Routes that require an account
 app.get(
   '/account',
-  passport.authenticate('jwt'),
+  passport.authenticate('jwt', { session: false }),
   getAccount as RequestHandler
 );
 
 // app.post(
 //   '/verify-checkout',
-//   passport.authenticate('jwt'),
+//   passport.authenticate('jwt', { session: false }),
 //   verifyCheckout as RequestHandler
 // )
 // app.post(
 //   '/verify-donation',
-//   passport.authenticate('jwt'),
+//   passport.authenticate('jwt', { session: false }),
 //   verifyDonation as RequestHandler
 // )
 
 // ***** Routes that require an ADMIN account
 app.get(
   '/analytics',
-  passport.authenticate('jwt'),
+  passport.authenticate('jwt', { session: false }),
   verifyRole(Role.ADMIN),
   getAnalytics as RequestHandler
 );
 
 app.get(
   '/quick-commands',
-  passport.authenticate('jwt'),
+  passport.authenticate('jwt', { session: false }),
   verifyRole(Role.ADMIN),
   getQuickCommands as RequestHandler
 );
 
 app.put(
   '/quick-commands',
-  passport.authenticate('jwt'),
+  passport.authenticate('jwt', { session: false }),
   verifyRole(Role.ADMIN),
   createOrUpdateQuickCommand
 );
 
 app.delete(
   '/quick-commands/:commandId',
-  passport.authenticate('jwt'),
+  passport.authenticate('jwt', { session: false }),
   verifyRole(Role.ADMIN),
   deleteQuickCommand
 );
 
 app.put(
   '/price-overrides',
-  passport.authenticate('jwt'),
+  passport.authenticate('jwt', { session: false }),
   verifyRole(Role.ADMIN),
   createPriceOverrides
 );
 
 app.put(
   '/disable',
-  passport.authenticate('jwt'),
+  passport.authenticate('jwt', { session: false }),
   verifyRole(Role.ADMIN),
   disableElements
 );
 
 app.put(
   '/disable/checkout',
-  passport.authenticate('jwt'),
+  passport.authenticate('jwt', { session: false }),
   verifyRole(Role.ADMIN),
   disableCheckout
 );
 
 app.post(
   '/players',
-  passport.authenticate('jwt'),
+  passport.authenticate('jwt', { session: false }),
   verifyRole(Role.ADMIN),
   createPlayers
 );
 
 app.delete(
   '/players/:username',
-  passport.authenticate('jwt'),
+  passport.authenticate('jwt', { session: false }),
   verifyRole(Role.ADMIN),
   deletePlayer
 );
 
 app.post(
   '/run-commands',
-  passport.authenticate('jwt'),
+  passport.authenticate('jwt', { session: false }),
   verifyRole(Role.ADMIN),
   runRconCommands
 );
