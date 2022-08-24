@@ -167,6 +167,6 @@ const effects = [
     description: 'Does damage every 2 seconds, and can kill the player.',
     price: 2.00
   }
-]
+];
 
-export default effects
+export default effects;

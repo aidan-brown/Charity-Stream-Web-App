@@ -1,5 +1,5 @@
-import { DataTypes, Model, Optional } from 'sequelize'
-import sequelizeConnection from '../config'
+import { DataTypes, Model, Optional } from 'sequelize';
+import sequelizeConnection from '../config';
 
 export enum Role {
   ADMIN = 'ADMIN',
@@ -26,13 +26,13 @@ interface AccountAttributes {
 export interface AccountInput extends Optional<AccountAttributes, 'id' | 'service'> {}
 
 class Account extends Model<AccountAttributes, AccountInput> implements AccountAttributes {
-  declare id: string
-  declare service: string
-  declare email?: string
-  declare name?: string
-  declare picture?: string
-  declare locale?: string
-  declare role?: Role
+  declare id: string;
+  declare service: string;
+  declare email?: string;
+  declare name?: string;
+  declare picture?: string;
+  declare locale?: string;
+  declare role?: Role;
 }
 
 Account.init({
@@ -76,6 +76,6 @@ Account.init({
   }
 }, {
   sequelize: sequelizeConnection
-})
+});
 
-export default Account
+export default Account;

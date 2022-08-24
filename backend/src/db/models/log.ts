@@ -1,5 +1,5 @@
-import { Optional, DataTypes, Model } from 'sequelize'
-import sequelizeConnection from '../config'
+import { Optional, DataTypes, Model } from 'sequelize';
+import sequelizeConnection from '../config';
 
 export enum LogType {
   ERROR = 'ERROR',
@@ -19,11 +19,11 @@ interface LogAttributes {
 export interface LogInput extends Optional<LogAttributes, 'id' | 'message' | 'code' | 'type'> {}
 
 export class Log extends Model<LogAttributes, LogInput> implements LogAttributes {
-  declare id: number
-  declare message: string
-  declare code: string
-  declare type: LogType
-  declare additional?: string
+  declare id: number;
+  declare message: string;
+  declare code: string;
+  declare type: LogType;
+  declare additional?: string;
 }
 
 Log.init({
@@ -53,6 +53,6 @@ Log.init({
   }
 }, {
   sequelize: sequelizeConnection
-})
+});
 
-export default Log
+export default Log;

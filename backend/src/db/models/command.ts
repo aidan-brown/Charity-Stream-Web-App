@@ -1,5 +1,5 @@
-import { DataTypes, Model, Optional } from 'sequelize'
-import sequelizeConnection from '../config'
+import { DataTypes, Model, Optional } from 'sequelize';
+import sequelizeConnection from '../config';
 
 export enum Status {
   FINISHED = 'FINISHED',
@@ -18,10 +18,10 @@ interface CommandAttributes {
 export interface CommandInput extends Optional<CommandAttributes, 'id' | 'commandText' | 'cronId'> {}
 
 class Command extends Model<CommandAttributes, CommandInput> implements CommandAttributes {
-  declare id: number
-  declare commandText: string
-  declare cronId: (number | null)
-  declare status?: Status
+  declare id: number;
+  declare commandText: string;
+  declare cronId: (number | null);
+  declare status?: Status;
 }
 
 Command.init({
@@ -49,6 +49,6 @@ Command.init({
   }
 }, {
   sequelize: sequelizeConnection
-})
+});
 
-export default Command
+export default Command;

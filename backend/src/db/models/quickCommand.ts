@@ -1,5 +1,5 @@
-import { DataTypes, Model, Optional } from 'sequelize'
-import sequelizeConnection from '../config'
+import { DataTypes, Model, Optional } from 'sequelize';
+import sequelizeConnection from '../config';
 
 interface QuickCommandAttributes {
   id: number
@@ -12,11 +12,11 @@ interface QuickCommandAttributes {
 export interface QuickCommandInput extends Optional<QuickCommandAttributes, 'id' | 'variables' | 'commands' | 'name'> {}
 
 class QuickCommand extends Model<QuickCommandAttributes, QuickCommandInput> implements QuickCommandAttributes {
-  declare id: number
-  declare variables: string
-  declare commands: string
-  declare name: string
-  declare dataSource?: string
+  declare id: number;
+  declare variables: string;
+  declare commands: string;
+  declare name: string;
+  declare dataSource?: string;
 }
 
 QuickCommand.init({
@@ -42,6 +42,6 @@ QuickCommand.init({
   }
 }, {
   sequelize: sequelizeConnection
-})
+});
 
-export default QuickCommand
+export default QuickCommand;

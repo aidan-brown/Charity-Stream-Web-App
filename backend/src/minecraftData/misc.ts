@@ -14,6 +14,6 @@ const misc = [
     price: 5.00,
     count: 2304
   }
-]
+];
 
-export default misc
+export default misc;

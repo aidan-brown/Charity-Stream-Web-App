@@ -225,6 +225,6 @@ const mobs = [
     price: 120.00,
     nbt: '{DragonPhase:0}'
   }
-]
+];
 
-export default mobs
+export default mobs;

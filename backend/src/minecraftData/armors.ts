@@ -223,6 +223,6 @@ const armors = [
     price: 4.00,
     durability: 336
   }
-]
+];
 
-export default armors
+export default armors;

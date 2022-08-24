@@ -35,6 +35,6 @@ const foods = [
     price: 10.00,
     hungerFill: 4
   }
-]
+];
 
-export default foods
+export default foods;

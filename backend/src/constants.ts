@@ -1,6 +1,6 @@
-export const PROD_URL = 'https://charitystream.cs.house'
-export const DEV_URL = 'https://develop-charitystream.cs.house'
-export const LOCAL_URL = 'http://localhost:3000'
+export const PROD_URL = 'https://charitystream.cs.house';
+export const DEV_URL = 'https://develop-charitystream.cs.house';
+export const LOCAL_URL = 'http://localhost:3000';
 
 export const TYPES = [
   'armor',
@@ -10,4 +10,4 @@ export const TYPES = [
   'material',
   'mob',
   'effect'
-]
+];

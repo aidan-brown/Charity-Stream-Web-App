@@ -32,7 +32,6 @@
         "passport": "^0.6.0",
         "passport-jwt": "^4.0.0",
         "rcon-client": "4.2.3",
-        "reflect-metadata": "^0.1.13",
         "sequelize": "^6.21.3"
     },
     "devDependencies": {

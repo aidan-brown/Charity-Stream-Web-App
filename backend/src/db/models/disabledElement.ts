@@ -1,5 +1,5 @@
-import { Model, DataTypes } from 'sequelize'
-import sequelizeConnection from '../config'
+import { Model, DataTypes } from 'sequelize';
+import sequelizeConnection from '../config';
 
 interface DisabledElementAttributes {
   id: string
@@ -10,9 +10,9 @@ interface DisabledElementAttributes {
 export interface DisabledElementInput extends DisabledElementAttributes {}
 
 class DisabledElement extends Model<DisabledElementAttributes, DisabledElementInput> implements DisabledElementAttributes {
-  declare id: string
-  declare type: string
-  declare disabled: boolean
+  declare id: string;
+  declare type: string;
+  declare disabled: boolean;
 }
 
 DisabledElement.init({
@@ -32,6 +32,6 @@ DisabledElement.init({
   }
 }, {
   sequelize: sequelizeConnection
-})
+});
 
-export default DisabledElement
+export default DisabledElement;

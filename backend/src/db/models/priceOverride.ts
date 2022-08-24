@@ -1,5 +1,5 @@
-import { DataTypes, Model, Optional } from 'sequelize'
-import sequelizeConnection from '../config'
+import { DataTypes, Model, Optional } from 'sequelize';
+import sequelizeConnection from '../config';
 
 interface PriceOverrideAttributes {
   id: string
@@ -10,9 +10,9 @@ interface PriceOverrideAttributes {
 export interface PriceOverrideInput extends Optional<PriceOverrideAttributes, 'id' | 'type' | 'price'> {}
 
 class PriceOverride extends Model<PriceOverrideAttributes, PriceOverrideInput> implements PriceOverrideAttributes {
-  declare id: string
-  declare type: string
-  declare price: number
+  declare id: string;
+  declare type: string;
+  declare price: number;
 }
 
 PriceOverride.init({
@@ -32,6 +32,6 @@ PriceOverride.init({
   }
 }, {
   sequelize: sequelizeConnection
-})
+});
 
-export default PriceOverride
+export default PriceOverride;

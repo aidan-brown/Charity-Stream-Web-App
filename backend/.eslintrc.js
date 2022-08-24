@@ -16,6 +16,7 @@ module.exports = {
     'global-require': 0,
     'eslint linebreak-style': [0, 'error', 'windows'],
     'no-console': 2,
-    semi: 'off'
+    semi: ['error', 'always'],
+    '@typescript-eslint/semi': ['error', 'always']
   }
 };

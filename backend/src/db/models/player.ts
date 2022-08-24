@@ -1,5 +1,5 @@
-import { DataTypes, Model, Optional } from 'sequelize'
-import sequelizeConnection from '../config'
+import { DataTypes, Model, Optional } from 'sequelize';
+import sequelizeConnection from '../config';
 
 export enum Association {
   CSH = 'CSH',
@@ -33,13 +33,13 @@ interface PlayerAttributes {
 export interface PlayerInput extends Optional<PlayerAttributes, 'username' | 'name' | 'association'> {}
 
 class Player extends Model<PlayerAttributes, PlayerInput> implements PlayerAttributes {
-  declare username: string
-  declare name: string
-  declare association: Association
-  declare channel?: string
-  declare channelType?: ChannelType
-  declare teamSkyWars?: string
-  declare teamBedWars?: string
+  declare username: string;
+  declare name: string;
+  declare association: Association;
+  declare channel?: string;
+  declare channelType?: ChannelType;
+  declare teamSkyWars?: string;
+  declare teamBedWars?: string;
 }
 
 Player.init({
@@ -85,6 +85,6 @@ Player.init({
   }
 }, {
   sequelize: sequelizeConnection
-})
+});
 
-export default Player
+export default Player;

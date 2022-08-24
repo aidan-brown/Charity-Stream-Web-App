@@ -35,6 +35,6 @@ const materials = [
     price: 0.80,
     count: 10
   }
-]
+];
 
-export default materials
+export default materials;

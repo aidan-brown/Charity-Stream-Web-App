@@ -1,5 +1,5 @@
-import { PassportStatic } from 'passport'
-import { Strategy as JwtStrategy, ExtractJwt } from 'passport-jwt'
+import { PassportStatic } from 'passport';
+import { Strategy as JwtStrategy, ExtractJwt } from 'passport-jwt';
 
 export interface JWTUser {
   id: string
@@ -15,13 +15,13 @@ export default function passportConfig (passport: PassportStatic): void {
       },
       (jwtPayload: JWTUser, done) => {
         try {
-          const { id, service } = jwtPayload
+          const { id, service } = jwtPayload;
 
-          done(null, { id, service })
+          done(null, { id, service });
         } catch (error) {
-          done(error, false)
+          done(error, false);
         }
       }
     )
-  )
+  );
 }

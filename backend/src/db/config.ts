@@ -1,14 +1,14 @@
-import { Sequelize } from 'sequelize'
-import dotenv from 'dotenv'
+import { Sequelize } from 'sequelize';
+import dotenv from 'dotenv';
 
-dotenv.config()
+dotenv.config();
 
 const {
   DB_HOST: host,
   DB_NAME: database,
   DB_USERNAME: username,
   DB_PASSWORD: password
-} = process.env
+} = process.env;
 
 const sequelizeConnection = new Sequelize(
   database ?? 'mcsdb',
@@ -26,6 +26,6 @@ const sequelizeConnection = new Sequelize(
     typeValidation: true,
     logging: false
   }
-)
+);
 
-export default sequelizeConnection
+export default sequelizeConnection;

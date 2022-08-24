@@ -1,16 +1,16 @@
-import axios from 'axios'
-import { AccountInput, Service } from '../../db/models/account'
+import axios from 'axios';
+import { AccountInput, Service } from '../../db/models/account';
 
-const GOOGLE_URL = 'https://www.googleapis.com/oauth2/v2/userinfo'
-const TWITCH_URL = 'https://api.twitch.tv/helix/users'
-const MICROSOFT_URL = 'https://graph.microsoft.com/v1.0/me'
+const GOOGLE_URL = 'https://www.googleapis.com/oauth2/v2/userinfo';
+const TWITCH_URL = 'https://api.twitch.tv/helix/users';
+const MICROSOFT_URL = 'https://graph.microsoft.com/v1.0/me';
 
 export async function google (token: string): Promise<AccountInput> {
   const { data: googleUser } = await axios.get(`${GOOGLE_URL}`, {
     headers: {
       Authorization: `Bearer ${token}`
     }
-  })
+  });
 
   const {
     id,
@@ -18,7 +18,7 @@ export async function google (token: string): Promise<AccountInput> {
     picture,
     locale,
     email
-  } = googleUser
+  } = googleUser;
 
   return {
     id,
@@ -27,7 +27,7 @@ export async function google (token: string): Promise<AccountInput> {
     locale,
     email,
     service: Service.GOOGLE
-  }
+  };
 }
 
 export async function twitch (token: string): Promise<AccountInput> {
@@ -36,8 +36,8 @@ export async function twitch (token: string): Promise<AccountInput> {
       Authorization: `Bearer ${token}`,
       'Client-Id': process.env.TWITCH_AUTH_CLIENT_ID ?? 'client-id'
     }
-  })
-  const [twitchUser] = data
+  });
+  const [twitchUser] = data;
 
   const {
     id,
@@ -45,7 +45,7 @@ export async function twitch (token: string): Promise<AccountInput> {
     profile_image_url: picture,
     locale = 'en',
     email
-  } = twitchUser
+  } = twitchUser;
 
   return {
     id,
@@ -54,7 +54,7 @@ export async function twitch (token: string): Promise<AccountInput> {
     locale,
     email,
     service: Service.TWITCH
-  }
+  };
 }
 
 export async function microsoft (token: string): Promise<AccountInput> {
@@ -62,14 +62,14 @@ export async function microsoft (token: string): Promise<AccountInput> {
     headers: {
       Authorization: `Bearer ${token}`
     }
-  })
+  });
 
   const {
     id,
     displayName: name,
     locale = 'en',
     mail: email
-  } = microsoftUser
+  } = microsoftUser;
 
   return {
     id,
@@ -77,5 +77,5 @@ export async function microsoft (token: string): Promise<AccountInput> {
     locale,
     email,
     service: Service.MICROSOFT
-  }
+  };
 }

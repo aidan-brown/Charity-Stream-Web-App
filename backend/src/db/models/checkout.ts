@@ -1,6 +1,6 @@
-import { DataTypes, Model, Optional } from 'sequelize'
-import sequelizeConnection from '../config'
-import Command from './command'
+import { DataTypes, Model, Optional } from 'sequelize';
+import sequelizeConnection from '../config';
+import Command from './command';
 
 export enum Status {
   ACCEPTED = 'ACCEPTED',
@@ -17,9 +17,9 @@ interface CheckoutAttributes {
 export interface CheckoutInput extends Optional<CheckoutAttributes, 'status' | 'subTotal'> {}
 
 class Checkout extends Model<CheckoutAttributes, CheckoutInput> implements CheckoutAttributes {
-  declare status: string
-  declare subTotal: number
-  declare donationID?: string
+  declare status: string;
+  declare subTotal: number;
+  declare donationID?: string;
 }
 
 Checkout.init({
@@ -41,8 +41,8 @@ Checkout.init({
   }
 }, {
   sequelize: sequelizeConnection
-})
+});
 
-Checkout.hasMany(Command)
+Checkout.hasMany(Command);
 
-export default Checkout
+export default Checkout;

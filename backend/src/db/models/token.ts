@@ -1,6 +1,6 @@
-import { DataTypes, Model, Optional } from 'sequelize'
-import sequelizeConnection from '../config'
-import Account from './account'
+import { DataTypes, Model, Optional } from 'sequelize';
+import sequelizeConnection from '../config';
+import Account from './account';
 
 interface TokenAttributes {
   accountId: string
@@ -11,9 +11,9 @@ interface TokenAttributes {
 export interface TokenInput extends Optional<TokenAttributes, 'accountId' | 'hash' | 'salt'> {}
 
 class Token extends Model<TokenAttributes, TokenInput> implements TokenAttributes {
-  declare accountId: string
-  declare hash: string
-  declare salt: string
+  declare accountId: string;
+  declare hash: string;
+  declare salt: string;
 }
 
 Token.init({
@@ -36,12 +36,12 @@ Token.init({
   }
 }, {
   sequelize: sequelizeConnection
-})
+});
 
 Token.belongsTo(Account, {
   foreignKey: 'accountId',
   onDelete: 'CASCADE',
   onUpdate: 'CASCADE'
-})
+});
 
-export default Token
+export default Token;

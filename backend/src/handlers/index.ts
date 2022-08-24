@@ -1,12 +1,12 @@
-import getAccount from './account'
-import { logout, oauth, tokenRefresh } from './auth/index'
-import getAnalytics from './analytics'
-import { getCheckoutStatus, disableCheckout, disableElements } from './disable'
-import { dynmapGetPlayerIcon, dynmapGetData } from './dynmap'
-import { getPriceOverrides, createPriceOverrides } from './priceOverride'
-import { getPlayers, createPlayers, deletePlayer } from './players'
-import { getQuickCommands, createOrUpdateQuickCommand, deleteQuickCommand } from './quickCommand'
-import runRconCommands from './rcon'
+import getAccount from './account';
+import { logout, oauth, tokenRefresh } from './auth/index';
+import getAnalytics from './analytics';
+import { getCheckoutStatus, disableCheckout, disableElements } from './disable';
+import { dynmapGetPlayerIcon, dynmapGetData } from './dynmap';
+import { getPriceOverrides, createPriceOverrides } from './priceOverride';
+import { getPlayers, createPlayers, deletePlayer } from './players';
+import { getQuickCommands, createOrUpdateQuickCommand, deleteQuickCommand } from './quickCommand';
+import runRconCommands from './rcon';
 
 export {
   getAccount,
@@ -28,4 +28,4 @@ export {
   logout,
   oauth,
   tokenRefresh
-}
+};

@@ -156,6 +156,6 @@ const weapons = [
     count: 10,
     nbt: '{Potion:"weakness"}'
   }
-]
+];
 
-export default weapons
+export default weapons;

@@ -71,6 +71,6 @@ const tools = [
     speed: 5,
     durability: 2031
   }
-]
+];
 
-export default tools
+export default tools;
