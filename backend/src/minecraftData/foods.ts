@@ -1,5 +1,5 @@
-const foods = [
-  {
+const foods = {
+  food_bread: {
     id: 'bread',
     displayName: '5x Bread',
     type: 'food',
@@ -8,7 +8,7 @@ const foods = [
     hungerFill: 5,
     count: 5
   },
-  {
+  food_cooked_beef: {
     id: 'cooked_beef',
     displayName: '5x Steak',
     type: 'food',
@@ -17,7 +17,7 @@ const foods = [
     hungerFill: 8,
     count: 5
   },
-  {
+  food_golden_apple: {
     id: 'golden_apple',
     displayName: 'Golden Apple',
     type: 'food',
@@ -26,7 +26,7 @@ const foods = [
     price: 3.00,
     hungerFill: 4
   },
-  {
+  food_enchanted_golden_apple: {
     id: 'enchanted_golden_apple',
     displayName: 'Enchanted Golden Apple',
     type: 'food',
@@ -35,6 +35,6 @@ const foods = [
     price: 10.00,
     hungerFill: 4
   }
-];
+};
 
 export default foods;

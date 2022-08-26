@@ -1,5 +1,5 @@
-const tools = [
-  {
+const tools = {
+  tool_golden_pickaxe: {
     id: 'golden_pickaxe',
     displayName: 'Gold Pickaxe',
     type: 'tool',
@@ -8,7 +8,7 @@ const tools = [
     speed: 1.5,
     durability: 32
   },
-  {
+  tool_iron_pickaxe: {
     id: 'iron_pickaxe',
     displayName: 'Iron Pickaxe',
     type: 'tool',
@@ -17,7 +17,7 @@ const tools = [
     speed: 1,
     durability: 250
   },
-  {
+  tool_diamond_pickaxe: {
     id: 'diamond_pickaxe',
     displayName: 'Diamond Pickaxe',
     type: 'tool',
@@ -26,7 +26,7 @@ const tools = [
     speed: 4,
     durability: 1561
   },
-  {
+  tool_netherite_pickaxe: {
     id: 'netherite_pickaxe',
     displayName: 'Netherite Pickaxe',
     type: 'tool',
@@ -35,7 +35,7 @@ const tools = [
     speed: 5,
     durability: 2031
   },
-  {
+  tool_golden_shovel: {
     id: 'golden_shovel',
     displayName: 'Gold Shovel',
     type: 'tool',
@@ -44,7 +44,7 @@ const tools = [
     speed: 1.5,
     durability: 32
   },
-  {
+  tool_iron_shovel: {
     id: 'iron_shovel',
     displayName: 'Iron Shovel',
     type: 'tool',
@@ -53,7 +53,7 @@ const tools = [
     speed: 1,
     durability: 250
   },
-  {
+  tool_diamond_shovel: {
     id: 'diamond_shovel',
     displayName: 'Diamond Shovel',
     type: 'tool',
@@ -62,7 +62,7 @@ const tools = [
     speed: 4,
     durability: 1561
   },
-  {
+  tool_netherite_shovel: {
     id: 'netherite_shovel',
     displayName: 'Netherite Shovel',
     type: 'tool',
@@ -71,6 +71,6 @@ const tools = [
     speed: 5,
     durability: 2031
   }
-];
+};
 
 export default tools;

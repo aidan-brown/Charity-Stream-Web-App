@@ -1,10 +1,9 @@
 import dotenv from 'dotenv';
 import {
   Player,
-  DisabledElement,
   Log,
   QuickCommand,
-  PriceOverride,
+  Item,
   Command,
   Token,
   Account,
@@ -19,10 +18,9 @@ export default async function dbInit (): Promise<void> {
   const alter = DEPLOYMENT_ENV !== 'production';
 
   await Player.sync({ alter, force });
-  await DisabledElement.sync({ alter, force });
   await Log.sync({ alter, force });
   await QuickCommand.sync({ alter, force });
-  await PriceOverride.sync({ alter, force });
+  await Item.sync({ alter, force });
 
   // Have to remove the command table first, then make
   // the checkout table before the command table (fk ref)

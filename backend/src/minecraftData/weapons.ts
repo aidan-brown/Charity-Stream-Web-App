@@ -1,5 +1,5 @@
-const weapons = [
-  {
+const weapons = {
+  weapon_golden_sword: {
     id: 'golden_sword',
     displayName: 'Gold Sword',
     type: 'weapon',
@@ -8,7 +8,7 @@ const weapons = [
     damage: 4,
     durability: 32
   },
-  {
+  weapon_iron_sword: {
     id: 'iron_sword',
     displayName: 'Iron Sword',
     type: 'weapon',
@@ -17,7 +17,7 @@ const weapons = [
     damage: 6,
     durability: 250
   },
-  {
+  weapon_diamond_sword: {
     id: 'diamond_sword',
     displayName: 'Diamond Sword',
     type: 'weapon',
@@ -26,7 +26,7 @@ const weapons = [
     damage: 7,
     durability: 1561
   },
-  {
+  weapon_netherite_sword: {
     id: 'netherite_sword',
     displayName: 'Netherite Sword',
     type: 'weapon',
@@ -35,7 +35,7 @@ const weapons = [
     damage: 8,
     durability: 2031
   },
-  {
+  weapon_golden_axe: {
     id: 'golden_axe',
     displayName: 'Gold Axe',
     type: 'weapon',
@@ -44,7 +44,7 @@ const weapons = [
     damage: 7,
     durability: 32
   },
-  {
+  weapon_iron_axe: {
     id: 'iron_axe',
     displayName: 'Iron Axe',
     type: 'weapon',
@@ -53,7 +53,7 @@ const weapons = [
     damage: 9,
     durability: 250
   },
-  {
+  weapon_diamond_axe: {
     id: 'diamond_axe',
     displayName: 'Diamond Axe',
     type: 'weapon',
@@ -62,7 +62,7 @@ const weapons = [
     damage: 9,
     durability: 1561
   },
-  {
+  weapon_netherite_axe: {
     id: 'netherite_axe',
     displayName: 'Netherite Axe',
     type: 'weapon',
@@ -71,7 +71,7 @@ const weapons = [
     damage: 10,
     durability: 2031
   },
-  {
+  weapon_trident: {
     id: 'trident',
     displayName: 'Trident',
     type: 'weapon',
@@ -81,7 +81,7 @@ const weapons = [
     durability: 250,
     nbt: '{Enchantments:[{id:loyalty,lvl:3}]}'
   },
-  {
+  weapon_bow: {
     id: 'bow',
     displayName: 'Bow',
     type: 'weapon',
@@ -90,7 +90,7 @@ const weapons = [
     damage: 4,
     durability: 384
   },
-  {
+  weapon_crossbow: {
     id: 'crossbow',
     displayName: 'Crossbow',
     type: 'weapon',
@@ -99,7 +99,7 @@ const weapons = [
     damage: 9,
     durability: 465
   },
-  {
+  weapon_arrow: {
     id: 'arrow',
     displayName: '10x Arrows',
     type: 'weapon',
@@ -107,7 +107,7 @@ const weapons = [
     price: 1.20,
     count: 10
   },
-  {
+  weapon_spectral_arrow: {
     id: 'spectral_arrow',
     displayName: '10x Spectral Arrows',
     type: 'weapon',
@@ -116,7 +116,7 @@ const weapons = [
     price: 2.00,
     count: 10
   },
-  {
+  'weapon_tipped_arrow-0': {
     id: 'tipped_arrow-0',
     displayName: '10x Arrows of Slowness',
     type: 'weapon',
@@ -126,7 +126,7 @@ const weapons = [
     count: 10,
     nbt: '{Potion:"slowness"}'
   },
-  {
+  'weapon_tipped_arrow-1': {
     id: 'tipped_arrow-1',
     displayName: '10x Arrows of Harming',
     type: 'weapon',
@@ -136,7 +136,7 @@ const weapons = [
     count: 10,
     nbt: '{Potion:"harming"}'
   },
-  {
+  'weapon_tipped_arrow-2': {
     id: 'tipped_arrow-2',
     displayName: '10x Arrows of Poison',
     type: 'weapon',
@@ -146,7 +146,7 @@ const weapons = [
     count: 10,
     nbt: '{Potion:"poison"}'
   },
-  {
+  'weapon_tipped_arrow-3': {
     id: 'tipped_arrow-3',
     displayName: '10x Arrows of Weakness',
     type: 'weapon',
@@ -156,6 +156,6 @@ const weapons = [
     count: 10,
     nbt: '{Potion:"weakness"}'
   }
-];
+};
 
 export default weapons;

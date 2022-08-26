@@ -5,7 +5,7 @@
     "main": "dist/server.js",
     "scripts": {
         "test": "jest --coverage",
-        "dev": "nodemon src/server.ts",
+        "start:dev": "nodemon src/server.ts",
         "start": "node dist/server.js",
         "build": "npx tsc",
         "lint": "eslint . --ext .ts --fix",
