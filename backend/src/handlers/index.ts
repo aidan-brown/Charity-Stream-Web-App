@@ -1,12 +1,11 @@
-import getAccount from './account';
-import { logout, oauth, tokenRefresh } from './auth/index';
+import { getAccount, logout, oauth, tokenRefresh } from './auth';
 import getAnalytics from './analytics';
 import getMinecraftData from './data/minecraftData';
 import { dynmapGetPlayerIcon, dynmapGetData } from './data/dynmap';
 import { getPlayers, createPlayers, deletePlayer } from './players';
 import { getQuickCommands, createOrUpdateQuickCommand, deleteQuickCommand } from './quickCommand';
 import runRconCommands from './rcon';
-import { getItems, updateItems } from './item';
+import { getItems, updateItems } from './data/item';
 
 export {
   createPlayers,

@@ -68,7 +68,7 @@ app.post('/token/refresh', tokenRefresh as RequestHandler);
 app.post('/logout', logout as RequestHandler);
 
 // ***** Basic routes for data retrieval *****
-// app.get('/checkout/status', getCheckoutStatus as RequestHandler);
+app.get('/checkout/status', (_, res) => res.status(200));
 app.get('/data/dynmap/icons/:playerName', dynmapGetPlayerIcon as RequestHandler);
 app.get('/data/dynmap', dynmapGetData as RequestHandler);
 app.get('/data/minecraft/:type', getMinecraftData as RequestHandler);

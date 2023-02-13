@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
-import Account from '../db/models/account';
-import { JWTUser } from '../utils/passportConfig';
+import Account from '../../db/models/account';
+import { JWTUser } from '../../utils/passportConfig';
 
 export default async function getAccount (req: Request, res: Response): Promise<Response> {
   const { user = {} } = req;

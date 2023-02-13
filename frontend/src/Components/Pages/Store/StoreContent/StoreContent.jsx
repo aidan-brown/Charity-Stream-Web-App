@@ -16,9 +16,9 @@ import './StoreContent.scss';
 const StoreContent = ({
   filterTag, addItemToCart, className, cartItems, setCartItems,
 }) => {
-  const { data: items = [] } = useQuery(['items'], () => getMinecraftItems());
-  const { data: mobs = [] } = useQuery(['mobs'], () => getMinecraftMobs());
-  const { data: effects = [] } = useQuery(['effects'], () => getMinecraftEffects());
+  const { data: { data: items = [] } = {} } = useQuery(['items'], () => getMinecraftItems());
+  const { data: { data: mobs = [] } = {} } = useQuery(['mobs'], () => getMinecraftMobs());
+  const { data: { data: effects = [] } = {} } = useQuery(['effects'], () => getMinecraftEffects());
 
   const findItem = (id, type) => {
     if (type === 'mob') {
@@ -52,6 +52,10 @@ const StoreContent = ({
     }
   }, [items, effects, mobs]);
 
+  console.log(items);
+  console.log(effects);
+  console.log(mobs);
+
   return (
     <div className={`StoreContent${className ? ` ${className}` : ''}`}>
       {items.filter((item) => !item.disabled && (filterTag === 'all' || item.type === filterTag)).map((item) => (
@@ -60,7 +64,7 @@ const StoreContent = ({
           addItemToCart={() => addItemToCart({
             ...item, amount: 1, icon: `${getApiUrl()}/images/items/${item.id}.webp`, img: `${getApiUrl()}/images/items/${item.id}-full.webp`,
           })}
-          key={item.id}
+          key={`${item.id}-${item.type}`}
         />
       ))}
       {mobs.filter((mob) => !mob.disabled && (filterTag === 'all' || filterTag === 'mobs')).map((mob) => (
@@ -69,7 +73,7 @@ const StoreContent = ({
           addItemToCart={() => addItemToCart({
             ...mob, amount: 1, icon: `${getApiUrl()}/images/mobs/${mob.id}.webp`, img: `${getApiUrl()}/images/mobs/${mob.id}-full.webp`, type: 'mob',
           })}
-          key={mob.id}
+          key={`${mob.id}`}
         />
       ))}
       {effects.filter((effect) => !effect.disabled && (filterTag === 'all' || filterTag === 'effects')).map((effect) => (
@@ -78,34 +82,7 @@ const StoreContent = ({
           addItemToCart={() => addItemToCart({
             ...effect, time: 30, power: 0, icon: `${getApiUrl()}/images/effects/${effect.id}.webp`, img: `${getApiUrl()}/images/effects/${effect.id}-full.webp`, type: 'effect',
           })}
-          key={effect.id}
-        />
-      ))}
-      {items.filter((item) => item.disabled && (filterTag === 'all' || item.type === filterTag)).map((item) => (
-        <StoreItem
-          item={item}
-          addItemToCart={() => addItemToCart({
-            ...item, amount: 1, icon: `${getApiUrl()}/images/items/${item.id}.webp`, img: `${getApiUrl()}/images/items/${item.id}-full.webp`,
-          })}
-          key={item.id}
-        />
-      ))}
-      {mobs.filter((mob) => mob.disabled && (filterTag === 'all' || filterTag === 'mobs')).map((mob) => (
-        <StoreMob
-          mob={mob}
-          addItemToCart={() => addItemToCart({
-            ...mob, amount: 1, icon: `${getApiUrl()}/images/mobs/${mob.id}.webp`, img: `${getApiUrl()}/images/mobs/${mob.id}-full.webp`, type: 'mob',
-          })}
-          key={mob.id}
-        />
-      ))}
-      {effects.filter((effect) => effect.disabled && (filterTag === 'all' || filterTag === 'effects')).map((effect) => (
-        <StoreEffect
-          effect={effect}
-          addItemToCart={() => addItemToCart({
-            ...effect, time: 30, power: 0, icon: `${getApiUrl()}/images/effects/${effect.id}.webp`, img: `${getApiUrl()}/images/effects/${effect.id}-full.webp`, type: 'effect',
-          })}
-          key={effect.id}
+          key={`${effect.id}-effect`}
         />
       ))}
     </div>

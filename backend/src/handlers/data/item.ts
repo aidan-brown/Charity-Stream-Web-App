@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
-import Item, { ItemInput } from '../db/models/item';
-import { logger } from '../utils';
+import Item, { ItemInput } from '../../db/models/item';
+import { logger } from '../../utils';
 
 export async function getItems (_: Request, res: Response): Promise<Response> {
   try {
@@ -18,6 +18,7 @@ export async function getItems (_: Request, res: Response): Promise<Response> {
     return res.status(500).send('Something went wrong when trying to get the price overrides');
   }
 }
+
 export async function updateItems (req: Request, res: Response): Promise<Response> {
   const updates: ItemInput[] = req.body;
 

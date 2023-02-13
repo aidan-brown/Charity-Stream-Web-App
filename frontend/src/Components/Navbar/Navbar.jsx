@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { Avatar, Button, CircularProgress } from '@mui/material';
 import { useQueryClient } from '@tanstack/react-query';
@@ -12,9 +12,11 @@ import '../Bootstrap-Colors/palette.scss';
 
 /** Class for constructing the main navbar of the page * */
 const Navbar = ({ streamStarted }) => {
+  const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+
   const queryClient = useQueryClient();
   const { account, isLoading } = useAccount();
-  const navigate = useNavigate();
 
   const [isPopoverOpen, setIsPopoverOpen] = useState(false);
 
@@ -87,33 +89,37 @@ const Navbar = ({ streamStarted }) => {
             )}
           </ul>
         </div>
-        {isLoading && <CircularProgress />}
-        {!isLoading && (
+        {searchParams.get('showLoginButton') && (
+        <>
+          {isLoading && <CircularProgress />}
+          {!isLoading && (
           <>
             {account && (
-              <button
-                type="button"
-                className="account"
-                onClick={() => {
-                  setIsPopoverOpen(!isPopoverOpen);
-                }}
-              >
-                <p className="name">
-                  {account.name || 'Account'}
-                </p>
-                <Avatar
-                  alt={account.name || 'Account'}
-                  src={account.picture}
-                  referrerPolicy="no-referrer"
-                />
-              </button>
+            <button
+              type="button"
+              className="account"
+              onClick={() => {
+                setIsPopoverOpen(!isPopoverOpen);
+              }}
+            >
+              <p className="name">
+                {account.name || 'Account'}
+              </p>
+              <Avatar
+                alt={account.name || 'Account'}
+                src={account.picture}
+                referrerPolicy="no-referrer"
+              />
+            </button>
             )}
             {!account && (
-              <Button variant="contained" href="/login">
-                Login
-              </Button>
+            <Button variant="contained" href="/login">
+              Login
+            </Button>
             )}
           </>
+          )}
+        </>
         )}
       </div>
       {isPopoverOpen && (

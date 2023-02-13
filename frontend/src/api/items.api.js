@@ -1,9 +1,11 @@
 import { Get } from './api';
 
-export const getAllMinecraftItems = async () => Get({ route: '/minecraft/all' });
+const BASE = '/data/minecraft';
 
-export const getMinecraftItems = async () => Get({ route: '/minecraft/items' });
+export const getAllMinecraftItems = async () => Get({ route: `${BASE}/all` });
 
-export const getMinecraftMobs = async () => Get({ route: '/minecraft/mobs' });
+export const getMinecraftItems = async () => Get({ route: `${BASE}/items` });
 
-export const getMinecraftEffects = async () => Get({ route: '/minecraft/effects' });
+export const getMinecraftMobs = async () => Get({ route: `${BASE}/mobs` });
+
+export const getMinecraftEffects = async () => Get({ route: `${BASE}/effects` });
