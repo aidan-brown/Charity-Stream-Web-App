@@ -1,4 +1,4 @@
-const mobs = {
+const mob = {
   mob_axolotl: {
     id: 'axolotl',
     displayName: 'Axolotl',
@@ -227,4 +227,4 @@ const mobs = {
   }
 };
 
-export default mobs;
+export default mob;

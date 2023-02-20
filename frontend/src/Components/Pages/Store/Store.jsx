@@ -18,7 +18,7 @@ import './Store.scss';
 
 /** Responsible for constructing the store page component * */
 const Store = ({ addItemToCart, cartItems, setCartItems }) => {
-  const [filterTag, setFilterTag] = useState('all');
+  const [filterTag, setFilterTag] = useState('ALL');
 
   const storeDiv = useRef();
 
@@ -37,39 +37,39 @@ const Store = ({ addItemToCart, cartItems, setCartItems }) => {
     <div className="Store">
       <div className="store-window" ref={storeDiv}>
         <nav className="store-nav bg-csh-secondary-gradient">
-          <span tabIndex={0} role="button" onKeyDown={() => setFilterTag('all')} id="store-all" className="store-link" onClick={() => setFilterTag('all')}>
+          <span tabIndex={0} role="button" onKeyDown={() => setFilterTag('ALL')} id="store-all" className="store-link" onClick={() => setFilterTag('ALL')}>
             <Icon path={mdiScriptText} />
             <p>All</p>
           </span>
-          <span tabIndex={0} role="button" onKeyDown={() => setFilterTag('tool')} id="a-tools" className="store-link" onClick={() => setFilterTag('tool')}>
+          <span tabIndex={0} role="button" onKeyDown={() => setFilterTag('TOOL')} id="a-tools" className="store-link" onClick={() => setFilterTag('TOOL')}>
             <Icon path={mdiPickaxe} />
             <p>Tools</p>
           </span>
-          <span tabIndex={0} role="button" onKeyDown={() => setFilterTag('weapon')} id="a-weapons" className="store-link" onClick={() => setFilterTag('weapon')}>
+          <span tabIndex={0} role="button" onKeyDown={() => setFilterTag('WEAPON')} id="a-weapons" className="store-link" onClick={() => setFilterTag('WEAPON')}>
             <Icon path={mdiSwordCross} />
             <p>Weapons</p>
           </span>
-          <span tabIndex={0} role="button" onKeyDown={() => setFilterTag('armor')} id="a-armor" className="store-link" onClick={() => setFilterTag('armor')}>
+          <span tabIndex={0} role="button" onKeyDown={() => setFilterTag('ARMOR')} id="a-armor" className="store-link" onClick={() => setFilterTag('ARMOR')}>
             <Icon path={mdiShield} />
             <p>Armor</p>
           </span>
-          <span tabIndex={0} role="button" onKeyDown={() => setFilterTag('food')} id="a-food" className="store-link" onClick={() => setFilterTag('food')}>
+          <span tabIndex={0} role="button" onKeyDown={() => setFilterTag('FOOD')} id="a-food" className="store-link" onClick={() => setFilterTag('FOOD')}>
             <Icon path={mdiFoodDrumstick} />
             <p>Food</p>
           </span>
-          <span tabIndex={0} role="button" onKeyDown={() => setFilterTag('material')} id="a-materials" className="store-link" onClick={() => setFilterTag('material')}>
+          <span tabIndex={0} role="button" onKeyDown={() => setFilterTag('MATERIAL')} id="a-materials" className="store-link" onClick={() => setFilterTag('MATERIAL')}>
             <Icon path={mdiSack} />
             <p>Materials</p>
           </span>
-          <span tabIndex={0} role="button" onKeyDown={() => setFilterTag('effects')} id="a-effects" className="store-link" onClick={() => setFilterTag('effects')}>
+          <span tabIndex={0} role="button" onKeyDown={() => setFilterTag('EFFECT')} id="a-effects" className="store-link" onClick={() => setFilterTag('EFFECT')}>
             <Icon path={mdiWizardHat} />
             <p>Effects</p>
           </span>
-          <span tabIndex={0} role="button" onKeyDown={() => setFilterTag('mobs')} id="a-mobs" className="store-link" onClick={() => setFilterTag('mobs')}>
+          <span tabIndex={0} role="button" onKeyDown={() => setFilterTag('MOB')} id="a-mobs" className="store-link" onClick={() => setFilterTag('MOB')}>
             <Icon path={mdiSkull} />
             <p>Mobs</p>
           </span>
-          <span tabIndex={0} role="button" onKeyDown={() => setFilterTag('misc')} id="a-misc" className="store-link" onClick={() => setFilterTag('misc')}>
+          <span tabIndex={0} role="button" onKeyDown={() => setFilterTag('MISC')} id="a-misc" className="store-link" onClick={() => setFilterTag('MISC')}>
             <Icon path={mdiFlask} />
             <p>Misc</p>
           </span>

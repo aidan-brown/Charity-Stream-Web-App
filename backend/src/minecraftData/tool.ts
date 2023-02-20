@@ -1,4 +1,4 @@
-const tools = {
+const tool = {
   tool_golden_pickaxe: {
     id: 'golden_pickaxe',
     displayName: 'Gold Pickaxe',
@@ -73,4 +73,4 @@ const tools = {
   }
 };
 
-export default tools;
+export default tool;

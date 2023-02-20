@@ -1,4 +1,4 @@
-const materials = {
+const material = {
   material_iron_ingot: {
     id: 'iron_ingot',
     displayName: 'Iron Ingot',
@@ -37,4 +37,4 @@ const materials = {
   }
 };
 
-export default materials;
+export default material;

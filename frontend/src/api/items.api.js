@@ -2,10 +2,6 @@ import { Get } from './api';
 
 const BASE = '/data/minecraft';
 
-export const getAllMinecraftItems = async () => Get({ route: `${BASE}/all` });
+const getMinecraftData = async (filterTag) => Get({ route: `${BASE}?filterTag=${filterTag}` });
 
-export const getMinecraftItems = async () => Get({ route: `${BASE}/items` });
-
-export const getMinecraftMobs = async () => Get({ route: `${BASE}/mobs` });
-
-export const getMinecraftEffects = async () => Get({ route: `${BASE}/effects` });
+export default getMinecraftData;

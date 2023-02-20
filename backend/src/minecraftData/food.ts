@@ -1,4 +1,4 @@
-const foods = {
+const food = {
   food_bread: {
     id: 'bread',
     displayName: '5x Bread',
@@ -37,4 +37,4 @@ const foods = {
   }
 };
 
-export default foods;
+export default food;

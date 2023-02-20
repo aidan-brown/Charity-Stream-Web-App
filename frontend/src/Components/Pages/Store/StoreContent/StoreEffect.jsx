@@ -27,15 +27,15 @@ const StoreEffect = ({
         )}
       <p className="store-item-displayName">{effect.displayName}</p>
       <span className="store-item-price">
-        <p className={`original-price ${effect.priceOverride !== null ? 'overrided' : ''}`}>
+        <p className={`original-price ${effect.priceOverride !== null && effect.priceOverride !== undefined ? 'overrided' : ''}`}>
           $
           {effect.price.toFixed(2)}
         </p>
-        {effect.priceOverride !== null && (
-        <p>
-          $
-          {Number(effect.priceOverride).toFixed(2)}
-        </p>
+        {(effect.priceOverride !== null && effect.priceOverride !== undefined) && (
+          <p>
+            $
+            {Number(effect.priceOverride).toFixed(2)}
+          </p>
         )}
         /30sec x Power Level
       </span>
@@ -57,7 +57,7 @@ StoreEffect.propTypes = {
     description: PropTypes.string.isRequired,
     price: PropTypes.number.isRequired,
     priceOverride: PropTypes.any,
-    disabled: PropTypes.bool.isRequired,
+    disabled: PropTypes.bool,
   }).isRequired,
   addItemToCart: PropTypes.func.isRequired,
   isStore: PropTypes.bool,

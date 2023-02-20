@@ -1,47 +1,47 @@
-import armors from './armors';
-import effects from './effects';
-import foods from './foods';
-import materials from './materials';
+import armor from './armor';
+import effect from './effect';
+import food from './food';
+import material from './material';
 import misc from './misc';
-import mobs from './mobs';
-import tools from './tools';
-import weapons from './weapons';
+import mob from './mob';
+import tool from './tool';
+import weapon from './weapon';
 
 const allFlat = new Map(
   Object.entries({
-    ...armors,
-    ...effects,
-    ...foods,
-    ...materials,
+    ...armor,
+    ...effect,
+    ...food,
+    ...material,
     ...misc,
-    ...mobs,
-    ...tools,
-    ...weapons
+    ...mob,
+    ...tool,
+    ...weapon
   })
 );
 
 const all = new Map(
   Object.entries({
-    armors: new Map(Object.entries(armors)),
-    effects: new Map(Object.entries(armors)),
-    foods: new Map(Object.entries(armors)),
-    materials: new Map(Object.entries(armors)),
-    misc: new Map(Object.entries(armors)),
-    mobs: new Map(Object.entries(armors)),
-    tools: new Map(Object.entries(armors)),
-    weapons: new Map(Object.entries(armors))
+    ARMOR: new Map(Object.entries(armor)),
+    EFFECT: new Map(Object.entries(effect)),
+    FOOD: new Map(Object.entries(food)),
+    MATERIAL: new Map(Object.entries(material)),
+    MISC: new Map(Object.entries(misc)),
+    MOB: new Map(Object.entries(mob)),
+    TOOL: new Map(Object.entries(tool)),
+    WEAPON: new Map(Object.entries(weapon))
   })
 );
 
 export {
   all,
   allFlat,
-  armors,
-  effects,
-  foods,
-  materials,
+  armor,
+  effect,
+  food,
+  material,
   misc,
-  mobs,
-  tools,
-  weapons
+  mob,
+  tool,
+  weapon
 };

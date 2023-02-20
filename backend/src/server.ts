@@ -71,7 +71,7 @@ app.post('/logout', logout as RequestHandler);
 app.get('/checkout/status', (_, res) => res.status(200));
 app.get('/data/dynmap/icons/:playerName', dynmapGetPlayerIcon as RequestHandler);
 app.get('/data/dynmap', dynmapGetData as RequestHandler);
-app.get('/data/minecraft/:type', getMinecraftData as RequestHandler);
+app.get('/data/minecraft', getMinecraftData as RequestHandler);
 app.get('/images/:type/:image', getImages as RequestHandler);
 app.get('/players', getPlayers as RequestHandler);
 app.get('/items', getItems as RequestHandler);

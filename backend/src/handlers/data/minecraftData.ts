@@ -10,25 +10,25 @@ interface ExtraData {
 };
 
 export default async function getMinecraftData (req: Request, res: Response): Promise<Response> {
-  const { type = null } = req.query;
+  const { filterTag = 'ALL' } = req.query;
 
   try {
     let data = allFlat;
 
-    if (type !== null) {
-      if (!all.has(type as string)) {
-        throw new Error(`${type as string} is not a valid type`);
+    if (filterTag !== null && filterTag !== 'ALL') {
+      if (!all.has(filterTag as string)) {
+        throw new Error(`${filterTag as string} is not a valid type`);
       }
 
-      data = all.get(type as string) ?? new Map();
+      data = all.get(filterTag as string) ?? new Map();
     }
 
     const extraData = new Map<string, ExtraData>();
 
     const items = await Item.findAll({
-      ...(type !== null && {
+      ...(filterTag !== null && {
         where: {
-          type: type as string
+          type: (filterTag as string).toLowerCase()
         }
       })
     });
@@ -42,12 +42,19 @@ export default async function getMinecraftData (req: Request, res: Response): Pr
     });
 
     return res.status(200).send({
-      data: Array.from(data).map(([key, value]) => {
-        return {
-          ...value,
-          ...extraData.get(`${value.type}_${key}`)
-        };
-      })
+      data: Array.from(data)
+        .map(
+          ([key, value]) => ({
+            ...value,
+            ...extraData.get(`${value.type}_${key}`)
+          })
+        )
+        .sort(({ disabled: d1 = false }, { disabled: d2 = false }) => {
+          if (d1 && d2) return 0;
+          if (d1) return -1;
+          return 1;
+        })
+
     });
   } catch (error) {
     void logger.log(
@@ -57,6 +64,6 @@ export default async function getMinecraftData (req: Request, res: Response): Pr
       }
     );
 
-    return res.status(500).send({ errors: ['Could not find disabled items'] });
+    return res.status(400).send({ errors: ['There was an error getting the items'] });
   }
 }

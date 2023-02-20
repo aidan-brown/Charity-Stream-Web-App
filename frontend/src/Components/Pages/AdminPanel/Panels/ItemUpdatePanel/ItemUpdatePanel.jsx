@@ -21,7 +21,7 @@ import {
   disableItem,
   pricesOverride,
   getCheckoutStatus,
-  getAllMinecraftItems,
+  getMinecraftData,
 } from '../../../../../api';
 import './ItemUpdatePanel.scss';
 
@@ -55,7 +55,7 @@ const ItemUpdatePanel = ({ setAlert }) => {
 
   useQuery(
     ['minecraft-items'],
-    () => getAllMinecraftItems(),
+    () => getMinecraftData(),
     {
       onSuccess: (newItems) => {
         setItems(newItems);

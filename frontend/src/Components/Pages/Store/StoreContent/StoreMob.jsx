@@ -27,11 +27,11 @@ const StoreMob = ({
         )}
       <p className="store-item-displayName">{mob.displayName}</p>
       <span className="store-item-price">
-        <p className={`original-price ${mob.priceOverride !== null ? 'overrided' : ''}`}>
+        <p className={`original-price ${mob.priceOverride !== null && mob.priceOverride !== undefined ? 'overrided' : ''}`}>
           $
           {mob.price.toFixed(2)}
         </p>
-        {mob.priceOverride !== null && (
+        {(mob.priceOverride !== null && mob.priceOverride !== undefined) && (
         <p>
           $
           {Number(mob.priceOverride).toFixed(2)}
@@ -56,7 +56,7 @@ StoreMob.propTypes = {
     description: PropTypes.string.isRequired,
     price: PropTypes.number.isRequired,
     priceOverride: PropTypes.any,
-    disabled: PropTypes.bool.isRequired,
+    disabled: PropTypes.bool,
   }).isRequired,
   addItemToCart: PropTypes.func.isRequired,
   isStore: PropTypes.bool,

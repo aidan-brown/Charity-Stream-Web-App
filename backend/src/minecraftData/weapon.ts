@@ -1,4 +1,4 @@
-const weapons = {
+const weapon = {
   weapon_golden_sword: {
     id: 'golden_sword',
     displayName: 'Gold Sword',
@@ -158,4 +158,4 @@ const weapons = {
   }
 };
 
-export default weapons;
+export default weapon;

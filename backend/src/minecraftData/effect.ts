@@ -1,4 +1,4 @@
-const effects = {
+const effect = {
   effect_absorption: {
     id: 'absorption',
     displayName: 'Absorption',
@@ -169,4 +169,4 @@ const effects = {
   }
 };
 
-export default effects;
+export default effect;

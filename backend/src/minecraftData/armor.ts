@@ -1,4 +1,4 @@
-const armors = {
+const armor = {
   armor_leather_helmet: {
     displayName: 'Leather Cap',
     id: 'leather_helmet',
@@ -225,4 +225,4 @@ const armors = {
   }
 };
 
-export default armors;
+export default armor;
