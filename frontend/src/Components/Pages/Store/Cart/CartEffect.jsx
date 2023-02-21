@@ -37,7 +37,7 @@ const CartEffect = ({
             ? RESTRICTED_POWER_LEVELS
             : POWER_LEVELS;
           return Object.keys(powerLevels).map((lvl) => (
-            <MenuItem value={powerLevels[lvl]} key={effect.displayName}>
+            <MenuItem value={powerLevels[lvl]} key={`${effect.displayName}-${lvl}`}>
               {lvl}
             </MenuItem>
           ));
@@ -45,7 +45,7 @@ const CartEffect = ({
       </Select>
       <Select className="effect-select" value={effect.time} onChange={(e) => changeEffectTime(e.target.value)}>
         {Object.keys(TIME_LEVELS).map((lvl) => (
-          <MenuItem value={TIME_LEVELS[lvl]} key={effect.displayName}>
+          <MenuItem value={TIME_LEVELS[lvl]} key={`${effect.displayName}-${lvl}`}>
             {lvl}
           </MenuItem>
         ))}

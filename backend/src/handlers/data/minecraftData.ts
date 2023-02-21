@@ -54,7 +54,6 @@ export default async function getMinecraftData (req: Request, res: Response): Pr
           if (d1) return -1;
           return 1;
         })
-
     });
   } catch (error) {
     void logger.log(

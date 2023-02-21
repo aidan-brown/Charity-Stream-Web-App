@@ -1,4 +1,3 @@
-/* eslint-disable react/forbid-prop-types */
 import React from 'react';
 import PropTypes from 'prop-types';
 
@@ -47,7 +46,7 @@ CartItem.propTypes = {
     displayName: PropTypes.string.isRequired,
     amount: PropTypes.number.isRequired,
     price: PropTypes.number.isRequired,
-    priceOverride: PropTypes.any,
+    priceOverride: PropTypes.number,
   }).isRequired,
   changeCartAmount: PropTypes.func.isRequired,
   removeFromCart: PropTypes.func.isRequired,
