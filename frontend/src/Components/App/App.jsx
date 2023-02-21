@@ -53,6 +53,8 @@ const App = () => {
 
   const focusPopup = () => popupRef.current.focus();
 
+  // TODO: Fix the bug associated with opening a new window on mobile / safari (maybe
+  // not make it a popup?)
   useEffect(() => {
     if (popupClosed) {
       popupBlur.current.className = popupBlur.current.className.replace('on', 'off');
@@ -102,13 +104,13 @@ const App = () => {
     cartItems.forEach((item) => {
       if (!('power' in item)) {
         total += (item.amount * (
-          item.priceOverride !== null
+          (item.priceOverride !== null && item.priceOverride !== undefined)
             ? Number(item.priceOverride)
             : item.price));
       } else {
         // eslint-disable-next-line no-mixed-operators
         total += ((item.power + 1) * (item.time / 30 * (
-          item.priceOverride !== null
+          (item.priceOverride !== null && item.priceOverride !== undefined)
             ? Number(item.priceOverride)
             : item.price)));
       }

@@ -9,7 +9,7 @@ import { useQuery } from '@tanstack/react-query';
 import CartEffect from './CartEffect';
 import CartItem from './CartItem';
 import './Cart.scss';
-import { getCheckoutStatus, getPlayers } from '../../../../api';
+import { getPlayers } from '../../../../api';
 
 const Cart = ({
   player,
@@ -30,13 +30,14 @@ const Cart = ({
     () => getPlayers(),
   );
 
-  const { data: checkoutDisabled } = useQuery(
-    ['checkout-status'],
-    () => getCheckoutStatus(),
-    {
-      refetchInterval: 10000,
-    },
-  );
+  // TODO: Not set up to handle routes
+  // const { data: checkoutDisabled } = useQuery(
+  //   ['checkout-status'],
+  //   () => getCheckoutStatus(),
+  //   {
+  //     refetchInterval: 10000,
+  //   },
+  // );
 
   return (
     <div className="Cart bg-csh-tertiary" data-showcart={showCart}>
@@ -100,10 +101,10 @@ const Cart = ({
           setLoading(false);
         }}
         startIcon={<ShoppingCartIcon />}
-        disabled={(checkoutDisabled || calculateTotal() < 2 || player === '')}
+        disabled={(/** checkoutDisabled || */ calculateTotal() < 2 || player === '')}
       >
         {(() => {
-          if (checkoutDisabled) return 'Waiting For Game To Start';
+          // TODO: if (checkoutDisabled) return 'Waiting For Game To Start';
           if (calculateTotal() < 2) return 'Minimum of $2.00';
           if (player === '') return 'Must select a player';
           if (loading) return 'Verifying Cart...';
