@@ -102,13 +102,13 @@ const App = () => {
     cartItems.forEach((item) => {
       if (!('power' in item)) {
         total += (item.amount * (
-          item.priceOverride !== null
+          (item.priceOverride !== null && item.priceOverride !== undefined)
             ? Number(item.priceOverride)
             : item.price));
       } else {
         // eslint-disable-next-line no-mixed-operators
         total += ((item.power + 1) * (item.time / 30 * (
-          item.priceOverride !== null
+          (item.priceOverride !== null && item.priceOverride !== undefined)
             ? Number(item.priceOverride)
             : item.price)));
       }

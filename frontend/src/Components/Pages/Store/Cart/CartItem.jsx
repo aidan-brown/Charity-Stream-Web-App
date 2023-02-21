@@ -7,11 +7,11 @@ const CartItem = ({ item, changeCartAmount, removeFromCart }) => (
     <div className="cart-item-description">
       <p className="cart-item-header">{item.displayName}</p>
       <span className="cart-item-price">
-        <p className={`original-price ${item.priceOverride !== null ? 'overrided' : ''}`}>
+        <p className={`original-price ${(item.priceOverride !== null && item.priceOverride !== undefined) ? 'overrided' : ''}`}>
           $
           {(item.amount * item.price).toFixed(2)}
         </p>
-        {item.priceOverride !== null && (
+        {(item.priceOverride !== null && item.priceOverride !== undefined) && (
         <p>
           $
           {(item.amount * Number(item.priceOverride)).toFixed(2)}

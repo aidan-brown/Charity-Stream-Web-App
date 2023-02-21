@@ -34,7 +34,7 @@ const StoreItem = ({
       className={`store-item bg-csh-tertiary ${className || ''}`}
       onClick={addItemToCart}
       onKeyDown={addItemToCart}
-      data-disabled={disabled}
+      data-disabled={!!disabled}
     >
       <div className="store-item-header bg-csh-primary-gradient">
         {!isSafari

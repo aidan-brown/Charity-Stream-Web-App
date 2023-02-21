@@ -1,4 +1,3 @@
-/* eslint-disable react/forbid-prop-types */
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useQuery } from '@tanstack/react-query';
@@ -8,7 +7,7 @@ import { getApiUrl } from '../../../../Utils';
 import './StoreContent.scss';
 
 const StoreContent = ({
-  filterTag, addItemToCart, className, cartItems, setCartItems,
+  filterTag, addItemToCart, className,
 }) => {
   const { data: { data: items = [] } = {}, refetch } = useQuery(['item_data'], () => getMinecraftData(filterTag));
 
@@ -42,8 +41,6 @@ StoreContent.propTypes = {
   filterTag: PropTypes.string.isRequired,
   className: PropTypes.string,
   addItemToCart: PropTypes.func.isRequired,
-  cartItems: PropTypes.array.isRequired,
-  setCartItems: PropTypes.func.isRequired,
 };
 
 StoreContent.defaultProps = {

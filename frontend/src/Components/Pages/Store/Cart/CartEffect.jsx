@@ -14,11 +14,11 @@ const CartEffect = ({
     <div className="cart-item-description">
       <p className="cart-item-header">{effect.displayName}</p>
       <span className="cart-item-price">
-        <p className={`original-price ${effect.priceOverride !== null ? 'overrided' : ''}`}>
+        <p className={`original-price ${(effect.priceOverride !== null && effect.priceOverride !== undefined) ? 'overrided' : ''}`}>
           $
           {(((effect.power + 1) * (effect.time / 30 * effect.price))).toFixed(2)}
         </p>
-        {effect.priceOverride !== null && (
+        {(effect.priceOverride !== null && effect.priceOverride !== undefined) && (
         <p>
           $
           {(((effect.power + 1) * (effect.time / 30 * Number(effect.priceOverride)))).toFixed(2)}

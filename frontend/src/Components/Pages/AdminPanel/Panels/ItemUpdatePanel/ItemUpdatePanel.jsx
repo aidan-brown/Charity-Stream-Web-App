@@ -13,8 +13,6 @@ import { TabPanel } from '@mui/lab';
 import { Clear, Check, Delete } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
-import StoreEffect from '../../../Store/StoreContent/StoreEffect';
-import StoreMob from '../../../Store/StoreContent/StoreMob';
 import StoreItem from '../../../Store/StoreContent/StoreItem';
 import {
   checkoutDisable,
@@ -492,36 +490,6 @@ const ItemUpdatePanel = ({ setAlert }) => {
                   key={item.id}
                 />
                 {priceOverride(item)}
-              </div>
-            ))}
-          {items
-            .filter((i) => (JSON.stringify(Object.values(i)).includes(filter)))
-            .filter(({ type }) => type === 'mob')
-            .map((mob) => (
-              <div key={`${mob.type}-${mob.id}`} className="item">
-                <StoreMob
-                  className={toDisable.find((d) => d.id === mob.id && d.type === mob.type) ? 'selected' : null}
-                  isStore={false}
-                  mob={mob}
-                  addItemToCart={() => toggleDisabled(mob)}
-                  key={mob.id}
-                />
-                {priceOverride(mob)}
-              </div>
-            ))}
-          {items
-            .filter((i) => (JSON.stringify(Object.values(i)).includes(filter)))
-            .filter(({ type }) => type === 'effect')
-            .map((effect) => (
-              <div key={`${effect.type}-${effect.id}`} className="item">
-                <StoreEffect
-                  className={toDisable.find((d) => d.id === effect.id && d.type === effect.type) ? 'selected' : null}
-                  isStore={false}
-                  effect={effect}
-                  addItemToCart={() => toggleDisabled(effect)}
-                  key={effect.id}
-                />
-                {priceOverride(effect)}
               </div>
             ))}
         </div>
