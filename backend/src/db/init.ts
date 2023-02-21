@@ -13,9 +13,9 @@ import {
 dotenv.config();
 
 export default async function dbInit (): Promise<void> {
-  const { DEPLOYMENT_ENV, DB_DROP_TABLES } = process.env;
+  const { DB_DROP_TABLES } = process.env;
   const force = DB_DROP_TABLES === 'true';
-  const alter = DEPLOYMENT_ENV !== 'production';
+  const alter = true; // DEPLOYMENT_ENV !== 'production'; TODO: Figure out if this was the problem
 
   await Player.sync({ alter, force });
   await Log.sync({ alter, force });
@@ -29,7 +29,7 @@ export default async function dbInit (): Promise<void> {
     await Token.drop();
   }
 
-  // FK refs
+  // Foreign Key refs
   await Account.sync({ alter, force });
   await Token.sync({ alter, force });
 

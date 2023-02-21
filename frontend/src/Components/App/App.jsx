@@ -53,6 +53,8 @@ const App = () => {
 
   const focusPopup = () => popupRef.current.focus();
 
+  // TODO: Fix the bug associated with opening a new window on mobile / safari (maybe
+  // not make it a popup?)
   useEffect(() => {
     if (popupClosed) {
       popupBlur.current.className = popupBlur.current.className.replace('on', 'off');

@@ -6,7 +6,7 @@ import { msToTime } from '../../../Utils';
 
 const Landing = ({ setStreamStarted }) => {
   const streamYear = '5th';
-  const streamDate = new Date('April 8, 2023 23:00:00 UTC');
+  const streamDate = new Date('April 7, 2023 23:00:00 UTC'); // TODO: Move this to be polled from the backend so it can be changed on the fly
   const [remainingTime, setRemainingTime] = useState(streamDate - Date.now());
 
   setTimeout(() => {
