@@ -12,10 +12,10 @@ const refreshToken = async () => {
   });
 
   if (response.status === 201) {
-    return true;
+    return response.json();
   }
 
-  return false;
+  return {};
 };
 
 export const verifyToken = async () => {
@@ -26,8 +26,11 @@ export const verifyToken = async () => {
     return token;
   }
 
-  if (await refreshToken()) {
-    return Cookies.get('accessToken');
+  const { accessToken } = await refreshToken();
+
+  if (accessToken) {
+    Cookies.set('accessToken', accessToken);
+    return accessToken;
   }
 
   // If that does not work, we have to redirect
