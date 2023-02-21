@@ -7,7 +7,7 @@ const CookieDisclaimer = () => {
   const [shouldShow, setShouldShow] = useState(true);
 
   useEffect(() => {
-    if (sessionStorage.getItem('mcs-cookies-acknowledge')) setShouldShow(false);
+    if (localStorage.getItem('mcs-cookies-acknowledge')) setShouldShow(false);
     else setShouldShow(true);
     setLoading(false);
   }, []);
@@ -45,7 +45,7 @@ const CookieDisclaimer = () => {
         variant="contained"
         onClick={() => {
           setShouldShow(false);
-          sessionStorage.setItem('mcs-cookies-acknowledge', true);
+          localStorage.setItem('mcs-cookies-acknowledge', true);
         }}
       >
         Acknowledge

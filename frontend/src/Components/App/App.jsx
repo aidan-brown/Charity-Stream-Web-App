@@ -5,15 +5,17 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'jquery';
 import 'popper.js';
 import 'bootstrap/dist/js/bootstrap.min';
-import { Route, Routes, BrowserRouter } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import Navbar from '../Navbar/Navbar';
 import Footer from '../Footer/Footer';
 import {
   Stream, Store, AdminPanel, Landing, DonationConfirmation,
 } from '../Pages';
 import Cart from '../Pages/Store/Cart/Cart';
-import { getUrl, postReq } from '../../Utils';
 import CookieDisclaimer from '../CookieDisclaimer';
+import Login from '../Pages/Login/Login';
+import LoginCallback from '../Pages/Login/LoginCallback';
+import { verifyCheckout } from '../../api';
 
 const App = () => {
   const [alert, setAlert] = useState();
@@ -24,15 +26,12 @@ const App = () => {
   const [popup, setPopup] = useState({ closed: true });
   const [popupClosed, setPopupClosed] = useState();
   const [popupWaitInt, setPopupWaitInt] = useState();
-  const [isAdmin, setIsAdmin] = useState(false);
 
   const itemAddRef = useRef();
   const popupRef = useRef(popup);
   const popupBlur = useRef();
 
   useEffect(() => {
-    if (localStorage.getItem('mcs-authHeader')) setIsAdmin(true);
-
     let lsGet = localStorage.getItem('mcs-player');
     if (!player && lsGet) {
       setPlayer(lsGet);
@@ -54,6 +53,8 @@ const App = () => {
 
   const focusPopup = () => popupRef.current.focus();
 
+  // TODO: Fix the bug associated with opening a new window on mobile / safari (maybe
+  // not make it a popup?)
   useEffect(() => {
     if (popupClosed) {
       popupBlur.current.className = popupBlur.current.className.replace('on', 'off');
@@ -101,8 +102,18 @@ const App = () => {
   const calculateTotal = () => {
     let total = 0;
     cartItems.forEach((item) => {
-      // eslint-disable-next-line no-mixed-operators
-      if (!('power' in item)) { total += (item.amount * (item.priceOverride !== null ? Number(item.priceOverride) : item.price)); } else { total += ((item.power + 1) * (item.time / 30 * (item.priceOverride !== null ? Number(item.priceOverride) : item.price))); }
+      if (!('power' in item)) {
+        total += (item.amount * (
+          (item.priceOverride !== null && item.priceOverride !== undefined)
+            ? Number(item.priceOverride)
+            : item.price));
+      } else {
+        // eslint-disable-next-line no-mixed-operators
+        total += ((item.power + 1) * (item.time / 30 * (
+          (item.priceOverride !== null && item.priceOverride !== undefined)
+            ? Number(item.priceOverride)
+            : item.price)));
+      }
     });
     return total;
   };
@@ -138,18 +149,15 @@ const App = () => {
       }
     });
 
-    const reqJSON = {
-      cart: items,
-      player,
-    };
+    try {
+      const jgUrl = await verifyCheckout({
+        cart: items,
+        player,
+      });
 
-    const res = await postReq(`${getUrl()}/verify-checkout`, JSON.stringify(reqJSON));
-
-    if (res.status === 200) {
-      const JG_URL = await res.text();
       setCartItems([]);
       setPopupClosed(false);
-      const newPopup = window.open(JG_URL, 'targetWindow',
+      const newPopup = window.open(jgUrl, 'targetWindow',
         `popup,
         width=483,
         height=680,
@@ -158,14 +166,8 @@ const App = () => {
       `);
       popupRef.current = newPopup;
       setPopup(newPopup);
-    } else {
-      const json = await res.json();
-      const { message } = json;
-
-      setAlert({
-        severity: 'error',
-        message,
-      });
+    } catch (err) {
+      // TODO: Handle error
     }
   };
 
@@ -175,8 +177,23 @@ const App = () => {
 
   const CartComponents = () => (
     <span>
-      <button type="button" className="bg-csh-tertiary toggle-cart " onClick={toggleCartMenu} data-showcart={showCart}><span className="material-icons">{showCart === 'yes' ? 'arrow_forward' : 'shopping_cart'}</span></button>
-      <img className="cart-add-item" ref={itemAddRef} src="" alt="item added to cart" data-show="no" />
+      <button
+        type="button"
+        className="bg-csh-tertiary toggle-cart "
+        onClick={toggleCartMenu}
+        data-showcart={showCart}
+      >
+        <span className="material-icons">
+          {showCart === 'yes' ? 'arrow_forward' : 'shopping_cart'}
+        </span>
+      </button>
+      <img
+        className="cart-add-item"
+        ref={itemAddRef}
+        src=""
+        alt="item added to cart"
+        data-show="no"
+      />
       <Cart
         player={player}
         setPlayer={setPlayer}
@@ -193,9 +210,9 @@ const App = () => {
   );
 
   return (
-    <BrowserRouter>
+    <>
       <div className="App">
-        <Navbar isAdmin={isAdmin} streamStarted={streamStarted} />
+        <Navbar streamStarted={streamStarted} />
         <main className="Content">
           <Routes>
             <Route
@@ -219,14 +236,14 @@ const App = () => {
                 <span>
                   {CartComponents()}
                   {alert && (
-                  <Alert
-                    className="App-alert"
-                    onClose={() => setAlert()}
-                    variant="filled"
-                    severity={alert.severity}
-                  >
-                    {alert.message}
-                  </Alert>
+                    <Alert
+                      className="App-alert"
+                      onClose={() => setAlert()}
+                      variant="filled"
+                      severity={alert.severity}
+                    >
+                      {alert.message}
+                    </Alert>
                   )}
                   <Store
                     addItemToCart={addItemToCart}
@@ -237,7 +254,9 @@ const App = () => {
             )}
             />
             <Route path="/donation-confirmation/:donationID/:checkoutID" element={<DonationConfirmation />} />
-            <Route path="/admin-panel" element={<AdminPanel setIsAdmin={setIsAdmin} />} />
+            <Route path="/admin-panel" element={<AdminPanel />} />
+            <Route exact path="/login" element={<Login />} />
+            <Route exact path="/login/callback/:service" element={<LoginCallback />} />
             <Route
               exact
               path="/"
@@ -265,7 +284,7 @@ const App = () => {
         </p>
       </span>
       <CookieDisclaimer />
-    </BrowserRouter>
+    </>
   );
 };
 

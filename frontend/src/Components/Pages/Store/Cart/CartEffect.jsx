@@ -14,11 +14,11 @@ const CartEffect = ({
     <div className="cart-item-description">
       <p className="cart-item-header">{effect.displayName}</p>
       <span className="cart-item-price">
-        <p className={`original-price ${effect.priceOverride !== null ? 'overrided' : ''}`}>
+        <p className={`original-price ${(effect.priceOverride !== null && effect.priceOverride !== undefined) ? 'overrided' : ''}`}>
           $
           {(((effect.power + 1) * (effect.time / 30 * effect.price))).toFixed(2)}
         </p>
-        {effect.priceOverride !== null && (
+        {(effect.priceOverride !== null && effect.priceOverride !== undefined) && (
         <p>
           $
           {(((effect.power + 1) * (effect.time / 30 * Number(effect.priceOverride)))).toFixed(2)}
@@ -37,7 +37,7 @@ const CartEffect = ({
             ? RESTRICTED_POWER_LEVELS
             : POWER_LEVELS;
           return Object.keys(powerLevels).map((lvl) => (
-            <MenuItem value={powerLevels[lvl]} key={effect.displayName}>
+            <MenuItem value={powerLevels[lvl]} key={`${effect.displayName}-${lvl}`}>
               {lvl}
             </MenuItem>
           ));
@@ -45,7 +45,7 @@ const CartEffect = ({
       </Select>
       <Select className="effect-select" value={effect.time} onChange={(e) => changeEffectTime(e.target.value)}>
         {Object.keys(TIME_LEVELS).map((lvl) => (
-          <MenuItem value={TIME_LEVELS[lvl]} key={effect.displayName}>
+          <MenuItem value={TIME_LEVELS[lvl]} key={`${effect.displayName}-${lvl}`}>
             {lvl}
           </MenuItem>
         ))}
