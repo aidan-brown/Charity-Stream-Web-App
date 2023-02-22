@@ -28,7 +28,6 @@ import {
 import {
   logger,
   rcon,
-  getUrl,
   passportConfig,
   verifyRole
 } from './utils';
@@ -49,7 +48,12 @@ const app = express();
 // Add CORS to the app for allowing credentials
 app.use(
   cors({
-    origin: getUrl(),
+    origin: [
+      'https://charitystream.csh.rit.edu',
+      'https://charitystream.cs.house',
+      'https://develop-charitystream.cs.house',
+      'http://localhost:3000'
+    ],
     methods: ['GET', 'PUT', 'POST', 'DELETE'],
     optionsSuccessStatus: 204,
     credentials: true
