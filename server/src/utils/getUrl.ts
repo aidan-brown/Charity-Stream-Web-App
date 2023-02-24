@@ -5,7 +5,7 @@ import {
 } from '../constants';
 
 export default function getUrl (): string {
-  switch (process.env.DEPLOYMENT_ENV) {
+  switch (process.env.NODE_ENV) {
     case 'production': return PROD_URL;
     case 'develop': return DEV_URL;
     case 'local': return LOCAL_URL;

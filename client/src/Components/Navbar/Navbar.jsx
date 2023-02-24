@@ -28,14 +28,14 @@ const Navbar = ({ streamStarted }) => {
     switch (window.location.pathname) {
       case '/':
         if (streamStarted) {
-          activeLink = document.querySelector('#stream');
+          activeLink = document?.querySelector('#stream');
         }
         break;
 
       default:
         if (window.location.pathname.split('/').length <= 2) {
           activeLink = document
-            .querySelector(`#${window.location.pathname
+            ?.querySelector(`#${window.location.pathname
               .substring(1, window.location.pathname.length).toLowerCase()}`);
         }
         break;

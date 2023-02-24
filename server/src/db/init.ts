@@ -13,9 +13,9 @@ import {
 dotenv.config();
 
 export default async function dbInit (): Promise<void> {
-  const { DB_DROP_TABLES } = process.env;
+  const { DB_DROP_TABLES, NODE_ENV } = process.env;
   const force = DB_DROP_TABLES === 'true';
-  const alter = true; // DEPLOYMENT_ENV !== 'production'; TODO: Figure out if this was the problem
+  const alter = NODE_ENV !== 'production';
 
   await Player.sync({ alter, force });
   await Log.sync({ alter, force });
