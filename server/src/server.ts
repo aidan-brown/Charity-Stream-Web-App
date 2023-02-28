@@ -1,5 +1,3 @@
-import dotenv from 'dotenv';
-
 import express, { RequestHandler } from 'express';
 import cors from 'cors';
 import cron from 'node-cron';
@@ -7,6 +5,7 @@ import passport from 'passport';
 import cookieParser from 'cookie-parser';
 import cookieSession from 'cookie-session';
 import path from 'path';
+import dotenv from 'dotenv';
 import {
   getAccount,
   getAnalytics,
@@ -82,7 +81,7 @@ app.get(
 app.get(
   '/api/auth/google/callback',
   passport.authenticate('google', { session: false }),
-  jwtMiddleware
+  jwtMiddleware as RequestHandler
 );
 
 // Microsoft auth routes
@@ -93,7 +92,7 @@ app.get(
 app.get(
   '/api/auth/microsoft/callback',
   passport.authenticate('microsoft', { session: false }),
-  jwtMiddleware
+  jwtMiddleware as RequestHandler
 );
 
 // ***** Basic routes for data retrieval *****
@@ -126,36 +125,36 @@ app.get(
 app.get(
   '/api/analytics',
   passport.authenticate('jwt', { session: false }),
-  verifyRole(Role.ADMIN),
+  verifyRole(Role.ADMIN) as RequestHandler,
   getAnalytics as RequestHandler
 );
 
 app.get(
   '/api/quick-commands',
   passport.authenticate('jwt', { session: false }),
-  verifyRole(Role.ADMIN),
+  verifyRole(Role.ADMIN) as RequestHandler,
   getQuickCommands as RequestHandler
 );
 
 app.put(
   '/api/quick-commands',
   passport.authenticate('jwt', { session: false }),
-  verifyRole(Role.ADMIN),
-  createOrUpdateQuickCommand
+  verifyRole(Role.ADMIN) as RequestHandler,
+  createOrUpdateQuickCommand as RequestHandler
 );
 
 app.delete(
   '/api/quick-commands/:commandId',
   passport.authenticate('jwt', { session: false }),
-  verifyRole(Role.ADMIN),
-  deleteQuickCommand
+  verifyRole(Role.ADMIN) as RequestHandler,
+  deleteQuickCommand as RequestHandler
 );
 
 app.put(
   '/api/items',
   passport.authenticate('jwt', { session: false }),
-  verifyRole(Role.ADMIN),
-  updateItems
+  verifyRole(Role.ADMIN) as RequestHandler,
+  updateItems as RequestHandler
 );
 
 // app.put(
@@ -168,22 +167,22 @@ app.put(
 app.post(
   '/api/players',
   passport.authenticate('jwt', { session: false }),
-  verifyRole(Role.ADMIN),
-  createPlayers
+  verifyRole(Role.ADMIN) as RequestHandler,
+  createPlayers as RequestHandler
 );
 
 app.delete(
   '/api/players/:username',
   passport.authenticate('jwt', { session: false }),
-  verifyRole(Role.ADMIN),
-  deletePlayer
+  verifyRole(Role.ADMIN) as RequestHandler,
+  deletePlayer as RequestHandler
 );
 
 app.post(
   '/api/run-commands',
   passport.authenticate('jwt', { session: false }),
-  verifyRole(Role.ADMIN),
-  runRconCommands
+  verifyRole(Role.ADMIN) as RequestHandler,
+  runRconCommands as RequestHandler
 );
 
 // Catchall for all other not found api routes
@@ -192,15 +191,15 @@ app.use('/api*', (_, res) => {
 });
 
 // Serving the client in non-local environments
-// if (process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'develop') {
-app.use(express.static(path.join(__dirname, '..', '..', 'client', 'dist')));
-app.use(express.static(path.join(__dirname, '..', '..', 'client', 'public')));
-app.use('*', (_, res) => {
-  res.sendFile(
-    path.join(__dirname, '..', '..', 'client', 'dist', 'index.html')
-  );
-});
-// }
+if (process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'develop') {
+  app.use(express.static(path.join(__dirname, '..', '..', 'client', 'dist')));
+  app.use(express.static(path.join(__dirname, '..', '..', 'client', 'public')));
+  app.use('*', (_, res) => {
+    res.sendFile(
+      path.join(__dirname, '..', '..', 'client', 'dist', 'index.html')
+    );
+  });
+}
 
 // The port that the webserver will be listening on (default 8080)
 const PORT = process.env.APP_PORT ?? 8080;
