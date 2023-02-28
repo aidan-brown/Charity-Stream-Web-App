@@ -15,23 +15,21 @@ const DonationConfirmation = () => {
     message: '',
   });
 
-  const { isLoading } = useQuery(
-    ['donation', { donationID, checkoutID }],
-    () => verifyDonation(),
-    {
-      onSuccess: (res) => {
-        setResponse({ ...response, code: res.code, message: res.message });
-      },
-      onError: () => {
-        setResponse({
-          ...response,
-          code: 'UH_OH',
-          message: 'We could not contact our services, reach out on Twitch with the code below and we can help!',
-        });
-      },
-      enabled: donationID && checkoutID,
+  const { isLoading } = useQuery({
+    queryKey: ['donation', { donationID, checkoutID }],
+    queryFn: () => verifyDonation(),
+    onSuccess: (res) => {
+      setResponse({ ...response, code: res.code, message: res.message });
     },
-  );
+    onError: () => {
+      setResponse({
+        ...response,
+        code: 'UH_OH',
+        message: 'We could not contact our services, reach out on Twitch with the code below and we can help!',
+      });
+    },
+    enabled: donationID && checkoutID,
+  });
 
   return (
     <div className="DonationConfirmation">

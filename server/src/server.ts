@@ -1,9 +1,11 @@
+import dotenv from 'dotenv';
+
 import express, { RequestHandler } from 'express';
 import cors from 'cors';
 import cron from 'node-cron';
 import passport from 'passport';
 import cookieParser from 'cookie-parser';
-import dotenv from 'dotenv';
+import cookieSession from 'cookie-session';
 import path from 'path';
 import {
   getAccount,
@@ -22,27 +24,21 @@ import {
   deleteQuickCommand,
   runRconCommands,
   logout,
-  oauth,
-  tokenRefresh,
-  getMinecraftData
+  getMinecraftData,
+  jwtMiddleware
 } from './handlers';
 import {
   logger,
   rcon,
   getUrl,
-  passportConfig,
   verifyRole
 } from './utils';
 import { Role } from './db/models/account';
 import dbInit from './db/init';
 import { testConnection } from './db/testConnection';
-import getImages from './images';
+import './config/passportSetup';
 
-// Inject env vars
 dotenv.config();
-
-// Setup token authentication
-passportConfig(passport);
 
 // Create the express application
 const app = express();
@@ -57,29 +53,60 @@ app.use(
   })
 );
 
+app.use(
+  cookieSession({
+    name: 'session',
+    keys: [process.env.COOKIE_KEY ?? 'cookieKey'],
+    maxAge: 24 * 60 * 60 * 7
+  })
+);
+
 // Allow json to be sent to the app
 app.use(express.json());
 
 // Add cookie parser for handling token auth
 app.use(cookieParser());
 
+// Add passport
+app.use(passport.initialize());
+app.use(passport.session());
+
 // ***** Routes to handle Authentication *****
-app.post('/:oauthService/auth', oauth as RequestHandler);
-app.post('/token/refresh', tokenRefresh as RequestHandler);
-app.post('/logout', logout as RequestHandler);
+app.post('/api/logout', logout as RequestHandler);
+
+// Google auth routes
+app.get(
+  '/api/auth/google',
+  passport.authenticate('google', { scope: ['email', 'profile'] })
+);
+app.get(
+  '/api/auth/google/callback',
+  passport.authenticate('google', { session: false }),
+  jwtMiddleware
+);
+
+// Microsoft auth routes
+app.get(
+  '/api/auth/microsoft',
+  passport.authenticate('microsoft')
+);
+app.get(
+  '/api/auth/microsoft/callback',
+  passport.authenticate('microsoft', { session: false }),
+  jwtMiddleware
+);
 
 // ***** Basic routes for data retrieval *****
-app.get('/checkout/status', (_, res) => res.status(200));
-app.get('/data/dynmap/icons/:playerName', dynmapGetPlayerIcon as RequestHandler);
-app.get('/data/dynmap', dynmapGetData as RequestHandler);
-app.get('/data/minecraft', getMinecraftData as RequestHandler);
-app.get('/images/:type/:image', getImages as RequestHandler);
-app.get('/players', getPlayers as RequestHandler);
-app.get('/items', getItems as RequestHandler);
+app.get('/api/checkout/status', (_, res) => res.status(200));
+app.get('/api/data/dynmap/icons/:playerName', dynmapGetPlayerIcon as RequestHandler);
+app.get('/api/data/dynmap', dynmapGetData as RequestHandler);
+app.get('/api/data/minecraft', getMinecraftData as RequestHandler);
+app.get('/api/players', getPlayers as RequestHandler);
+app.get('/api/items', getItems as RequestHandler);
 
 // ***** Routes that require an account
 app.get(
-  '/account',
+  '/api/account',
   passport.authenticate('jwt', { session: false }),
   getAccount as RequestHandler
 );
@@ -97,78 +124,83 @@ app.get(
 
 // ***** Routes that require an ADMIN account
 app.get(
-  '/analytics',
+  '/api/analytics',
   passport.authenticate('jwt', { session: false }),
   verifyRole(Role.ADMIN),
   getAnalytics as RequestHandler
 );
 
 app.get(
-  '/quick-commands',
+  '/api/quick-commands',
   passport.authenticate('jwt', { session: false }),
   verifyRole(Role.ADMIN),
   getQuickCommands as RequestHandler
 );
 
 app.put(
-  '/quick-commands',
+  '/api/quick-commands',
   passport.authenticate('jwt', { session: false }),
   verifyRole(Role.ADMIN),
   createOrUpdateQuickCommand
 );
 
 app.delete(
-  '/quick-commands/:commandId',
+  '/api/quick-commands/:commandId',
   passport.authenticate('jwt', { session: false }),
   verifyRole(Role.ADMIN),
   deleteQuickCommand
 );
 
 app.put(
-  '/items',
+  '/api/items',
   passport.authenticate('jwt', { session: false }),
   verifyRole(Role.ADMIN),
   updateItems
 );
 
 // app.put(
-//   '/disable/checkout',
+//   '/api/disable/checkout',
 //   passport.authenticate('jwt', { session: false }),
 //   verifyRole(Role.ADMIN),
 //   disableCheckout
 // );
 
 app.post(
-  '/players',
+  '/api/players',
   passport.authenticate('jwt', { session: false }),
   verifyRole(Role.ADMIN),
   createPlayers
 );
 
 app.delete(
-  '/players/:username',
+  '/api/players/:username',
   passport.authenticate('jwt', { session: false }),
   verifyRole(Role.ADMIN),
   deletePlayer
 );
 
 app.post(
-  '/run-commands',
+  '/api/run-commands',
   passport.authenticate('jwt', { session: false }),
   verifyRole(Role.ADMIN),
   runRconCommands
 );
 
+// Catchall for all other not found api routes
+app.use('/api*', (_, res) => {
+  res.status(404).send('Requested route does not exist');
+});
+
 // Serving the client in non-local environments
-if (process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'develop') {
-  app.use(express.static(path.join(__dirname, '..', '..', 'client', 'dist')));
-  app.use(express.static(path.join(__dirname, '..', '..', 'client', 'public')));
-  app.use('*', (_, res) => {
-    res.sendFile(
-      path.join(__dirname, '..', '..', 'client', 'dist', 'index.html')
-    );
-  });
-}
+// if (process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'develop') {
+app.use(express.static(path.join(__dirname, '..', '..', 'client', 'dist')));
+app.use(express.static(path.join(__dirname, '..', '..', 'client', 'public')));
+app.use('*', (_, res) => {
+  res.sendFile(
+    path.join(__dirname, '..', '..', 'client', 'dist', 'index.html')
+  );
+});
+// }
 
 // The port that the webserver will be listening on (default 8080)
 const PORT = process.env.APP_PORT ?? 8080;
@@ -186,8 +218,10 @@ app.listen(PORT, () => {
       // Schedule cron job to process rcon commands every 2 seconds
       cron.schedule(
         `*/${process.env.CRON_TIME ?? 2} * * * * *`,
-        (now: Date) => {
-          void rcon(now);
+        (now: (Date | 'init' | 'manual')) => {
+          if (now instanceof Date) {
+            void rcon(now);
+          }
         }
       );
 

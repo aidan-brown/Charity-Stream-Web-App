@@ -5,7 +5,6 @@ import Log from './log';
 import QuickCommand from './quickCommand';
 import Item from './item';
 import Account from './account';
-import Token from './token';
 
 export {
   Player,
@@ -14,6 +13,5 @@ export {
   Log,
   QuickCommand,
   Item,
-  Account,
-  Token
+  Account
 };

@@ -5,7 +5,6 @@ import {
   QuickCommand,
   Item,
   Command,
-  Token,
   Account,
   Checkout
 } from './models';
@@ -26,13 +25,9 @@ export default async function dbInit (): Promise<void> {
   // the checkout table before the command table (fk ref)
   if (force) {
     await Command.drop();
-    await Token.drop();
   }
 
-  // Foreign Key refs
   await Account.sync({ alter, force });
-  await Token.sync({ alter, force });
-
   await Checkout.sync({ alter, force });
   await Command.sync({ alter, force });
 }

@@ -1,23 +1,23 @@
-export const API_PROD_URL = 'https://charitystream-app.cs.house';
-export const API_DEV_URL = 'https://develop-charitystream-app.cs.house';
+export const API_PROD_URL = '/api';
+export const API_DEV_URL = '/api';
 export const API_LOCAL_URL = 'http://localhost:8080';
 
-export const PROD_URL = 'https://charitystream.cs.house';
+export const PROD_URL = 'https://charitystream.csh.rit.edu';
 export const DEV_URL = 'https://develop-charitystream.cs.house';
 export const LOCAL_URL = 'http://localhost:3000';
 
 export const ASSOCIATIONS = [
-  'csh',
-  'blackbaud',
-  'hogs',
-  'ehouse',
-  'sse',
-  'arthouse',
-  'ihouse',
-  'pepband',
-  'rit',
-  'streamer',
-  'other',
+  'CSH',
+  'BLACKBAUD',
+  'HOGS',
+  'EHOUSE',
+  'SSE',
+  'ARTHOUSE',
+  'IHOUSE',
+  'PEPBAND',
+  'RIT',
+  'STREAMER',
+  'OTHER',
 ];
 
 export const CHANNEL_TYPES = [

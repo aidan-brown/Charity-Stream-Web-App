@@ -3,13 +3,15 @@ import PropTypes from 'prop-types';
 import { useQuery } from '@tanstack/react-query';
 import StoreItem from './StoreItem';
 import { getMinecraftData } from '../../../../api';
-import { getApiUrl } from '../../../../Utils';
 import './StoreContent.scss';
 
 const StoreContent = ({
   filterTag, addItemToCart, className,
 }) => {
-  const { data: { data: items = [] } = {} } = useQuery([`item_data_${filterTag}`], () => getMinecraftData(filterTag));
+  const { data: { data: items = [] } = {} } = useQuery({
+    queryKey: [`item_data_${filterTag}`],
+    queryFn: () => getMinecraftData(filterTag),
+  });
 
   return (
     <div className={`StoreContent${className ? ` ${className}` : ''}`}>
@@ -24,8 +26,8 @@ const StoreContent = ({
                 ...item,
                 amount: 1,
                 ...(type === 'effect' && { time: 30, power: 0 }),
-                icon: `${getApiUrl()}/images/${type}/${id}.webp`,
-                img: `${getApiUrl()}/images/${type}/${id}-full.webp`,
+                icon: `/images/${type}/${id}.webp`,
+                img: `/images/${type}/${id}-full.webp`,
               });
             }}
             key={`${id}-${type}`}

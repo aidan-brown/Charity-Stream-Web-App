@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import Account, { Role } from '../db/models/account';
-import { JWTUser } from './passportConfig';
+import { JWTUser } from '../config/passportSetup';
 
 export default function verifyRole (...roles: Role[]) {
   return async function (req: Request, res: Response, next: NextFunction) {

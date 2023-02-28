@@ -8,7 +8,6 @@ export const createNewPlayers = async (players) => {
   const { errors, newPlayers: nps } = await Post({
     route: '/players',
     body: players,
-    shouldAuth: true,
   });
 
   return {
@@ -19,5 +18,4 @@ export const createNewPlayers = async (players) => {
 
 export const deletePlayer = async (username) => Delete({
   route: `/players/${username}`,
-  shouldAuth: true,
 });

@@ -3,7 +3,7 @@ import Command, { Status } from '../db/models/command';
 import logger from './logger';
 
 export default async function rcon (scheduled: Date): Promise<void> {
-  const cronId = scheduled.getTime();
+  const cronId = Number(scheduled);
 
   try {
   // If any commands need to be run, set the cron timeStamp

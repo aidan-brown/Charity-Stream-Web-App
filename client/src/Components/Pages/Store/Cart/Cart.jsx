@@ -4,7 +4,7 @@ import {
   MenuItem, Select, FormControl, InputLabel,
 } from '@mui/material';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import LoadingButton from '@mui/lab/LoadingButton';
+import { LoadingButton } from '@mui/lab';
 import { useQuery } from '@tanstack/react-query';
 import CartEffect from './CartEffect';
 import CartItem from './CartItem';
@@ -25,10 +25,10 @@ const Cart = ({
 }) => {
   const [loading, setLoading] = useState(false);
 
-  const { data: players = [] } = useQuery(
-    ['players'],
-    () => getPlayers(),
-  );
+  const { data: players = [] } = useQuery({
+    queryKey: ['players'],
+    queryFn: () => getPlayers(),
+  });
 
   // TODO: Not set up to handle routes
   // const { data: checkoutDisabled } = useQuery(

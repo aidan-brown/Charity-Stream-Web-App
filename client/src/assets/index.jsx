@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-import { mdiGoogleController } from '@mdi/js';
+import { mdiController } from '@mdi/js';
 import Icon from '@mdi/react';
 import React from 'react';
 import {
@@ -42,5 +42,5 @@ export default {
   ROXKSTAR74: () => <img src={roxkstar74} alt="Roxkstar74 logo" className="team-logo" />,
   SAMANTHIIANA: () => <img src={samanthiiana} alt="Samanthiiana logo" className="team-logo" />,
   SKELETON_WEEB: () => <img src={skeleton_weeb} alt="Skeleton_Weeb logo" className="team-logo" />,
-  OTHER: () => <Icon path={mdiGoogleController} className="team-logo" />,
+  OTHER: () => <Icon path={mdiController} className="team-logo" />,
 };

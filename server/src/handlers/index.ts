@@ -1,4 +1,4 @@
-import { getAccount, logout, oauth, tokenRefresh } from './auth';
+import { getAccount, logout, jwtMiddleware } from './auth';
 import getAnalytics from './analytics';
 import getMinecraftData from './data/minecraftData';
 import { dynmapGetPlayerIcon, dynmapGetData } from './data/dynmap';
@@ -23,8 +23,7 @@ export {
   getPlayers,
   getQuickCommands,
   logout,
-  oauth,
+  jwtMiddleware,
   runRconCommands,
-  tokenRefresh,
   updateItems
 };

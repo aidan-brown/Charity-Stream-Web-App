@@ -21,10 +21,6 @@ import {
   createNewPlayers,
   deletePlayer,
 } from './player.api';
-import {
-  verifyToken,
-  postToken,
-} from './token.api';
 
 export {
   getAccount,
@@ -45,6 +41,4 @@ export {
   getPlayers,
   createNewPlayers,
   deletePlayer,
-  verifyToken,
-  postToken,
 };

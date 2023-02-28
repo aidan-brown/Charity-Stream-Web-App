@@ -1,11 +1,9 @@
 import getAccount from './account';
 import logout from './logout';
-import oauth from './oauth';
-import tokenRefresh from './tokenRefresh';
+import jwtMiddleware from './jwtMiddleware';
 
 export {
   getAccount,
   logout,
-  oauth,
-  tokenRefresh
+  jwtMiddleware
 };

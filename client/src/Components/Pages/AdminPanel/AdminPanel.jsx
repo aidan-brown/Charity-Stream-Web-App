@@ -1,14 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import {
-  Alert,
-  Box,
-  Tab,
-} from '@mui/material';
-import { TabContext, TabList } from '@mui/lab';
+import { Box } from '@mui/material';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import {
-  AnalyticsPanel, CommandsPanel, ItemUpdatePanel, PlayerManagePanel,
-} from './Panels';
 import useAccount from '../../../hooks';
 import './AdminPanel.scss';
 import Loading from '../Loading';
@@ -18,8 +10,7 @@ const AdminPanel = () => {
   const navigate = useNavigate();
   const { account, isLoading } = useAccount();
 
-  const [alert, setAlert] = useState();
-  const [tab, setTab] = useState(searchParams.get('tab') || 'quick-commands');
+  const [tab] = useState(searchParams.get('tab') || 'quick-commands');
 
   useEffect(() => navigate(`/admin-panel?tab=${tab}`), [tab]);
   useEffect(() => {
@@ -34,7 +25,8 @@ const AdminPanel = () => {
 
   return (
     <Box className="admin-panel" sx={{ width: '100%', typography: 'body1' }}>
-      <TabContext value={tab}>
+      <h1>Admin Panel (Coming soon)</h1>
+      {/* <TabContext value={tab}>
         <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
           <TabList
             textColor="secondary"
@@ -62,7 +54,7 @@ const AdminPanel = () => {
         <ItemUpdatePanel setAlert={setAlert} />
         <PlayerManagePanel setAlert={setAlert} />
         <AnalyticsPanel setAlert={setAlert} />
-      </TabContext>
+      </TabContext> */}
     </Box>
   );
 };

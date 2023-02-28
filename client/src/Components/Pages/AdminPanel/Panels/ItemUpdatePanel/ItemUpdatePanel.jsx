@@ -35,37 +35,33 @@ const ItemUpdatePanel = ({ setAlert }) => {
   const [items, setItems] = useState([]);
   const [checkoutStatus, setCheckoutStatus] = useState(false);
 
-  useQuery(
-    ['checkout-status'],
-    () => getCheckoutStatus(),
-    {
-      onSuccess: (status) => {
-        setCheckoutStatus(status);
-      },
-      onError: () => {
-        setAlert({
-          message: 'Could not get checkout status',
-          severity: 'error',
-        });
-      },
+  useQuery({
+    queryKey: ['checkout-status'],
+    queryFn: () => getCheckoutStatus(),
+    onSuccess: (status) => {
+      setCheckoutStatus(status);
     },
-  );
+    onError: () => {
+      setAlert({
+        message: 'Could not get checkout status',
+        severity: 'error',
+      });
+    },
+  });
 
-  useQuery(
-    ['minecraft-items'],
-    () => getMinecraftData(),
-    {
-      onSuccess: (newItems) => {
-        setItems(newItems);
-      },
-      onError: () => {
-        setAlert({
-          message: 'Could not get items from backend',
-          severity: 'error',
-        });
-      },
+  useQuery({
+    queryKey: ['minecraft-items'],
+    queryFn: () => getMinecraftData(),
+    onSuccess: (newItems) => {
+      setItems(newItems);
     },
-  );
+    onError: () => {
+      setAlert({
+        message: 'Could not get items from backend',
+        severity: 'error',
+      });
+    },
+  });
 
   const disableItems = async () => {
     try {

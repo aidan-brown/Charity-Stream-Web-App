@@ -1,5 +1,5 @@
 /* eslint-disable react/forbid-prop-types */
-import React, { useRef, useState } from 'react';
+import React, { Fragment, useRef, useState } from 'react';
 import Icon from '@mdi/react';
 import {
   mdiForum,
@@ -40,18 +40,16 @@ const Stream = ({
   const [streamWidth, setStreamWidth] = useState('100%');
   const [filterTag, setFilterTag] = useState('ALL');
 
-  const { data: playerList = [] } = useQuery(
-    ['players'],
-    () => getPlayers(),
-  );
+  const { data: playerList = [] } = useQuery({
+    queryKey: ['players'],
+    queryFn: () => getPlayers(),
+  });
 
-  const { data: playerData = {} } = useQuery(
-    ['dynmap-data'],
-    () => getDynmapData(),
-    {
-      refetchInterval: 5000,
-    },
-  );
+  const { data: playerData = {} } = useQuery({
+    queryKey: ['dynmap-data'],
+    queryFn: () => getDynmapData(),
+    refetchInterval: 5000,
+  });
 
   const playerOnClick = (player) => {
     setSelectedPlayer(player.username);
@@ -146,9 +144,8 @@ const Stream = ({
           const pData = playerData[player.username];
           const playerConnected = player.username in playerData;
           return (
-            <>
+            <Fragment key={player.username}>
               <Link
-                key={`${player.username}link`}
                 className={`list-element ${playerAssociation}`}
                 onClick={() => playerOnClick(player)}
                 aria-owns={open[player.username] ? `${player.username}-popover` : undefined}
@@ -162,7 +159,6 @@ const Stream = ({
                 <Icon path={mdiCart} className="shop-logo" />
               </Link>
               <Popover
-                key={`${player.username}popover`}
                 id={`${player.username}-popover`}
                 className="player-popover"
                 sx={{ pointerEvents: 'none' }}
@@ -185,7 +181,7 @@ const Stream = ({
                   {playerConnected ? ')' : ''}
                 </span>
               </Popover>
-            </>
+            </Fragment>
           );
         })}
       </ul>

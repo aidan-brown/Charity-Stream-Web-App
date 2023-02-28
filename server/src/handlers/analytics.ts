@@ -11,10 +11,10 @@ interface queryParams {
 
 export default async function getAnalytics (req: Request, res: Response): Promise<Response> {
   const {
-    code,
-    message,
-    type,
-    additional
+    code = '',
+    message = '',
+    type = '',
+    additional = ''
   } = req.query as unknown as queryParams;
 
   try {

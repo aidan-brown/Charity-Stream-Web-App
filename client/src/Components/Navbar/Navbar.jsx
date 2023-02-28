@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useNavigate, useSearchParams } from 'react-router-dom';
+import {
+  Link, Navigate, useNavigate, useSearchParams,
+} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { Avatar, Button, CircularProgress } from '@mui/material';
 import { useQueryClient } from '@tanstack/react-query';
-import Cookies from 'js-cookie';
 import AssociationLogos from '../../assets';
 import { Toggler } from '../../assets/svg';
 import useAccount from '../../hooks';
@@ -15,13 +16,13 @@ import '../Bootstrap-Colors/palette.scss';
 const Navbar = ({ streamStarted }) => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
-
   const queryClient = useQueryClient();
-  const { account, isLoading } = useAccount();
+  const { account, isLoading, isError } = useAccount();
 
   const [isPopoverOpen, setIsPopoverOpen] = useState(false);
 
   const isAdmin = account?.role === 'ADMIN';
+  const isLoginTest = searchParams.get('loginTest');
 
   useEffect(() => {
     let activeLink;
@@ -45,6 +46,10 @@ const Navbar = ({ streamStarted }) => {
       activeLink.className += ' active';
     }
   }, []);
+
+  if (isError && isLoginTest) {
+    return <Navigate to="/login" />;
+  }
 
   /*
     Handles setting the active link on the navbar
@@ -90,7 +95,7 @@ const Navbar = ({ streamStarted }) => {
             )}
           </ul>
         </div>
-        {searchParams.get('showLoginButton') && (
+        {isLoginTest && (
         <>
           {isLoading && <CircularProgress />}
           {!isLoading && (
@@ -131,7 +136,6 @@ const Navbar = ({ streamStarted }) => {
               await logoutAccount();
               setIsPopoverOpen(false);
               queryClient.removeQueries(['account']);
-              Cookies.remove('accessToken');
               navigate('/');
             }}
           >
