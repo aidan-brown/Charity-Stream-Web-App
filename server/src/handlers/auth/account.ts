@@ -1,8 +1,9 @@
 import { Request, Response } from 'express';
 import Account from '../../db/models/account';
 import { JWTUser } from '../../config/passportSetup';
+import { Donation } from '../../db/models';
 
-export default async function getAccount (req: Request, res: Response): Promise<Response> {
+export async function getAccount (req: Request, res: Response): Promise<Response> {
   const { user = {} } = req;
 
   try {
@@ -16,7 +17,22 @@ export default async function getAccount (req: Request, res: Response): Promise<
     }
 
     return res.status(404).send('Account not found');
-  } catch (err) {
+  } catch (_err) {
+    return res.status(500).send('Internal Server Error');
+  }
+}
+
+export async function getAccountDonations (req: Request, res: Response): Promise<Response> {
+  const { user = {} } = req;
+
+  try {
+    const { id } = user as JWTUser;
+    const donations = await Donation.findAll({
+      where: { accountId: id }
+    });
+
+    return res.status(200).send(donations);
+  } catch (_err) {
     return res.status(500).send('Internal Server Error');
   }
 }

@@ -24,7 +24,10 @@ import {
   runRconCommands,
   logout,
   getMinecraftData,
-  jwtMiddleware
+  jwtMiddleware,
+  processDonation,
+  donationCallback,
+  getAccountDonations
 } from './handlers';
 import {
   logger,
@@ -110,16 +113,23 @@ app.get(
   getAccount as RequestHandler
 );
 
-// app.post(
-//   '/verify-checkout',
-//   passport.authenticate('jwt', { session: false }),
-//   verifyCheckout as RequestHandler
-// )
-// app.post(
-//   '/verify-donation',
-//   passport.authenticate('jwt', { session: false }),
-//   verifyDonation as RequestHandler
-// )
+app.get(
+  '/api/account/donations',
+  passport.authenticate('jwt', { session: false }),
+  getAccountDonations as RequestHandler
+);
+
+app.get(
+  '/api/donate',
+  passport.authenticate('jwt', { session: false }),
+  processDonation as RequestHandler
+);
+
+app.get(
+  '/api/donate/callback',
+  passport.authenticate('jwt', { session: false }),
+  donationCallback as RequestHandler
+);
 
 // ***** Routes that require an ADMIN account
 app.get(

@@ -1,6 +1,5 @@
 import { DataTypes, Model, Optional } from 'sequelize';
 import sequelizeConnection from '../config';
-import Command from './command';
 
 export enum Status {
   ACCEPTED = 'ACCEPTED',
@@ -42,7 +41,5 @@ Checkout.init({
 }, {
   sequelize: sequelizeConnection
 });
-
-Checkout.hasMany(Command);
 
 export default Checkout;

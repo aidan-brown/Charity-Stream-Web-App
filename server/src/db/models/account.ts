@@ -21,6 +21,7 @@ interface AccountAttributes {
   picture?: string
   locale?: string
   role?: Role
+  balance?: number
 }
 
 export interface AccountInput extends Optional<AccountAttributes, 'id' | 'service'> {}
@@ -33,6 +34,7 @@ class Account extends Model<AccountAttributes, AccountInput> implements AccountA
   declare picture?: string;
   declare locale?: string;
   declare role?: Role;
+  declare balance?: number;
 }
 
 Account.init({
@@ -47,25 +49,15 @@ Account.init({
       Service.MICROSOFT,
       Service.TWITCH
     ),
-    allowNull: false,
-    primaryKey: true
+    allowNull: false
   },
   email: {
     type: DataTypes.STRING,
-    allowNull: true
+    allowNull: false
   },
-  name: {
-    type: DataTypes.STRING,
-    allowNull: true
-  },
-  picture: {
-    type: DataTypes.STRING,
-    allowNull: true
-  },
-  locale: {
-    type: DataTypes.STRING,
-    allowNull: true
-  },
+  name: DataTypes.STRING,
+  picture: DataTypes.STRING,
+  locale: DataTypes.STRING,
   role: {
     type: DataTypes.ENUM(
       Role.ADMIN,
@@ -73,6 +65,10 @@ Account.init({
       Role.USER
     ),
     defaultValue: Role.USER
+  },
+  balance: {
+    type: DataTypes.FLOAT,
+    defaultValue: 0.00
   }
 }, {
   sequelize: sequelizeConnection

@@ -5,13 +5,15 @@ import Log from './log';
 import QuickCommand from './quickCommand';
 import Item from './item';
 import Account from './account';
+import Donation from './donation';
 
 export {
-  Player,
+  Account,
   Checkout,
   Command,
-  Log,
-  QuickCommand,
+  Donation,
   Item,
-  Account
+  Log,
+  Player,
+  QuickCommand
 };

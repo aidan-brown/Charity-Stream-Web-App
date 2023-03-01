@@ -16,8 +16,7 @@ const findOrCreateUser = (newAccount: AccountInput, done: any): void => {
   // Find or create user
   void Account.findOrCreate({
     where: {
-      id: newAccount.email,
-      service: newAccount.service
+      id: newAccount.id
     },
     defaults: newAccount
   }).then(([account]) => {
@@ -40,7 +39,7 @@ passport.use(
 
       findOrCreateUser(
         {
-          id: googleUser.email,
+          id: `${Service.GOOGLE}::${String(googleUser.email)}`,
           email: googleUser.email,
           name: googleUser.name,
           service: Service.GOOGLE,
@@ -64,12 +63,14 @@ passport.use(
     },
     function (_accessToken: string, _refreshToken: string, profile: any, done: any) {
       const { emails, _json: microsoftUser } = profile;
-      const [{ value: email }] = emails;
+      const [{ value }] = emails;
+
+      const email = (value as string) !== '' ? value : microsoftUser.userPrincipalName;
 
       findOrCreateUser(
         {
-          id: microsoftUser.email,
-          email: (email as string) !== '' ? email : microsoftUser.userPrincipalName,
+          id: `${Service.MICROSOFT}::${String(email)}`,
+          email,
           name: microsoftUser.displayName,
           service: Service.MICROSOFT
         },
@@ -87,13 +88,14 @@ passport.use(
       secretOrKey: process.env.JWT_SECRET_KEY
     },
     (jwtPayload, done) => {
-      try {
-        const { user = {} } = jwtPayload;
+      const { user = {} } = jwtPayload;
+      const { id, service } = user as JWTUser;
 
-        done(null, user);
-      } catch (error) {
-        done(error, false);
-      }
+      Account.findOne({ where: { id, service } }).then(account => {
+        done(null, account ?? false);
+      }).catch(err => {
+        done(err, false);
+      });
     }
   )
 );
