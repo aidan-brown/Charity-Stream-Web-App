@@ -78,8 +78,6 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // ***** Routes to handle Authentication *****
-app.post('/api/logout', logout as RequestHandler);
-
 // Google auth routes
 app.get(
   '/api/auth/google',
@@ -102,6 +100,8 @@ app.get(
   jwtMiddleware as RequestHandler
 );
 
+app.post('/api/auth/logout', logout as RequestHandler);
+
 // ***** Basic routes for data retrieval *****
 app.get('/api/checkout/status', (_, res) => res.status(200));
 app.get('/api/data/dynmap/icons/:playerName', dynmapGetPlayerIcon as RequestHandler);
@@ -110,7 +110,7 @@ app.get('/api/data/minecraft', getMinecraftData as RequestHandler);
 app.get('/api/players', getPlayers as RequestHandler);
 app.get('/api/items', getItems as RequestHandler);
 
-// ***** Routes that require an account
+// ***** Routes that require a USER account
 app.get(
   '/api/account',
   passport.authenticate('jwt', { session: false }),
@@ -231,7 +231,7 @@ app.listen(PORT, () => {
       // Schedule cron job to process rcon commands every 2 seconds
       cron.schedule(
         `*/${process.env.CRON_TIME ?? 2} * * * * *`,
-        (now: (Date | 'init' | 'manual')) => {
+        (now) => {
           if (now instanceof Date) {
             void rcon(now);
           }
