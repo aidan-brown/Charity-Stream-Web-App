@@ -24,7 +24,6 @@ import StreamWindow from './StreamWindow/StreamWindow';
 import StoreContent from '../Store/StoreContent/StoreContent';
 import { getApiUrl, ItemSymbols } from '../../../Utils';
 import AssociationLogos from '../../../assets';
-import BackgroundVideo from '../../../assets/landing-stream-clips.mp4';
 import { steveFace } from '../../../assets/images';
 import { getPlayers, getDynmapData } from '../../../api';
 import './Stream.scss';
@@ -276,7 +275,6 @@ const Stream = ({
       </div>
       <h2 className="stream-row-title row-reverse">About the Stream</h2>
       <div className="stream-row row-reverse bg-csh-secondary-gradient">
-        <video className="stream-row-item" playsInline autoPlay muted loop preload="none" src={BackgroundVideo} />
         <article className="stream-row-item stream-row-text-box">
           <p>
             CSH&apos;s annual Minecraft Charity Stream is a large-scale competition

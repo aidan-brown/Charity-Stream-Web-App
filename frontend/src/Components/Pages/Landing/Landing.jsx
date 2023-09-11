@@ -1,6 +1,5 @@
 import React from 'react';
 import './Landing.scss';
-import BackgroundVideo from '../../../assets/landing-stream-clips.mp4';
 
 const Landing = () => (
   <div className="Landing">
@@ -13,15 +12,6 @@ const Landing = () => (
       </h1>
     </span>
     <span className="landing-overlay" />
-    <video
-      className="landing-backdrop-video"
-      playsInline
-      autoPlay
-      muted
-      loop
-      preload="none"
-      src={BackgroundVideo}
-    />
   </div>
 );
 
