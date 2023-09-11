@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
-import PropTypes from 'prop-types';
 import { Avatar, Button, CircularProgress } from '@mui/material';
 import { useQueryClient } from '@tanstack/react-query';
 import Cookies from 'js-cookie';
@@ -12,7 +11,7 @@ import './Navbar.scss';
 import '../Bootstrap-Colors/palette.scss';
 
 /** Class for constructing the main navbar of the page * */
-const Navbar = ({ streamStarted }) => {
+const Navbar = () => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
 
@@ -23,37 +22,11 @@ const Navbar = ({ streamStarted }) => {
 
   const isAdmin = account?.role === 'ADMIN';
 
-  useEffect(() => {
-    let activeLink;
-    switch (window.location.pathname) {
-      case '/':
-        if (streamStarted) {
-          activeLink = document.querySelector('#stream');
-        }
-        break;
-
-      default:
-        if (window.location.pathname.split('/').length <= 2) {
-          activeLink = document
-            .querySelector(`#${window.location.pathname
-              .substring(1, window.location.pathname.length).toLowerCase()}`);
-        }
-        break;
-    }
-
-    if (activeLink) {
-      activeLink.className += ' active';
-    }
-  }, []);
-
   /*
     Handles setting the active link on the navbar
     */
   const setLinkActive = (event) => {
     document.querySelector('.Navbar .active').className = 'nav-link';
-    if (event.target.className.includes('navbar-brand') && streamStarted) {
-      document.querySelector('#stream').className = 'nav-link active';
-    }
     /* eslint-disable no-param-reassign */
     if (event.target.className === 'nav-link' || event.target.className === 'nav-link active') {
       event.target.className = 'nav-link active';
@@ -144,7 +117,6 @@ const Navbar = ({ streamStarted }) => {
 };
 
 Navbar.propTypes = {
-  streamStarted: PropTypes.bool.isRequired,
 };
 
 export default Navbar;

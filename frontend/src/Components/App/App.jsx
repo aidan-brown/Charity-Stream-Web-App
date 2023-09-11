@@ -19,7 +19,6 @@ import { verifyCheckout } from '../../api';
 
 const App = () => {
   const [alert, setAlert] = useState();
-  const [streamStarted, setStreamStarted] = useState(false);
   const [cartItems, setCartItems] = useState([]);
   const [player, setPlayer] = useState('');
   const [showCart, setShowCart] = useState('no');
@@ -212,7 +211,7 @@ const App = () => {
   return (
     <>
       <div className="App">
-        <Navbar streamStarted={streamStarted} />
+        <Navbar />
         <main className="Content">
           <Routes>
             <Route
@@ -260,17 +259,7 @@ const App = () => {
             <Route
               exact
               path="/"
-              element={!streamStarted ? <Landing setStreamStarted={setStreamStarted} /> : (
-                <span>
-                  {CartComponents()}
-                  <Stream
-                    setSelectedPlayer={setPlayer}
-                    addItemToCart={addItemToCart}
-                    cartItems={cartItems}
-                    setCartItems={setCartItems}
-                  />
-                </span>
-              )}
+              element={<Landing />}
             />
           </Routes>
         </main>

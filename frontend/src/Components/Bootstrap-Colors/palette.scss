@@ -1,22 +1,20 @@
 $color_1: white;
 $color_2: black;
-$background-color_1: #B0197E;
-$background-color_2: #E11C52;
-$background-color_3: #F8F8FF;
+$background-color_1: #00A4EF;
+$background-color_2: #7FBA00;
+$background-color_3: #FFB900;
 
 .bg-csh-primary {
 	background-color: $background-color_1;
 }
 .bg-csh-primary-gradient {
-	background: rgb(176,25,126);
-	background: linear-gradient(180deg, rgba(176,25,126,1) 0%, rgba(154,23,111,1) 100%);
+	background: $background-color_1;
 }
 .bg-csh-secondary {
 	background-color: $background-color_2;
 }
 .bg-csh-secondary-gradient {
-	background: rgba(225,28,82,1);
-	background: linear-gradient(180deg, rgba(225,28,82,1) 0%, rgba(205,27,76,1) 100%);
+	background: $background-color_2;
 }
 .bg-csh-tertiary {
 	background-color: $background-color_3;
