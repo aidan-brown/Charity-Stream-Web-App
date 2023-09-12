@@ -49,8 +49,7 @@ const app = express();
 app.use(
   cors({
     origin: [
-      'https://charitystream.csh.rit.edu',
-      'https://charitystream.cs.house',
+      'amphitvw.azurewebsites.net',
       'https://develop-charitystream.cs.house',
       'http://localhost:3000'
     ],
