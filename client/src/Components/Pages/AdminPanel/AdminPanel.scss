@@ -1,50 +1,41 @@
 .admin-panel {
-  background-color: white;
-  min-height: calc(100vh - 56.56px);
-
-  .admin-alert {
-    margin: 8px auto;
-    width: 90%;
-    padding: 10px;
-    border-radius: 7.55px;
-  }
-
-  .MuiTabPanel-root {
-    padding: 0px;
-  }
-
-  .login-wrapper {
-    background-color: #b0197e;
-    background-image: linear-gradient(rgb(176, 25, 126), #cd1b4c);
-    justify-content: center;
-    align-items: center;
+  .nav-container {
     display: flex;
-    flex-direction: column;
-    min-height: 100vh;
+    justify-content: space-between;
+    align-items: center;
 
-    .login {
-      position: relative;
-      padding: 10px;
-      border-radius: 5px;
-      background-color: white;
-      width: 30%;
-  
-      .inputs {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        padding: 5px;
-        width: 100%;
-  
-        .signin {
-          background-color: #b0197e;
-          width: 100%;
-          padding: 10px;
-          margin-top: 30px;
-  
-          ::after {
-            color: red;
+    padding: 20px;
+
+
+    ul {
+      display: flex;
+      justify-content: baseline;
+      align-items: center;
+      list-style-type: none;
+
+      li {
+        a {
+          color: black;
+          margin: 0 10px 0 10px;
+          position: relative;
+          text-decoration: none;
+          border-bottom: 3px solid transparent;
+
+          &:visited {
+            text-decoration: none;
+          }
+
+          &:hover {
+            text-decoration: none;
+            border-bottom: 3px solid black;
+            color: #777777;
+            transition: all 250ms;
+          }
+        }
+
+        &.link-active {
+          a {
+            border-bottom: 3px solid black;
           }
         }
       }

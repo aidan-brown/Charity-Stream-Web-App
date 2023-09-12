@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import {
-  Link, Navigate, useNavigate, useSearchParams,
+  Link, useNavigate,
 } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { Avatar, Button, CircularProgress } from '@mui/material';
@@ -15,14 +15,12 @@ import '../Bootstrap-Colors/palette.scss';
 /** Class for constructing the main navbar of the page * */
 const Navbar = ({ streamStarted }) => {
   const navigate = useNavigate();
-  const [searchParams] = useSearchParams();
   const queryClient = useQueryClient();
-  const { account, isLoading, isError } = useAccount();
+  const { account, isLoading } = useAccount();
 
   const [isPopoverOpen, setIsPopoverOpen] = useState(false);
 
   const isAdmin = account?.role === 'ADMIN';
-  const isLoginTest = searchParams.get('loginTest');
 
   useEffect(() => {
     let activeLink;
@@ -46,10 +44,6 @@ const Navbar = ({ streamStarted }) => {
       activeLink.className += ' active';
     }
   }, []);
-
-  if (isError && isLoginTest) {
-    return <Navigate to="/login" />;
-  }
 
   /*
     Handles setting the active link on the navbar
@@ -95,10 +89,8 @@ const Navbar = ({ streamStarted }) => {
             )}
           </ul>
         </div>
-        {isLoginTest && (
-        <>
-          {isLoading && <CircularProgress />}
-          {!isLoading && (
+        {isLoading && <CircularProgress />}
+        {!isLoading && (
           <>
             {account && (
             <button
@@ -124,8 +116,6 @@ const Navbar = ({ streamStarted }) => {
             </Button>
             )}
           </>
-          )}
-        </>
         )}
       </div>
       {isPopoverOpen && (

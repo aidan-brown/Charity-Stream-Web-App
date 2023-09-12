@@ -205,15 +205,15 @@ app.use('/api*', (_, res) => {
 });
 
 // Serving the client in non-local environments
-if (process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'develop') {
-  app.use(express.static(path.join(__dirname, '..', '..', 'client', 'dist')));
-  app.use(express.static(path.join(__dirname, '..', '..', 'client', 'public')));
-  app.use('*', (_, res) => {
-    res.sendFile(
-      path.join(__dirname, '..', '..', 'client', 'dist', 'index.html')
-    );
-  });
-}
+// if (process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'develop') {
+app.use(express.static(path.join(__dirname, '..', '..', 'client', 'dist')));
+app.use(express.static(path.join(__dirname, '..', '..', 'client', 'public')));
+app.use('*', (_, res) => {
+  res.sendFile(
+    path.join(__dirname, '..', '..', 'client', 'dist', 'index.html')
+  );
+});
+// }
 
 // The port that the webserver will be listening on (default 8080)
 const PORT = process.env.APP_PORT ?? 8080;

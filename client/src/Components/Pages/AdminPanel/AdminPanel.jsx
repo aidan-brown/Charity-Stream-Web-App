@@ -1,16 +1,19 @@
-import React, { useEffect, useState } from 'react';
-import { Box } from '@mui/material';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
+import { FormControlLabel, Switch } from '@mui/material';
 import useAccount from '../../../hooks';
 import './AdminPanel.scss';
 import Loading from '../Loading';
+import Dashboard from './Panels/Dashboard';
+
+const PANELS = ['Dashboard', 'Players', 'Commands', 'Items'];
 
 const AdminPanel = () => {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const { account, isLoading } = useAccount();
 
-  const [tab] = useState(searchParams.get('tab') || 'quick-commands');
+  const tab = searchParams.get('tab') || 'Dashboard';
 
   useEffect(() => navigate(`/admin-panel?tab=${tab}`), [tab]);
   useEffect(() => {
@@ -24,38 +27,33 @@ const AdminPanel = () => {
   }
 
   return (
-    <Box className="admin-panel" sx={{ width: '100%', typography: 'body1' }}>
-      <h1>Admin Panel (Coming soon)</h1>
-      {/* <TabContext value={tab}>
-        <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-          <TabList
-            textColor="secondary"
-            indicatorColor="secondary"
-            onChange={(_, newValue) => setTab(newValue)}
-            aria-label="Admin Panel Tabs"
-          >
-            <Tab label="Quick Commands" value="quick-commands" />
-            <Tab label="Update Items" value="update-items" />
-            <Tab label="Players" value="players" />
-            <Tab label="Analytics" value="analytics" />
-          </TabList>
-        </Box>
-        {alert && (
-        <Alert
-          className="admin-alert"
-          onClose={() => setAlert()}
-          variant="filled"
-          severity={alert.severity}
-        >
-          {alert.message}
-        </Alert>
+    <div className="admin-panel">
+      <div className="nav-container">
+        <ul>
+          {PANELS.map((panel) => (
+            <li key={panel} className={tab === panel ? 'link-active' : ''}>
+              <Link
+                id={panel}
+                to={`/admin-panel?tab=${panel}`}
+              >
+                {panel}
+              </Link>
+            </li>
+          ))}
+        </ul>
+        <FormControlLabel
+          value="start"
+          control={<Switch color="primary" />}
+          label="Checkout Disabled"
+          labelPlacement="start"
+        />
+      </div>
+      <div>
+        {tab === 'Dashboard' && (
+          <Dashboard />
         )}
-        <CommandsPanel setAlert={setAlert} />
-        <ItemUpdatePanel setAlert={setAlert} />
-        <PlayerManagePanel setAlert={setAlert} />
-        <AnalyticsPanel setAlert={setAlert} />
-      </TabContext> */}
-    </Box>
+      </div>
+    </div>
   );
 };
 

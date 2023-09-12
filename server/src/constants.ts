@@ -12,6 +12,10 @@ export const TYPES = [
   'effect'
 ];
 
+export const ADMINS = [
+  'river.marks@outlook.com'
+];
+
 export const LOGO = `
  /$$      /$$ /$$                                                   /$$$$$$   /$$    
 | $$$    /$$$|__/                                                  /$$__  $$ | $$    

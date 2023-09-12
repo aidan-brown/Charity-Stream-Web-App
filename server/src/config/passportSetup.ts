@@ -4,7 +4,8 @@ import { Strategy as GoogleStrategy } from 'passport-google-oauth2';
 import { Strategy as MicrosoftStrategy } from 'passport-microsoft';
 import { Strategy as JwtStrategy } from 'passport-jwt';
 import { Account } from '../db/models';
-import { AccountInput, Service } from '../db/models/account';
+import { AccountInput, Role, Service } from '../db/models/account';
+import { ADMINS } from '../constants';
 
 export interface JWTUser {
   id: string
@@ -37,6 +38,8 @@ passport.use(
     (_req: any, _accessToken: any, _refreshToken: any, profile: any, done: any) => {
       const { _json: googleUser } = profile;
 
+      const role = ADMINS.includes(googleUser.email) ? Role.ADMIN : Role.USER;
+
       findOrCreateUser(
         {
           id: `${Service.GOOGLE}::${String(googleUser.email)}`,
@@ -44,7 +47,8 @@ passport.use(
           name: googleUser.name,
           service: Service.GOOGLE,
           picture: googleUser.picture,
-          locale: googleUser.locale
+          locale: googleUser.locale,
+          role
         },
         done
       );
@@ -66,13 +70,15 @@ passport.use(
       const [{ value }] = emails;
 
       const email = (value as string) !== '' ? value : microsoftUser.userPrincipalName;
+      const role = ADMINS.includes(email) ? Role.ADMIN : Role.USER;
 
       findOrCreateUser(
         {
           id: `${Service.MICROSOFT}::${String(email)}`,
           email,
           name: microsoftUser.displayName,
-          service: Service.MICROSOFT
+          service: Service.MICROSOFT,
+          role
         },
         done
       );
