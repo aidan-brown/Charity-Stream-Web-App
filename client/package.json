@@ -1,0 +1,70 @@
+{
+  "name": "mcs-client",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@datadog/browser-rum": "4.34.1",
+    "@emotion/react": "11.10.6",
+    "@emotion/styled": "11.10.6",
+    "@mdi/js": "7.1.96",
+    "@mdi/react": "1.6.1",
+    "@mui/icons-material": "5.11.9",
+    "@mui/lab": "5.0.0-alpha.120",
+    "@mui/material": "5.11.10",
+    "@tanstack/react-query": "4.0.10",
+    "bootstrap": "4.6.0",
+    "dotenv": "16.0.3",
+    "jquery": "3.6.3",
+    "popper.js": "^1.16.1",
+    "prop-types": "15.8.1",
+    "react": "18.2.0",
+    "react-device-detect": "2.2.3",
+    "react-dom": "18.2.0",
+    "react-lazy-load-image-component": "1.5.6",
+    "react-router-dom": "6.8.1"
+  },
+  "scripts": {
+    "start": "node server.js",
+    "start:dev": "REACT_APP_ENVIRONMENT=local webpack serve --mode development",
+    "build": "webpack --mode production"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "@babel/core": "7.16.0",
+    "@babel/plugin-transform-runtime": "7.21.0",
+    "@babel/preset-env": "7.16.0",
+    "@babel/preset-react": "7.16.0",
+    "@babel/runtime": "7.21.0",
+    "@svgr/webpack": "6.5.1",
+    "babel-loader": "8.2.3",
+    "css-loader": "6.5.1",
+    "eslint": "7.30.0",
+    "eslint-config-airbnb": "18.2.1",
+    "eslint-plugin-import": "2.23.4",
+    "eslint-plugin-jsx-a11y": "6.4.1",
+    "eslint-plugin-react": "7.24.0",
+    "eslint-plugin-react-hooks": "4.2.0",
+    "file-loader": "6.2.0",
+    "html-webpack-plugin": "5.5.0",
+    "sass": "1.43.4",
+    "sass-loader": "12.3.0",
+    "style-loader": "3.3.1",
+    "webpack": "5.64.1",
+    "webpack-cli": "4.10.0",
+    "webpack-dev-server": "4.11.1"
+  }
+}

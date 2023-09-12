@@ -1,0 +1,13 @@
+{
+  "name": "mcs",
+  "version": "3.0.0",
+  "description": "Minecraft Charity Stream web application",
+  "main": "dist/server.js",
+  "scripts": {
+      "start": "node server/dist/server.js",
+      "build": "cd server && npx tsc && cd ../client && npm run build",
+      "install": "cd server && npm install && cd ../client && npm install"
+  },
+  "author": "River Marks",
+  "license": "MIT"
+}

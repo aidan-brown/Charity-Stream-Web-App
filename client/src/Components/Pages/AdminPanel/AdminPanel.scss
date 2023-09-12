@@ -1,0 +1,44 @@
+.admin-panel {
+  .nav-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 20px;
+
+
+    ul {
+      display: flex;
+      justify-content: baseline;
+      align-items: center;
+      list-style-type: none;
+
+      li {
+        a {
+          color: black;
+          margin: 0 10px 0 10px;
+          position: relative;
+          text-decoration: none;
+          border-bottom: 3px solid transparent;
+
+          &:visited {
+            text-decoration: none;
+          }
+
+          &:hover {
+            text-decoration: none;
+            border-bottom: 3px solid black;
+            color: #777777;
+            transition: all 250ms;
+          }
+        }
+
+        &.link-active {
+          a {
+            border-bottom: 3px solid black;
+          }
+        }
+      }
+    }
+  }
+}
