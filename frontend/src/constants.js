@@ -1,9 +1,9 @@
-export const API_PROD_URL = 'veronabackend.azurewebsites.net';
-export const API_DEV_URL = 'https://develop-charitystream-app.cs.house';
+export const API_PROD_URL = 'dionysus.headass.house:8080';
+export const API_DEV_URL = 'dionysus.headass.house:8080';
 export const API_LOCAL_URL = 'http://localhost:8080';
 
 export const PROD_URL = 'amphitvw.azurewebsites.net';
-export const DEV_URL = 'https://develop-charitystream.cs.house';
+export const DEV_URL = 'amphitvw.azurewebsites.net';
 export const LOCAL_URL = 'http://localhost:3000';
 
 export const ASSOCIATIONS = [
